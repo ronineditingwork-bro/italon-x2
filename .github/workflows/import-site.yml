@@ -1,0 +1,67 @@
+name: Import Italon Experience sources
+
+on:
+  push:
+    branches: [main]
+    paths: ['_upload/source.part*']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: italon-initial-source-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out this repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Verify and unpack website sources
+        run: |
+          python3 - <<'SOURCE_IMPORT'
+          from pathlib import Path, PurePosixPath
+          from io import BytesIO
+          import hashlib, json, zipfile, os
+          parts = [Path('_upload/source.part' + str(i).zfill(2)) for i in range(4)]
+          archive = b''.join(part.read_bytes() for part in parts)
+          assert hashlib.sha256(archive).hexdigest() == '9e1690a156bde1b46e7036b3577f54996dca094acff3b416ce7dde70bd392246'
+          manifest = json.loads(Path('_upload/manifest.json').read_text())
+          assert manifest['repository'] == os.environ['GITHUB_REPOSITORY'] == 'ronineditingwork-bro/italon-x2'
+          expected = {item['path']: item for item in manifest['files']}
+          seen = set()
+          with zipfile.ZipFile(BytesIO(archive)) as source:
+              for entry in source.infolist():
+                  assert not entry.is_dir()
+                  path = PurePosixPath(entry.filename)
+                  assert path.parts[0] == 'italon-x2' and not path.is_absolute()
+                  relative = PurePosixPath(*path.parts[1:])
+                  assert '..' not in relative.parts
+                  assert not any(p in {'.git', '.openai', 'node_modules', '.hosting-runtime', '.sites-runtime', 'private-data', 'backups'} for p in relative.parts)
+                  name = str(relative)
+                  assert name in expected and name not in seen
+                  content = source.read(entry)
+                  item = expected[name]
+                  assert len(content) == item['bytes']
+                  sha = hashlib.sha1(b'blob ' + str(len(content)).encode() + b'\0' + content).hexdigest()
+                  assert sha == item['sha'], name
+                  target = Path(name)
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  target.write_bytes(content)
+                  target.chmod(0o644)
+                  seen.add(name)
+          assert seen == set(expected) and len(seen) == 1101
+          for part in parts:
+              part.unlink()
+          Path('_upload/manifest.json').unlink()
+          print('Verified and unpacked', len(seen), 'source files')
+          SOURCE_IMPORT
+      - name: Publish the complete website tree
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Upload complete Italon Experience website sources and images'
+          git push origin HEAD:main
