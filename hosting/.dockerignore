@@ -1,0 +1,7 @@
+.env
+private-data
+data
+backups
+source
+*.zip
+*.tar.gz

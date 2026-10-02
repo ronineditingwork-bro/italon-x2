@@ -1,0 +1,465 @@
+{
+  "retrievedOn": "2026-10-02",
+  "collections": {
+    "aura": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/aura.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/aura.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/aura-144dc4df77f7.webp",
+      "originalSha256": "400c36241b9bcaa9c4cdcb7af46ce4edc5ae3501b1d493ccfc1333259716e8b7",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "avantgarde": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/avantgarde.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/avantgarde.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/avantgarde-35aaec6282c8.webp",
+      "originalSha256": "3ab0a75da05b55f324998dc176541902905d104d0d2b5ebb372e6ded7685a346",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "boutique": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/boutique.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/boutique.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/boutique-857b906e11db.webp",
+      "originalSha256": "a05497d9b42b0e9e090388538821e4219f6e4975c0e588203f3f278d2d8ac878",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "charme-advance": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/charme-advance.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/charme-advance.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/charme-advance-b7071714e099.webp",
+      "originalSha256": "81840f79e114dd3e224ebd0b4d4cf0d08e92e1f89e05edbaf23e351bd2ee11b8",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "charme-deluxe": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/charme-deluxe.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/charme-deluxe.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/charme-deluxe-10694e22f377.webp",
+      "originalSha256": "cc3e484bc3230fdcfee1b4001de9ee2f3842aa8c77dd1342cb4aea976d3fd7e2",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "charme-evo": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/charme-evo.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/charme-evo.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/charme-evo-e641f3b989fe.webp",
+      "originalSha256": "e05476208b218f5e5c1eb1cad07df59a843bc87486a2e0eb03712949a3ae65f4",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "charme-extra": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/charme-extra.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/charme-extra.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/charme-extra-aaaf092c3a7f.webp",
+      "originalSha256": "8359134d10e1d1b24c3bf768f6a2d446fe6ba1402695a2eab3a2f8a7bb481ca1",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "continuum": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/continuum.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/continuum.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/continuum-cd5f5e0fa138.webp",
+      "originalSha256": "fc5a0111e9406d50a0465fed0477bd3f2537fcbc6b97f9fb8392bcba91e2617b",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "eternum": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/eternum.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/eternum.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/eternum-cbe25130835e.webp",
+      "originalSha256": "cb85e44aa969ea7bd894671982f1593fa2c891745cd7867a40129fd56fa036e1",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "forum": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/forum.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/forum.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/forum-ca1cb0801acb.webp",
+      "originalSha256": "7f915d6f713bb7fcf9490efc84efb5a26bb80a67cd70f9cf7181f02ece934e0d",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "loft": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/loft.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/loft.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/loft-cddf50ade9fb.webp",
+      "originalSha256": "371aa74030a6ad1bf478b153021f53bd46f6a11b2d9678e595be8af4ad92b759",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "magma": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/magma.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/magma.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/magma-ed7edf09fa23.webp",
+      "originalSha256": "dbd52ecf3aa5ac6eee2e2119ba633a078d13e4f398cd95171e24f06b9bb8c4e1",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "materia": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/materia.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/materia.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/materia-7dfadc8ebef5.webp",
+      "originalSha256": "4d2fb18f172a6d42d4e05a5c61e17a2f4f149804ef8d63a3aa13dc2923572be8",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "metropolis": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/metropolis.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/metropolis.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/metropolis-9af724ab96d8.webp",
+      "originalSha256": "4d9594169271784a6dada003eb388edf90bb6075c97d059a2a2aa51d218da07d",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "millennium": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/millennium.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/millennium.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/millennium-01228d4f8245.webp",
+      "originalSha256": "ae07231e881db7f7bd716429756daf4ddf03e74ee50cfb5700a961d2dfdb1e00",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "stellaris": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/stellaris.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/stellaris.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/stellaris-4ecfc0b0f9f6.webp",
+      "originalSha256": "e9f654ee19f8b40e38b4ca0c2582ecde929c12a4ee75495673276755fb65f130",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "wonderful-life": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/wonderful-life.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/wonderful-life.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/wonderful-life-1cf738e460c6.webp",
+      "originalSha256": "7bf4b23c32c0dbb34840f7877399089db6b6651defe8d1cbb064b656cbef9f36",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-avantgarde": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-avantgarde.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-avantgarde.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-avantgarde-f63771895454.webp",
+      "originalSha256": "2c39c2b763c702b852b3f8a9f6ab95ff1124fb974fef72c20eec04940236a28d",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-charme-deluxe": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-charme-deluxe.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-charme-deluxe.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-charme-deluxe-254efd72d1a5.webp",
+      "originalSha256": "1060ada85891472dd8468525066d2911eecd290b7ddaf9ee88866032ce815cf2",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-climb": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-climb.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-climb.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-climb-6e3eedf89868.webp",
+      "originalSha256": "e953cb7c5b3c52be750348f6b4651c916b2cb84e5e3711b0742ac9bc63b76914",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-contempora": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-contempora.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-contempora.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-contempora-cb7c3db110d8.webp",
+      "originalSha256": "6f222ab13d50335600a03fd0bb0ceca4d9b88750a209b77d3bbf7ee20677c2ee",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-cosmos": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-cosmos.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-cosmos.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-cosmos-2cdec83cd06c.webp",
+      "originalSha256": "528aa72074d580bc33366da679b2b8077c0ddc829483a079e9e155a2a5976206",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-discover": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-discover.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-discover.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-discover-c20aebb405c7.webp",
+      "originalSha256": "cd5e85b80815768e05310840657a4ec0a340f7640cee423fb975577aa75c65a3",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-everstone": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-everstone.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-everstone.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-everstone-ef52c4416ea2.webp",
+      "originalSha256": "0e0e808a6c548c959fa308d745a4665e30b959e6b25a2917769f206d98ae4605",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-magnetique": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-magnetique.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-magnetique.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-magnetique-7eabf0cd3418.webp",
+      "originalSha256": "c81d105472eee756ce7a899b1660945bdc021ac68b82bade006ffe3b5a0547ba",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-materia": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-materia.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-materia.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-materia-e9d389df9fa5.webp",
+      "originalSha256": "71f4b99d72db56054676dd54bd232480895d6388458f9dfbdbbe147a9b690755",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-millennium": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-millennium.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-millennium.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-millennium-bee2a1f6a980.webp",
+      "originalSha256": "59b7322099837010c6dd7fbf6b69c786df87a6bb91fb07c2e08fecdca5fe08cb",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-natural-life-wood": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-natural-life-wood.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-natural-life-wood.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-natural-life-wood-c4ffb6d8034d.webp",
+      "originalSha256": "c64c4e549c6ca720af47aa6cf7bb5f51b56b873d0e447dbcc60942ce69be0b59",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-nordica": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-nordica.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-nordica.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-nordica-b21cdddad913.webp",
+      "originalSha256": "8ad510a47520d010d032f137cfe8dead5f80ad9fc356ac781603ee5c8ecb95a5",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-room": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-room.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-room.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-room-065894612b4f.webp",
+      "originalSha256": "0d34a1faed688fe9f275f3d4bb3ff3c125439bbe911234dafc7cb2b2b33585fc",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-skyfall": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-skyfall.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-skyfall.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-skyfall-01f912b89d17.webp",
+      "originalSha256": "712e99b8a688d2ce9a4379c6ec9365093a806c33f4594aae0c7b2380efc040c5",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "x2-skyline": {
+      "sourceUrl": "https://github.com/ronineditingwork-bro/Amana_website/blob/main/assets/img/italon/coll/x2-skyline.jpg",
+      "imageUrl": "https://raw.githubusercontent.com/ronineditingwork-bro/Amana_website/main/assets/img/italon/coll/x2-skyline.jpg",
+      "evidence": "User repository filename matches source collection slug",
+      "asset": "/media/collections/x2-skyline-a3704bef8eae.webp",
+      "originalSha256": "2ec575e06de5c3c7ffc909acee1d5c41cb79e3888cef0a8013c2f961e007a5cd",
+      "mediaType": "Collection scene from user repository",
+      "reuseNotes": null,
+      "pdfPage": null
+    },
+    "prima": {
+      "sourceUrl": "https://file.italonceramica.ru/Home/serieccataloghi/2026/Catalogo%20Texture%20Prima_WEB.pdf#page=4",
+      "imageUrl": "https://file.italonceramica.ru/Home/serieccataloghi/2026/Catalogo%20Texture%20Prima_WEB.pdf",
+      "evidence": "Kitchen scene extracted unchanged from official Prima June 2026 catalog page 4. Page 5 caption identifies Prima White Silk 120×120 on the floor and Volcano Green Lux 120×278 on walls/island.",
+      "asset": "/media/collections/prima-e96e5a5bad20.webp",
+      "originalSha256": "00536d58195c7ed9690e88fcb95192e1780ca8715ccd59e7eb0cd11e79405752",
+      "mediaType": "Manufacturer architectural campaign render",
+      "reuseNotes": "Catalog imagery bears © Italon; no explicit reuse license was found in the retrieved source.",
+      "pdfPage": 4
+    },
+    "status": {
+      "sourceUrl": "https://file.italonceramica.ru/Home/serieccataloghi/2026/GIUGNO/Catalogo%20Texture%20Status_WEB.pdf#page=4",
+      "imageUrl": "https://file.italonceramica.ru/Home/serieccataloghi/2026/GIUGNO/Catalogo%20Texture%20Status_WEB.pdf",
+      "evidence": "Living room scene extracted unchanged from official Status June 2026 catalog page 4. Page 5 caption identifies Status Arctic natural 120×120 and Corten natural 120×278.",
+      "asset": "/media/collections/status-5e8ad6f94c4e.webp",
+      "originalSha256": "f8b703eeca0fd92402cf2131bc38e21d217c3e3eb8fe7d6da10ffc25ebea528a",
+      "mediaType": "Manufacturer architectural campaign render",
+      "reuseNotes": "Catalog imagery bears © Italon; no explicit reuse license was found in the retrieved source.",
+      "pdfPage": 4
+    },
+    "velvet": {
+      "sourceUrl": "https://sanberg.ru/pdf/italon-velvet.pdf#page=4",
+      "imageUrl": "https://sanberg.ru/pdf/italon-velvet.pdf",
+      "evidence": "Living room scene extracted unchanged from Italon Velvet June 2026 catalog hosted by dealer Sanberg. Page 5 specifically states Velvet Cotton natural 120×120 on floor and Silk natural 120×278 on walls.",
+      "asset": "/media/collections/velvet-2c167842ae92.webp",
+      "originalSha256": "9d031d6e7c62e05e97e85edc035329da0997df029350cf4046b0a504cbee3988",
+      "mediaType": "Manufacturer architectural campaign render",
+      "reuseNotes": "Catalog imagery bears © Italon; no explicit reuse license was found in the retrieved source.",
+      "pdfPage": 4
+    },
+    "surface": {
+      "sourceUrl": "https://sanberg.ru/pdf/italon-surface.pdf#page=6",
+      "imageUrl": "https://sanberg.ru/pdf/italon-surface.pdf",
+      "evidence": "Boutique scene extracted unchanged from manufacturer Surface catalog hosted by Sanberg. The spread on PDF pages 5–6 (printed pp. 50–51) names Surface Steel natural 60×120; same collection scene also appears as ITALON_SURFACE_1.jpg in Sanberg's exact Surface gallery.",
+      "asset": "/media/collections/surface-84db044accb3.webp",
+      "originalSha256": "a8599b0398dd9b626132166043d81c9fef82e0a83388c2a1d1c62c180c7cc5ef",
+      "mediaType": "Manufacturer architectural campaign render",
+      "reuseNotes": "Catalog imagery bears © Italon; no explicit reuse license was found in the retrieved source.",
+      "pdfPage": 6
+    },
+    "bottega": {
+      "sourceUrl": "https://sanberg.ru/pdf/italon-velvet.pdf#page=6",
+      "imageUrl": "https://sanberg.ru/pdf/italon-velvet.pdf",
+      "evidence": "Bathroom scene extracted unchanged from Italon Velvet catalog. Adjacent page 7 explicitly states Bottega Lava Mosaico Gemma 30×29.6 on the walls, with Velvet Gold 20×160 on the floor. This is a combined collection scene with verified Bottega wall mosaic, not a substituted generic bathroom.",
+      "asset": "/media/collections/bottega-8b4a79efc77b.webp",
+      "originalSha256": "1695f343f84e4984f0406887debbb860b2027c6b1b9ea0e585253190e782895b",
+      "mediaType": "Manufacturer architectural campaign render",
+      "reuseNotes": "Catalog imagery bears © Italon; no explicit reuse license was found in the retrieved source.",
+      "pdfPage": 6
+    },
+    "surface-wall-project": {
+      "sourceUrl": "https://file.italonceramica.ru/Home/serieccataloghi/2026/GIUGNO/Catalogo%20Texture%20Status_WEB.pdf#page=6",
+      "imageUrl": "https://file.italonceramica.ru/Home/serieccataloghi/2026/GIUGNO/Catalogo%20Texture%20Status_WEB.pdf",
+      "evidence": "Bathroom scene extracted unchanged from official Status catalog page 6. Page 7 caption lists Surface Moon White opaque 50×120 on walls, Bottega Neve Mosaico Arco, and Status Moka 120×120 on floor. The product range in the same PDF explicitly classifies Moon White 50×120 as Surface Wall Project white-body wall tile; Moon White is not the floor material.",
+      "asset": "/media/collections/surface-wall-project-f20c63c47fc6.webp",
+      "originalSha256": "3915b312a970be7b8d621019317a9cd628a041986213bee6dac8b59efc6c759d",
+      "mediaType": "Manufacturer architectural campaign render",
+      "reuseNotes": "Catalog imagery bears © Italon; no explicit reuse license was found in the retrieved source.",
+      "pdfPage": 6
+    },
+    "x2-aura": {
+      "sourceUrl": "https://interiodv.ru/aura-x2-c11775",
+      "imageUrl": "https://skeeks-market.ru/uploads/all/de/63/ad/de63ad35e708693e2ab7a76dabe46128/sx-filter__skeeks-cms-components-imaging-filters-Thumbnail/150956fd0dcf249e18b4b4a51758abc9/aura-x2-568748.webp",
+      "evidence": "Downloaded unchanged from the gallery on a dealer page titled Коллекция Аура X2 Italon. The page explains outdoor 30×120, 20 mm Aura X2 and lists its four Classic colours. The matching gallery filename is aura-x2-568748.webp; image depicts a wood-effect terrace with outdoor seating and grass/gravel edge.",
+      "asset": "/media/collections/x2-aura-dc4c88860463.webp",
+      "originalSha256": "a364f067c9547334b7607c13eb35524074d27612c20a0ee7607bb1993d49c878",
+      "mediaType": "Manufacturer exterior campaign render reproduced by dealer",
+      "reuseNotes": "No visible watermark in selected image; no explicit reuse license was found.",
+      "pdfPage": null
+    },
+    "x2-district": {
+      "sourceUrl": "https://file.italonceramica.ru/Home/area-documenti/Cataloghi/2026%20CATALOGHI%20AGGIORNATI/Catalogo%20X2%2010.2025_web.pdf#page=43",
+      "imageUrl": "https://file.italonceramica.ru/Home/area-documenti/Cataloghi/2026%20CATALOGHI%20AGGIORNATI/Catalogo%20X2%2010.2025_web.pdf",
+      "evidence": "Outdoor dining terrace original embedded JPEG from official X2 catalog PDF page 43, left printed page 82. It sits directly under heading DISTRICT SAND X2 / ДИСТРИКТ СЭНД Х2, with 60×60 and 20 mm product specification.",
+      "asset": "/media/collections/x2-district-c5a5517516e0.webp",
+      "originalSha256": "ed100119f341ae1a5e11b1ca58aaf7e0a364aacfd81b9eb277917c57685f64d7",
+      "mediaType": "Manufacturer architectural campaign render",
+      "reuseNotes": "Catalog imagery bears © Italon; no explicit reuse license was found in the retrieved source.",
+      "pdfPage": 43
+    },
+    "x2-fossil": {
+      "sourceUrl": "https://file.italonceramica.ru/Home/area-documenti/Cataloghi/2026%20CATALOGHI%20AGGIORNATI/Catalogo%20X2%2010.2025_web.pdf#page=17",
+      "imageUrl": "https://file.italonceramica.ru/Home/area-documenti/Cataloghi/2026%20CATALOGHI%20AGGIORNATI/Catalogo%20X2%2010.2025_web.pdf",
+      "evidence": "Poolside house exterior original embedded JPEG from official X2 catalog PDF page 17, right printed page 31; spread heading specifically identifies FOSSIL PURE X2 / ФОССИЛ ПЬЮР Х2 and 60×120, 20 mm.",
+      "asset": "/media/collections/x2-fossil-7985e7a30353.webp",
+      "originalSha256": "4f1146e0fdd2f3733095d55fa51cad3ada8d708f900e0714a6fcc583daa5c936",
+      "mediaType": "Manufacturer architectural campaign render",
+      "reuseNotes": "Catalog imagery bears © Italon; no explicit reuse license was found in the retrieved source.",
+      "pdfPage": 17
+    },
+    "x2-magma": {
+      "sourceUrl": "https://file.italonceramica.ru/Home/area-documenti/Cataloghi/2026%20CATALOGHI%20AGGIORNATI/Catalogo%20Magma_web.pdf#page=59",
+      "imageUrl": "https://file.italonceramica.ru/Home/area-documenti/Cataloghi/2026%20CATALOGHI%20AGGIORNATI/Catalogo%20Magma_web.pdf",
+      "evidence": "Covered outdoor lounge original embedded JPEG from official Magma catalog PDF page 59, left printed page 114. Caption explicitly identifies Graphite X2 structured 60×120, and the same scene appears under MAGMA GRAPHITE X2 in the official X2 catalog PDF page 16.",
+      "asset": "/media/collections/x2-magma-32c59efcb6c3.webp",
+      "originalSha256": "720a37185b1dae72aab2d1e78c1abc8cba185ca03f248be945b5fc2b74d9f386",
+      "mediaType": "Manufacturer architectural campaign render",
+      "reuseNotes": "Catalog imagery bears © Italon; no explicit reuse license was found in the retrieved source.",
+      "pdfPage": 59
+    }
+  },
+  "laying": {
+    "grass": {
+      "sourceUrl": "https://sanberg.ru/pdf/italon-everstone-x2.pdf#page=17",
+      "imageUrl": "https://sanberg.ru/pdf/italon-everstone-x2.pdf",
+      "evidence": "Two-row garden stepping-tile path with broad clearly visible grass joints and natural garden surroundings. Genuine outdoor garden photograph.",
+      "pdfPage": 17,
+      "printedPage": 30,
+      "asset": "/media/laying/grass.webp",
+      "originalSha256": "70b49efd3b7089287a55f4d381a5314b804456ebd7e933b25f5c9f1b186d1b4a"
+    },
+    "gravel": {
+      "sourceUrl": "https://sanberg.ru/pdf/italon-everstone-x2.pdf#page=18",
+      "imageUrl": "https://sanberg.ru/pdf/italon-everstone-x2.pdf",
+      "evidence": "Real installer with gloved hands is lowering a thick porcelain tile onto exposed loose gravel, beside already-laid tiles and visible joint spacers. The gravel substrate and tile thickness are clear.",
+      "pdfPage": 18,
+      "printedPage": 32,
+      "asset": "/media/laying/gravel.webp",
+      "originalSha256": "c00b73a9394b395c18144a266501fa91f8655202b8cb76e7587909341767405f"
+    },
+    "pedestals": {
+      "sourceUrl": "https://sanberg.ru/pdf/italon-everstone-x2.pdf#page=20",
+      "imageUrl": "https://sanberg.ru/pdf/italon-everstone-x2.pdf",
+      "evidence": "Real installer hand is laying a thick porcelain slab over a fully exposed adjustable black pedestal with its support head and adjustment ring visible; under-floor gap also visible.",
+      "pdfPage": 20,
+      "printedPage": 36,
+      "asset": "/media/laying/pedestals.webp",
+      "originalSha256": "23ce0f87a761bc40b945bdb1057b31658ebf9d660efd8cb7c21683c886385713"
+    },
+    "adhesive": {
+      "sourceUrl": "https://sanberg.ru/pdf/italon-everstone-x2.pdf#page=19",
+      "imageUrl": "https://sanberg.ru/pdf/italon-everstone-x2.pdf",
+      "evidence": "Real installer gloved hand and notched trowel comb fresh gray adhesive beside already-laid outdoor tiles. The wet adhesive ridges and tile edges are visible.",
+      "pdfPage": 19,
+      "printedPage": 34,
+      "asset": "/media/laying/adhesive.webp",
+      "originalSha256": "8b8b32d7794a3cb0eaf37467249b4f10c158ec08ec59ef3b4d1e7e749820f62f"
+    }
+  },
+  "layingCatalog": "Italon X2 manufacturer catalog, March 2019",
+  "layingReuseNotes": "Final catalog page states “March 2019 - © Italon”. No explicit open license or reuse permission was found. Photographs are manufacturer catalog material, served by the distributor Sanberg. Attribute as Italon X2 catalog installation photographs."
+}

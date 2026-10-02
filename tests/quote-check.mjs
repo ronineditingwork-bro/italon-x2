@@ -1,0 +1,17 @@
+import { mkdir,readFile,writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { createQuote } from '../src/quote.mjs';
+import { products,calculateCart } from '../src/catalog.mjs';
+import { PDFDocument } from 'pdf-lib';
+import assert from 'node:assert/strict';
+const out=resolve(import.meta.dirname,'../test-results');await mkdir(out,{recursive:true});
+const font=await readFile(resolve(import.meta.dirname,'../public/fonts/Inter-Quote.ttf'));
+const now=new Date('2026-10-01T17:00:00Z');
+const smallCart=calculateCart([{code:'610010001539',packs:36},{code:'620110000263',packs:1},{code:'600080000350',packs:1}]);
+const one=await createQuote(smallCart,{customer:'Образец коммерческого предложения',project:'Терраса и интерьер',note:'Тестовый пример состава корзины. Получатель и объект заполняются при скачивании.'},font,{now,quoteId:'20261001-TEST'});
+await writeFile(resolve(out,'quote-sample.pdf'),one.bytes);
+const loaded=await PDFDocument.load(one.bytes);assert.equal(loaded.getPageCount(),1);
+const manyCart=calculateCart(products.slice(0,45).map(p=>({code:p.code,packs:p.minPacks})));
+const many=await createQuote(manyCart,{customer:'Тест переноса длинного наименования получателя коммерческого предложения',project:'Проект с большим количеством материалов: плитка, мозаика, бордюры и транспортировочная упаковка',note:'Комментарий для проверки переноса между страницами. '.repeat(10)},font,{now,quoteId:'20261001-LONG'});
+await writeFile(resolve(out,'quote-multipage.pdf'),many.bytes);assert.ok(many.pageCount>=4);
+console.log(JSON.stringify({sample:{pages:one.pageCount,totalKopecks:smallCart.totalKopecks,bytes:one.bytes.length},multipage:{pages:many.pageCount,lines:manyCart.lines.length,totalKopecks:manyCart.totalKopecks,bytes:many.bytes.length}}));

@@ -1,0 +1,258 @@
+{
+  "collections": {
+    "aura": {
+      "src": "/media/collections/aura-144dc4df77f7.webp",
+      "width": 640,
+      "height": 800
+    },
+    "avantgarde": {
+      "src": "/media/collections/avantgarde-35aaec6282c8.webp",
+      "width": 640,
+      "height": 800
+    },
+    "boutique": {
+      "src": "/media/collections/boutique-857b906e11db.webp",
+      "width": 544,
+      "height": 680
+    },
+    "charme-advance": {
+      "src": "/media/collections/charme-advance-b7071714e099.webp",
+      "width": 640,
+      "height": 800
+    },
+    "charme-deluxe": {
+      "src": "/media/collections/charme-deluxe-10694e22f377.webp",
+      "width": 640,
+      "height": 800
+    },
+    "charme-evo": {
+      "src": "/media/collections/charme-evo-e641f3b989fe.webp",
+      "width": 640,
+      "height": 800
+    },
+    "charme-extra": {
+      "src": "/media/collections/charme-extra-aaaf092c3a7f.webp",
+      "width": 640,
+      "height": 800
+    },
+    "continuum": {
+      "src": "/media/collections/continuum-cd5f5e0fa138.webp",
+      "width": 640,
+      "height": 800
+    },
+    "eternum": {
+      "src": "/media/collections/eternum-cbe25130835e.webp",
+      "width": 640,
+      "height": 800
+    },
+    "forum": {
+      "src": "/media/collections/forum-ca1cb0801acb.webp",
+      "width": 640,
+      "height": 800
+    },
+    "loft": {
+      "src": "/media/collections/loft-cddf50ade9fb.webp",
+      "width": 640,
+      "height": 800
+    },
+    "magma": {
+      "src": "/media/collections/magma-ed7edf09fa23.webp",
+      "width": 640,
+      "height": 800
+    },
+    "materia": {
+      "src": "/media/collections/materia-7dfadc8ebef5.webp",
+      "width": 640,
+      "height": 800
+    },
+    "metropolis": {
+      "src": "/media/collections/metropolis-9af724ab96d8.webp",
+      "width": 640,
+      "height": 800
+    },
+    "millennium": {
+      "src": "/media/collections/millennium-01228d4f8245.webp",
+      "width": 640,
+      "height": 800
+    },
+    "stellaris": {
+      "src": "/media/collections/stellaris-4ecfc0b0f9f6.webp",
+      "width": 640,
+      "height": 800
+    },
+    "wonderful-life": {
+      "src": "/media/collections/wonderful-life-1cf738e460c6.webp",
+      "width": 640,
+      "height": 800
+    },
+    "x2-avantgarde": {
+      "src": "/media/collections/x2-avantgarde-f63771895454.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-charme-deluxe": {
+      "src": "/media/collections/x2-charme-deluxe-254efd72d1a5.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-climb": {
+      "src": "/media/collections/x2-climb-6e3eedf89868.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-contempora": {
+      "src": "/media/collections/x2-contempora-cb7c3db110d8.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-cosmos": {
+      "src": "/media/collections/x2-cosmos-2cdec83cd06c.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-discover": {
+      "src": "/media/collections/x2-discover-c20aebb405c7.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-everstone": {
+      "src": "/media/collections/x2-everstone-ef52c4416ea2.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-magnetique": {
+      "src": "/media/collections/x2-magnetique-7eabf0cd3418.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-materia": {
+      "src": "/media/collections/x2-materia-e9d389df9fa5.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-millennium": {
+      "src": "/media/collections/x2-millennium-bee2a1f6a980.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-natural-life-wood": {
+      "src": "/media/collections/x2-natural-life-wood-c4ffb6d8034d.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-nordica": {
+      "src": "/media/collections/x2-nordica-b21cdddad913.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-room": {
+      "src": "/media/collections/x2-room-065894612b4f.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-skyfall": {
+      "src": "/media/collections/x2-skyfall-01f912b89d17.webp",
+      "width": 480,
+      "height": 480
+    },
+    "x2-skyline": {
+      "src": "/media/collections/x2-skyline-a3704bef8eae.webp",
+      "width": 480,
+      "height": 480
+    },
+    "prima": {
+      "src": "/media/collections/prima-e96e5a5bad20.webp",
+      "width": 680,
+      "height": 504
+    },
+    "status": {
+      "src": "/media/collections/status-5e8ad6f94c4e.webp",
+      "width": 800,
+      "height": 593
+    },
+    "velvet": {
+      "src": "/media/collections/velvet-2c167842ae92.webp",
+      "width": 800,
+      "height": 593
+    },
+    "surface": {
+      "src": "/media/collections/surface-84db044accb3.webp",
+      "width": 583,
+      "height": 724
+    },
+    "bottega": {
+      "src": "/media/collections/bottega-8b4a79efc77b.webp",
+      "width": 800,
+      "height": 593,
+      "caption": "На стенах — мозаика Боттега Лава. На полу — Вельвет Голд."
+    },
+    "surface-wall-project": {
+      "src": "/media/collections/surface-wall-project-f20c63c47fc6.webp",
+      "width": 800,
+      "height": 593,
+      "caption": "На стенах — Серфейс Мун Уайт 50 × 120. На полу — Статус Мока."
+    },
+    "x2-aura": {
+      "src": "/media/collections/x2-aura-dc4c88860463.webp",
+      "width": 550,
+      "height": 680
+    },
+    "x2-district": {
+      "src": "/media/collections/x2-district-c5a5517516e0.webp",
+      "width": 533,
+      "height": 537
+    },
+    "x2-fossil": {
+      "src": "/media/collections/x2-fossil-7985e7a30353.webp",
+      "width": 784,
+      "height": 800
+    },
+    "x2-magma": {
+      "src": "/media/collections/x2-magma-32c59efcb6c3.webp",
+      "width": 535,
+      "height": 680
+    }
+  },
+  "laying": {
+    "grass": {
+      "label": "На траву",
+      "caption": "Плиты в газоне с открытыми травяными швами.",
+      "alt": "Плиты в газоне с открытыми травяными швами.",
+      "image": {
+        "src": "/media/laying/grass.webp",
+        "width": 680,
+        "height": 411
+      }
+    },
+    "gravel": {
+      "label": "На гравий",
+      "caption": "Монтаж плиты на подготовленное гравийное основание.",
+      "alt": "Монтаж плиты на подготовленное гравийное основание.",
+      "image": {
+        "src": "/media/laying/gravel.webp",
+        "width": 395,
+        "height": 322
+      }
+    },
+    "pedestals": {
+      "label": "На опоры",
+      "caption": "Установка плиты на регулируемую опору с зазором под покрытием.",
+      "alt": "Установка плиты на регулируемую опору с зазором под покрытием.",
+      "image": {
+        "src": "/media/laying/pedestals.webp",
+        "width": 395,
+        "height": 322
+      }
+    },
+    "adhesive": {
+      "label": "На клей",
+      "caption": "Нанесение плиточного клея зубчатым шпателем перед укладкой плиты.",
+      "alt": "Нанесение плиточного клея зубчатым шпателем перед укладкой плиты.",
+      "image": {
+        "src": "/media/laying/adhesive.webp",
+        "width": 395,
+        "height": 322
+      }
+    }
+  }
+}

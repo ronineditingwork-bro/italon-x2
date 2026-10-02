@@ -1,0 +1,16 @@
+node_modules
+dist/
+.sites-runtime/
+.hosting-runtime/
+.env
+.env.*
+!.env.example
+*.tar.gz
+test-results/
+worker/assets.generated.json
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+private-data/
+backups/
+*.zip
