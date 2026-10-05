@@ -257,3 +257,4 @@ input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; a
   .cart-item__total { grid-column: 2; text-align: left; }
   .cart-item__photo { grid-row: span 3; }
 }
+@media (max-width: 29.99rem) { .btn-row > .btn { flex: 1 1 100%; } }

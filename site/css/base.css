@@ -179,7 +179,6 @@ address { font-style: normal; }
   .footer-brand { grid-column: 1 / -1; }
   .footer-col, .footer-col:first-of-type, .footer-col:last-child { grid-column: span 6; }
 }
-@media (max-width: 29.99rem) { .footer-col, .footer-col:first-of-type, .footer-col:last-child { grid-column: 1 / -1; } }
 
 /* ---------- Без JS ---------- */
 .noscript-note { padding: .75rem var(--edge); background: var(--bg-2); color: var(--text); font-size: var(--fs-s); border-bottom: 1px solid var(--line); }
