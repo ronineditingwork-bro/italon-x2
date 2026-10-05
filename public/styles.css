@@ -262,7 +262,7 @@ body:has(dialog[open]){overflow:hidden}
 }
 @media(max-width:490px){
   .eyebrow{font-size:.75rem;letter-spacing:.075em}
-  .hero h1{font-size:2.5rem}
+  .hero h1{font-size:clamp(1.75rem,10vw,2.5rem)}
   .hero-photo{aspect-ratio:4/3}
   .hero-description{font-size:.9375rem}
   .photo-note{letter-spacing:.04em;left:16px;bottom:12px}
@@ -427,7 +427,7 @@ body{font-size:1rem}
 }
 @media(max-width:760px){
   .calculator{grid-template-columns:minmax(0,1fr);gap:32px}
-  .calc-intro h2{font-size:2.5rem}
+  .calc-intro h2{font-size:clamp(1.625rem,9vw,2.5rem)}
   .calc-intro>p:not(.eyebrow){max-width:none;margin-top:16px}
   .calc-intro>p.calc-note{margin-top:24px}
   .space-list{grid-template-columns:minmax(0,1fr);gap:24px}
@@ -435,6 +435,7 @@ body{font-size:1rem}
   .space-card h3{font-size:1.75rem}
   .laying-grid{gap:24px 16px}
   .contact-intro{margin-top:16px;text-align:left}
+  .contact-intro br{display:none}
   .contact-layout{grid-template-columns:minmax(0,1fr);gap:32px}
   .salon-address{font-size:2.125rem}
   .salon-description,.contact-hours{max-width:none}
@@ -473,3 +474,6 @@ body{font-size:1rem}
   .direction{grid-template-columns:72px 1fr;column-gap:12px;padding:16px 12px}
   .direction img{width:72px;height:104px}
 }
+p,dd,li,figcaption,.space-description,.salon-description,.catalog-note,.hero-description{text-wrap:pretty}
+.salon-description,.space-description,.catalog-note,.hero-description,.direction p,.direction-label,.contact-intro,.price-caption,.calc-note,.quote-note,.hero-caption{text-wrap:balance}
+.results-line p,.laying-grid p{text-wrap:balance}
