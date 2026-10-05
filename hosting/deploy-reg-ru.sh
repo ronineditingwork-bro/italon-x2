@@ -27,7 +27,11 @@ swapon --show
 echo "==> 2/6 Docker и git"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
-apt-get install -y -qq ca-certificates curl git docker.io docker-compose-v2 >/dev/null
+apt-get install -y -qq ca-certificates curl git rsync >/dev/null
+if ! { apt-get install -y -qq docker.io docker-compose-v2 >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; }; then
+  echo "Пакеты Docker из Ubuntu недоступны — ставлю официальным скриптом get.docker.com"
+  curl -fsSL https://get.docker.com | sh
+fi
 systemctl enable --now docker >/dev/null 2>&1 || true
 docker --version; docker compose version
 
@@ -59,10 +63,13 @@ echo "==> 6/6 Запуск"
 cd "$APP"
 docker compose config --quiet
 docker compose up -d --build
-sleep 8
+ok=0
+for i in $(seq 1 30); do
+  if docker compose exec -T app node -e "fetch('http://127.0.0.1:3000/healthz').then(async r=>{console.log(await r.text());process.exit(r.ok?0:1)}).catch(()=>process.exit(1))" 2>/dev/null; then ok=1; break; fi
+  sleep 2
+done
 docker compose ps
-docker compose exec -T app node -e "fetch('http://127.0.0.1:3000/healthz').then(async r=>{console.log(await r.text());process.exit(r.ok?0:1)})" \
-  && echo "OK: приложение отвечает." || { echo "Приложение не отвечает:"; docker compose logs --tail=30 app; exit 1; }
+if [ "$ok" = 1 ]; then echo "OK: приложение отвечает."; else echo "Приложение не отвечает:"; docker compose logs --tail=40 app; exit 1; fi
 
 IP=$(curl -fsS https://api.ipify.org 2>/dev/null || hostname -I | awk '{print $1}')
 cat <<EOF
