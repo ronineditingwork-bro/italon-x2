@@ -37,7 +37,7 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   function tableHeader(){
     page.drawRectangle({x:M,y:y-26,width:R-M,height:26,color:colors.pale});
     write('№',M+7,y-17,8.5);write('Материал / артикул',M+31,y-17,8.5);
-    write('Количество',302,y-17,8);right('Цена / ед.',447,y-17,8.5);right('Сумма, руб.',R-7,y-17,8.5);y-=26;
+    right('Количество',378,y-17,8.5);right('Цена / ед.',455,y-17,8.5);right('Сумма, руб.',R-7,y-17,8.5);y-=26;
   }
   function newPage(first=false,table=false){
     page=doc.addPage([W,H]);page.drawRectangle({x:0,y:H-7,width:W,height:7,color:colors.ink});
@@ -59,17 +59,17 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   tableHeader();
   for(let index=0;index<cart.lines.length;index++){
     const l=cart.lines[index],p=l.product;
-    const nameLines=wrap(p.name,222,9.6);
-    const metaLines=wrap(`Арт. ${p.code}${p.format?' / '+p.format.replace(/[XХ]/g,'x'):''}`,222,7.8);
-    const quantityLines=wrap(`${number(l.quantity)} ${p.unit}${p.boxed?'\n'+number(l.packs)+' кор.':''}`,65,8.5);
-    const rowHeight=Math.max(57,18+nameLines.length*12+metaLines.length*11,24+quantityLines.length*12);
+    const nameLines=wrap(p.name,236,9.6);
+    const metaLines=wrap(`Арт. ${p.code}${p.format?' / '+p.format.replace(/[XХ]/g,'x'):''}`,236,7.8);
+    const quantityLines=wrap(`${number(l.quantity)} ${p.unit}${p.boxed?'\n'+number(l.packs)+' кор.':''}`,70,8.5);
+    const rowHeight=Math.max(46,26+nameLines.length*12+metaLines.length*11,26+Math.max(quantityLines.length,2)*12);
     if(y-rowHeight<105)newPage(false,true);
     if(index%2===0)page.drawRectangle({x:M,y:y-rowHeight,width:R-M,height:rowHeight,color:colors.stripe});
-    const top=y-18;write(String(index+1),M+7,top,8.5,colors.muted);
+    const top=y-19;write(String(index+1),M+7,top,8.5,colors.muted);
     nameLines.forEach((line,j)=>write(line,M+31,top-j*12,9.6));
     metaLines.forEach((line,j)=>write(line,M+31,top-nameLines.length*12-3-j*11,7.8,colors.muted));
-    quantityLines.forEach((line,j)=>write(line,302,top-j*12,8.5));
-    right(money(p.priceKopecks),447,top,9);right(`руб. / ${p.unit}`,447,top-14,7.8,colors.muted);
+    quantityLines.forEach((line,j)=>right(line,378,top-j*12,j?8:9,j?colors.muted:colors.ink));
+    right(money(p.priceKopecks),455,top,9.6);right(`руб. / ${p.unit}`,455,top-12,7.8,colors.muted);
     let amountSize=10;while(font.widthOfTextAtSize(money(l.totalKopecks),amountSize)>98)amountSize-=.5;
     right(money(l.totalKopecks),R-7,top,amountSize);
     y-=rowHeight;page.drawLine({start:{x:M,y},end:{x:R,y},thickness:.5,color:colors.line});
