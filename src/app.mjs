@@ -170,7 +170,7 @@ function updateCalc() {
     const area=mode==='area'?Number($('#calc-area').value):Number($('#calc-length').value)*Number($('#calc-width').value);
     if(mode==='dimensions'&&(!Number($('#calc-length').value)||!Number($('#calc-width').value)||Number($('#calc-length').value)<=0||Number($('#calc-width').value)<=0||Number($('#calc-length').value)>1000||Number($('#calc-width').value)>1000))throw new Error('Укажите положительные размеры до 1 000 м.');
     const result=calculateArea($('#calc-product').value,area,Number($('#calc-reserve').value));
-    $('#calc-result').innerHTML=`<strong>${n(result.packs)} ${result.product.orderUnit} · ${n(result.quantity)} м²</strong><dl><div><dt>Сумма с НДС</dt><dd>${money(result.totalKopecks)}</dd></div><div><dt>С учётом запаса</dt><dd>${n(result.target)} м²</dd></div><div><dt>Плит</dt><dd>${n(result.pieces)}</dd></div></dl>${result.minimumApplied?`<p>Учтён минимальный заказ: ${esc(result.product.minimum)}.</p>`:''}`;
+    $('#calc-result').innerHTML=`<strong><span>${n(result.packs)} ${result.product.orderUnit}</span> · <span>${n(result.quantity)} м²</span></strong><dl><div><dt>Сумма с НДС</dt><dd>${money(result.totalKopecks)}</dd></div><div><dt>С учётом запаса</dt><dd>${n(result.target)} м²</dd></div><div><dt>Плит</dt><dd>${n(result.pieces)}</dd></div></dl>${result.minimumApplied?`<p>Учтён минимальный заказ: ${esc(result.product.minimum)}.</p>`:''}`;
     $('#calc-error').hidden=true;$('#calc-add').disabled=false;return result;
   } catch(e){$('#calc-result').innerHTML='<strong>—</strong>';$('#calc-error').textContent=e.message;$('#calc-error').hidden=false;$('#calc-add').disabled=true;return null;}
 }
