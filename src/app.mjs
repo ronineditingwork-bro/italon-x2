@@ -16,7 +16,7 @@ function packLabel(p) { return p.boxed ? `${n(p.unitsPerPack)} ${p.unit} в ко
 function minimumLabel(p) { return `Минимум: ${p.minimum}${p.minPacks > 1 && p.boxed ? ` · ${n(p.minPacks)} кор.` : ''}`; }
 function productPhoto(p, place='catalog') {
   const image=p.image;
-  if(!image)return `<div class="product-photo photo-${place} photo-missing"><span>${p.collectionId==='packaging'?'Транспортировочная упаковка':'Фото уточняется'}</span></div>`;
+  if(!image)return `<div class="product-photo photo-${place} photo-missing"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5 35 12v16L20 35 5 28V12zM5 12l15 7 15-7M20 19v16"/></svg><span>${p.collectionId==='packaging'?'Транспортировочная упаковка':'Фото уточняется'}</span></div>`;
   const caption=image.kind==='collection'?'Пример коллекции':'';
   const alt=image.kind==='collection'?`Пример коллекции ${p.collection}; фотография конкретного артикула уточняется`:p.name;
   const picture=`<img src="${esc(image.src)}" alt="${esc(alt)}" width="${image.width}" height="${image.height}" loading="${place==='detail'?'eager':'lazy'}" decoding="async" data-product-image>`;
