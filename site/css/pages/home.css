@@ -9,7 +9,7 @@
 .hero__inner { position: relative; z-index: 2; padding-block: clamp(3rem, 2rem + 5vw, 6.5rem); }
 .hero__content { max-width: 46rem; display: grid; gap: var(--s-5); }
 .hero__eyebrow { color: rgba(255, 255, 255, .88); }
-.hero .t-hero { color: #fff; max-width: 12em; }
+.hero .t-hero { color: #fff; max-width: 10.5em; }
 .hero__text { font-size: var(--fs-l); line-height: var(--lh); color: rgba(255, 255, 255, .92); max-width: 34em; }
 .hero .btn-row { margin-top: var(--s-2); }
 .hero .btn:not(.btn--outline-light) { border-color: var(--btn); }
@@ -35,6 +35,10 @@
 .story__swatch { display: block; aspect-ratio: 1; background: var(--bg); overflow: hidden; }
 .story__swatch img { width: 100%; height: 100%; object-fit: contain; padding: 10%; transition: transform var(--t-slow) var(--ease-out); }
 .story__swatches a:hover img { transform: scale(var(--zoom)); }
+@media (max-width: 74.99rem) {
+  .story__figure { grid-column: 1 / span 7; }
+  .story__text { grid-column: 8 / -1; }
+}
 @media (max-width: 63.99rem) {
   .story__figure, .story__text { grid-column: 1 / -1; }
 }

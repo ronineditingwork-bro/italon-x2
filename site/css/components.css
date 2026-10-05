@@ -248,3 +248,12 @@ a:hover .media > img, a:focus-visible .media > img, button:hover .media > img, .
 html.has-dialog { overflow: hidden; }
 /* обёртки карточек (например, с data-reveal) растягиваются, чтобы низ карточек был на одной линии */
 .product-grid > :not(.product-card) { display: grid; min-width: 0; }
+input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+@media (max-width: 47.99rem) {
+  .dialog--side { width: 100%; }
+}
+@media (max-width: 29.99rem) {
+  .cart-item { grid-template-columns: 4.5rem minmax(0, 1fr); }
+  .cart-item__total { grid-column: 2; text-align: left; }
+  .cart-item__photo { grid-row: span 3; }
+}

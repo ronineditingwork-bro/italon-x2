@@ -55,6 +55,8 @@ function initSearch() {
       || `<li class="t-small" style="padding-block:1rem">По запросу «${esc(query)}» ничего не найдено. Попробуйте артикул или название коллекции.</li>`;
   };
   input.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(run, 120); });
+  // Esc в поле type=search сначала очищает его — закрываем диалог сразу
+  input.addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); dialog.close(); } });
 }
 
 // ---------- запуск ----------
