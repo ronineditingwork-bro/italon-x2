@@ -486,3 +486,15 @@ p,dd,li,figcaption,.space-description,.salon-description,.catalog-note,.hero-des
 .product-name:focus-visible{outline-offset:-2px}
 .section-tabs{flex-wrap:wrap;row-gap:0}
 html:has(dialog[open]){background:#70746c}
+@media(max-width:900px){
+  .header{grid-template-columns:minmax(0,1fr) auto}
+  .brand{font-size:min(1.5rem,8vw)}
+  .desktop-nav{min-width:0}
+}
+@media(max-width:420px){
+  .desktop-nav{font-size:min(.875rem,4.4vw)}
+  .desktop-nav a{padding:0 4px}
+  .cart-trigger{font-size:min(.875rem,4.6vw)}
+}
+.salon-bar a{text-wrap:balance}
+.salon-bar>span{text-wrap:balance}
