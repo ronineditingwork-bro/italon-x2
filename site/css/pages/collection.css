@@ -1,0 +1,14 @@
+/* Страница коллекции (/collections/<id>/). Каркас этапа A. */
+.collection-intro .grid { row-gap: var(--s-6); align-items: start; }
+.collection-intro__figure { grid-column: 1 / span 7; }
+.collection-intro__media { display: block; width: 100%; padding: 0; }
+.collection-intro__media img { max-height: 46rem; }
+.collection-intro__text { grid-column: 9 / -1; display: grid; gap: var(--s-5); justify-items: start; }
+.collection-intro__text .specs { width: 100%; }
+@media (max-width: 63.99rem) { .collection-intro__figure, .collection-intro__text { grid-column: 1 / -1; } }
+.collection-next__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+.collection-next__link { display: grid; gap: var(--s-2); padding-block: var(--s-4); }
+.collection-next__link--next { text-align: right; justify-items: end; }
+.collection-next__link .t-h3 { display: inline-flex; align-items: center; gap: .75rem; }
+.collection-next__link:hover .t-h3 { text-decoration: underline; text-underline-offset: .2em; text-decoration-thickness: 1px; }
+.collection-next__link:hover .arrow { transform: translateX(.25rem); }

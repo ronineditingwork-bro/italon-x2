@@ -1,0 +1,7 @@
+/* Салон (/salon/). */
+.salon { row-gap: var(--s-6); align-items: start; }
+.salon__info { grid-column: 1 / span 5; display: grid; gap: var(--s-5); }
+.salon__map { grid-column: 7 / -1; position: relative; min-height: 28rem; background: var(--bg-2); }
+.salon__map iframe { position: relative; z-index: 1; width: 100%; height: 100%; min-height: 28rem; border: 0; }
+.salon__fallback { position: absolute; inset: 0; display: grid; align-content: center; gap: var(--s-2); padding: var(--s-6); }
+@media (max-width: 63.99rem) { .salon__info, .salon__map { grid-column: 1 / -1; } }

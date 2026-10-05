@@ -1,0 +1,5 @@
+/* Точка входа общего CSS (собирается esbuild в public/assets/site.css). Порядок важен. */
+@import "./fonts.css";
+@import "./tokens.css";
+@import "./base.css";
+@import "./components.css";

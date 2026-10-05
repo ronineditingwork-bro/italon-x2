@@ -1,0 +1,5 @@
+/* Каталог (/catalog/). Каркас этапа A; этап B — мобильная панель фильтров, фильтр цены. */
+.catalog__filters { display: grid; grid-template-columns: 2fr repeat(5, minmax(0, 1fr)) auto; gap: var(--s-3); align-items: end; padding-bottom: var(--s-5); margin-bottom: var(--s-5); border-bottom: 1px solid var(--line); }
+.catalog__count { margin-bottom: var(--s-5); }
+@media (max-width: 74.99rem) { .catalog__filters { grid-template-columns: repeat(3, minmax(0, 1fr)); } .catalog__search { grid-column: 1 / -1; } }
+@media (max-width: 47.99rem) { .catalog__filters { grid-template-columns: 1fr 1fr; } }

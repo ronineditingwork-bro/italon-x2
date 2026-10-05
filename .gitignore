@@ -14,3 +14,16 @@ worker/assets.generated.json
 private-data/
 backups/
 *.zip
+# сборка сайта (scripts/build-site.mjs) — генерируется в public/
+/public/.site-manifest.json
+/public/index.html
+/public/404.html
+/public/assets/
+/public/data/
+/public/collections/
+/public/product/
+/public/catalog/
+/public/calculator/
+/public/x2/
+/public/inspiration/
+/public/salon/
