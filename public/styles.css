@@ -531,3 +531,29 @@ html:has(dialog[open]){background:#70746c}
 .skip-inline{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .skip-inline:focus{position:static;display:inline-flex;align-items:center;width:auto;height:auto;min-height:44px;margin-bottom:12px;padding:0 16px;overflow:visible;clip-path:none;background:var(--ink);color:var(--white)}
 #catalog-search{scroll-margin-top:96px}
+/* Крупный шрифт на узких экранах: перестройка вместо переполнения (при 100% вид прежний) */
+.product-top{flex-wrap:wrap}
+.product-top>span:first-child{overflow-wrap:normal}
+.product-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
+.product-actions .button{flex:1 1 0;min-width:max-content;white-space:nowrap}
+.search-field{container-type:inline-size}
+#catalog-search{text-overflow:ellipsis}
+#catalog-search::placeholder{font-size:min(1em,6.4cqi)}
+.calc-mode{grid-template-columns:repeat(2,minmax(0,1fr))}
+.field-row{grid-template-columns:repeat(auto-fit,minmax(min(100%,7rem),1fr))}
+.field>span{overflow-wrap:break-word}
+@media(max-width:380px){
+  .product-price{font-size:min(1.9375rem,10vw)}
+  .calc-mode button{padding:0 8px;font-size:min(.875rem,4.4vw)}
+  .pagination button{min-width:0;padding:8px 12px}
+  .pagination{gap:8px}
+  .cart-item h3{font-size:min(1.125rem,5.6vw)}
+}
+.product-price small{white-space:nowrap}
+.calc-result dl>div{flex-wrap:wrap}
+.calc-result dd{margin-left:auto}
+.collection-card,.space-card,.product-card{grid-template-columns:minmax(0,1fr)}
+.collection-card-info h4{overflow-wrap:break-word}
+@media(max-width:768px){
+  .catalog-controls{grid-template-columns:repeat(auto-fit,minmax(min(100%,8rem),1fr))}
+}
