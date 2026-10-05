@@ -1,26 +1,51 @@
 // /collections/ — индекс коллекций по линиям; /collections/<id>/ — страница каждой коллекции.
 // Каркас этапа A: аккуратная базовая версия; этап B может расширить (фильтры, галереи).
-import { esc, fmt, positions, productCard, money, ARROW } from '../shared/format.mjs';
+import { esc, fmt, positions, plural, productCard, money, ARROW } from '../shared/format.mjs';
 import { pageHead, image, collectionCard } from '../shared/blocks.mjs';
+import { collectionRows } from '../shared/collection-tiles.mjs';
 import { collections, italonCollections, x2Collections, stats, variantsOf } from '../data.mjs';
 
 const listRu = items => items.length > 1 ? `${items.slice(0, -1).join(', ')} и ${items.at(-1)}` : items[0] || '';
 
+// ---------- Индекс: журнальное вступление, переключатель линий без перезагрузки, асимметричная сетка ----------
+const maxPlate = list => list.flatMap(c => c.plateFormats).sort((a, b) => b.split('X').reduce((x, y) => x * y, 1) - a.split('X').reduce((x, y) => x * y, 1))[0];
+const LINES = [
+  { id: 'italon', list: italonCollections, eyebrow: 'Интерьер', title: 'Italon', count: stats.italon,
+    text: 'Керамогранит для полов и стен: крупные плиты, мозаика и декор в одной гамме.', link: ['/catalog/', 'Позиции Italon в каталоге'], query: '?section=italon' },
+  { id: 'x2', list: x2Collections, eyebrow: 'Улица · 20 мм', title: 'X2', count: stats.x2,
+    text: 'Плиты толщиной 20 мм для террас, садовых дорожек и зоны у бассейна. Четыре способа укладки.', link: ['/x2/', 'Про X2 и способы укладки'] },
+];
 const index = {
   path: '/collections/',
   title: 'Коллекции',
   description: `${stats.collections} коллекции керамогранита Italon и X2 с интерьерными фото.`,
+  styles: ['collections'],
+  scripts: ['collections'],
   render: ctx => `${pageHead(ctx, { crumbs: [['Коллекции']], eyebrow: 'Italon и X2', title: 'Коллекции',
-    lead: `${italonCollections.length} коллекции Italon для интерьера и ${x2Collections.length} коллекций X2 толщиной 20&nbsp;мм для открытых пространств.`,
+    lead: `${stats.collections} коллекции: ${italonCollections.length} — Italon для интерьера, ${x2Collections.length} — X2 толщиной 20&nbsp;мм для открытых пространств. В&nbsp;каждой — форматы, отделки и все позиции прайса.`,
     aside: `<a class="link-arrow" href="${ctx.url('/catalog/')}">Все ${stats.total} позиции ${ARROW}</a>` })}
-<section class="section" id="italon" aria-labelledby="italon-title" style="padding-top:0">
-<div class="wrap"><div class="section-head"><div class="section-head__text"><p class="eyebrow">Интерьер</p><h2 class="t-h2" id="italon-title">Italon</h2></div><span class="t-small">${positions(stats.italon)}</span></div>
-<div class="collection-grid" data-reveal-group>${italonCollections.map((c, i) => collectionCard(ctx, c, { eager: i < 4 })).join('\n')}</div></div>
-</section>
-<section class="section section--alt" id="x2" aria-labelledby="x2-title">
-<div class="wrap"><div class="section-head"><div class="section-head__text"><p class="eyebrow">Улица · 20 мм</p><h2 class="t-h2" id="x2-title">X2</h2></div><a class="link-arrow" href="${ctx.url('/x2/')}">Про X2 и укладку ${ARROW}</a></div>
-<div class="collection-grid" data-reveal-group>${x2Collections.map(c => collectionCard(ctx, c)).join('\n')}</div></div>
-</section>`,
+<div class="cx-bar">
+<div class="wrap cx-bar__inner">
+<div class="cx-switch" role="group" aria-label="Показать коллекции линии" data-cx-switch hidden>
+<button type="button" class="cx-switch__btn" data-line="all" aria-pressed="true">Все <span class="cx-switch__n">${stats.collections}</span></button>
+${LINES.map(l => `<button type="button" class="cx-switch__btn" data-line="${l.id}" aria-pressed="false">${l.id === 'x2' ? 'X2<span class="cx-long"> · улица</span> 20&nbsp;мм' : 'Italon<span class="cx-long"> · интерьер</span>'} <span class="cx-switch__n">${l.list.length}</span></button>`).join('\n')}
+</div>
+<nav class="cx-jump" aria-label="Линии коллекций" data-cx-jump>${LINES.map(l => `<a class="link-arrow" href="#${l.id}">${l.title} · ${l.list.length}</a>`).join('')}</nav>
+<p class="cx-bar__facts t-small">${positions(stats.total)} · форматы до ${fmt(stats.largestFormat)}&nbsp;см</p>
+</div>
+</div>
+<p class="sr-only" role="status" id="cx-status"></p>
+${LINES.map((l, i) => `<section class="section cx-line${i ? ' section--alt' : ''}" id="${l.id}" data-line-section="${l.id}" aria-labelledby="${l.id}-title">
+<div class="wrap">
+<div class="cx-line__head">
+<div class="cx-line__title"><p class="eyebrow" data-reveal>${l.eyebrow}</p><h2 class="t-h2" id="${l.id}-title" data-reveal>${l.title}</h2></div>
+<div class="cx-line__text" data-reveal><p class="t-body">${esc(l.text)}</p>
+<p class="cx-line__facts t-small">${l.list.length} ${plural(l.list.length, ['коллекция', 'коллекции', 'коллекций'])} · ${positions(l.count)} · форматы до ${fmt(maxPlate(l.list))}&nbsp;см</p>
+<a class="link-arrow" href="${ctx.url(l.link[0])}${l.query || ''}">${l.link[1]} ${ARROW}</a></div>
+</div>
+${collectionRows(ctx, l.list, { eagerFirst: i ? 0 : 2 })}
+</div>
+</section>`).join('\n')}`,
 };
 
 function collectionPage(c, i, list) {
