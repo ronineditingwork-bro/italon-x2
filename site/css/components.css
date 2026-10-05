@@ -246,3 +246,5 @@ a:hover .media > img, a:focus-visible .media > img, button:hover .media > img, .
 @media (max-width: 63.99rem) { .collection-grid { --cols: 3; } }
 @media (max-width: 47.99rem) { .collection-grid { --cols: 2; } }
 html.has-dialog { overflow: hidden; }
+/* обёртки карточек (например, с data-reveal) растягиваются, чтобы низ карточек был на одной линии */
+.product-grid > :not(.product-card) { display: grid; min-width: 0; }

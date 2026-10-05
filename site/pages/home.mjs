@@ -100,8 +100,8 @@ ${pick.map(p => `<div data-reveal>${productCard(p, ctx.root, { variants: variant
 
 function ideas(ctx) {
   const items = [
-    { c: col('bottega'), title: 'Мозаика на стене, тёплый пол', alt: 'Ванная комната: мозаика Боттега на стенах, Вельвет на полу' },
-    { c: col('surface-wall-project'), title: 'Светлая ванная в одной гамме', alt: 'Ванная комната: Серфейс на стенах, Статус на полу' },
+    { c: col('bottega'), title: 'Мозаика на стенах', alt: 'Ванная комната: мозаика Боттега на стенах, Вельвет на полу' },
+    { c: col('surface-wall-project'), title: 'Ванная в одной гамме', alt: 'Ванная комната: Серфейс на стенах, Статус на полу' },
     { c: col('x2-magma'), title: 'Терраса у дома', alt: 'Терраса с плитами Магма X2' },
   ];
   return `<section class="section ideas" aria-labelledby="ideas-title">

@@ -17,7 +17,7 @@
 @media (max-width: 47.99rem) {
   .hero { min-height: 82svh; }
   .hero__media img { object-position: 70% 50%; }
-  .hero__media::after { background: linear-gradient(0deg, rgba(10, 10, 10, .72) 0%, rgba(10, 10, 10, .45) 45%, rgba(10, 10, 10, .1) 80%); }
+  .hero__media::after { background: linear-gradient(0deg, rgba(10, 10, 10, .8) 0%, rgba(10, 10, 10, .58) 55%, rgba(10, 10, 10, .3) 100%); }
   .hero__caption { display: none; }
   .hero .btn-row .btn { flex: 1 1 12rem; }
 }
