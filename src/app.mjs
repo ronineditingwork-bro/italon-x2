@@ -198,6 +198,9 @@ document.addEventListener('click',event=>{
   if(target.hasAttribute('data-continue')){$('#cart-dialog').close();$('#catalog').scrollIntoView({behavior:'smooth'});return;}
 });
 $('.cart-trigger').addEventListener('click',openCart);
+// класс на <html> вместо :has(dialog[open]): работает и в Safari до 15.4
+{const syncDialogs=()=>document.documentElement.classList.toggle('has-dialog',[...document.querySelectorAll('dialog')].some(d=>d.open));
+if(window.MutationObserver)$$('dialog').forEach(d=>new MutationObserver(syncDialogs).observe(d,{attributes:true,attributeFilter:['open']}));}
 // ширина полосы прокрутки внутри диалога: крестик встаёт по правому краю контента
 if(window.ResizeObserver)['#product-details','#scene-dialog-content'].forEach(sel=>{const el=$(sel);new ResizeObserver(()=>{el.parentElement.style.setProperty('--sbw',(el.offsetWidth-el.clientWidth)+'px');}).observe(el);});
 $$('.dialog-close').forEach(b=>b.addEventListener('click',()=>b.closest('dialog').close()));
