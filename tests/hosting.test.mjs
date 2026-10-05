@@ -72,7 +72,17 @@ test('independent hosting preserves cart semantics across a proxy and restart', 
     assert.equal(catalog.status, 200); assert.equal(catalog.json().products.length, 993);
     const productPhoto = catalog.json().products.find(product => product.image?.src)?.image.src;
     assert.ok(productPhoto);
-    const imagePaths = [productPhoto, ...[...home.body.toString().matchAll(/src="(\/media\/(?:collections|laying)\/[^" ]+)"/g)].map(match => match[1])];
+    const homeImages = [...home.body.toString().matchAll(/src="(media\/(?:collections|laying)\/[^" ]+)"/g)].map(match => '/' + match[1]);
+    assert.ok(homeImages.length >= 6, 'главная показывает фото коллекций');
+    const imagePaths = [productPhoto, ...homeImages];
+    // многостраничный сайт: разделы, страницы коллекций и товаров, 404, каталог для клиента
+    for (const path of ['/collections/', '/collections/aura/', '/x2/', '/catalog/', '/calculator/', '/salon/', '/inspiration/', '/product/620110000263/']) {
+      const page = await call(server.port, path); assert.equal(page.status, 200, path); assert.match(page.body.toString(), /<main id="main"/, path);
+    }
+    assert.equal((await call(server.port, '/salon')).headers.location, '/salon/');
+    const missing = await call(server.port, '/no-such-page/'); assert.equal(missing.status, 404); assert.match(missing.body.toString(), /Такой страницы нет/);
+    const clientCatalog = await call(server.port, '/data/catalog.json'); assert.equal(clientCatalog.status, 200); assert.equal(clientCatalog.json().products.length, 993);
+    assert.equal((await call(server.port, '/.site-manifest.json')).status, 404);
     for (const path of new Set(imagePaths)) {
       const photo = await call(server.port, path); assert.equal(photo.status, 200, path);
       assert.equal(photo.headers['content-type'], 'image/webp'); assert.equal(photo.body.subarray(8, 12).toString(), 'WEBP');
