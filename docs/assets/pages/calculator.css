@@ -1,0 +1,1 @@
+.calc{row-gap:var(--s-6);align-items:start}.calc__form{grid-column:1 / span 6;display:grid;gap:var(--s-5)}.calc__result{grid-column:8 / -1;display:grid;gap:var(--s-4);padding:clamp(1.25rem,1rem + 1.5vw,2.5rem);background:var(--bg-2)}.calc__result dl{margin-top:var(--s-3)}@media(max-width:63.99rem){.calc__form,.calc__result{grid-column:1 / -1}}

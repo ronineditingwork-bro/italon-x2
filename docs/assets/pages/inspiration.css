@@ -1,0 +1,1 @@
+.inspiration-grid{columns:3 18rem;column-gap:var(--gap)}.inspiration-grid .tile{break-inside:avoid;margin-bottom:clamp(2rem,1.5rem + 1.5vw,3rem)}
