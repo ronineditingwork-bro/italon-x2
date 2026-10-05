@@ -197,6 +197,8 @@ document.addEventListener('click',event=>{
   if(target.hasAttribute('data-continue')){$('#cart-dialog').close();$('#catalog').scrollIntoView({behavior:'smooth'});return;}
 });
 $('.cart-trigger').addEventListener('click',openCart);
+// ширина полосы прокрутки внутри диалога: крестик встаёт по правому краю контента
+if(window.ResizeObserver)['#product-details','#scene-dialog-content'].forEach(sel=>{const el=$(sel);new ResizeObserver(()=>{el.parentElement.style.setProperty('--sbw',(el.offsetWidth-el.clientWidth)+'px');}).observe(el);});
 $$('.dialog-close').forEach(b=>b.addEventListener('click',()=>b.closest('dialog').close()));
 $$('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}}));
 $('#cart-content').addEventListener('change',event=>{
