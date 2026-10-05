@@ -504,3 +504,9 @@ html:has(dialog[open]){background:#70746c}
 .product-photo.photo-missing{overflow-wrap:anywhere;min-width:0}
 .product-name{max-width:100%;min-width:0;overflow-wrap:anywhere;text-align:left}
 .product-actions .text-button{min-width:0;white-space:normal;text-align:right}
+.nw{white-space:nowrap}
+.desktop-nav a:focus-visible{outline-offset:-4px}
+.cart-item h3{overflow-wrap:break-word}
+@media(max-width:380px){
+  .cart-item h3{font-size:1.125rem}
+}

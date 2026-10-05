@@ -5,7 +5,7 @@ const $$ = s => [...document.querySelectorAll(s)];
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n = (value, max = 3) => new Intl.NumberFormat('ru-RU', { maximumFractionDigits: max }).format(value);
 const money = value => new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 2 }).format(value / 100);
-const fmt = value => String(value).replace(/[XХ]/g, ' × ');
+const fmt = value => String(value).replace(/[XХ]/g, '\u00a0×\u00a0');
 const normalize = s => s.toLocaleLowerCase('ru').replace(/ё/g,'е').replace(/[х×]/g,'x').replace(/\s+/g,' ').trim();
 let activeSection = 'italon', page = 1, mode = 'area', toastTimer;
 let cart = { lines: [], totalKopecks: 0, version: 0, priceInfo }, cartLoaded = false, cartPromise;
