@@ -520,3 +520,14 @@ html:has(dialog[open]){background:#70746c}
   .detail-table>div{padding:8px 0}
   #product-details{padding-top:56px}
 }
+/* Реакция фото-кнопок: плавное приближение картинки внутри рамки и плотный чип «Увеличить», без сдвига макета */
+.collection-photo img,.space-photo img,.laying-photo img,.product-photo-open img{transition:transform .35s ease}
+.collection-photo:hover img,.space-photo:hover img,.laying-photo:hover img,.collection-photo:focus-visible img,.space-photo:focus-visible img,.laying-photo:focus-visible img{transform:scale(1.04)}
+.product-photo-open:hover img,.product-photo-open:focus-visible img{transform:scale(1.03)}
+.photo-enlarge{transition:background .2s,color .2s}
+.collection-photo:hover .photo-enlarge,.space-photo:hover .photo-enlarge,.laying-photo:hover .photo-enlarge,.collection-photo:focus-visible .photo-enlarge,.space-photo:focus-visible .photo-enlarge,.laying-photo:focus-visible .photo-enlarge{background:var(--ink);color:var(--white)}
+.collection-photo:active img,.space-photo:active img,.laying-photo:active img,.product-photo-open:active img{transform:scale(1.01)}
+.space-photo:focus-visible,.laying-photo:focus-visible{outline-offset:-4px}
+.skip-inline{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip-inline:focus{position:static;display:inline-flex;align-items:center;width:auto;height:auto;min-height:44px;margin-bottom:12px;padding:0 16px;overflow:visible;clip-path:none;background:var(--ink);color:var(--white)}
+#catalog-search{scroll-margin-top:96px}
