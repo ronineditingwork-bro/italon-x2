@@ -172,6 +172,7 @@ address { font-style: normal; }
 .footer-col:last-child { grid-column: span 2; }
 .footer-col h2 { font-size: var(--fs-xs); font-weight: 500; letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--dark-text-2); margin-bottom: var(--s-3); }
 .footer-col a, .footer-col span, .footer-col address { font-size: var(--fs-s); line-height: 1.5; padding-block: .45rem; color: var(--dark-text); }
+.footer-col a { min-height: var(--tap); display: flex; align-items: center; padding-block: .25rem; }
 .footer-col span { color: var(--dark-text-2); }
 .footer-col a:hover { text-decoration: underline; text-underline-offset: .25em; }
 .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s-2) var(--s-6); margin-top: var(--s-8); padding-top: var(--s-5); border-top: 1px solid var(--dark-line); color: var(--dark-text-2); font-size: var(--fs-xs); }

@@ -13,7 +13,7 @@
 .hero__text { font-size: var(--fs-l); line-height: var(--lh); color: rgba(255, 255, 255, .92); max-width: 34em; }
 .hero .btn-row { margin-top: var(--s-2); }
 .hero .btn:not(.btn--outline-light) { border-color: var(--btn); }
-.hero__caption { position: absolute; right: var(--edge); bottom: 1rem; z-index: 2; font-size: .6875rem; letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: rgba(255, 255, 255, .78); }
+.hero__caption { position: absolute; right: var(--edge); bottom: 1rem; z-index: 2; font-size: var(--fs-xs); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: rgba(255, 255, 255, .85); }
 @media (max-width: 47.99rem) {
   .hero { min-height: 82svh; }
   .hero__media img { object-position: 70% 50%; }
