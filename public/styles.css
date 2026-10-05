@@ -180,7 +180,7 @@ em{font-style:normal;color:var(--olive)}
   .pagination button{min-width:88px}
 }
 @media(max-width:600px){
-  .product-grid{grid-template-columns:1fr}
+  .product-grid{grid-template-columns:minmax(0,1fr)}
   .collection-rail{grid-auto-columns:78%}
   .product-card{--card-pad:20px}
   .product-name{font-size:1.4375rem}
@@ -498,3 +498,8 @@ html:has(dialog[open]){background:#70746c}
 }
 .salon-bar a{text-wrap:balance}
 .salon-bar>span{text-wrap:balance}
+.product-card>*{min-width:0}
+.product-top>span:first-child{min-width:0;overflow-wrap:anywhere}
+.product-photo.photo-missing{overflow-wrap:anywhere;min-width:0}
+.product-name{max-width:100%;min-width:0;overflow-wrap:anywhere;text-align:left}
+.product-actions .text-button{min-width:0;white-space:normal;text-align:right}
