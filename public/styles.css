@@ -578,3 +578,8 @@ html.has-dialog{background:#70746c}
 @supports not (overflow-wrap:anywhere){
   .product-name,.product-price,.salon-address,.cart-item h3,.cart-total strong,.product-top>span:first-child,.product-photo.photo-missing{word-break:break-word}
 }
+@media(max-width:480px){
+  .pagination{flex-wrap:nowrap}
+  .pagination button{flex:none}
+  .pagination>span{flex:1 1 auto;min-width:0;text-align:center;text-wrap:balance}
+}
