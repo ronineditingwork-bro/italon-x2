@@ -50,7 +50,7 @@ function menu(ctx) {
 <button type="button" class="icon-btn" data-dialog-close aria-label="Закрыть меню"><svg viewBox="0 0 16 16" aria-hidden="true" style="width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.4">${CLOSE.replace(/^<svg[^>]*>|<\/svg>$/g, '')}</svg></button></div>
 <ul class="menu__list" role="list">${[{ path: '/', label: 'Главная' }, ...nav].map(item => `<li><a href="${ctx.url(item.path)}"${ctx.isCurrent(item.path) ? ' aria-current="page"' : ''}>${esc(item.label)}</a></li>`).join('')}
 <li><a href="${ctx.url('/catalog/')}" data-search-open>Поиск по каталогу <span>${ICON.search.replace('<svg', '<svg style="width:1.25rem;height:1.25rem;fill:none;stroke:currentColor;stroke-width:1.4"')}</span></a></li></ul>
-<div class="menu__contacts"><address>${esc(salon.address)}</address><span>${salon.hours.map(([d, t]) => `${esc(d)}: ${esc(t)}`).join(' · ')}</span><a href="${salon.phoneHref}">${esc(salon.phone)}</a></div>
+<div class="menu__contacts"><address>${esc(salon.address).replace(/, (\d+)$/, ',&nbsp;$1')}</address><span>${salon.hours.map(([d, t]) => `${esc(d)}: ${esc(t)}`).join(' · ')}</span><a href="${salon.phoneHref}">${esc(salon.phone)}</a></div>
 </div>
 </dialog>`;
 }
@@ -84,7 +84,7 @@ function footer(ctx) {
 <nav class="footer-col" aria-labelledby="f-brand"><h2 id="f-brand">О бренде</h2>
 <a href="${u('/salon/')}">Салон Italon Experience</a><a href="${u('/collections/')}">Коллекции Italon</a><a href="${u('/x2/')}">X2 — 20 мм</a></nav>
 <div class="footer-col"><h2>Контакты</h2>
-<address>${esc(salon.address)}</address>${salon.hours.map(([d, t]) => `<span>${esc(d)}: ${esc(t)}</span>`).join('')}
+<address>${esc(salon.address).replace(/, (\d+)$/, ',&nbsp;$1')}</address>${salon.hours.map(([d, t]) => `<span>${esc(d)}: ${esc(t)}</span>`).join('')}
 <a href="${salon.phoneHref}">${esc(salon.phone)}</a><a href="mailto:${salon.email}">${esc(salon.email)}</a></div>
 </div>
 <div class="footer-bottom"><span>© Italon Experience, Краснодар</span><span>${esc(priceNote)}. Сайт не принимает оплату.</span></div>

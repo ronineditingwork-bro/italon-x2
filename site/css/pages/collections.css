@@ -86,3 +86,8 @@
   .cx-switch__btn { min-height: var(--tap); padding-block: .6rem; font-size: var(--fs-s); }
   .cx-bar__facts { margin-left: 0; padding-bottom: var(--s-2); }
 }
+
+/* крупный системный шрифт: содержимое карточек не шире колонки */
+.ctile, .ctile__body, .cx-line__title, .cx-line__text { grid-template-columns: minmax(0, 1fr); }
+.ctile__top { flex-wrap: wrap; }
+.ctile__latin { white-space: normal; }
