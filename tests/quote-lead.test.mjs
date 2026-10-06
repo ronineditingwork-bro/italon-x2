@@ -37,3 +37,12 @@ test('/api/quote saves the lead and sends it to Telegram', async () => {
     assert.equal((await post({ phone: '89182489248' })).status, 429);
   } finally { close(); }
 });
+
+import { quoteDiscount } from '../src/discount.mjs';
+test('скидка за данные: адрес 2%, телефон 3%, ФИО 3%, проект 3%', () => {
+  assert.equal(quoteDiscount({}, 100000).percent, 0);
+  const all = quoteDiscount({ address: 'Краснодар, ул. Красная, 1', phone: '+7 918 248-92-48', customer: 'Иванов Иван Иванович', design: true }, 100000);
+  assert.equal(all.percent, 11); assert.equal(all.discountKopecks, 11000); assert.equal(all.payableKopecks, 89000);
+  assert.equal(quoteDiscount({ customer: 'Иван' }, 100).percent, 0);
+  assert.equal(quoteDiscount({ address: 'Краснодар' }, 100).percent, 0);
+});

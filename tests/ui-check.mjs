@@ -68,7 +68,7 @@ async function flow(s, expectMode) {
   $('[data-remove="620110000263"]').click();
   await until(() => $('[data-cart-count]').textContent === '1', 'remove');
   await until(() => !$('#quote-download').disabled, 'quote ready');
-  $('#quote-customer').value = 'Проверка интерфейса'; $('#quote-phone').value = '+7 918 248-92-48';
+  $('#quote-customer').value = 'Проверка интерфейса'; $('#quote-phone').value = '+7 918 248-92-48'; $('#quote-address').value = 'Краснодар, ул. Красная, 1'; $('#quote-customer').value = 'Иванов Иван Иванович';
   $('#quote-form').dispatchEvent(new win.Event('submit', { bubbles: true, cancelable: true }));
   await until(() => !!s.downloaded(), 'PDF');
   const pdf = Buffer.from(await s.downloaded().arrayBuffer()); assert.equal(pdf.subarray(0, 4).toString(), '%PDF');

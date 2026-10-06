@@ -1,5 +1,6 @@
 import { PDFDocument, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
+import { quoteDiscount } from './discount.mjs';
 
 const W=595.28,H=841.89,M=36,R=W-M;
 // Реквизиты салона (те же, что на странице «Салон»).
@@ -77,7 +78,8 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   }
   newPage(true);
   if(details.phone?.trim()){paragraph(`Телефон: ${details.phone.trim().slice(0,30)}`,10);y-=5;}
-  if(details.customer?.trim()){paragraph(`Получатель: ${details.customer.trim().slice(0,100)}`,10);y-=5;}
+  if(details.customer?.trim()){paragraph(`ФИО: ${details.customer.trim().slice(0,100)}`,10);y-=5;}
+  if(details.address?.trim()){paragraph(`Адрес объекта: ${details.address.trim().slice(0,200)}`,10);y-=5;}
   if(details.project?.trim()){paragraph(`Объект: ${details.project.trim().slice(0,150)}`,10);y-=5;}
   paragraph('Цены с НДС. Прайс от 01.07.2026, склад Краснодар.',9,colors.muted,13);y-=19;
   tableHeader();
@@ -101,11 +103,18 @@ export async function createQuote(cart, details, fontBytes, options={}) {
     y-=rowHeight;page.drawLine({start:{x:M,y},end:{x:R,y},thickness:.5,color:colors.line});
   }
   y-=24;if(y<180)newPage(false,false);
-  page.drawRectangle({x:302,y:y-66,width:R-302,height:66,color:colors.pale});
+  const disc=quoteDiscount(details,cart.totalKopecks),extra=disc.percent?40:0;
+  page.drawRectangle({x:302,y:y-66-extra,width:R-302,height:66+extra,color:colors.pale});
+  if(disc.percent){
+    write('Сумма без скидки',316,y-16,9,colors.muted);right(money(cart.totalKopecks)+' руб.',R-14,y-16,9);
+    write(`Скидка ${disc.percent}%`,316,y-32,9,colors.muted);right('-'+money(disc.discountKopecks)+' руб.',R-14,y-32,9);
+    y-=extra;
+  }
   write('ИТОГО С НДС',316,y-20,9,colors.muted);
-  const totalText=money(cart.totalKopecks)+' руб.';let totalSize=23;
+  const totalText=money(disc.payableKopecks)+' руб.';let totalSize=23;
   while(font.widthOfTextAtSize(totalText,totalSize)>R-330)totalSize-=.5;
   right(totalText,R-14,y-49,totalSize);y-=92;
+  if(disc.percent){paragraph(`Скидка за данные: ${disc.parts.map(r=>`${r.label} ${r.percent}%`).join(', ')}.${details.design?' Скидка за дизайн-проект действует при получении проекта менеджером салона.':''}`,9,colors.muted,13);y-=6;}
   paragraph('Условия предложения',10,colors.ink,17);
   paragraph('Количество рассчитано с учётом целых упаковок и минимального заказа (одна коробка). Наличие, тон, калибр и сроки поставки уточняются при подтверждении заказа. Доставка рассчитывается отдельно.',8.7,colors.muted,13);
   y-=15;paragraph('Салон',10,colors.ink,17);

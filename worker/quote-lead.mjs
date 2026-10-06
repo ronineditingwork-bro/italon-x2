@@ -1,4 +1,5 @@
 import { calculateCart } from '../src/catalog.mjs';
+import { quoteDiscount } from '../src/discount.mjs';
 
 const rub = kopecks => (kopecks / 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' ₽';
 const clean = (value, max) => String(value ?? '').replace(/[\u0000-\u001f\u007f]+/g, ' ').trim().slice(0, max);
@@ -14,6 +15,7 @@ export function normalizePhone(value) {
 
 /** Текст заявки для Telegram. Цены и позиции берутся из корзины на сервере, а не от браузера. */
 export function leadText(lead, cart) {
+  const discount = quoteDiscount(lead, cart.totalKopecks);
   const lines = cart.lines.map((l, i) =>
     `${i + 1}. ${l.product.name}\n   арт. ${l.code} · ${l.packs} ${l.product.orderUnit}` +
     (l.area ? ` · ${l.area} м²` : '') + ` · ${rub(l.totalKopecks)}`);
@@ -21,10 +23,14 @@ export function leadText(lead, cart) {
     '🧾 Новое КП — Italon Experience',
     `Время: ${new Date(lead.createdAt).toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })} (МСК)`,
     `Телефон: ${lead.phone}`,
-    lead.customer && `Получатель: ${lead.customer}`,
+    lead.customer && `ФИО: ${lead.customer}`,
+    lead.address && `Адрес объекта: ${lead.address}`,
+    lead.design && 'Дизайн-проект: клиент пришлёт (скидка 3% — после получения)',
     lead.project && `Объект: ${lead.project}`,
     lead.note && `Комментарий: ${lead.note}`,
-    '', ...lines, '', `Итого с НДС: ${rub(cart.totalKopecks)}`,
+    '', ...lines, '', `Сумма с НДС: ${rub(cart.totalKopecks)}`,
+    discount.percent && `Скидка ${discount.percent}% (${discount.parts.map(r => r.label).join(', ')}): −${rub(discount.discountKopecks)}`,
+    `К оплате: ${rub(discount.payableKopecks)}`,
   ].filter(x => x !== false && x !== undefined).join('\n').slice(0, 4000);
 }
 

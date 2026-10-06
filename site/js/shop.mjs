@@ -11,6 +11,7 @@
 //   [data-cart-open]          — открыть корзину
 import { esc, money, number, fmt, titleRu, lower, packLabel, minimumLabel, productImage, productUrl, collectionUrl, priceHtml, normalize } from '../shared/format.mjs';
 import { createPricing, MAX_PACKS } from '../../src/pricing.mjs';
+import { quoteDiscount } from '../../src/discount.mjs';
 import { $, $$, ROOT, rootRel, openDialog, closeDialog, toast } from './ui.mjs';
 
 const html = document.documentElement;
@@ -161,6 +162,7 @@ function render() {
   }
   const total = $('#cart-total');
   if (total) total.textContent = money(shown.totalKopecks);
+  renderDiscount();
   const list = $('#cart-list');
   if (list) list.innerHTML = shown.lines.length ? shown.lines.map(cartItem).join('') : `<div class="empty-state"><strong>Корзина пока пуста</strong><p>Добавьте позиции из каталога или сохраните расчёт из калькулятора.</p><a class="btn btn--outline" href="${rootRel}catalog/">Открыть каталог</a></div>`;
   setExportState();
@@ -267,9 +269,20 @@ async function quoteImages(cart) {
   }));
   return images;
 }
+function quoteDetails() {
+  return { phone: $('#quote-phone').value, customer: $('#quote-customer').value, address: $('#quote-address').value,
+    project: $('#quote-project').value, note: $('#quote-note').value, design: $('#quote-design').checked };
+}
+function renderDiscount() {
+  const out = $('#quote-discount'); if (!out) return;
+  const d = quoteDiscount(quoteDetails(), shownCart().totalKopecks || 0);
+  out.textContent = d.percent ? `Ваша скидка ${d.percent}%: −${money(d.discountKopecks)}. К оплате ${money(d.payableKopecks)}.` : 'Заполните поля — получите скидку до 11%.';
+}
+
 async function sendLead(quote, phone) {
   const form = new FormData();
   form.set('phone', phone); form.set('customer', $('#quote-customer').value); form.set('project', $('#quote-project').value);
+  form.set('address', $('#quote-address').value); form.set('design', $('#quote-design').checked ? '1' : '');
   form.set('note', $('#quote-note').value); form.set('filename', quote.filename);
   form.set('pdf', new Blob([quote.bytes], { type: 'application/pdf' }), quote.filename);
   const response = await fetch(new URL('api/quote', ROOT), { method: 'POST', body: form, credentials: 'same-origin' });
@@ -292,7 +305,7 @@ async function exportQuote(event) {
       fetch(new URL('fonts/Inter-Quote.ttf', ROOT)).then(r => { if (!r.ok) throw new Error('Не удалось загрузить шрифт для PDF. Повторите попытку.'); return r.arrayBuffer(); }),
     ]);
     const images = await quoteImages(cart);
-    const quote = await createQuote(cart, { phone: phoneInput.value, customer: $('#quote-customer').value, project: $('#quote-project').value, note: $('#quote-note').value }, new Uint8Array(font), { images });
+    const quote = await createQuote(cart, quoteDetails(), new Uint8Array(font), { images });
     download(quote.bytes, quote.filename, 'application/pdf');
     let sent = true;
     if (mode === 'server') sent = await sendLead(quote, phoneInput.value).catch(() => false);
@@ -348,6 +361,8 @@ export function initShop() {
   document.addEventListener('click', onClick);
   document.addEventListener('change', onChange);
   $('#quote-form')?.addEventListener('submit', exportQuote);
+  $('#quote-form')?.addEventListener('input', renderDiscount);
+  $('#quote-form')?.addEventListener('change', renderDiscount);
   document.addEventListener('italon:cart-refresh', () => render());
   render();
   ensureCart().catch(() => {});
