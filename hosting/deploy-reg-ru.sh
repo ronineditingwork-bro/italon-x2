@@ -51,9 +51,9 @@ docker run --rm -v "$SRC":/src -w /src node:24-bookworm-slim bash -c \
 echo "==> 5/6 Выкладка в $APP"
 mkdir -p "$APP"
 # .env и тома Docker не трогаем
-rsync -a --delete --exclude='.env' "$SRC/.hosting-runtime/release/" "$APP/" 2>/dev/null || {
+rsync -a --delete --exclude='.env' --exclude='.deployed-commit' --exclude='.attempted-commit' "$SRC/.hosting-runtime/release/" "$APP/" 2>/dev/null || {
   apt-get install -y -qq rsync >/dev/null
-  rsync -a --delete --exclude='.env' "$SRC/.hosting-runtime/release/" "$APP/"
+  rsync -a --delete --exclude='.env' --exclude='.deployed-commit' --exclude='.attempted-commit' "$SRC/.hosting-runtime/release/" "$APP/"
 }
 if [ ! -f "$APP/.env" ]; then
   printf 'DOMAIN=%s\nTLS_EMAIL=%s\n' "$DOMAIN" "$TLS_EMAIL" > "$APP/.env"
@@ -70,6 +70,34 @@ for i in $(seq 1 30); do
 done
 docker compose ps </dev/null
 if [ "$ok" = 1 ]; then echo "OK: приложение отвечает."; else echo "Приложение не отвечает:"; docker compose logs --tail=40 app; exit 1; fi
+
+echo "==> Автообновление (раз в 5 минут проверяет GitHub и сам обновляет сайт)"
+git -C "$SRC" rev-parse HEAD > "$APP/.deployed-commit"
+rm -f "$APP/.attempted-commit"
+install -m 755 "$SRC/hosting/auto-update.sh" /usr/local/bin/italon-autoupdate
+printf 'REPO=%s\nBRANCH=%s\n' "$REPO" "$BRANCH" > /etc/italon-autoupdate.env
+cat > /etc/systemd/system/italon-autoupdate.service <<'UNIT'
+[Unit]
+Description=Italon: автообновление сайта с GitHub
+After=network-online.target docker.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/italon-autoupdate
+StandardOutput=append:/var/log/italon-autoupdate.log
+StandardError=append:/var/log/italon-autoupdate.log
+UNIT
+cat > /etc/systemd/system/italon-autoupdate.timer <<'UNIT'
+[Unit]
+Description=Italon: проверка обновлений каждые 5 минут
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+Persistent=true
+[Install]
+WantedBy=timers.target
+UNIT
+systemctl daemon-reload
+systemctl enable --now italon-autoupdate.timer >/dev/null 2>&1 && echo "Автообновление включено (журнал: /var/log/italon-autoupdate.log)" || echo "Не удалось включить автообновление"
 
 IP=$(curl -fsS https://api.ipify.org 2>/dev/null || hostname -I | awk '{print $1}')
 cat <<EOF
