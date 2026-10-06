@@ -40,7 +40,7 @@ for (const series of raw.series) for (const row of series.items) {
     piecesPerPack: boxed ? row.pcs : 1, areaPerPack: crate ? null : row.box,
     palletArea: crate ? null : row.pallet, minPacks,
     minimum: row.min || '1 шт', canOrder,
-    image: crate ? null : images.products[row.code] || images.collections[series.slug] || null,
+    image: crate ? images.products[row.code] || null : images.products[row.code] || images.collections[series.slug] || null,
   });
 }
 export const products = [...unique.values()];

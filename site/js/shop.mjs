@@ -245,6 +245,28 @@ function download(bytes, name, type) {
   const a = document.createElement('a'); a.href = url; a.download = name; document.body.append(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 60000);
 }
+// Картинки позиций для PDF: pdf-lib понимает только JPEG/PNG, поэтому webp перерисовываем в jpeg (белый фон, до 360 px).
+async function quoteImages(cart) {
+  const images = new Map();
+  await Promise.all(cart.lines.map(async line => {
+    const src = line.product?.image?.src;
+    if (!src || images.has(line.product.code)) return;
+    try {
+      const response = await fetch(new URL(src, ROOT));
+      if (!response.ok) return;
+      const bitmap = await createImageBitmap(await response.blob());
+      const scale = Math.min(1, 360 / Math.max(bitmap.width, bitmap.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(bitmap.width * scale)); canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+      const context = canvas.getContext('2d');
+      context.fillStyle = '#fff'; context.fillRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.85));
+      if (blob) images.set(line.product.code, { bytes: new Uint8Array(await blob.arrayBuffer()), format: 'jpg' });
+    } catch { /* без картинки позиция остаётся в КП, просто без миниатюры */ }
+  }));
+  return images;
+}
 async function exportQuote(event) {
   event.preventDefault();
   if (pending || unsaved || exporting || !cart.lines.length) return;
@@ -257,7 +279,8 @@ async function exportQuote(event) {
       import('../../src/quote.mjs'),
       fetch(new URL('fonts/Inter-Quote.ttf', ROOT)).then(r => { if (!r.ok) throw new Error('Не удалось загрузить шрифт для PDF. Повторите попытку.'); return r.arrayBuffer(); }),
     ]);
-    const quote = await createQuote(cart, { customer: $('#quote-customer').value, project: $('#quote-project').value, note: $('#quote-note').value }, new Uint8Array(font));
+    const images = await quoteImages(cart);
+    const quote = await createQuote(cart, { customer: $('#quote-customer').value, project: $('#quote-project').value, note: $('#quote-note').value }, new Uint8Array(font), { images });
     download(quote.bytes, quote.filename, 'application/pdf');
     toast('Коммерческое предложение готово');
   } catch (error) { showError(error.message || 'Не удалось сформировать PDF.'); }

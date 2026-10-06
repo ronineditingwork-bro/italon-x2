@@ -17,6 +17,24 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   const date=new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Moscow',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);
   const id=options.quoteId||`${date.split('.').reverse().join('')}-${crypto.randomUUID().slice(0,6).toUpperCase()}`;
   doc.setTitle(`Коммерческое предложение - ${SALON.name} ${SALON.city}, ${SALON.address}`);doc.setAuthor(`${SALON.name} ${SALON.city}`);doc.setCreationDate(now);doc.setModificationDate(now);
+  // Картинки товаров: options.images — Map код → {bytes, format:'jpg'|'png'} (webp перед этим переводится в jpeg в браузере).
+  const imageSource=options.images instanceof Map?options.images:new Map(Object.entries(options.images||{}));
+  const embedded=new Map();
+  async function embedImage(code){
+    if(embedded.has(code))return embedded.get(code);
+    const src=imageSource.get(code);let value=null;
+    if(src?.bytes){try{value=src.format==='png'?await doc.embedPng(src.bytes):await doc.embedJpg(src.bytes);}catch{value=null;}}
+    embedded.set(code,value);return value;
+  }
+  const THUMB={w:40,h:48};
+  function drawThumb(image,x,top){
+    const box={x,y:top-THUMB.h,width:THUMB.w,height:THUMB.h};
+    page.drawRectangle({...box,color:rgb(1,1,1),borderColor:colors.line,borderWidth:.5});
+    if(!image)return;
+    const k=Math.min((THUMB.w-4)/image.width,(THUMB.h-4)/image.height);
+    const w=image.width*k,h=image.height*k;
+    page.drawImage(image,{x:x+(THUMB.w-w)/2,y:box.y+(THUMB.h-h)/2,width:w,height:h});
+  }
   let page,y;
   const write=(text,x,baseline,size=10,color=colors.ink)=>page.drawText(clean(text),{x,y:baseline,font,size,color});
   const right=(text,rightX,baseline,size=10,color=colors.ink)=>{const s=clean(text);write(s,rightX-font.widthOfTextAtSize(s,size),baseline,size,color);};
@@ -64,15 +82,17 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   tableHeader();
   for(let index=0;index<cart.lines.length;index++){
     const l=cart.lines[index],p=l.product;
-    const nameLines=wrap(p.name,236,9.6);
-    const metaLines=wrap(`Арт. ${p.code}${p.format?' / '+p.format.replace(/[XХ]/g,'x'):''}`,236,7.8);
+    const thumb=await embedImage(p.code);const textX=thumb?M+78:M+31,textW=thumb?190:236;
+    const nameLines=wrap(p.name,textW,9.6);
+    const metaLines=wrap(`Арт. ${p.code}${p.format?' / '+p.format.replace(/[XХ]/g,'x'):''}`,textW,7.8);
     const quantityLines=wrap(`${number(l.quantity)} ${p.unit}${p.boxed?'\n'+number(l.packs)+' кор.':''}`,70,8.5);
-    const rowHeight=Math.max(46,26+nameLines.length*12+metaLines.length*11,26+Math.max(quantityLines.length,2)*12);
+    const rowHeight=Math.max(thumb?64:46,26+nameLines.length*12+metaLines.length*11,26+Math.max(quantityLines.length,2)*12);
     if(y-rowHeight<105)newPage(false,true);
     if(index%2===0)page.drawRectangle({x:M,y:y-rowHeight,width:R-M,height:rowHeight,color:colors.stripe});
     const top=y-19;write(String(index+1),M+7,top,8.5,colors.muted);
-    nameLines.forEach((line,j)=>write(line,M+31,top-j*12,9.6));
-    metaLines.forEach((line,j)=>write(line,M+31,top-nameLines.length*12-3-j*11,7.8,colors.muted));
+    if(thumb)drawThumb(thumb,M+29,y-8);
+    nameLines.forEach((line,j)=>write(line,textX,top-j*12,9.6));
+    metaLines.forEach((line,j)=>write(line,textX,top-nameLines.length*12-3-j*11,7.8,colors.muted));
     quantityLines.forEach((line,j)=>right(line,378,top-j*12,j?8:9,j?colors.muted:colors.ink));
     right(money(p.priceKopecks),455,top,9.6);right(`руб. / ${p.unit}`,455,top-12,7.8,colors.muted);
     let amountSize=10;while(font.widthOfTextAtSize(money(l.totalKopecks),amountSize)>98)amountSize-=.5;

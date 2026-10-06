@@ -5951,6 +5951,12 @@
       "kind": "sku",
       "width": 341,
       "height": 180
+    },
+    "450080000001": {
+      "src": "/media/products/crate-2920x1450x344.jpg",
+      "kind": "sku",
+      "width": 800,
+      "height": 375
     }
   },
   "collections": {
