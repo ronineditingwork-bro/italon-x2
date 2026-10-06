@@ -200,3 +200,12 @@ address { font-style: normal; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }
+
+/* Подвал: длинная почта и адрес не выходят за колонку на 320 px и при крупном шрифте */
+.footer-col, .footer-col a, .footer-col address { min-width: 0; overflow-wrap: anywhere; }
+/* Шапка на телефоне при крупном системном шрифте (125–150 %): логотип и иконки не выталкивают меню за край */
+@media (max-width: 29.99rem) {
+  .site-header .logo { font-size: min(1rem, 4.3vw); }
+  .site-header .icon-btn { min-width: min(var(--tap), 12vw); }
+  .site-header .header-actions { gap: 0; }
+}

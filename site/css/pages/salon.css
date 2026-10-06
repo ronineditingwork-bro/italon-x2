@@ -75,3 +75,8 @@
   .salon-map { min-height: 24rem; }
   .salon-map__fallback { padding: var(--s-4); }
 }
+
+/* крупный системный шрифт: колонки текста не распираются содержимым */
+.salon-card, .salon-book__text, .salon-before__text, .salon-form { grid-template-columns: minmax(0, 1fr); }
+.salon-card > *, .salon-book__text > *, .salon-before__text > * { max-width: 100%; }
+.salon-card__hours > div { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }

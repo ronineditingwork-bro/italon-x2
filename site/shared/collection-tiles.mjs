@@ -4,7 +4,7 @@
 // Ряды: «пара» (7 + 5 колонок, крупная карточка попеременно слева и справа), «тройка» (4 + 4 + 4)
 // и «четвёрка» (3 × 4). Фото небольшие (480–800 px), поэтому карточка попадает в крупную ячейку,
 // только если её фото не растягивается больше ~1.3× (номинальные размеры ячеек — при контенте 1440).
-import { esc, fmt, positions, collectionUrl } from './format.mjs';
+import { esc, fmt, positions, plural, collectionUrl } from './format.mjs';
 
 const SLOTS = { L: [759, 662], M: [533, 662], T: [420, 525], Q: [307, 384] };
 const MAX_SCALE = 1.32;
@@ -74,6 +74,13 @@ function formatsLine(c, full) {
   return `${shown.join(' · ')} см${plates.length > shown.length ? ` · ещё ${plates.length - shown.length}` : ''}`;
 }
 
+/** Поверхности: в крупной карточке — до трёх названий, в малой — одно название или их число. */
+function finishLine(c, full) {
+  const f = c.finishes;
+  if (full || f.length < 2) return f.slice(0, 3).join(' · ');
+  return `${f.length} ${plural(f.length, ['поверхность', 'поверхности', 'поверхностей'])}`;
+}
+
 /** Карточка коллекции. slot: L | M | T | Q. */
 export function collectionTile(ctx, c, { slot = 'T', n = 0, eager = false } = {}) {
   const big = slot === 'L' || slot === 'M';
@@ -84,7 +91,7 @@ export function collectionTile(ctx, c, { slot = 'T', n = 0, eager = false } = {}
   return `<a class="ctile ctile--${slot}" href="${collectionUrl(ctx.root, c.id)}" data-reveal data-line="${c.section}">
 <span class="media ctile__media">${img}</span>
 <span class="ctile__body">
-<span class="ctile__top"><span class="ctile__num t-num">${String(n).padStart(2, '0')}</span><span class="ctile__line">${esc(c.finishes.slice(0, 3).join(' · ') || lineLabel(c))}</span></span>
+<span class="ctile__top"><span class="ctile__num t-num">${String(n).padStart(2, '0')}</span><span class="ctile__line">${esc(finishLine(c, slot === 'L') || lineLabel(c))}</span></span>
 <span class="ctile__name">${esc(c.label)}${c.latin.toLocaleLowerCase('ru-RU') !== c.label.toLocaleLowerCase('ru-RU') ? ` <span class="ctile__latin">${esc(c.latin)}</span>` : ''}</span>
 <span class="ctile__meta"><span class="ctile__count">${positions(c.count)}</span><span class="ctile__formats">${esc(formatsLine(c, big))}</span></span>
 </span></a>`;

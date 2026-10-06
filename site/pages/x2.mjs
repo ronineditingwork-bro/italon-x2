@@ -38,7 +38,7 @@ function scenes(ctx) {
 ${outdoorSpaces.map((s, i) => {
     const c = col(s.collectionId);
     return `<article class="x2-scene${i % 2 ? ' x2-scene--flip' : ''}" aria-labelledby="scene-${s.id}">
-<a class="x2-scene__media media" href="${collectionUrl(ctx.root, c.id)}" tabindex="-1" aria-hidden="true" data-reveal>${img(ctx, c.image, `${s.label}: коллекция ${c.label}`)}</a>
+<a class="x2-scene__media media" href="${collectionUrl(ctx.root, c.id)}" tabindex="-1" aria-hidden="true" style="--nw:${c.image.width}px" data-reveal>${img(ctx, c.image, `${s.label}: коллекция ${c.label}`)}</a>
 <div class="x2-scene__text" data-reveal>
 <p class="x2-scene__num t-num">${String(i + 1).padStart(2, '0')}</p>
 <h3 class="t-h2 x2-scene__title" id="scene-${s.id}">${esc(s.label)}</h3>

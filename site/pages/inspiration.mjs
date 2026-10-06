@@ -31,7 +31,7 @@ function item(ctx, c, layout, n) {
   const catalog = `${ctx.url('/catalog/')}?collection=${encodeURIComponent(c.id)}`;
   const feature = layout.cls.includes('m-feature');
   const formats = c.plateFormats.length ? `${c.plateFormats.slice(0, 3).map(fmt).join(' · ')} см` : '';
-  return `<figure class="insp ${layout.cls}" data-reveal data-line="${c.section}" data-w="${c.image.width}" data-h="${c.image.height}"${c.image.caption ? ' data-feature' : ''} style="--ratio:${layout.ratio}">
+  return `<figure class="insp ${layout.cls}" data-reveal data-line="${c.section}" data-w="${c.image.width}" data-h="${c.image.height}"${c.image.caption ? ' data-feature' : ''} style="--ratio:${layout.ratio};--nw:${c.image.width}px">
 <a class="insp__media media" href="${href}" data-insp="${esc(c.id)}" aria-label="Открыть фото: коллекция ${esc(c.label)}"><img src="${ctx.media(c.image.src)}" alt="${esc(alt(c))}" width="${c.image.width}" height="${c.image.height}" ${n < 3 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"></a>
 <figcaption class="insp__cap">
 <span class="insp__top"><span class="insp__num t-num">${String(n + 1).padStart(2, '0')}</span><span>${esc(lineLabel(c))}</span></span>

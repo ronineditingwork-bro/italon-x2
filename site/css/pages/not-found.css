@@ -25,3 +25,5 @@
   .nf__links { grid-template-columns: minmax(0, 1fr); }
   .nf__search-row .btn { padding-inline: 1.25rem; }
 }
+.nf__main { grid-template-columns: minmax(0, 1fr); }
+.nf__main > * { max-width: 100%; }
