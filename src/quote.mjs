@@ -76,6 +76,7 @@ export async function createQuote(cart, details, fontBytes, options={}) {
     }
   }
   newPage(true);
+  if(details.phone?.trim()){paragraph(`Телефон: ${details.phone.trim().slice(0,30)}`,10);y-=5;}
   if(details.customer?.trim()){paragraph(`Получатель: ${details.customer.trim().slice(0,100)}`,10);y-=5;}
   if(details.project?.trim()){paragraph(`Объект: ${details.project.trim().slice(0,150)}`,10);y-=5;}
   paragraph('Цены с НДС. Прайс от 01.07.2026, склад Краснодар.',9,colors.muted,13);y-=19;

@@ -8,7 +8,7 @@
     "check": "node scripts/check.mjs",
     "build": "node scripts/build-hosting.mjs",
     "build:site": "node scripts/build-site.mjs",
-    "test": "node --test tests/core.test.mjs tests/site.test.mjs",
+    "test": "node --test tests/core.test.mjs tests/site.test.mjs tests/quote-lead.test.mjs",
     "build:hosting": "node scripts/build-hosting.mjs",
     "test:hosting": "node --test tests/hosting.test.mjs"
   },

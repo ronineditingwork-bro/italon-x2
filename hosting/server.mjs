@@ -41,9 +41,10 @@ const server = createServer({ maxHeaderSize: 16384 }, async (req, res) => {
     if (url.pathname.startsWith('/api/')) {
       const chunks = [];
       let size = 0;
+      const limit = url.pathname === '/api/quote' ? 3_000_000 : 20000;
       for await (const chunk of req.iterator({ destroyOnReturn: false })) {
         size += chunk.length;
-        if (size > 20000) { sendJson(res, 413, { error: 'Слишком большая корзина.' }); req.resume(); return; }
+        if (size > limit) { sendJson(res, 413, { error: 'Слишком большая корзина.' }); req.resume(); return; }
         chunks.push(chunk);
       }
       const headers = new Headers();
@@ -52,7 +53,7 @@ const server = createServer({ maxHeaderSize: 16384 }, async (req, res) => {
       }
       const request = new Request(url, { method: req.method, headers,
         ...(!['GET', 'HEAD'].includes(req.method) ? { body: Buffer.concat(chunks) } : {}) });
-      const response = await handleApi(request, { DB: storage.DB });
+      const response = await handleApi(request, { DB: storage.DB, TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID });
       res.writeHead(response.status, Object.fromEntries(response.headers));
       res.end(Buffer.from(await response.arrayBuffer()));
       return;

@@ -5,6 +5,8 @@ services:
     environment:
       APP_ORIGIN: https://${DOMAIN:?Set DOMAIN in .env}
       DB_PATH: /data/cart.sqlite
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
     volumes:
       - cart_data:/data
     expose:

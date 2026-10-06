@@ -267,10 +267,22 @@ async function quoteImages(cart) {
   }));
   return images;
 }
+async function sendLead(quote, phone) {
+  const form = new FormData();
+  form.set('phone', phone); form.set('customer', $('#quote-customer').value); form.set('project', $('#quote-project').value);
+  form.set('note', $('#quote-note').value); form.set('filename', quote.filename);
+  form.set('pdf', new Blob([quote.bytes], { type: 'application/pdf' }), quote.filename);
+  const response = await fetch(new URL('api/quote', ROOT), { method: 'POST', body: form, credentials: 'same-origin' });
+  return response.ok && (await response.json()).saved;
+}
+
 async function exportQuote(event) {
   event.preventDefault();
   if (pending || unsaved || exporting || !cart.lines.length) return;
   const button = $('#quote-download');
+  const phoneInput = $('#quote-phone');
+  if (phoneInput.value.replace(/\D/g, '').length < 10) { phoneInput.focus(); showError('Укажите телефон для связи: не меньше 10 цифр.'); return; }
+  hideError();
   exporting = true; setExportState(); button.textContent = 'Готовим PDF…';
   try {
     if (mode === 'server') await ensureCart(true);
@@ -280,9 +292,11 @@ async function exportQuote(event) {
       fetch(new URL('fonts/Inter-Quote.ttf', ROOT)).then(r => { if (!r.ok) throw new Error('Не удалось загрузить шрифт для PDF. Повторите попытку.'); return r.arrayBuffer(); }),
     ]);
     const images = await quoteImages(cart);
-    const quote = await createQuote(cart, { customer: $('#quote-customer').value, project: $('#quote-project').value, note: $('#quote-note').value }, new Uint8Array(font), { images });
+    const quote = await createQuote(cart, { phone: phoneInput.value, customer: $('#quote-customer').value, project: $('#quote-project').value, note: $('#quote-note').value }, new Uint8Array(font), { images });
     download(quote.bytes, quote.filename, 'application/pdf');
-    toast('Коммерческое предложение готово');
+    let sent = true;
+    if (mode === 'server') sent = await sendLead(quote, phoneInput.value).catch(() => false);
+    toast(sent ? 'Коммерческое предложение готово' : 'КП скачано. Заявку отправить не удалось — позвоните нам: +7 918 24 89 248');
   } catch (error) { showError(error.message || 'Не удалось сформировать PDF.'); }
   finally { exporting = false; button.textContent = 'Скачать КП в PDF'; setExportState(); }
 }
