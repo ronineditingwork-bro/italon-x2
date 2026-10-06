@@ -80,3 +80,6 @@
   .col-next__text { justify-items: start; text-align: left; }
   .col-next__name { font-size: var(--fs-h2); }
 }
+/* крупный шрифт (125–150%) на узком экране: подписи карточек и цифры переносятся, а не распирают страницу */
+.col-grid .product-card__body > *, .col-facts__list dd, .col-facts__list dt, .col-hero__title { overflow-wrap: anywhere; min-width: 0; }
+.col-items .t-h2, .col-more .t-h2, .col-next__name { overflow-wrap: anywhere; hyphens: auto; }

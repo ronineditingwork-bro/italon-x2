@@ -146,3 +146,7 @@
 @media (prefers-reduced-motion: reduce) {
   .pdp__view, .pdp__view img, .pdp-bar { transition: none !important; }
 }
+/* крупный шрифт (125–150%) на узком экране: колонки характеристик и карточки не распирают страницу */
+.pdp-specs .specs > div { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+.pdp-specs .specs dd, .pdp__facts li, .pdp-related .product-card__body > * { overflow-wrap: anywhere; min-width: 0; }
+.pdp-specs__head .t-h2, .pdp + .section .t-h2, .pdp-related ~ * .t-h2, section .t-h2#related-title { overflow-wrap: anywhere; hyphens: auto; }

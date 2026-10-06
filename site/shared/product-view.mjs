@@ -38,8 +38,8 @@ export function minimumLabel(p) {
   const m = minimumOrder(p);
   const parts = [lower(p.minimum)];
   if (m && p.boxed && m.packs > 1) parts.push(`${number(m.packs)} ${p.orderUnit}`);
-  if (m && p.unit === 'м²') parts.push(`${number(m.quantity)} м²`);
-  else if (m && p.boxed) parts.push(`${number(m.quantity)} шт`);
+  if (m && p.unit === 'м²') parts.push(`${number(m.quantity)}\u00a0м²`);
+  else if (m && p.boxed) parts.push(`${number(m.quantity)}\u00a0шт`);
   return parts.join(' · ');
 }
 
@@ -70,11 +70,11 @@ export function productSpecs(p, { collectionLabel = '', categoryLabel = '' } = {
   const pack = p.collectionId === 'packaging' ? [['Продажа', 'Поштучно']] : [
     ['Цена за', p.unit === 'м²' ? 'м²' : 'штуку'],
     p.boxed ? ['Продажа', 'Коробками'] : ['Продажа', 'Поштучно'],
-    p.boxed && p.areaPerPack && ['Площадь в коробке', `${number(p.areaPerPack)} м²`],
-    !p.boxed && p.areaPerPack && p.unit === 'м²' && ['Площадь одной плиты', `${number(p.areaPerPack)} м²`],
+    p.boxed && p.areaPerPack && ['Площадь в коробке', `${number(p.areaPerPack)}\u00a0м²`],
+    !p.boxed && p.areaPerPack && p.unit === 'м²' && ['Площадь одной плиты', `${number(p.areaPerPack)}\u00a0м²`],
     p.boxed && p.piecesPerPack && ['Штук в коробке', number(p.piecesPerPack)],
     ['Минимальный заказ', minimumLabel(p)],
-    p.palletArea && ['Паллета', `${number(p.palletArea)} м²${perPallet && p.boxed ? ` · ${number(perPallet)} ${p.orderUnit}` : ''}`],
+    p.palletArea && ['Паллета', `${number(p.palletArea)}\u00a0м²${perPallet && p.boxed ? ` · ${number(perPallet)} ${p.orderUnit}` : ''}`],
   ].filter(Boolean);
   return { tile, pack };
 }
