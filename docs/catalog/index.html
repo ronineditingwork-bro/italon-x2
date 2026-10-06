@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="ru" data-build="ca1704fab5" class="no-js" data-root="../" data-page="catalog">
+<html lang="ru" data-build="ea3a70f899" class="no-js" data-root="../" data-page="catalog">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Каталог — Italon Experience</title>
-<meta name="description" content="Каталог Italon и X2: 993 позиции с ценами по прайсу от 01.07.2026, поиск по названию и артикулу.">
+<meta name="description" content="Каталог Italon и X2: 993 позиции с ценами по прайсу от 01.07.2026, поиск по названию и артикулу, фильтры по коллекции, формату, отделке и цене.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -14,8 +14,8 @@ if(w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches){h.cla
 h.classList.add('reveal');if(!('onpagereveal' in w))h.classList.add('page-fade');
 setTimeout(function(){if(!h.classList.contains('motion-ready'))h.classList.remove('reveal');},3000);
 })(document,window);</script>
-<link rel="stylesheet" href="../assets/site.css?v=8dcc793d5d"><link rel="stylesheet" href="../assets/pages/catalog.css?v=562793d838">
-<script type="module" src="../assets/main.js?v=4038371788"></script><script type="module" src="../assets/pages/catalog.js?v=0e30747575"></script>
+<link rel="stylesheet" href="../assets/site.css?v=8dcc793d5d"><link rel="stylesheet" href="../assets/pages/catalog.css?v=bb46f0461d">
+<script type="module" src="../assets/main.js?v=699f12d8eb"></script><script type="module" src="../assets/pages/catalog.js?v=81e1e84867"></script>
 </head>
 <body class="page-catalog">
 <a class="skip-link" href="#main">К содержанию</a>
@@ -37,26 +37,64 @@ setTimeout(function(){if(!h.classList.contains('motion-ready'))h.classList.remov
 <div class="wrap">
 <nav class="breadcrumbs" aria-label="Навигация по разделам"><ol><li><a href="../">Главная</a></li><li><span aria-current="page">Каталог</span></li></ol></nav>
 <div class="page-head__grid">
-<div class="page-head__text">
+<div class="page-head__text"><p class="eyebrow" data-reveal>Прайс от 01.07.2026 · склад Краснодар</p>
 <h1 class="t-h1" data-reveal>Каталог</h1>
-<p class="t-lead page-head__lead" data-reveal>993 позиции: 928 Italon и 65 X2. Цены по прайсу от 01.07.2026, склад Краснодар, с НДС.</p></div>
-
+<p class="t-lead page-head__lead" data-reveal>993 позиции: 928 Italon для интерьера и 65 X2 толщиной 20&nbsp;мм для улицы. Ищите по названию или артикулу, отбирайте по коллекции, формату, отделке и цене.</p></div>
+<div class="page-head__aside" data-reveal><nav class="catalog-quick" aria-label="Быстрый выбор"><p class="eyebrow">Быстрый выбор</p><ul role="list"><li><a href="../catalog/?section=italon" data-catalog-link>Italon · интерьер <span>928</span></a></li><li><a href="../catalog/?section=x2" data-catalog-link>X2 · улица <span>65</span></a></li><li><a href="../catalog/?category=mosaic" data-catalog-link>Мозаика <span>285</span></a></li><li><a href="../catalog/?format=120X278" data-catalog-link>Макси-формат 120 × 278 <span>57</span></a></li></ul></nav></div>
 </div>
 </div>
 </header>
-<section class="section catalog" style="padding-top:0" aria-label="Позиции каталога">
-<div class="wrap">
-<form class="catalog__filters" id="catalog-filters" role="search" hidden>
-<label class="field catalog__search"><span class="field__label">Поиск</span><input class="input" type="search" name="q" placeholder="Название, цвет или артикул" autocomplete="off"></label>
-<label class="field"><span class="field__label">Раздел</span><select class="select" name="section"><option value="">Italon и X2</option><option value="italon">Italon · интерьер</option><option value="x2">X2 · улица</option></select></label>
-<label class="field"><span class="field__label">Категория</span><select class="select" name="category"><option value="">Все</option></select></label>
-<label class="field"><span class="field__label">Коллекция</span><select class="select" name="collection"><option value="">Все</option></select></label>
-<label class="field"><span class="field__label">Формат</span><select class="select" name="format"><option value="">Все</option></select></label>
-<label class="field"><span class="field__label">Отделка</span><select class="select" name="finish"><option value="">Все</option></select></label>
-<button type="reset" class="btn btn--outline catalog__reset">Сбросить</button>
+<section class="catalog" aria-label="Позиции каталога">
+<div class="wrap catalog__layout" id="catalog">
+<form class="catalog__form" id="catalog-filters" role="search" aria-label="Поиск и фильтры каталога" hidden>
+<div class="catalog__toolbar">
+<label class="catalog__search"><span class="sr-only">Поиск по названию или артикулу</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><input class="catalog__search-input" type="search" name="q" placeholder="Название, цвет или артикул" autocomplete="off" enterkeyhint="search" aria-describedby="catalog-count"></label>
+<button type="button" class="catalog__filters-btn" id="catalog-filters-open" aria-controls="catalog-aside" aria-expanded="false" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11M18 7h3M3 17h4M11 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><span>Фильтры</span><span class="catalog__badge" data-active-count hidden></span></button>
+<label class="catalog__sort"><span class="catalog__sort-label">Сортировка</span><select class="select" name="sort"><option value="">По умолчанию</option><option value="price-asc">Сначала дешевле</option><option value="price-desc">Сначала дороже</option><option value="name">По названию, А — Я</option></select></label>
+</div>
+<aside class="catalog__aside" id="catalog-aside" aria-labelledby="catalog-filters-title">
+<div class="filters">
+<div class="filters__head"><h2 class="filters__title" id="catalog-filters-title">Фильтры</h2>
+<button type="button" class="filters__reset" data-catalog-reset hidden>Сбросить всё</button>
+<button type="button" class="filters__close" data-filters-close aria-label="Закрыть фильтры"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 1l14 14M15 1 1 15"/></svg></button></div>
+<div class="filters__body">
+<details class="facet" data-facet="section" open>
+<summary class="facet__summary"><span class="facet__title">Раздел</span><span class="facet__count" data-facet-count></span></summary>
+<fieldset class="facet__body"><legend class="sr-only">Раздел</legend><div class="facet__options" data-options="section"></div></fieldset>
+</details>
+<details class="facet" data-facet="category" open>
+<summary class="facet__summary"><span class="facet__title">Категория</span><span class="facet__count" data-facet-count></span></summary>
+<fieldset class="facet__body"><legend class="sr-only">Категория</legend><div class="facet__options" data-options="category"></div></fieldset>
+</details>
+<details class="facet" data-facet="collection" open>
+<summary class="facet__summary"><span class="facet__title">Коллекция</span><span class="facet__count" data-facet-count></span></summary>
+<fieldset class="facet__body"><legend class="sr-only">Коллекция</legend><div class="facet__options" data-options="collection"></div><button type="button" class="facet__more" data-more="collection" hidden></button></fieldset>
+</details>
+<details class="facet" data-facet="finish" open>
+<summary class="facet__summary"><span class="facet__title">Отделка</span><span class="facet__count" data-facet-count></span></summary>
+<fieldset class="facet__body"><legend class="sr-only">Отделка</legend><div class="facet__options" data-options="finish"></div></fieldset>
+</details>
+<details class="facet" data-facet="format" open>
+<summary class="facet__summary"><span class="facet__title">Формат, см</span><span class="facet__count" data-facet-count></span></summary>
+<fieldset class="facet__body"><legend class="sr-only">Формат, см</legend><div class="facet__options" data-options="format"></div><button type="button" class="facet__more" data-more="format" hidden></button></fieldset>
+</details>
+<details class="facet" data-facet="price" open>
+<summary class="facet__summary"><span class="facet__title">Цена, ₽</span><span class="facet__count" data-facet-count></span></summary>
+<fieldset class="facet__body"><legend class="sr-only">Цена, ₽</legend><div class="facet__price"><label class="field"><span class="field__label">от</span><input class="input" type="number" name="price_from" inputmode="numeric" min="0" step="1" aria-describedby="catalog-price-hint"></label>
+<label class="field"><span class="field__label">до</span><input class="input" type="number" name="price_to" inputmode="numeric" min="0" step="1" aria-describedby="catalog-price-hint"></label></div>
+<p class="field__hint" id="catalog-price-hint">За м² или за штуку — как в прайсе, с НДС.</p></fieldset>
+</details>
+</div>
+<div class="filters__foot"><button type="button" class="btn btn--outline" data-catalog-reset>Сбросить</button><button type="button" class="btn" data-filters-close id="catalog-apply">Показать</button></div>
+</div>
+</aside>
 </form>
-<p class="t-small catalog__count" id="catalog-count" role="status">Показаны первые 24 из 993 позиций</p>
-<div class="product-grid" id="catalog-grid"><article class="product-card" data-code="600180000132">
+<div class="catalog__backdrop" data-filters-close hidden></div>
+<div class="catalog__summary">
+<p class="catalog__count" id="catalog-count" role="status">993 позиции · показаны первые 24</p>
+<ul class="catalog__chips" id="catalog-chips" role="list" aria-label="Выбранные фильтры" hidden></ul>
+</div>
+<div class="product-grid catalog__grid" id="catalog-grid"><article class="product-card" data-code="600180000132">
 <a class="product-card__photo" href="../product/600180000132/" tabindex="-1" aria-hidden="true"><img src="../media/products/dc06b6855f5f7ef5d78e.webp" alt="ПРИ.ДЕНИМ РЭД 120X278 ЛЮКС" width="148" height="341" loading="lazy" decoding="async" data-product-image></a>
 <div class="product-card__body">
 <p class="product-card__collection">Прима</p>
@@ -344,8 +382,9 @@ setTimeout(function(){if(!h.classList.contains('motion-ready'))h.classList.remov
 <div class="product-card__foot"><p class="product-card__price">3 809,00 ₽ <small>/ м²</small></p>
 <button type="button" class="product-card__add" data-add="610010006209" aria-label="В корзину: СТАТУС АЙВОРИ 60Х120"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v14M3 10h14"/></svg></button></div>
 </article></div>
-<nav class="pagination" id="catalog-pages" aria-label="Страницы каталога"></nav>
-<noscript><p class="t-small" style="margin-top:2rem">Поиск и фильтры работают при включённом JavaScript. Все позиции доступны на <a class="link" href="../collections/">страницах коллекций</a>.</p></noscript>
+<script>(function(){var s=location.search.replace(/^\?/,'').split('&').filter(function(x){return x&&!/^page=/.test(x)});if(s.length)document.getElementById('catalog-grid').classList.add('is-pending')})();</script>
+<div class="catalog__more" id="catalog-more" hidden></div>
+<noscript><p class="t-small catalog__noscript">Поиск и фильтры работают при включённом JavaScript. Все позиции доступны на <a class="link" href="../collections/">страницах коллекций</a>.</p></noscript>
 </div>
 </section>
 </main>
