@@ -65,7 +65,7 @@ function gallery(ctx, d, c) {
     ? `<a class="pdp__view pdp__view--tile${img.scene ? ' is-cover' : ''} is-active" href="${esc(img.src)}" data-view="tile" data-photo="${esc(img.path)}" data-photo-alt="${esc(img.alt)}" data-photo-caption="${esc(`${d.name}, арт. ${d.code}`)}" data-photo-width="${img.width}" data-photo-height="${img.height}" aria-label="Увеличить фото: ${esc(d.name)}">
 <img src="${esc(img.src)}" alt="${esc(img.alt)}" width="${img.width}" height="${img.height}" style="--w:${img.width}px;--h:${img.height}px" fetchpriority="high" decoding="async" data-product-image data-v-img>
 ${img.scene ? '<span class="pdp__badge">Фото коллекции</span>' : ''}<span class="pdp__zoom">${ZOOM}<span>Увеличить</span></span></a>`
-    : `<div class="pdp__view pdp__view--tile is-active" data-view="tile"><span class="media-missing">${c ? 'Фото уточняется' : 'Транспортировочная упаковка'}</span></div>`;
+    : `<div class="pdp__view pdp__view--tile pdp__view--empty is-active" data-view="tile"><span class="media-missing">${c ? 'Фото уточняется' : 'Транспортировочная упаковка'}</span></div>`;
   const sceneView = scene
     ? `<a class="pdp__view pdp__view--scene${scene.width < 600 ? ' is-small' : ''}" href="${ctx.media(scene.src)}" data-view="scene" data-photo="${esc(scene.src.replace(/^\//, ''))}" data-photo-alt="${esc(sceneAlt)}" data-photo-caption="${esc(scene.caption || `Коллекция ${c.label} (${c.latin})`)}" data-photo-width="${scene.width}" data-photo-height="${scene.height}" aria-label="Увеличить фото коллекции ${esc(c.label)}">
 <img src="${ctx.media(scene.src)}" alt="${esc(sceneAlt)}" width="${scene.width}" height="${scene.height}" style="--w:${scene.width}px;--h:${scene.height}px" loading="lazy" decoding="async">
@@ -78,7 +78,7 @@ ${img.scene ? '<span class="pdp__badge">Фото коллекции</span>' : ''
   return `<div class="pdp__gallery">
 <div class="pdp__stage">${tileView}${sceneView}</div>
 ${thumbs}
-<p class="pdp__note">${img?.scene ? 'Фото артикула уточняется; показан пример коллекции. ' : ''}Цвет на экране может отличаться от плитки — сравните образцы в салоне.</p>
+${img ? `<p class="pdp__note">${img.scene ? 'Фото артикула уточняется; показан пример коллекции. ' : ''}Цвет на экране может отличаться от плитки — сравните образцы в салоне.</p>` : ''}
 </div>`;
 }
 
@@ -105,7 +105,7 @@ function render(p) {
 <div class="wrap pdp__grid">
 ${gallery(ctx, d, c)}
 <div class="pdp__info">
-<p class="eyebrow pdp__eyebrow">${c ? `<a href="${collectionUrl(ctx.root, c.id)}">${esc(c.label)}</a>` : esc(titleRu(p.collection))}<span aria-hidden="true">·</span>${line}</p>
+<p class="eyebrow pdp__eyebrow">${c ? `<a href="${collectionUrl(ctx.root, c.id)}">${esc(c.label)}</a>` : esc(titleRu(p.collection))}${c ? `<span aria-hidden="true">·</span>${line}` : ''}</p>
 <h1 class="pdp__title" data-v="name">${esc(p.name)}</h1>
 <p class="pdp__code">Артикул <span data-v="code">${esc(p.code)}</span>${d.format ? `<span aria-hidden="true">·</span>${esc(d.format)}` : ''}</p>
 ${variantsBlock}
@@ -134,7 +134,7 @@ ${variantsBlock}
 <div class="wrap grid">
 <div class="pdp-specs__head" data-reveal><h2 class="t-h2" id="specs-title">Характеристики и&nbsp;размеры</h2>
 <p class="t-small">По прайсу от 01.07.2026. Тон и калибр партии уточняются при заказе.</p></div>
-<div class="pdp-specs__col" data-reveal><h3 class="pdp-specs__title">Плитка</h3><dl class="specs" data-v="tile">${d.tile}</dl></div>
+<div class="pdp-specs__col" data-reveal><h3 class="pdp-specs__title">${c ? 'Плитка' : 'Позиция'}</h3><dl class="specs" data-v="tile">${d.tile}</dl></div>
 <div class="pdp-specs__col" data-reveal data-reveal-delay="70"><h3 class="pdp-specs__title">Упаковка и заказ</h3><dl class="specs" data-v="pack">${d.pack}</dl></div>
 </div>
 </section>
