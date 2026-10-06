@@ -150,3 +150,4 @@
 .pdp-specs .specs > div { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
 .pdp-specs .specs dd, .pdp__facts li, .pdp-related .product-card__body > * { overflow-wrap: anywhere; min-width: 0; }
 .pdp-specs__head .t-h2, .pdp + .section .t-h2, .pdp-related ~ * .t-h2, section .t-h2#related-title { overflow-wrap: anywhere; hyphens: auto; }
+.pdp__eyebrow a { display: inline-flex; align-items: center; min-height: var(--tap); margin-block: calc((1.4em - var(--tap)) / 2); }
