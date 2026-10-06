@@ -7,7 +7,7 @@
 // На ≤1023 px фильтры — панель-шторка (кнопка «Фильтры», фокус-ловушка, Esc, «Показать N позиций»).
 import { loadCatalog } from '../shop.mjs';
 import { $, $$, reducedMotion } from '../ui.mjs';
-import { productCard, normalize, lower, number, positions, esc, CLOSE } from '../../shared/format.mjs';
+import { productCard, normalize, lower, number, plural, positions, esc, CLOSE } from '../../shared/format.mjs';
 
 const PAGE = 24;
 const LIMIT = 8;            // сколько вариантов показывать в длинных списках до «Показать все»
@@ -165,7 +165,7 @@ function updateFacets() {
   const from = form.elements.price_from, to = form.elements.price_to;
   if (document.activeElement !== from) from.value = state.from ?? '';
   if (document.activeElement !== to) to.value = state.to ?? '';
-  from.placeholder = String(lo); to.placeholder = String(hi);
+  from.placeholder = prices.length ? String(lo) : ''; to.placeholder = prices.length ? String(hi) : '';
   $('#catalog-price-hint').textContent = prices.length ? `В выборке: ${rub(lo)} — ${rub(hi)} за м² или за штуку, как в прайсе, с НДС.` : 'За м² или за штуку — как в прайсе, с НДС.';
   $('[data-facet="price"] [data-facet-count]', form).textContent = state.from != null || state.to != null ? '· 1' : '';
 }
@@ -208,15 +208,15 @@ function emptyHtml(active) {
   return `<div class="catalog__empty">
 <h2>Ничего не найдено</h2>
 <p>${state.q ? `По запросу «${esc(state.q)}»${active.length > 1 ? ' с выбранными фильтрами' : ''} позиций нет.` : 'С выбранными фильтрами позиций нет.'} Попробуйте убрать часть условий или искать по артикулу либо названию коллекции.</p>
-${hints.length ? `<ul>${hints.map(h => `<li>без «${esc(h.a.label)}» — ${positions(h.n)}</li>`).join('')}</ul>` : ''}
-<div class="btn-row">${hints[0] ? `<button type="button" class="btn" data-chip="${active.indexOf(hints[0].a)}">Убрать «${esc(hints[0].a.label)}»</button>` : ''}<button type="button" class="btn ${hints[0] ? 'btn--outline' : ''}" data-catalog-reset>Сбросить фильтры</button></div>
+${hints.length ? `<ul>${hints.map(h => `<li>${h.a.title === 'поиск' ? `без поиска ${esc(h.a.label)}` : `без «${esc(h.a.label)}»`} — ${positions(h.n)}</li>`).join('')}</ul>` : ''}
+<div class="btn-row">${hints[0] ? `<button type="button" class="btn" data-chip="${active.indexOf(hints[0].a)}">${hints[0].a.title === 'поиск' ? 'Убрать поиск' : `Убрать «${esc(hints[0].a.label)}»`}</button>` : ''}<button type="button" class="btn ${hints[0] ? 'btn--outline' : ''}" data-catalog-reset>Сбросить фильтры</button></div>
 </div>`;
 }
 function renderMore() {
   if (shown >= results.length) { more.hidden = true; more.innerHTML = ''; return; }
   const next = Math.min(PAGE, results.length - shown);
   more.hidden = false;
-  more.innerHTML = `<div class="catalog__progress"><span>Показано ${number(shown, 0)} из ${positions(results.length)}</span><span class="catalog__bar" aria-hidden="true"><span style="width:${(shown / results.length * 100).toFixed(1)}%"></span></span></div>
+  more.innerHTML = `<div class="catalog__progress"><span>Показано ${number(shown, 0)} из ${number(results.length, 0)} ${plural(results.length, ['позиции', 'позиций', 'позиций'])}</span><span class="catalog__bar" aria-hidden="true"><span style="width:${(shown / results.length * 100).toFixed(1)}%"></span></span></div>
 <button type="button" class="btn btn--outline" data-more-items>Показать ещё ${next}</button>`;
 }
 
@@ -228,7 +228,7 @@ function update({ animate = true, scroll = false } = {}) {
   updateFacets();
   const active = activeList();
   renderChips(active);
-  count.innerHTML = results.length ? `Найдено: ${positions(results.length)}` : 'Ничего не найдено';
+  count.textContent = `Найдено: ${positions(results.length)}`;
   applyButton.textContent = results.length ? `Показать ${positions(results.length)}` : 'Нет подходящих позиций';
   grid.innerHTML = results.length ? cardsHtml(results.slice(0, shown), animate && !reducedMotion()) : emptyHtml(active);
   grid.classList.remove('is-pending');

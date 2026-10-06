@@ -165,6 +165,9 @@
   .catalog__chip { min-height: var(--tap); }
 }
 @media (max-width: 47.99rem) {
+  .page-catalog .page-head__aside { display: none; }
+  .catalog__filters-btn { flex: 0 0 auto; }
+  .catalog__sort .select { padding-left: .75rem; font-size: .9375rem; }
   .catalog__sort-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .catalog__summary { gap: var(--s-3); }
 }
