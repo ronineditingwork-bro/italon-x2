@@ -78,7 +78,7 @@ ${img.scene ? '<span class="pdp__badge">Фото коллекции</span>' : ''
   return `<div class="pdp__gallery">
 <div class="pdp__stage">${tileView}${sceneView}</div>
 ${thumbs}
-${img && p.collectionId !== 'packaging' ? `<p class="pdp__note">${img.scene ? 'Фото артикула уточняется; показан пример коллекции. ' : ''}Цвет на экране может отличаться от плитки — сравните образцы в салоне.</p>` : ''}
+${img && c ? `<p class="pdp__note">${img.scene ? 'Фото артикула уточняется; показан пример коллекции. ' : ''}Цвет на экране может отличаться от плитки — сравните образцы в салоне.</p>` : ''}
 </div>`;
 }
 
