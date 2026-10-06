@@ -209,3 +209,32 @@ address { font-style: normal; }
   .site-header .icon-btn { min-width: min(var(--tap), 12vw); }
   .site-header .header-actions { gap: 0; }
 }
+
+/* Крупный системный шрифт (125–150 %) на узких экранах: длинные подписи и сетки не выталкивают страницу. */
+@media (max-width: 800px) {
+  .eyebrow,
+  .product-card__collection,
+  .calc-picked__collection,
+  .ctile__line,
+  .page-head__text,
+  .col-hero__figure,
+  .pdp__gallery,
+  .pdp__stage,
+  .insp__top,
+  .salon-map__label,
+  .cx-switch__n { min-width: 0; max-width: 100%; overflow-wrap: anywhere; white-space: normal; }
+  .eyebrow,
+  .product-card__collection,
+  .calc-picked__collection,
+  .ctile__line,
+  .page-head__text { white-space: normal; }
+  .hero__content,
+  .page-head,
+  .page-head__text { grid-template-columns: minmax(0, 1fr); }
+  h1, h2, h3 { overflow-wrap: break-word; hyphens: auto; }
+  .cx-switch { flex-wrap: wrap; max-width: 100%; }
+  .cx-switch__btn { min-width: 0; white-space: normal; }
+}
+
+/* Страховка: страница никогда не получает горизонтальную прокрутку (clip, а не hidden — липкие панели работают). */
+html, body { overflow-x: clip; }
