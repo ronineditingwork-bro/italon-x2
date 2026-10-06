@@ -35,20 +35,27 @@ export function leadText(lead, cart) {
 }
 
 export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch) {
-  const token = env.TELEGRAM_BOT_TOKEN, chat = env.TELEGRAM_CHAT_ID;
-  if (!token || !chat) return false;
+  const token = env.TELEGRAM_BOT_TOKEN;
+  const chats = String(env.TELEGRAM_CHAT_ID || '').split(',').map(x => x.trim()).filter(Boolean);
+  if (!token || !chats.length) return false;
   const api = method => `https://api.telegram.org/bot${token}/${method}`;
   const signal = () => AbortSignal.timeout(15000);
-  let response = await fetchImpl(api('sendMessage'), { method: 'POST', signal: signal(),
-    headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, text }) });
-  if (!response.ok) throw new Error('telegram sendMessage ' + response.status);
-  if (pdf) {
-    const form = new FormData();
-    form.set('chat_id', chat);
-    form.set('document', new Blob([pdf], { type: 'application/pdf' }), filename);
-    response = await fetchImpl(api('sendDocument'), { method: 'POST', body: form, signal: signal() });
-    if (!response.ok) throw new Error('telegram sendDocument ' + response.status);
-  }
+  // Каждому получателю отдельно: сбой у одного не мешает остальным; ошибка, только если не дошло никому.
+  const results = await Promise.allSettled(chats.map(async chat => {
+    let response = await fetchImpl(api('sendMessage'), { method: 'POST', signal: signal(),
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, text }) });
+    if (!response.ok) throw new Error('telegram sendMessage ' + response.status);
+    if (pdf) {
+      const form = new FormData();
+      form.set('chat_id', chat);
+      form.set('document', new Blob([pdf], { type: 'application/pdf' }), filename);
+      response = await fetchImpl(api('sendDocument'), { method: 'POST', body: form, signal: signal() });
+      if (!response.ok) throw new Error('telegram sendDocument ' + response.status);
+    }
+  }));
+  const failed = results.filter(r => r.status === 'rejected');
+  failed.forEach(r => console.error('telegram_error', r.reason.message));
+  if (failed.length === results.length) throw failed[0].reason;
   return true;
 }
 

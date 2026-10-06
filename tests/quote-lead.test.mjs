@@ -17,7 +17,7 @@ test('/api/quote saves the lead and sends it to Telegram', async () => {
   await DB.prepare('INSERT INTO carts (id, items, version, updated_at) VALUES (?, ?, 1, ?)')
     .bind(id, JSON.stringify([{ code: '620110000263', packs: 2 }]), Date.now()).run();
   const calls = [];
-  const env = { DB, TELEGRAM_BOT_TOKEN: 'T', TELEGRAM_CHAT_ID: '42', fetch: async (url, init) => { calls.push({ url, init }); return new Response('{}', { status: 200 }); } };
+  const env = { DB, TELEGRAM_BOT_TOKEN: 'T', TELEGRAM_CHAT_ID: '42, -100500', fetch: async (url, init) => { calls.push({ url, init }); return new Response('{}', { status: 200 }); } };
   const post = fields => {
     const form = new FormData();
     for (const [k, v] of Object.entries(fields)) form.set(k, v);
@@ -32,7 +32,9 @@ test('/api/quote saves the lead and sends it to Telegram', async () => {
     assert.deepEqual(await ok.json(), { ok: true, sent: true, saved: true });
     assert.match(calls[0].url, /botT\/sendMessage/);
     assert.match(JSON.parse(calls[0].init.body).text, /\+79182489248/);
-    assert.match(calls[1].url, /sendDocument/);
+    assert.equal(calls.length, 4);
+    assert.ok(calls.some(c => /sendDocument/.test(c.url)));
+    assert.deepEqual(calls.filter(c => /sendMessage/.test(c.url)).map(c => JSON.parse(c.init.body).chat_id).sort(), ['-100500', '42']);
     assert.equal((await DB.prepare('SELECT telegram_ok FROM quotes').first()).telegram_ok, 1);
     assert.equal((await post({ phone: '89182489248' })).status, 429);
   } finally { close(); }
