@@ -2,6 +2,8 @@ import { PDFDocument, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 
 const W=595.28,H=841.89,M=36,R=W-M;
+// Реквизиты салона (те же, что на странице «Салон»).
+const SALON={name:'Italon Experience',city:'Краснодар',address:'ул. Бабушкина, 248',phone:'+7 918 24 89 248',email:'italon@amanagroup.org',site:'italon-x2.ru',hours:'Пн—Пт 10:00—19:00, Сб—Вс 10:00—18:00'};
 const colors={ink:rgb(.18,.22,.17),muted:rgb(.39,.43,.36),pale:rgb(.9,.92,.86),line:rgb(.81,.83,.78),stripe:rgb(.97,.97,.95)};
 const number=(v,d=3)=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:d}).format(v).replace(/\u00a0|\u202f/g,' ');
 const money=k=>new Intl.NumberFormat('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}).format(k/100).replace(/\u00a0|\u202f/g,' ');
@@ -14,7 +16,7 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   const now=options.now||new Date();
   const date=new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Moscow',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);
   const id=options.quoteId||`${date.split('.').reverse().join('')}-${crypto.randomUUID().slice(0,6).toUpperCase()}`;
-  doc.setTitle('Коммерческое предложение - Italon / X2');doc.setAuthor('italon-x2.ru');doc.setCreationDate(now);doc.setModificationDate(now);
+  doc.setTitle(`Коммерческое предложение - ${SALON.name} ${SALON.city}, ${SALON.address}`);doc.setAuthor(`${SALON.name} ${SALON.city}`);doc.setCreationDate(now);doc.setModificationDate(now);
   let page,y;
   const write=(text,x,baseline,size=10,color=colors.ink)=>page.drawText(clean(text),{x,y:baseline,font,size,color});
   const right=(text,rightX,baseline,size=10,color=colors.ink)=>{const s=clean(text);write(s,rightX-font.widthOfTextAtSize(s,size),baseline,size,color);};
@@ -41,9 +43,12 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   }
   function newPage(first=false,table=false){
     page=doc.addPage([W,H]);page.drawRectangle({x:0,y:H-7,width:W,height:7,color:colors.ink});
-    write('ITALON / X2',M,H-51,23);right('italon-x2.ru',R,H-48,10,colors.muted);
-    if(first){write('Коммерческое предложение',M,H-101,23);write(`№ ${id}`,M,H-129,10,colors.muted);right(`от ${date}`,R,H-129,10,colors.muted);y=H-159;}
-    else{write(`Предложение № ${id} / продолжение`,M,H-80,9,colors.muted);y=H-105;}
+    write(SALON.name,M,H-53,23);
+    write(`${SALON.city} · ${SALON.address}`,M,H-73,10.5,colors.muted);
+    right(SALON.phone,R,H-47,10);right(SALON.email,R,H-61,9,colors.muted);right(SALON.site,R,H-74,9,colors.muted);
+    page.drawLine({start:{x:M,y:H-90},end:{x:R,y:H-90},thickness:.5,color:colors.line});
+    if(first){write('Коммерческое предложение',M,H-126,20);write(`№ ${id}`,M,H-150,10,colors.muted);right(`от ${date}`,R,H-150,10,colors.muted);y=H-178;}
+    else{write(`Коммерческое предложение № ${id} / продолжение`,M,H-112,9,colors.muted);y=H-134;}
     if(table)tableHeader();
   }
   function paragraph(text,size=10,color=colors.ink,gap=15){
@@ -82,11 +87,15 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   right(totalText,R-14,y-49,totalSize);y-=92;
   paragraph('Условия предложения',10,colors.ink,17);
   paragraph('Количество рассчитано с учётом целых упаковок и минимального заказа из прайса. Наличие, тон, калибр и сроки поставки уточняются при подтверждении заказа. Доставка рассчитывается отдельно.',8.7,colors.muted,13);
+  y-=15;paragraph('Салон',10,colors.ink,17);
+  paragraph(`${SALON.name}, ${SALON.city}, ${SALON.address}`,9,colors.ink,14);
+  paragraph(`${SALON.hours}`,9,colors.muted,14);
+  paragraph(`Тел. ${SALON.phone} · ${SALON.email}`,9,colors.muted,14);
   if(details.note?.trim()){y-=15;paragraph('Комментарий',10,colors.ink,17);paragraph(details.note.trim().slice(0,500),9,colors.ink,14);}
   for(const [i,p] of doc.getPages().entries()){
     page=p;page.drawLine({start:{x:M,y:49},end:{x:R,y:49},thickness:.5,color:colors.line});
-    write('ITALON / X2  •  italon-x2.ru',M,33,8,colors.muted);
+    write(`${SALON.name} · ${SALON.city}, ${SALON.address} · ${SALON.phone}`,M,33,8,colors.muted);
     right(`${i+1} / ${doc.getPageCount()}`,R,33,8,colors.muted);
   }
-  return {bytes:await doc.save(),filename:`KP-Italon-X2-${id}.pdf`,pageCount:doc.getPageCount(),id};
+  return {bytes:await doc.save(),filename:`KP-Italon-Experience-${id}.pdf`,pageCount:doc.getPageCount(),id};
 }
