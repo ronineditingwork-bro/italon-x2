@@ -9,7 +9,7 @@ const dec = s => String(s).replace(/(\d)\.(\d)/g, '$1,$2');
 /** Отделка из прайса: «ЛЮКС И РЕТТИФИЦИРОВАННАЯ» → { surface: 'люкс', rectified: true } */
 export function finishInfo(p) {
   const parts = String(p.finish || '').split(/\s+И\s+/).map(lower).filter(Boolean);
-  return { surface: parts.filter(x => !x.startsWith('реттиф')).join(' и '), rectified: parts.some(x => x.startsWith('реттиф')) };
+  return { surface: parts.filter(x => !x.startsWith('реттиф')).map(x => x.replace(/ый$/, 'ая')).join(' и '), rectified: parts.some(x => x.startsWith('реттиф')) };
 }
 /** Подпись варианта отделки: «Люкс», «Натуральный» */
 export const surfaceLabel = p => cap(finishInfo(p).surface) || '—';
@@ -64,7 +64,7 @@ export function productSpecs(p, { collectionLabel = '', categoryLabel = '' } = {
     f.surface && ['Поверхность', cap(f.surface)],
     f.rectified && ['Кромка', 'Ректифицированная'],
     p.section === 'x2' && ['Толщина', '20 мм'],
-    ['Линия', p.section === 'x2' ? 'X2 — для улицы' : 'Italon — для интерьера'],
+    p.collectionId !== 'packaging' && ['Линия', p.section === 'x2' ? 'X2 — для улицы' : 'Italon — для интерьера'],
   ].filter(Boolean);
   const perPallet = packsPerPallet(p);
   const pack = p.collectionId === 'packaging' ? [['Продажа', 'Поштучно']] : [
