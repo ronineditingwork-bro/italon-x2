@@ -105,3 +105,24 @@ export function variantsOf(p) {
   return [...byFinish.values()];
 }
 export { products, priceInfo, layingMethods, outdoorSpaces };
+
+// ---- Этап B2 (аддитивно): уточнённая группировка вариантов отделки для страниц товара и коллекции.
+// В прайсе встречается слитное написание («80X160ЛЮКС», «МИКЕЛ.80X160», «БР.ДАРК» / «БР. ДАРК», «ШЛ», «RET»):
+// variantKey их не связывает (96 позиций с вариантами), finishVariantKey — связывает (116 позиций).
+const FINISH_TOKENS_B = /^(ЛЮКС|РЕТ|RET|НАТ|ПАТ|СТР|ШЛИФ|ШЛ|СИЛК|ГЛ|МАТ|ЛАП|Х2|X2|\d+(\.\d+)?([XХ]\d+(\.\d+)?)?)$/;
+export function finishVariantKey(p) {
+  const base = p.name.replace(/(\d)(ЛЮКС|РЕТ|ПАТ)/g, '$1 $2').replace(/\.(?=\S)/g, '. ').split(/\s+/).filter(t => t && !FINISH_TOKENS_B.test(t)).join(' ');
+  return `${p.collectionId}|${p.format}|${base}`;
+}
+export const finishVariantGroups = new Map();
+for (const p of products) {
+  const key = finishVariantKey(p);
+  if (!finishVariantGroups.has(key)) finishVariantGroups.set(key, []);
+  finishVariantGroups.get(key).push(p);
+}
+/** Как variantsOf, но по finishVariantKey: по одной позиции на отделку (текущая — первой). */
+export function finishVariantsOf(p) {
+  const byFinish = new Map([[p.finish, p]]);
+  for (const other of finishVariantGroups.get(finishVariantKey(p)) || []) if (!byFinish.has(other.finish)) byFinish.set(other.finish, other);
+  return [...byFinish.values()];
+}
