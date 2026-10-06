@@ -1,0 +1,27 @@
+/* 404: заголовок, поиск по каталогу, кадр коллекции, разделы сайта в сетке из тонких линий. */
+.nf__grid { row-gap: clamp(2.5rem, 1.5rem + 3vw, 5rem); align-items: end; }
+.nf__main { grid-column: 1 / span 7; display: grid; gap: var(--s-5); justify-items: start; }
+.nf__title { max-width: 9em; }
+.nf__lead { color: var(--text-2); }
+.nf__search { display: grid; gap: .5rem; width: 100%; max-width: 34rem; margin-top: var(--s-3); }
+.nf__search-row { display: flex; gap: var(--s-2); }
+.nf__search-row .input { flex: 1 1 auto; min-width: 0; }
+.nf__figure { grid-column: 9 / -1; }
+.nf__media { display: block; aspect-ratio: 4 / 5; }
+.nf__nav { grid-column: 1 / -1; }
+.nf__links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--gap); border-top: 1px solid var(--text); }
+.nf__link { display: grid; gap: .3rem; height: 100%; padding-block: var(--s-4) var(--s-5); border-bottom: 1px solid var(--line); }
+.nf__link-title { display: inline-flex; align-items: center; gap: .75rem; font-size: var(--fs-h4); font-weight: 500; letter-spacing: -.01em; }
+.nf__link-text { font-size: var(--fs-s); color: var(--text-2); }
+.nf__link:hover .arrow { transform: translateX(.25rem); }
+@media (max-width: 63.99rem) {
+  .nf__main { grid-column: 1 / span 8; }
+  .nf__figure { grid-column: 9 / -1; }
+  .nf__links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 47.99rem) {
+  .nf__main, .nf__figure { grid-column: 1 / -1; }
+  .nf__media { aspect-ratio: 4 / 3; }
+  .nf__links { grid-template-columns: minmax(0, 1fr); }
+  .nf__search-row .btn { padding-inline: 1.25rem; }
+}

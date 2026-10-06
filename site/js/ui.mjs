@@ -6,7 +6,7 @@ const html = document.documentElement;
 /** Относительный путь к корню сайта («./», «../», «../../») — для шаблонов. */
 export const rootRel = html.dataset.root || './';
 /** Абсолютный URL корня сайта (работает и на домене, и под /italon-x2/). */
-export const ROOT = new URL(rootRel, location.href);
+export const ROOT = new URL(rootRel, document.baseURI);
 export const siteUrl = path => new URL(String(path).replace(/^\//, ''), ROOT).href;
 export const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
