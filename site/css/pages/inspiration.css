@@ -1,3 +1,60 @@
-/* Вдохновение (/inspiration/). Каркас этапа A: «кирпичная» раскладка по колонкам. */
-.inspiration-grid { columns: 3 18rem; column-gap: var(--gap); }
-.inspiration-grid .tile { break-inside: avoid; margin-bottom: clamp(2rem, 1.5rem + 1.5vw, 3rem); }
+/* Вдохновение (/inspiration/): журнальная мозаика (раскладка — shared/mosaic.mjs), фильтр — .cx-switch из collections.css. */
+.insp-section { padding-top: clamp(2.5rem, 1.5rem + 3vw, 5rem); }
+.insp-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: clamp(3rem, 1.8rem + 4vw, 7rem); align-items: start; }
+.insp { display: grid; gap: var(--s-4); align-content: start; min-width: 0; }
+.insp__media { display: block; aspect-ratio: var(--ratio, 4 / 5); cursor: zoom-in; }
+.insp__cap { display: grid; gap: var(--s-2); justify-items: start; }
+.insp__top { display: flex; gap: var(--s-3); width: 100%; padding-top: var(--s-3); border-top: 1px solid var(--line); font-size: var(--fs-xs); font-weight: 500; letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--text-2); }
+.insp__num { color: var(--text); letter-spacing: .04em; }
+.insp__name { font-size: var(--fs-h4); font-weight: 500; letter-spacing: -.01em; line-height: 1.3; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; text-decoration-color: transparent; transition: text-decoration-color var(--t) var(--ease); }
+.insp__name:hover { text-decoration-color: currentColor; }
+.insp__meta { font-size: var(--fs-s); color: var(--text-2); }
+.insp__quote { font-size: var(--fs-l); line-height: 1.5; color: var(--text); max-width: 30em; }
+.insp__links { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-6); margin-top: var(--s-3); }
+
+/* ряды */
+.m-big { grid-column: span 7; }
+.m-big--r { grid-column: 6 / span 7; }
+.m-small--r { grid-column: 9 / span 4; }
+.m-small--l { grid-column: 1 / span 4; }
+.m-small { margin-top: clamp(3rem, 8vw, 9rem); }
+.m-third { grid-column: span 4; }
+.m-half { grid-column: span 6; }
+.m-solo { grid-column: 4 / span 6; }
+.m-drop { margin-top: clamp(2rem, 5vw, 5.5rem); }
+.m-big .insp__name { font-size: var(--fs-h3); font-weight: 400; letter-spacing: -.02em; }
+/* разворот: кадр 7 колонок + подпись-цитата */
+.m-feature { grid-column: 1 / -1; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); align-items: end; padding-block: clamp(1rem, .5rem + 2vw, 2.5rem); }
+.m-feature .insp__media { grid-column: 1 / span 7; }
+.m-feature .insp__cap { grid-column: 9 / -1; gap: var(--s-4); }
+.m-feature .insp__name { font-size: var(--fs-h2); font-weight: 400; letter-spacing: -.025em; line-height: 1.1; }
+.m-feature .insp__quote { font-size: var(--fs-h4); line-height: 1.45; }
+.m-feature:nth-child(n+2 of .m-feature) .insp__media { grid-column: 6 / -1; grid-row: 1; }
+.m-feature:nth-child(n+2 of .m-feature) .insp__cap { grid-column: 1 / span 4; grid-row: 1; }
+
+.insp-grid.is-entering > .insp { animation: insp-enter var(--t-slow) var(--ease-out) both; }
+@keyframes insp-enter { from { opacity: 0; transform: translateY(18px); } }
+
+@media (max-width: 63.99rem) {
+  .m-feature .insp__media, .m-feature:nth-child(n+2 of .m-feature) .insp__media { grid-column: 1 / -1; grid-row: auto; }
+  .m-feature .insp__cap, .m-feature:nth-child(n+2 of .m-feature) .insp__cap { grid-column: 1 / -1; grid-row: auto; }
+  .m-feature { row-gap: var(--s-5); }
+}
+@media (max-width: 47.99rem) {
+  .insp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--s-7); }
+  .insp { grid-column: 1 / -1 !important; margin-top: 0 !important; }
+  .m-third:not(.m-third--first), .m-half { grid-column: span 1 !important; }
+  .m-big .insp__media, .m-small .insp__media, .m-third--first .insp__media { aspect-ratio: 4 / 3; }
+  .m-third:not(.m-third--first) .insp__media, .m-half .insp__media { aspect-ratio: 4 / 5; }
+  .m-feature { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .m-third:not(.m-third--first) .insp__top span:not(.insp__num), .m-half .insp__top span:not(.insp__num) { display: none; }
+  .m-third:not(.m-third--first) .insp__meta, .m-half .insp__meta { font-size: var(--fs-xs); }
+}
+
+/* Призыв в конце */
+.insp-end { padding-block: 0 var(--section); }
+.insp-end__inner { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--s-6); flex-wrap: wrap; padding-top: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); border-top: 1px solid var(--text); }
+.insp-end__inner > div:first-child { display: grid; gap: var(--s-3); max-width: 40rem; }
+
+/* вторая ссылка в диалоге фото (добавляет js/pages/inspiration.mjs) */
+#photo-dialog [data-insp-items] { margin-left: var(--s-5); }
