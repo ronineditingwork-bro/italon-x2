@@ -9,9 +9,15 @@ test('catalog preserves sections and deduplicates the shared transport crate',()
  assert.equal(products.filter(p=>p.code==='450080000001').length,1);assert.ok(products.every(p=>p.canOrder));
  assert.equal(productMap.get('450080000001').priceKopecks,1473500);
 });
-test('X2 calculation respects pallet minimum and prices square metres',()=>{
+test('X2 calculation: минимальный заказ — одна коробка, паллетой покупать не обязательно',()=>{
  const result=calculateArea('610010001539',20,10);
- assert.equal(result.packs,36);assert.equal(result.quantity,25.92);assert.equal(result.pieces,72);assert.equal(result.totalKopecks,17651520);assert.equal(result.minimumApplied,true);
+ assert.equal(result.packs,31);assert.equal(result.quantity,22.32);assert.equal(result.pieces,62);assert.equal(result.totalKopecks,15199920);assert.equal(result.minimumApplied,false);
+ const p=productMap.get('610010001539');
+ assert.equal(p.minPacks,1);assert.equal(p.minimum,'1 коробка');
+ const one=lineFor('610010001539',1);
+ assert.equal(one.packs,1);assert.equal(one.quantity,0.72);assert.equal(one.totalKopecks,490320);
+ // нигде в минимальном заказе не осталось паллеты
+ assert.equal(products.filter(x=>/паллет/i.test(x.minimum)).length,0);
 });
 test('piece-priced mosaic bills pieces, not the area of the box',()=>{
  const result=lineFor('620110000263',1);
@@ -25,7 +31,7 @@ test('exact package boundary stays exact but a slightly larger area rounds up',(
  assert.equal(calculateArea(p.code,3.33601,0).packs,2);
 });
 test('rejects invalid quantities and duplicate, unrecognized or oversized inputs',()=>{
- assert.throws(()=>lineFor('610010001539',35));assert.throws(()=>lineFor('620110000263',1.5));assert.throws(()=>lineFor('620110000263',10000));
+ assert.throws(()=>lineFor('610010001539',0));assert.throws(()=>lineFor('610010001539',1.5));assert.throws(()=>lineFor('620110000263',1.5));assert.throws(()=>lineFor('620110000263',10000));
  assert.throws(()=>calculateArea('610010001539',-1,10));assert.throws(()=>calculateArea('610010001539',Infinity,10));assert.throws(()=>calculateArea('610010001539',20,90));
  assert.throws(()=>calculateCart([{code:'unknown',packs:1}]));assert.throws(()=>calculateCart([{code:'620110000263',packs:1},{code:'620110000263',packs:1}]));
 });

@@ -150,7 +150,7 @@ function update() {
 <div><dt>Цена</dt><dd>${money(p.priceKopecks)} за м²</dd></div>
 <div><dt>Остаток сверх расчёта</dt><dd>${m2(Math.max(0, areaPacked - r.target))}</dd></div>
 </dl>
-${r.minimumApplied ? `<p class="calc-min">Учтён минимальный заказ из прайса — ${esc(lower(p.minimum))} (${packWord(p, p.minPacks)}). По площади хватило бы ${p.orderUnit === 'шт' ? `${number(before, 0)}\u00a0шт.` : `${number(before, 0)}\u00a0${plural(before, ['коробки', 'коробок', 'коробок'])}`}.</p>` : ''}
+${r.minimumApplied ? `<p class="calc-min">Учтён минимальный заказ — ${esc(lower(p.minimum))} (${packWord(p, p.minPacks)}). По площади хватило бы ${p.orderUnit === 'шт' ? `${number(before, 0)}\u00a0шт.` : `${number(before, 0)}\u00a0${plural(before, ['коробки', 'коробок', 'коробок'])}`}.</p>` : ''}
 <div class="calc-total"><span>Сумма с НДС</span><strong>${money(r.totalKopecks)}</strong></div>`;
   setAdd();
   clearTimeout(liveTimer);

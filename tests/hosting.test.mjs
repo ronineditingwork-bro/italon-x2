@@ -98,7 +98,7 @@ test('independent hosting preserves cart semantics across a proxy and restart', 
     assert.equal((await put({ version: 4, items: [] })).status, 409);
     assert.equal((await call(server.port, '/api/cart', { method: 'PUT', headers: { Cookie: cookie, Origin: 'https://example.com', 'Content-Type': 'application/json' }, body: { version: 5, items: [] } })).status, 403);
     assert.equal((await call(server.port, '/api/cart', { headers: { Cookie: cookie, 'Sec-Fetch-Site': 'cross-site' } })).status, 403);
-    assert.equal((await put({ version: 5, items: [{ code: '610010001539', packs: 35 }] })).status, 400);
+    assert.equal((await put({ version: 5, items: [{ code: '610010001539', packs: 0 }] })).status, 400);
     assert.equal((await put(' '.repeat(20001))).status, 413);
     await server.stop(); server = null;
     server = await start(dbPath);

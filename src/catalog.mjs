@@ -20,13 +20,11 @@ for (const series of raw.series) for (const row of series.items) {
   const unit = row.unit === 'Кв.м' ? 'м²' : 'шт';
   const boxed = row.boxonly === true;
   const unitsPerPack = unit === 'м²' ? row.box : (boxed ? row.pcs : 1);
-  const palletMinimum = /паллета/i.test(row.min);
-  const pieceMinimum = Number(row.min.match(/^(\d+)\s*ШТ/i)?.[1] || 1);
-  const minPacks = palletMinimum && row.box > 0 && row.pallet > 0
-    ? roundUp(row.pallet / row.box)
-    : Math.max(1, roundUp(pieceMinimum / (unitsPerPack || 1)));
-  const canOrder = Number.isFinite(unitsPerPack) && unitsPerPack > 0 &&
-    (!palletMinimum || (row.box > 0 && row.pallet > 0));
+  // Продаём не только паллетами: в прайсе у многих позиций стоит «1 паллета», но минимальный заказ у нас — 1 коробка.
+  const pieceMinimum = Number(row.min.match(/^(\d+)\s*ШТ/i)?.[1] || 0); // явный минимум в штуках («2 ШТ») — как в прайсе
+  const minPacks = pieceMinimum ? Math.max(1, roundUp(pieceMinimum / (unitsPerPack || 1))) : 1;
+  const canOrder = Number.isFinite(unitsPerPack) && unitsPerPack > 0;
+  const minimum = /паллета/i.test(row.min) ? '1 коробка' : (row.min || '1 шт');
   const crate = row.code === '450080000001';
   unique.set(row.code, {
     code: row.code, name: row.name, latin: row.latin,
@@ -39,7 +37,7 @@ for (const series of raw.series) for (const row of series.items) {
     unitMilliPerPack: Math.round((unitsPerPack || 0) * 1000),
     piecesPerPack: boxed ? row.pcs : 1, areaPerPack: crate ? null : row.box,
     palletArea: crate ? null : row.pallet, minPacks,
-    minimum: row.min || '1 шт', canOrder,
+    minimum, canOrder,
     image: crate ? images.products[row.code] || null : images.products[row.code] || images.collections[series.slug] || null,
   });
 }
