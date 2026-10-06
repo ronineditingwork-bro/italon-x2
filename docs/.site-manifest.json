@@ -1,11 +1,11 @@
 {
- "buildId": "05ada67946",
+ "buildId": "859e2d27b0",
  "files": [
   "404.html",
+  "assets/chunks/chunk-46AGGFWX.js",
   "assets/chunks/chunk-6DHFEWGX.js",
-  "assets/chunks/chunk-BZYZ6VKF.js",
   "assets/chunks/chunk-CAUZGAIU.js",
-  "assets/chunks/chunk-HLP3TT44.js",
+  "assets/chunks/chunk-ISNCN65T.js",
   "assets/chunks/quote-PB3MJNJW.js",
   "assets/main.js",
   "assets/pages/calculator.css",
@@ -13,6 +13,7 @@
   "assets/pages/catalog.css",
   "assets/pages/catalog.js",
   "assets/pages/collection.css",
+  "assets/pages/collection.js",
   "assets/pages/collections.css",
   "assets/pages/collections.js",
   "assets/pages/home.css",

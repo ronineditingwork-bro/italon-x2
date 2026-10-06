@@ -9,4 +9,4 @@ ${e>1?`<p class="product-card__variants">${e}\xA0${p(e,["\u0432\u0430\u0440\u043
 </div>
 <div class="product-card__foot"><p class="product-card__price">${w(t)}</p>
 <button type="button" class="product-card__add" data-add="${r(t.code)}" aria-label="\u0412 \u043A\u043E\u0440\u0437\u0438\u043D\u0443: ${r(t.name)}"${t.canOrder?"":" disabled"}>${f}</button></div>
-</article>`}export{r as a,s as b,x as c,h as d,k as e,d as f,$ as g,y as h,M as i,R as j,_ as k,U as l,C as m,b as n,v as o,L as p,w as q,I as r};
+</article>`}export{r as a,s as b,x as c,h as d,p as e,k as f,d as g,$ as h,y as i,M as j,R as k,_ as l,U as m,C as n,b as o,v as p,L as q,w as r,I as s};

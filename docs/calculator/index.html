@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="ru" data-build="05ada67946" class="no-js" data-root="../" data-page="calculator">
+<html lang="ru" data-build="859e2d27b0" class="no-js" data-root="../" data-page="calculator">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Калькулятор упаковок — Italon Experience</title>
-<meta name="description" content="Расчёт количества упаковок керамогранита Italon и X2 по площади с запасом и минимальным заказом.">
+<meta name="description" content="Расчёт количества упаковок керамогранита Italon и X2 по площади или размерам помещения: запас на подрезку, целые упаковки, минимальный заказ и сумма по прайсу с НДС.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -14,8 +14,8 @@ if(w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches){h.cla
 h.classList.add('reveal');if(!('onpagereveal' in w))h.classList.add('page-fade');
 setTimeout(function(){if(!h.classList.contains('motion-ready'))h.classList.remove('reveal');},3000);
 })(document,window);</script>
-<link rel="stylesheet" href="../assets/site.css?v=a5eac84f5d"><link rel="stylesheet" href="../assets/pages/calculator.css?v=48167efb49">
-<script type="module" src="../assets/main.js?v=5f82b02dc2"></script><script type="module" src="../assets/pages/calculator.js?v=5d5c9775e0"></script>
+<link rel="stylesheet" href="../assets/site.css?v=a5eac84f5d"><link rel="stylesheet" href="../assets/pages/calculator.css?v=09b89ce74b">
+<script type="module" src="../assets/main.js?v=7c073e7f43"></script><script type="module" src="../assets/pages/calculator.js?v=7646734216"></script>
 </head>
 <body class="page-calculator">
 <a class="skip-link" href="#main">К содержанию</a>
@@ -33,34 +33,64 @@ setTimeout(function(){if(!h.classList.contains('motion-ready'))h.classList.remov
 </div>
 </header>
 <main id="main" tabindex="-1">
-<header class="page-head">
-<div class="wrap">
-<nav class="breadcrumbs" aria-label="Навигация по разделам"><ol><li><a href="../">Главная</a></li><li><span aria-current="page">Калькулятор</span></li></ol></nav>
-<div class="page-head__grid">
-<div class="page-head__text">
-<h1 class="t-h1" data-reveal>Калькулятор упаковок</h1>
-<p class="t-lead page-head__lead" data-reveal>Укажите площадь и запас на подрезку: рассчитаем целые упаковки, сумму с НДС и учтём минимальный заказ из прайса.</p></div>
-
+<div class="wrap"><nav class="breadcrumbs" aria-label="Навигация по разделам"><ol><li><a href="../">Главная</a></li><li><span aria-current="page">Калькулятор</span></li></ol></nav></div>
+<section class="calc-page" aria-labelledby="calc-title">
+<div class="wrap calc-layout">
+<div class="calc-intro">
+<p class="eyebrow" data-reveal>Калькулятор упаковок</p>
+<h1 class="t-h1" id="calc-title" data-reveal data-reveal-delay="60">Сколько плитки нужно</h1>
+<p class="t-lead calc-intro__lead" data-reveal data-reveal-delay="120">Выберите материал и укажите площадь: посчитаем целые упаковки с запасом на подрезку, учтём минимальный заказ из прайса и сумму с НДС. Готовый расчёт можно сразу положить в корзину и выгрузить коммерческое предложение в PDF.</p>
 </div>
+<div class="calc-how" data-reveal>
+<h2 class="calc-how__title">Как считаем</h2>
+<ol class="calc-how__list" role="list"><li><span class="calc-how__n">01</span><div><h3>Площадь</h3><p>Укажите площадь в м² или длину и ширину помещения — площадь посчитаем сами.</p></div></li><li><span class="calc-how__n">02</span><div><h3>Запас</h3><p>Добавляем выбранный процент на подрезку и возможный бой.</p></div></li><li><span class="calc-how__n">03</span><div><h3>Целые упаковки</h3><p>Округляем вверх до целых коробок: плитка продаётся упаковками, указанными в прайсе.</p></div></li><li><span class="calc-how__n">04</span><div><h3>Минимальный заказ</h3><p>Если в прайсе задан минимум — например, паллета, — расчёт его учитывает и показывает, сколько получилось бы без него.</p></div></li><li><span class="calc-how__n">05</span><div><h3>Сумма</h3><p>Считаем по цене прайса от 01.07.2026 (склад Краснодар, с НДС) за фактическое количество в упаковках.</p></div></li></ol>
+<p class="calc-how__note">Расчёт ориентировочный: раскладка, схема подрезки и наличие согласуются отдельно — в салоне или по телефону.</p>
+<figure class="calc-photo" id="calc-photo" hidden><div class="media calc-photo__media"></div><figcaption class="media-note"></figcaption></figure>
 </div>
-</header>
-<section class="section" style="padding-top:0">
-<div class="wrap grid calc">
-<form class="calc__form" id="calc-form" novalidate>
-<label class="field"><span class="field__label">Материал</span><select class="select" id="calc-product" disabled><option>Загружаем каталог…</option></select><span class="field__hint">Позиции с ценой за м². Начните вводить название в поиске каталога, если не знаете артикул.</span></label>
-<div class="chips" role="group" aria-label="Способ расчёта"><button type="button" class="chip" data-calc-mode="area" aria-pressed="true">По площади</button><button type="button" class="chip" data-calc-mode="size" aria-pressed="false">По размерам</button></div>
-<div class="field-row" id="calc-area-row"><label class="field"><span class="field__label">Площадь, м²</span><input class="input" id="calc-area" type="number" inputmode="decimal" min="0.01" max="100000" step="0.01" value="20"></label></div>
-<div class="field-row" id="calc-size-row" hidden><label class="field"><span class="field__label">Длина, м</span><input class="input" id="calc-length" type="number" inputmode="decimal" min="0.01" max="1000" step="0.01" value="5"></label><label class="field"><span class="field__label">Ширина, м</span><input class="input" id="calc-width" type="number" inputmode="decimal" min="0.01" max="1000" step="0.01" value="4"></label></div>
-<label class="field"><span class="field__label">Запас на подрезку</span><select class="select" id="calc-reserve"><option value="0">Без запаса</option><option value="5">5%</option><option value="10" selected>10%</option><option value="15">15%</option><option value="20">20%</option></select></label>
-<p class="form-error" id="calc-error" role="alert" hidden></p>
+<div class="calc-panel" id="calc-panel">
+<form class="calc-form" id="calc-form" novalidate aria-labelledby="calc-title">
+<div class="calc-block">
+<label class="calc-step" for="calc-material" id="calc-material-label"><span>01</span>Материал</label>
+<div class="combo" id="calc-combo">
+<div class="combo__control"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><input class="combo__input" id="calc-material" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="calc-listbox" aria-describedby="calc-material-hint" autocomplete="off" spellcheck="false" placeholder="Коллекция, цвет или артикул" disabled>
+<button type="button" class="combo__clear" id="calc-clear" aria-label="Очистить поиск материала" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 1l14 14M15 1 1 15"/></svg></button></div>
+<ul class="combo__list" id="calc-listbox" role="listbox" aria-labelledby="calc-material-label" hidden></ul>
+</div>
+<p class="field__hint" id="calc-material-hint">741 позиций с ценой за м². Стрелки ↑ ↓ — выбор, Enter — подтвердить.</p>
+<p class="calc-notice" id="calc-notice" role="alert" hidden></p>
+<div class="calc-picked" id="calc-picked" hidden></div>
+</div>
+<fieldset class="calc-block">
+<legend class="calc-step"><span>02</span>Площадь</legend>
+<div class="segmented" role="radiogroup" aria-label="Способ расчёта">
+<label><input type="radio" name="mode" value="area" checked><span>По площади</span></label>
+<label><input type="radio" name="mode" value="size"><span>По размерам</span></label>
+</div>
+<div class="calc-inputs" id="calc-area-row">
+<label class="field"><span class="field__label">Площадь, м²</span><span class="calc-unit"><input class="input" id="calc-area" name="area" type="text" inputmode="decimal" value="20" autocomplete="off" aria-describedby="calc-area-error"><span aria-hidden="true">м²</span></span><span class="calc-error" id="calc-area-error"></span></label>
+</div>
+<div class="calc-inputs calc-inputs--two" id="calc-size-row" hidden>
+<label class="field"><span class="field__label">Длина, м</span><span class="calc-unit"><input class="input" id="calc-length" name="length" type="text" inputmode="decimal" value="5" autocomplete="off" aria-describedby="calc-length-error"><span aria-hidden="true">м</span></span><span class="calc-error" id="calc-length-error"></span></label>
+<span class="calc-times" aria-hidden="true">×</span>
+<label class="field"><span class="field__label">Ширина, м</span><span class="calc-unit"><input class="input" id="calc-width" name="width" type="text" inputmode="decimal" value="4" autocomplete="off" aria-describedby="calc-width-error"><span aria-hidden="true">м</span></span><span class="calc-error" id="calc-width-error"></span></label>
+<p class="field__hint calc-inputs__sum" id="calc-size-sum"></p>
+</div>
+</fieldset>
+<fieldset class="calc-block">
+<legend class="calc-step"><span>03</span>Запас на подрезку</legend>
+<div class="segmented segmented--five" role="radiogroup" aria-label="Запас на подрезку"><label><input type="radio" name="reserve" value="0"><span>0 %</span></label><label><input type="radio" name="reserve" value="5"><span>5 %</span></label><label><input type="radio" name="reserve" value="10" checked><span>10 %</span></label><label><input type="radio" name="reserve" value="15"><span>15 %</span></label><label><input type="radio" name="reserve" value="20"><span>20 %</span></label></div>
+<p class="field__hint">Запас покрывает подрезку и возможный бой. Нужный процент зависит от раскладки и формата — его стоит уточнить при согласовании.</p>
+</fieldset>
 </form>
-<div class="calc__result" aria-live="polite">
-<p class="eyebrow">Результат</p>
-<div id="calc-result"><p class="t-h2">—</p></div>
-<button type="button" class="btn btn--block" id="calc-add" disabled>Добавить расчёт в корзину</button>
-<p class="t-small">Расчёт по площади. Раскладка и схема подрезки согласуются отдельно.</p>
+<section class="calc-result" aria-labelledby="calc-result-title">
+<h2 class="calc-step" id="calc-result-title"><span>04</span>Результат</h2>
+<div class="calc-output" id="calc-output"><p class="calc-empty">Выберите материал — здесь появится расчёт: упаковки, площадь, количество штук и сумма.</p>
+<noscript><p class="calc-empty">Калькулятор работает при включённом JavaScript. Цены и упаковки каждой позиции — на страницах товаров в <a class="link" href="../catalog/">каталоге</a>.</p></noscript></div>
+<p class="sr-only" id="calc-live" role="status" aria-live="polite"></p>
+<div class="calc-actions"><button type="button" class="btn" id="calc-add" disabled>Добавить в корзину</button><a class="btn btn--outline" id="calc-product-link" href="../catalog/" hidden>Страница товара</a></div>
+<p class="calc-note">Расчёт ориентировочный; раскладка и подрезка согласуются отдельно. Цены по прайсу от 01.07.2026, склад Краснодар, с НДС; наличие уточняется. Сайт не принимает оплату.</p>
+</section>
 </div>
-<noscript><p class="t-small">Калькулятор работает при включённом JavaScript.</p></noscript>
 </div>
 </section>
 </main>
