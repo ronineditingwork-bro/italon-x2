@@ -4,7 +4,7 @@ import { esc, ARROW } from '../shared/format.mjs';
 import { nav, stats, collections } from '../data.mjs';
 
 const notes = {
-  '/collections/': `${stats.collections} коллекции Italon и X2`,
+  '/collections/': `${stats.collections} коллекций Italon, X2, Coliseum и Контракт`,
   '/x2/': 'Керамогранит 20 мм и способы укладки',
   '/catalog/': `${stats.total} позиции прайса с фильтрами`,
   '/calculator/': 'Количество упаковок по площади',

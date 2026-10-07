@@ -10,13 +10,13 @@ const pub = resolve(import.meta.dirname, '../public');
 const fileFor = path => resolve(pub, path.endsWith('/') ? `.${path}index.html` : `.${path}`);
 const exists = async file => { try { return (await stat(file)).isFile(); } catch { return false; } };
 
-test('все страницы собраны: главная, разделы, 42 коллекции, 993 товара, 404', async () => {
+test('все страницы собраны: главная, разделы, 75 коллекций, 1202 товара, 404', async () => {
   const paths = new Set(pages.map(p => p.path));
   for (const path of ['/', '/collections/', '/x2/', '/catalog/', '/calculator/', '/inspiration/', '/salon/', '/404.html']) assert.ok(paths.has(path), path);
-  assert.equal(pages.filter(p => /^\/collections\/[^/]+\/$/.test(p.path)).length, 42);
-  assert.equal(pages.filter(p => p.path.startsWith('/product/')).length, 993);
+  assert.equal(pages.filter(p => /^\/collections\/[^/]+\/$/.test(p.path)).length, 75);
+  assert.equal(pages.filter(p => p.path.startsWith('/product/')).length, 1202);
   const catalog = JSON.parse(await readFile(resolve(pub, 'data/catalog.json'), 'utf8'));
-  assert.equal(catalog.products.length, 993);
+  assert.equal(catalog.products.length, 1202);
 });
 
 test('пути относительные, ссылки и ресурсы существуют (выборка страниц)', async () => {

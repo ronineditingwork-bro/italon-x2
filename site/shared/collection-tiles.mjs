@@ -4,7 +4,7 @@
 // Ряды: «пара» (7 + 5 колонок, крупная карточка попеременно слева и справа), «тройка» (4 + 4 + 4)
 // и «четвёрка» (3 × 4). Фото небольшие (480–800 px), поэтому карточка попадает в крупную ячейку,
 // только если её фото не растягивается больше ~1.3× (номинальные размеры ячеек — при контенте 1440).
-import { esc, fmt, positions, plural, collectionUrl } from './format.mjs';
+import { esc, fmt, positions, plural, collectionUrl, lineOf } from './format.mjs';
 
 const SLOTS = { L: [759, 662], M: [533, 662], T: [420, 525], Q: [307, 384] };
 const MAX_SCALE = 1.32;
@@ -61,7 +61,7 @@ export function packRows(list) {
   return rows;
 }
 
-const lineLabel = c => c.section === 'x2' ? 'X2 · улица, 20 мм' : 'Italon · интерьер';
+const lineLabel = c => lineOf(c.section).label;
 
 /** Строка форматов: плиты (все — в крупной карточке, до трёх — в малой) или мозаика/декор. */
 function formatsLine(c, full) {

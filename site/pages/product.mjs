@@ -1,8 +1,8 @@
-// /product/<код>/ — страница каждой позиции прайса (993).
+// /product/<код>/ — страница каждой позиции прайса .
 // Галерея (фото плитки + интерьерный кадр коллекции, увеличение в диалоге фото), название, артикул,
 // варианты отделки с живым переключением (site/js/pages/product.mjs; без JS — ссылки на соседние позиции),
 // цена и минимальный заказ, «В корзину», расчёт количества, консультация, характеристики, связанные позиции.
-import { esc, priceHtml, productCard, titleRu, collectionUrl, ARROW } from '../shared/format.mjs';
+import { esc, priceHtml, productCard, titleRu, collectionUrl, ARROW, lineOf } from '../shared/format.mjs';
 import { breadcrumbs } from '../shared/blocks.mjs';
 import { productSpecs, specsHtml, surfaceLabel, minimumNote, consultSubject, consultBody, formatLabel, variantsCount } from '../shared/product-view.mjs';
 import { products, collections, salon, finishVariantsOf as variantsOf, finishVariantKey as variantKey, categoryOf, categories, priceNote } from '../data.mjs';
@@ -91,7 +91,7 @@ function render(p) {
     const data = ordered.map(v => variantData(ctx, v, c));
     const d = data.find(x => x.code === p.code);
     const related = relatedOf(p, c, group);
-    const line = p.section === 'x2' ? 'X2 · улица, 20&nbsp;мм' : 'Italon · интерьер';
+    const line = lineOf(p.section).label.replace('20 мм', '20&nbsp;мм');
     const crumbs = [['Каталог', '/catalog/'], ...(c ? [[c.label, `/collections/${c.id}/`]] : []), [p.name]];
     const variantsBlock = data.length > 1 ? `<div class="pdp__variants">
 <p class="pdp__label" id="variants-label">Отделка: <span data-v="surface">${esc(d.surface)}</span></p>

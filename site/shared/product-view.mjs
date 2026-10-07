@@ -1,7 +1,7 @@
 // Страница товара: подписи и характеристики позиции. Общие для сборки (site/pages/product.mjs)
 // и браузера (site/js/pages/product.mjs — живое переключение вариантов отделки без перезагрузки),
 // поэтому статический HTML и HTML после переключения совпадают. Только данные прайса, без домыслов.
-import { esc, fmt, lower, money, number, plural } from './format.mjs';
+import { esc, fmt, lower, money, number, plural, lineOf } from './format.mjs';
 
 const cap = s => s ? s[0].toLocaleUpperCase('ru-RU') + s.slice(1) : '';
 const dec = s => String(s).replace(/(\d)\.(\d)/g, '$1,$2');
@@ -64,7 +64,7 @@ export function productSpecs(p, { collectionLabel = '', categoryLabel = '' } = {
     f.surface && ['Поверхность', cap(f.surface)],
     f.rectified && ['Кромка', 'Ректифицированная'],
     p.section === 'x2' && ['Толщина', '20 мм'],
-    p.collectionId !== 'packaging' && ['Линия', p.section === 'x2' ? 'X2 — для улицы' : 'Italon — для интерьера'],
+    p.collectionId !== 'packaging' && ['Линия', lineOf(p.section).product],
   ].filter(Boolean);
   const perPallet = packsPerPallet(p);
   const pack = p.collectionId === 'packaging' ? [['Продажа', 'Поштучно']] : [

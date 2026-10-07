@@ -80,7 +80,7 @@ function booking(ctx) {
 function before(ctx) {
   const c = collections.find(x => x.id === 'charme-deluxe') || collections.find(x => x.image);
   const links = [
-    ['/collections/', 'Коллекции', `${stats.collections} коллекции Italon и X2 с интерьерными кадрами.`],
+    ['/collections/', 'Коллекции', `${stats.collections} коллекций Italon, X2, Coliseum и Контракт.`],
     ['/catalog/', 'Каталог', `${stats.total} позиций прайса: форматы до ${fmt(stats.largestFormat)} см, отделки, цены.`],
     ['/calculator/', 'Калькулятор', 'Количество упаковок по площади — чтобы прийти с готовыми цифрами.'],
   ];

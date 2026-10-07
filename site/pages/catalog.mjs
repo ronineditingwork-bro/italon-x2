@@ -17,7 +17,7 @@ const facet = (id, title, body, { open = true } = {}) => `<details class="facet"
 export default {
   path: '/catalog/',
   title: 'Каталог',
-  description: `Каталог Italon и X2: ${stats.total} позиции с ценами по прайсу от 01.07.2026, поиск по названию и артикулу, фильтры по коллекции, формату, отделке и цене.`,
+  description: `Каталог Italon, X2, Coliseum и Контракт: ${stats.total} позиции с ценами по прайсу от 01.07.2026, поиск по названию и артикулу, фильтры по коллекции, формату, отделке и цене.`,
   styles: ['catalog'],
   scripts: ['catalog'],
   render: ctx => {
@@ -26,6 +26,8 @@ export default {
     const quick = [
       ['?section=italon', 'Italon · интерьер', stats.italon],
       ['?section=x2', 'X2 · улица', stats.x2],
+      ['?section=coliseum', 'Coliseum', stats.coliseum],
+      ['?section=contract', 'Контракт', stats.contract],
       ['?category=mosaic', 'Мозаика', mosaic],
       [`?format=${stats.largestFormat}`, `Макси-формат ${fmt(stats.largestFormat)}`, maxi],
     ];
@@ -34,7 +36,7 @@ export default {
       crumbs: [['Каталог']],
       eyebrow: 'Прайс от 01.07.2026 · склад Краснодар',
       title: 'Каталог',
-      lead: `${positions(stats.total)}: ${stats.italon} Italon для интерьера и ${stats.x2} X2 толщиной 20&nbsp;мм для улицы. Ищите по названию или артикулу, отбирайте по коллекции, формату, отделке и цене.`,
+      lead: `${positions(stats.total)}: ${stats.italon} Italon для интерьера, ${stats.x2} X2 толщиной 20&nbsp;мм для улицы, ${stats.coliseum} Coliseum и ${stats.contract} Контракт. Ищите по названию или артикулу, отбирайте по коллекции, формату, отделке и цене.`,
       aside: `<nav class="catalog-quick" aria-label="Быстрый выбор"><p class="eyebrow">Быстрый выбор</p><ul role="list">${quick.map(([q, label, n]) =>
         `<li><a href="${base}${q}" data-catalog-link>${esc(label)} <span>${n}</span></a></li>`).join('')}</ul></nav>`,
     })}

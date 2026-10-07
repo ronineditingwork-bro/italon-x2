@@ -24,6 +24,14 @@ export const minimumLabel = p => `Минимум: ${p.minimum}${p.minPacks > 1 &
 /** Путь медиа из данных («/media/…») → относительный к корню сайта. */
 export const media = (root, src) => root + String(src || '').replace(/^\//, '');
 
+/** Линии прайса: подписи для карточек, страниц и фильтров. section — поле позиции и коллекции. */
+export const LINE_INFO = {
+  italon: { short: 'Italon', label: 'Italon · интерьер', product: 'Italon — для интерьера', catalog: 'Italon · интерьер', what: 'Керамогранит Italon для интерьера' },
+  x2: { short: 'X2', label: 'X2 · улица, 20 мм', product: 'X2 — для улицы', catalog: 'X2 · улица', what: 'Керамогранит X2 толщиной 20\u00a0мм для открытых пространств' },
+  coliseum: { short: 'Coliseum', label: 'Italon Coliseum', product: 'Italon Coliseum', catalog: 'Coliseum', what: 'Керамогранит линии Italon Coliseum' },
+  contract: { short: 'Контракт', label: 'Italon Контракт', product: 'Italon Контракт', catalog: 'Контракт', what: 'Керамогранит линии Italon Контракт' },
+};
+export const lineOf = section => LINE_INFO[section] || LINE_INFO.italon;
 export const ARROW = '<svg class="arrow" viewBox="0 0 26 10" aria-hidden="true"><path d="M0 5h24.5M20 .8 24.6 5 20 9.2"/></svg>';
 export const CLOSE = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 1l14 14M15 1 1 15"/></svg>';
 

@@ -1,9 +1,9 @@
 // /collections/ — индекс коллекций по линиям; /collections/<id>/ — страница каждой коллекции.
 // Каркас этапа A: аккуратная базовая версия; этап B может расширить (фильтры, галереи).
-import { esc, fmt, positions, plural, productCard, money, ARROW } from '../shared/format.mjs';
+import { esc, fmt, positions, plural, productCard, money, ARROW, lineOf } from '../shared/format.mjs';
 import { pageHead, image, collectionCard } from '../shared/blocks.mjs';
 import { collectionRows } from '../shared/collection-tiles.mjs';
-import { collections, italonCollections, x2Collections, stats, variantsOf } from '../data.mjs';
+import { collections, italonCollections, x2Collections, coliseumCollections, contractCollections, stats, variantsOf } from '../data.mjs';
 
 const listRu = items => items.length > 1 ? `${items.slice(0, -1).join(', ')} и ${items.at(-1)}` : items[0] || '';
 
@@ -14,21 +14,25 @@ const LINES = [
     text: 'Керамогранит для полов и стен: крупные плиты, мозаика и декор в одной гамме.', link: ['/catalog/', 'Позиции Italon в каталоге'], query: '?section=italon' },
   { id: 'x2', list: x2Collections, eyebrow: 'Улица · 20 мм', title: 'X2', count: stats.x2,
     text: 'Плиты толщиной 20 мм для террас, садовых дорожек и зоны у бассейна. Четыре способа укладки.', link: ['/x2/', 'Про X2 и способы укладки'] },
+  { id: 'coliseum', list: coliseumCollections, eyebrow: 'Линия Italon', title: 'Coliseum', count: stats.coliseum,
+    text: 'Линия Italon Coliseum из прайса склада Краснодар: керамогранит 60×120, 60×60 и 20×120, мозаика и декор.', link: ['/catalog/', 'Позиции Coliseum в каталоге'], query: '?section=coliseum' },
+  { id: 'contract', list: contractCollections, eyebrow: 'Линия Italon', title: 'Контракт', count: stats.contract,
+    text: 'Линия Italon Контракт из прайса склада Краснодар: керамогранит 60×120, 60×60 и 30×60 для объектов.', link: ['/catalog/', 'Позиции Контракта в каталоге'], query: '?section=contract' },
 ];
 const index = {
   path: '/collections/',
   title: 'Коллекции',
-  description: `${stats.collections} коллекции керамогранита Italon и X2 с интерьерными фото.`,
+  description: `${stats.collections} коллекций керамогранита Italon, X2, Coliseum и Контракт.`,
   styles: ['collections'],
   scripts: ['collections'],
-  render: ctx => `${pageHead(ctx, { crumbs: [['Коллекции']], eyebrow: 'Italon и X2', title: 'Коллекции',
-    lead: `${stats.collections} коллекции: ${italonCollections.length} — Italon для интерьера, ${x2Collections.length} — X2 толщиной 20&nbsp;мм для открытых пространств. В&nbsp;каждой — форматы, отделки и все позиции прайса.`,
+  render: ctx => `${pageHead(ctx, { crumbs: [['Коллекции']], eyebrow: 'Italon, X2, Coliseum и Контракт', title: 'Коллекции',
+    lead: `${stats.collections} ${plural(stats.collections, ['коллекция', 'коллекции', 'коллекций'])}: ${italonCollections.length} — Italon для интерьера, ${x2Collections.length} — X2 толщиной 20&nbsp;мм для открытых пространств, ${coliseumCollections.length} — Coliseum и ${contractCollections.length} — Контракт. В&nbsp;каждой — форматы, отделки и все позиции прайса.`,
     aside: `<a class="link-arrow" href="${ctx.url('/catalog/')}">Все ${stats.total} позиции ${ARROW}</a>` })}
 <div class="cx-bar">
 <div class="wrap cx-bar__inner">
 <div class="cx-switch" role="group" aria-label="Показать коллекции линии" data-cx-switch hidden>
 <button type="button" class="cx-switch__btn" data-line="all" aria-pressed="true">Все <span class="cx-switch__n">${stats.collections}</span></button>
-${LINES.map(l => `<button type="button" class="cx-switch__btn" data-line="${l.id}" aria-pressed="false">${l.id === 'x2' ? 'X2<span class="cx-long"> · улица</span> 20&nbsp;мм' : 'Italon<span class="cx-long"> · интерьер</span>'} <span class="cx-switch__n">${l.list.length}</span></button>`).join('\n')}
+${LINES.map(l => `<button type="button" class="cx-switch__btn" data-line="${l.id}" aria-pressed="false">${l.id === 'x2' ? 'X2<span class="cx-long"> · улица</span> 20&nbsp;мм' : l.id === 'italon' ? 'Italon<span class="cx-long"> · интерьер</span>' : l.title} <span class="cx-switch__n">${l.list.length}</span></button>`).join('\n')}
 </div>
 <nav class="cx-jump" aria-label="Линии коллекций" data-cx-jump>${LINES.map(l => `<a class="link-arrow" href="#${l.id}">${l.title} · ${l.list.length}</a>`).join('')}</nav>
 <p class="cx-bar__facts t-small">${positions(stats.total)} · форматы до ${fmt(stats.largestFormat)}&nbsp;см</p>
@@ -67,7 +71,7 @@ const capB = s => s ? s[0].toLocaleUpperCase('ru-RU') + s.slice(1) : '';
 function collectionLead(c) {
   const kinds = [...new Set(c.items.map(categoryOfB))];
   const extra = [kinds.includes('mosaic') && 'мозаика', kinds.includes('decor') && 'декоративные элементы'].filter(Boolean);
-  const what = c.section === 'x2' ? 'Керамогранит X2 толщиной 20&nbsp;мм для открытых пространств' : 'Керамогранит Italon для интерьера';
+  const what = lineOf(c.section).what.replace('\u00a0', '&nbsp;');
   const formats = c.plateFormats.length ? `${c.plateFormats.length > 1 ? 'форматы' : 'формат'} ${listB(c.plateFormats.map(fmtB))}&nbsp;см` : '';
   return `${what}: ${positionsB(c.count)} в прайсе${formats ? `, ${formats}` : ''}${extra.length ? `; ${listB(extra)}` : ''}. Поверхность — ${listB(femB(c.finishes))}${c.rectified ? ', кромка ректифицированная' : ''}.`;
 }
@@ -83,7 +87,7 @@ function collectionPage(c, i, list) {
   const prev = list[(i - 1 + list.length) % list.length];
   const neighbours = [1, 2, 3, 4].map(k => list[(i + k) % list.length]).filter(x => x.id !== c.id).slice(0, 4);
   const x2 = c.section === 'x2';
-  const line = x2 ? 'X2 · улица, 20 мм' : 'Italon · интерьер';
+  const line = lineOf(c.section).label;
   const img = c.image;
   const alt = `Коллекция ${c.label} ${x2 ? 'в экстерьере' : 'в интерьере'}`;
   const formatCounts = new Map(), finishCounts = new Map();
@@ -160,4 +164,4 @@ ${next.image ? `<span class="media col-next__media"><img src="${ctx.media(next.i
   };
 }
 
-export default [index, ...italonCollections.map(collectionPage), ...x2Collections.map(collectionPage)];
+export default [index, ...[italonCollections, x2Collections, coliseumCollections, contractCollections].flatMap(list => list.map(collectionPage))];

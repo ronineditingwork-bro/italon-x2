@@ -9,6 +9,7 @@ const titleCase = s => s.split('-').map(w => w === 'x2' ? 'X2' : w[0].toUpperCas
 
 /** Латинское имя коллекции из идентификатора: charme-deluxe → «Charme Deluxe», x2-aura → «Aura X2». */
 export function latinName(id) {
+  id = id.replace(/^(coliseum|contract)-/, '');
   return id.startsWith('x2-') ? titleCase(id.slice(3)) + ' X2' : titleCase(id);
 }
 
@@ -26,15 +27,21 @@ export const collections = rawCollections.map((c, index) => {
 });
 export const italonCollections = collections.filter(c => c.section === 'italon');
 export const x2Collections = collections.filter(c => c.section === 'x2');
+export const coliseumCollections = collections.filter(c => c.section === 'coliseum');
+export const contractCollections = collections.filter(c => c.section === 'contract');
 
 const allPlateFormats = [...new Set(products.map(p => p.format).filter(plateFormat))];
 export const stats = {
   total: products.length,
   italon: products.filter(p => p.section === 'italon').length,
   x2: products.filter(p => p.section === 'x2').length,
+  coliseum: products.filter(p => p.section === 'coliseum').length,
+  contract: products.filter(p => p.section === 'contract').length,
   collections: collections.length,
   italonCollections: italonCollections.length,
   x2Collections: x2Collections.length,
+  coliseumCollections: coliseumCollections.length,
+  contractCollections: contractCollections.length,
   plateFormats: allPlateFormats.length,
   largestFormat: allPlateFormats.sort((a, b) => area(b) - area(a))[0],
 };

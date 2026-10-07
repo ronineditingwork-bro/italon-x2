@@ -1,6 +1,6 @@
 // Каталог: поиск, фильтры, сортировка и «Показать ещё» на клиенте по public/data/catalog.json.
 // Состояние — в адресе, поэтому ссылки вида catalog/?category=mosaic открывают каталог с фильтром:
-//   ?q=<строка>&section=italon|x2&category=<id>&collection=<id>&finish=<отделка>&format=<формат>
+//   ?q=<строка>&section=italon|x2|coliseum|contract&category=<id>&collection=<id>&finish=<отделка>&format=<формат>
 //   &price_from=<₽>&price_to=<₽>&sort=price-asc|price-desc|name&page=<сколько порций показано>
 // category, collection, finish и format можно повторять (несколько значений — «или»).
 // finish — поверхность («люкс», «натуральный»…); старое значение из прайса («ЛЮКС И РЕТТИФИЦИРОВАННАЯ») тоже понимается.
@@ -34,14 +34,14 @@ const surfacesOf = finish => lower(finish).split(/\s+и\s+/).filter(f => f && !f
 const formatLabel = f => cap(lower(String(f).replace(/(\d)\s*[XХ]\s*(\d)/g, '$1 × $2').replace(/(\d)\.(\d)/g, '$1,$2')));
 const isPlate = f => /^\d/.test(f);
 const area = f => (f.match(/[\d.]+/g) || []).slice(0, 2).reduce((a, b) => a * Number(b), 1);
-const SECTION_LABEL = { '': 'Italon и X2', italon: 'Italon · интерьер', x2: 'X2 · улица' };
+const SECTION_LABEL = { '': 'Все линии', italon: 'Italon · интерьер', x2: 'X2 · улица', coliseum: 'Coliseum', contract: 'Контракт' };
 const rub = v => `${number(v, 0)} ₽`;
 
 // ---------------------------------------------------------------- адрес ↔ состояние
 function fromParams(search) {
   const params = new URLSearchParams(search), s = blank();
   s.q = (params.get('q') || '').trim().slice(0, 100);
-  s.section = ['italon', 'x2'].includes(params.get('section')) ? params.get('section') : '';
+  s.section = ['italon', 'x2', 'coliseum', 'contract'].includes(params.get('section')) ? params.get('section') : '';
   for (const k of MULTI) s[k] = [...new Set(params.getAll(k).filter(Boolean))];
   // старый формат отделки — строка из прайса; переводим в поверхности
   s.finish = [...new Set(s.finish.flatMap(f => /[А-ЯЁ]/.test(f) ? surfacesOf(f) : [f]))];
@@ -99,7 +99,7 @@ function option(type, name, value, label) {
 }
 function buildFacets() {
   const values = {
-    section: [['', 'Все разделы'], ['italon', SECTION_LABEL.italon], ['x2', SECTION_LABEL.x2]],
+    section: [['', 'Все разделы'], ['italon', SECTION_LABEL.italon], ['x2', SECTION_LABEL.x2], ['coliseum', SECTION_LABEL.coliseum], ['contract', SECTION_LABEL.contract]],
     category: catalog.categories.filter(c => items.some(it => it.p.category === c.id)).map(c => [c.id, c.label]),
     collection: catalog.collections.map(c => [c.id, c.label, c.section]),
     finish: [...items.flatMap(it => it.surfaces).reduce((m, f) => m.set(f, (m.get(f) || 0) + 1), new Map())].sort((a, b) => b[1] - a[1]).map(([f]) => [f, cap(f)]),

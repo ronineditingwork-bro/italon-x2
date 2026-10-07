@@ -6,8 +6,10 @@ export const priceInfo = { source: raw.source, validFrom: raw.validFrom, currenc
 export const sections = [
   { id: 'italon', label: 'Italon', available: true },
   { id: 'x2', label: 'X2', available: true },
-  { id: 'coliseum', label: 'Coliseum', available: false },
+  { id: 'coliseum', label: 'Coliseum', available: true },
+  { id: 'contract', label: 'Контракт', available: true },
 ];
+const SECTION_BY_LINE = { X2: 'x2', 'Italon Coliseum': 'coliseum', 'Italon Контракт': 'contract' };
 const unique = new Map();
 const roundUp = n => Math.ceil(n - 1e-9);
 for (const series of raw.series) for (const row of series.items) {
@@ -28,7 +30,7 @@ for (const series of raw.series) for (const row of series.items) {
   const crate = row.code === '450080000001';
   unique.set(row.code, {
     code: row.code, name: row.name, latin: row.latin,
-    section: series.line === 'X2' ? 'x2' : 'italon',
+    section: SECTION_BY_LINE[series.line] || 'italon',
     collectionId: crate ? 'packaging' : series.slug,
     collection: crate ? 'Упаковка' : series.series,
     format: crate ? '' : row.fmt, finish: crate ? '' : row.finish,

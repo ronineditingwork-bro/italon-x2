@@ -1,7 +1,7 @@
 // Общий каркас всех страниц: <head>, шапка, мобильное меню, поиск, подвал, диалоги.
 // Страница отдаёт только содержимое <main>; см. site/README.md → «Как добавить страницу».
 import { esc, CLOSE, CART_ICON } from './shared/format.mjs';
-import { nav, salon, priceNote } from './data.mjs';
+import { nav, salon, priceNote, stats } from './data.mjs';
 
 /** Встроенный загрузчик: классы на <html> до первой отрисовки (без мигания).
  *  js — JS включён; reveal — можно прятать [data-reveal] до появления (нет reduced-motion);
@@ -65,7 +65,7 @@ function search(ctx) {
 </form>
 <p class="sr-only" id="search-status" role="status" aria-live="polite"></p>
 <ul class="search-results" id="search-results" role="list"></ul>
-<div class="search-dialog__foot"><span>Поиск по 993 позициям прайса Italon и X2</span><a class="link-arrow" id="search-all" href="${ctx.url('/catalog/')}">Все результаты в каталоге</a></div>
+<div class="search-dialog__foot"><span>Поиск по ${stats.total} позициям прайса</span><a class="link-arrow" id="search-all" href="${ctx.url('/catalog/')}">Все результаты в каталоге</a></div>
 </div>
 </dialog>`;
 }

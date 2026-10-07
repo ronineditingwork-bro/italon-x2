@@ -61,7 +61,7 @@ test('independent hosting preserves cart semantics across a proxy and restart', 
   try {
     assert.equal(JSON.parse(await run('server/import-carts.mjs', { DB_PATH: dbPath }, snapshot)).imported, 1);
     server = await start(dbPath);
-    assert.equal((await call(server.port, '/healthz')).json().catalogItems, 993);
+    assert.equal((await call(server.port, '/healthz')).json().catalogItems, 1202);
     const home = await call(server.port, '/');
     assert.equal(home.status, 200); assert.match(home.body.toString(), /Italon Experience/); assert.match(home.body.toString(), /Бабушкина/);
     assert.equal((await call(server.port, '/', { headers: { Host: 'other.example' } })).status, 421);
@@ -69,7 +69,7 @@ test('independent hosting preserves cart semantics across a proxy and restart', 
     assert.equal((await call(server.port, '/.env')).status, 404);
     assert.equal((await call(server.port, '/%2e%2e/%2e%2e/server/api.mjs')).status, 404);
     const catalog = await call(server.port, '/api/catalog');
-    assert.equal(catalog.status, 200); assert.equal(catalog.json().products.length, 993);
+    assert.equal(catalog.status, 200); assert.equal(catalog.json().products.length, 1202);
     const productPhoto = catalog.json().products.find(product => product.image?.src)?.image.src;
     assert.ok(productPhoto);
     const homeImages = [...home.body.toString().matchAll(/src="(media\/(?:collections|laying)\/[^" ]+)"/g)].map(match => '/' + match[1]);
@@ -81,7 +81,7 @@ test('independent hosting preserves cart semantics across a proxy and restart', 
     }
     assert.equal((await call(server.port, '/salon')).headers.location, '/salon/');
     const missing = await call(server.port, '/no-such-page/'); assert.equal(missing.status, 404); assert.match(missing.body.toString(), /Такой страницы нет/);
-    const clientCatalog = await call(server.port, '/data/catalog.json'); assert.equal(clientCatalog.status, 200); assert.equal(clientCatalog.json().products.length, 993);
+    const clientCatalog = await call(server.port, '/data/catalog.json'); assert.equal(clientCatalog.status, 200); assert.equal(clientCatalog.json().products.length, 1202);
     assert.equal((await call(server.port, '/.site-manifest.json')).status, 404);
     for (const path of new Set(imagePaths)) {
       const photo = await call(server.port, path); assert.equal(photo.status, 200, path);

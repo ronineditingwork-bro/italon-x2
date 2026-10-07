@@ -9,7 +9,7 @@
 //   [data-laying="<id>"]      — фото способа укладки X2 (grass|gravel|pedestals|adhesive)
 //   [data-photo="<src>"]      — любое фото: data-photo-alt, data-photo-caption, data-photo-width/height
 //   [data-cart-open]          — открыть корзину
-import { esc, money, number, fmt, titleRu, lower, packLabel, minimumLabel, productImage, productUrl, collectionUrl, priceHtml, normalize } from '../shared/format.mjs';
+import { esc, money, number, fmt, titleRu, lower, packLabel, minimumLabel, lineOf, productImage, productUrl, collectionUrl, priceHtml, normalize } from '../shared/format.mjs';
 import { createPricing, MAX_PACKS } from '../../src/pricing.mjs';
 import { quoteDiscount, nextTier } from '../../src/discount.mjs';
 import { $, $$, ROOT, rootRel, openDialog, closeDialog, toast } from './ui.mjs';
@@ -200,7 +200,7 @@ export async function openProduct(code) {
     ['Отделка', p.finish ? lower(p.finish) : '—'],
     ['Упаковка', packLabel(p) + (p.unit === 'м²' && p.piecesPerPack ? ` · ${number(p.piecesPerPack)} шт` : '')],
     ['Минимальный заказ', `${p.minimum}${p.minPacks > 1 ? ` (${number(p.minPacks)} ${p.orderUnit})` : ''}`],
-    ['Раздел', p.section === 'x2' ? 'X2 · 20 мм, улица' : 'Italon'],
+    ['Раздел', p.section === 'x2' ? 'X2 · 20 мм, улица' : lineOf(p.section).short],
   ];
   $('#product-dialog-body').innerHTML = `<div class="product-detail">
 <div class="product-detail__photo${scene ? ' is-scene' : ''}">${productImage(p, rootRel, 'detail')}</div>

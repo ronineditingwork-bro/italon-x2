@@ -5,7 +5,7 @@ import { handleApi } from '../worker/api.mjs';
 import { localDatabase } from '../scripts/sqlite-adapter.mjs';
 
 test('catalog preserves sections and deduplicates the shared transport crate',()=>{
- assert.equal(products.length,993);assert.equal(products.filter(p=>p.section==='x2').length,65);assert.equal(products.filter(p=>p.section==='italon').length,928);
+ assert.equal(products.length,1202);assert.equal(products.filter(p=>p.section==='x2').length,65);assert.equal(products.filter(p=>p.section==='italon').length,928);assert.equal(products.filter(p=>p.section==='coliseum').length,148);assert.equal(products.filter(p=>p.section==='contract').length,61);
  assert.equal(products.filter(p=>p.code==='450080000001').length,1);assert.ok(products.every(p=>p.canOrder));
  assert.equal(productMap.get('450080000001').priceKopecks,1473500);
 });
