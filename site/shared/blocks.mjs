@@ -32,7 +32,7 @@ export function image(ctx, img, alt, { eager = false } = {}) {
 /** Карточка коллекции: фото 4:5, название, число позиций. */
 export function collectionCard(ctx, c, { eager = false } = {}) {
   return `<a class="collection-card" href="${collectionUrl(ctx.root, c.id)}" data-reveal>
-<figure class="media collection-card__media">${image(ctx, c.image, `Коллекция ${c.label} ${c.section === 'x2' ? 'в экстерьере' : 'в интерьере'}`, { eager })}</figure>
+<figure class="media collection-card__media">${image(ctx, c.image || c.cover, c.image ? `Коллекция ${c.label} ${c.section === 'x2' ? 'в экстерьере' : 'в интерьере'}` : `Образец плитки коллекции ${c.label}`, { eager })}</figure>
 <span class="collection-card__name">${esc(c.label)}</span>
 <span class="collection-card__meta">${esc(c.latin)} · ${positions(c.count)}</span></a>`;
 }

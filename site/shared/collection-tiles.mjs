@@ -84,9 +84,10 @@ function finishLine(c, full) {
 /** Карточка коллекции. slot: L | M | T | Q. */
 export function collectionTile(ctx, c, { slot = 'T', n = 0, eager = false } = {}) {
   const big = slot === 'L' || slot === 'M';
-  const alt = `Коллекция ${c.label} ${c.section === 'x2' ? 'в экстерьере' : 'в интерьере'}`;
-  const img = c.image
-    ? `<img src="${ctx.media(c.image.src)}" alt="${esc(alt)}" width="${c.image.width}" height="${c.image.height}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`
+  const shown = c.image || c.cover;
+  const alt = c.image ? `Коллекция ${c.label} ${c.section === 'x2' ? 'в экстерьере' : 'в интерьере'}` : `Образец плитки коллекции ${c.label}`;
+  const img = shown
+    ? `<img src="${ctx.media(shown.src)}" alt="${esc(alt)}" width="${shown.width}" height="${shown.height}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`
     : '<span class="media-missing">Фото уточняется</span>';
   return `<a class="ctile ctile--${slot}" href="${collectionUrl(ctx.root, c.id)}" data-reveal data-line="${c.section}">
 <span class="media ctile__media">${img}</span>

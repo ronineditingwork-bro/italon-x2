@@ -22,7 +22,10 @@ export const collections = rawCollections.map((c, index) => {
   const finishes = [...new Set(finishParts.filter(f => !f.startsWith('реттиф')).map(f => f.replace(/ая$/, 'ый')))];
   const rectified = finishParts.some(f => f.startsWith('реттиф'));
   const prices = items.filter(p => p.unit === 'м²').map(p => p.priceKopecks);
-  return { ...c, latin: latinName(c.id), formats, plateFormats: formats.filter(plateFormat), finishes, rectified,
+  // Обложка вместо интерьерного кадра: фото первой плиты (иначе — первой позиции) с фото артикула
+  const sample = items.find(p => p.image?.kind === 'sku' && categoryOf(p) === 'plate') || items.find(p => p.image?.kind === 'sku');
+  const cover = !c.image && sample ? { ...sample.image, product: sample.code } : null;
+  return { ...c, cover, latin: latinName(c.id), formats, plateFormats: formats.filter(plateFormat), finishes, rectified,
     minPriceKopecks: prices.length ? Math.min(...prices) : null, items, index };
 });
 export const italonCollections = collections.filter(c => c.section === 'italon');

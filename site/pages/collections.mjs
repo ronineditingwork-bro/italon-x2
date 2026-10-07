@@ -117,8 +117,8 @@ function collectionPage(c, i, list) {
 <div class="btn-row" data-reveal data-reveal-delay="180"><a class="btn" href="${catalogHref(ctx.url)}">Открыть в каталоге</a><a class="btn btn--outline" href="#items">Позиции коллекции</a></div>
 </div>
 <figure class="col-hero__figure" data-reveal>
-${img ? `<button type="button" class="media media--hover col-hero__media" data-scene="${escB(c.id)}" style="--w:${img.width}px;--ratio:${img.width}/${img.height}" aria-label="Увеличить фото коллекции ${escB(c.label)}"><img src="${ctx.media(img.src)}" alt="${escB(alt)}" width="${img.width}" height="${img.height}" fetchpriority="high" decoding="async"></button>` : '<span class="media-missing">Фото уточняется</span>'}
-<figcaption class="media-note">${escB(img?.caption || `Коллекция ${c.label} (${c.latin}) ${x2 ? 'на улице' : 'в интерьере'}`)}</figcaption>
+${img ? `<button type="button" class="media media--hover col-hero__media" data-scene="${escB(c.id)}" style="--w:${img.width}px;--ratio:${img.width}/${img.height}" aria-label="Увеличить фото коллекции ${escB(c.label)}"><img src="${ctx.media(img.src)}" alt="${escB(alt)}" width="${img.width}" height="${img.height}" fetchpriority="high" decoding="async"></button>` : c.cover ? `<span class="media col-hero__media" style="--w:${c.cover.width}px;--ratio:${c.cover.width}/${c.cover.height}"><img src="${ctx.media(c.cover.src)}" alt="Образец плитки коллекции ${escB(c.label)}" width="${c.cover.width}" height="${c.cover.height}" fetchpriority="high" decoding="async"></span>` : '<span class="media-missing">Фото уточняется</span>'}
+<figcaption class="media-note">${escB(img?.caption || (c.cover ? `Коллекция ${c.label} (${c.latin}): образец плитки` : `Коллекция ${c.label} (${c.latin}) ${x2 ? 'на улице' : 'в интерьере'}`))}</figcaption>
 </figure>
 </div>
 </section>
@@ -157,7 +157,7 @@ ${c.items.map(p => `<div class="col-grid__item" data-format="${escB(p.format)}" 
 <a class="col-next__prev" href="${ctx.url(`/collections/${prev.id}/`)}"><span class="eyebrow">← Предыдущая</span><span class="col-next__prev-name">${escB(prev.label)}</span></a>
 <a class="col-next__next" href="${ctx.url(`/collections/${next.id}/`)}">
 <span class="col-next__text"><span class="eyebrow">Следующая коллекция</span><span class="col-next__name">${escB(next.label)} ${ARROW_B}</span><span class="col-next__meta">${escB(next.latin)} · ${positionsB(next.count)}</span></span>
-${next.image ? `<span class="media col-next__media"><img src="${ctx.media(next.image.src)}" alt="" width="${next.image.width}" height="${next.image.height}" loading="lazy" decoding="async"></span>` : ''}
+${next.image || next.cover ? `<span class="media col-next__media"><img src="${ctx.media((next.image || next.cover).src)}" alt="" width="${(next.image || next.cover).width}" height="${(next.image || next.cover).height}" loading="lazy" decoding="async"></span>` : ''}
 </a>
 </div>
 </nav>`,
