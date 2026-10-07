@@ -17,7 +17,7 @@ test('/api/quote saves the lead and sends it to Telegram', async () => {
   await DB.prepare('INSERT INTO carts (id, items, version, updated_at) VALUES (?, ?, 1, ?)')
     .bind(id, JSON.stringify([{ code: '620110000263', packs: 2 }]), Date.now()).run();
   const calls = [];
-  const env = { DB, TELEGRAM_BOT_TOKEN: 'T', TELEGRAM_CHAT_ID: '42, -100500', fetch: async (url, init) => { calls.push({ url, init }); return new Response('{}', { status: 200 }); } };
+  const env = { DB, TELEGRAM_BOT_TOKEN: 'T', TELEGRAM_CHAT_ID: '42, -100500', TELEGRAM_API_BASE: 'https://relay.example/', fetch: async (url, init) => { calls.push({ url, init }); return new Response('{}', { status: 200 }); } };
   const post = fields => {
     const form = new FormData();
     for (const [k, v] of Object.entries(fields)) form.set(k, v);
@@ -30,7 +30,7 @@ test('/api/quote saves the lead and sends it to Telegram', async () => {
     const ok = await post({ phone: '8 918 248 92 48', customer: 'Иван', pdf });
     assert.equal(ok.status, 200);
     assert.deepEqual(await ok.json(), { ok: true, sent: true, saved: true });
-    assert.match(calls[0].url, /botT\/sendMessage/);
+    assert.match(calls[0].url, /^https:\/\/relay\.example\/botT\/sendMessage/);
     assert.match(JSON.parse(calls[0].init.body).text, /\+79182489248/);
     assert.equal(calls.length, 4);
     assert.ok(calls.some(c => /sendDocument/.test(c.url)));

@@ -37,7 +37,9 @@ export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch) 
   const token = env.TELEGRAM_BOT_TOKEN;
   const chats = String(env.TELEGRAM_CHAT_ID || '').split(',').map(x => x.trim()).filter(Boolean);
   if (!token || !chats.length) return false;
-  const api = method => `https://api.telegram.org/bot${token}/${method}`;
+  // TELEGRAM_API_BASE — адрес ретранслятора, если сервер не достаёт до api.telegram.org напрямую.
+  const base = String(env.TELEGRAM_API_BASE || 'https://api.telegram.org').replace(/\/+$/, '');
+  const api = method => `${base}/bot${token}/${method}`;
   const signal = () => AbortSignal.timeout(15000);
   // Каждому получателю отдельно: сбой у одного не мешает остальным; ошибка, только если не дошло никому.
   const results = await Promise.allSettled(chats.map(async chat => {

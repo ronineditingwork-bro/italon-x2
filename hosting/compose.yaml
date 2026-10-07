@@ -7,6 +7,7 @@ services:
       DB_PATH: /data/cart.sqlite
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
       TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      TELEGRAM_API_BASE: ${TELEGRAM_API_BASE:-}
     volumes:
       - cart_data:/data
     expose:
