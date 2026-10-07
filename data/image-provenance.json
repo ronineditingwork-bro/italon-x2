@@ -9920,6 +9920,1670 @@
       "evidence": "Product JSON-LD sku and image filename match the price SKU",
       "originalSha256": "19c3009ede9dd901eb22eab47442aaa66d8c10f88f297b297425bfc7f18d051a",
       "asset": "/media/products/af39ce33fe7719f73ff7.webp"
+    },
+    "610010001530": {
+      "code": "610010001530",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Lirica/Product-images/Lirica-White-60x120-5.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/lirika/lirika-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "8910bc1179505e7e741c31085eb73fde3d9d18e520cc5ae2bdf150e5c795e3ec",
+      "asset": "/media/products/9228850d402bf6eda2b1.webp"
+    },
+    "610010001531": {
+      "code": "610010001531",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Lirica/Product-images/Lirica-Grey-60x120-4.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/lirika/lirika-fonovaia-plitka-grei-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "6382b4c20ca3ffba860ffe09314358c981bb3f276cd8652c8a94546530f1f914",
+      "asset": "/media/products/01cec05425208dcc3d31.webp"
+    },
+    "610010001532": {
+      "code": "610010001532",
+      "imageUrl": "https://coliseumgres.ru/assets/products/rim/Rim-White-60x120-3.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/rim/rim-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "8b82cf3fde49a9aed1eb9ba51baf5abdd11ef860b826a7127042c6b72a5b974d",
+      "asset": "/media/products/a80a2b66a5524673a43f.webp"
+    },
+    "610010001533": {
+      "code": "610010001533",
+      "imageUrl": "https://coliseumgres.ru/assets/products/rim/Rim-Sand-60x120-2.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/rim/rim-fonovaia-plitka-send-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "354ed5cf19ab9fef175ef63f8d46f8828782e6e0f9996f291ec6287ffe701582",
+      "asset": "/media/products/9e63a7319c26668649f8.webp"
+    },
+    "610010001534": {
+      "code": "610010001534",
+      "imageUrl": "https://coliseumgres.ru/assets/products/rim/Rim-Grey-60x120-4.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/rim/rim-fonovaia-plitka-grei-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "59dfd703fe783b2ee3842a7540fd93ddd35e3646aa80be96e2303516ba67cdc3",
+      "asset": "/media/products/d7bb29d1d5ea9d6430c5.webp"
+    },
+    "610010001535": {
+      "code": "610010001535",
+      "imageUrl": "https://coliseumgres.ru/assets/products/tivoli/Tivoli-White-60x120-4.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/tivoli/tivoli-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "cb1bd93745d3f5a48aeed7da7a091d33a8167a8182026886101df73570f35b95",
+      "asset": "/media/products/b582976e3017fdcee34c.webp"
+    },
+    "610010001536": {
+      "code": "610010001536",
+      "imageUrl": "https://coliseumgres.ru/assets/products/tivoli/Tivoli-Grey-60x120-4.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/tivoli/tivoli-fonovaia-plitka-grei-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "94ac369fa60f6f8e40bab4e42131780848a4e1630c342d43efeabe5a51a9efdd",
+      "asset": "/media/products/4636f6bd582a38810f90.webp"
+    },
+    "610010001537": {
+      "code": "610010001537",
+      "imageUrl": "https://coliseumgres.ru/assets/products/vivaldi/Product-images/Vivaldi-White-60x120-4.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/vivaldi/vivaldi-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "6c909dd70e858edd9736b7fb43859b5fe0546e2515d14247e39bb4f91d9dc57e",
+      "asset": "/media/products/d1d78ca7a0313f7d5baa.webp"
+    },
+    "610010001538": {
+      "code": "610010001538",
+      "imageUrl": "https://coliseumgres.ru/assets/products/vivaldi/Product-images/Vivaldi-Cream-60x120-4.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/vivaldi/vivaldi-fonovaia-plitka-krim-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "3b9fba7638b4f09b0fa5353a738041a8c8eb2d438a7adeb890666fed83568eb1",
+      "asset": "/media/products/87c296ac5d25939d5821.webp"
+    },
+    "610010003142": {
+      "code": "610010003142",
+      "imageUrl": "https://coliseumgres.ru/assets/products/salento/product-images/Salento-grey-60x120-1.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/salento/salento-fonovaia-plitka-grei-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "f7e25dbe341a179e6078835cb42893042dce537ba871b0821e0f7f17a2c476fb",
+      "asset": "/media/products/3d6a9f8acb42cdaf5757.webp"
+    },
+    "610010003165": {
+      "code": "610010003165",
+      "imageUrl": "https://coliseumgres.ru/assets/products/aurelia/Aurelia_60x120_white_f5.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/aurelia/aurelia-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "893e4125e534c60d766fafb68cc2f6f5f0786f80efa1d26d8a75153e491f31b6",
+      "asset": "/media/products/97b014b6876df4cd5b15.webp"
+    },
+    "610010003167": {
+      "code": "610010003167",
+      "imageUrl": "https://coliseumgres.ru/assets/products/riviera/Riviera-White-60x60-f6.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/riviera/rivera-fonovaia-plitka-uait-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "f692fc05cd7b873b4599afc1dfba698b3356301d9ba53cf2b98810698591c032",
+      "asset": "/media/products/56789104738e0bffda85.webp"
+    },
+    "610010003168": {
+      "code": "610010003168",
+      "imageUrl": "https://coliseumgres.ru/assets/products/riviera/Riviera-Dark-60x60-f3.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/riviera/rivera-fonovaia-plitka-dark-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "ee7d649a5940442131e7ba0cda924e0517ceee6df40346c119647a58ff842181",
+      "asset": "/media/products/212723935ff5e7ad3c6b.webp"
+    },
+    "610010003502": {
+      "code": "610010003502",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ducale/Ducale-Sand-20x120-f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ducale/dukale-fonovaia-plitka-send-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "38ba441bea9b7b2438440a20d5c67c1a0744f1dc81d2a5e14c2234a064cde00d",
+      "asset": "/media/products/23400d2dac35689bb88c.webp"
+    },
+    "610010003503": {
+      "code": "610010003503",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ducale/Ducale-Nut-20x120-f05.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ducale/dukale-fonovaia-plitka-nat-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "b3461ff25d79e3c583f8a8d2e545f1939e0227e914086b9418368dbba2ce9d8b",
+      "asset": "/media/products/4bdb9f8c085ce8b8f0e0.webp"
+    },
+    "610010003504": {
+      "code": "610010003504",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ducale/Ducale-Pepper-20x120-f05.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ducale/dukale-fonovaia-plitka-pepper-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "831804a4165553252889a1bd40ee8c99f4675c5b14e9888a5159bf673e49655f",
+      "asset": "/media/products/ca64960b06f666f952c5.webp"
+    },
+    "610010004067": {
+      "code": "610010004067",
+      "imageUrl": "https://coliseumgres.ru/assets/products/bormio/Bormio-Sand-20x120-f4.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/bormio/bormio-fonovaia-plitka-send-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "3f552e9721a5c5212bfc8f627c41896d8f5a293636d00fbc99d28a01c852804e",
+      "asset": "/media/products/330cdace2c80522dbe27.webp"
+    },
+    "610010004068": {
+      "code": "610010004068",
+      "imageUrl": "https://coliseumgres.ru/assets/products/bormio/Bormio-Honey-20x120-f4.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/bormio/bormio-fonovaia-plitka-xani-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "abe236b084539f7e581061735bb7676c4040c19cf6863915db7d35cbb2b63c0e",
+      "asset": "/media/products/5ffc6902dd5db420c936.webp"
+    },
+    "610010004069": {
+      "code": "610010004069",
+      "imageUrl": "https://coliseumgres.ru/assets/products/bormio/Bormio-Pepper-20x120-f4.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/bormio/bormio-fonovaia-plitka-pepper-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "67a9007d69b1a32cb33152129f5f021ab48ffbec1036ead8eaba070dc9fb975d",
+      "asset": "/media/products/81d186dadbc7606c81f9.webp"
+    },
+    "610010004073": {
+      "code": "610010004073",
+      "imageUrl": "https://coliseumgres.ru/assets/products/salento/Salento-white-60x120-4.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/salento/salento-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "41dbe004db03465dbfc2f273a6e2dfb8276a6a5dc7e38edfa373f1137a0fbd2b",
+      "asset": "/media/products/97ea4bda1f69269fdcc7.webp"
+    },
+    "610010004074": {
+      "code": "610010004074",
+      "imageUrl": "https://coliseumgres.ru/assets/products/salento/product-images/Salento-cream-60x120-4.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/salento/salento-fonovaia-plitka-krim-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "56026676031975a92b29c9c6bfe16c40706b682d31f0084f6b9ee2916e2c0b17",
+      "asset": "/media/products/8b0a152141efb9cf0ca9.webp"
+    },
+    "610010004075": {
+      "code": "610010004075",
+      "imageUrl": "https://coliseumgres.ru/assets/products/monza/Monza-Cream-60x120-2.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/monza/monca-fonovaia-plitka-krim-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "33fce297d64d8dad6223fcdf5d2b6897b1580fc282aceeee3823d6593f1bf1e3",
+      "asset": "/media/products/18afbb506608c0c97e6d.webp"
+    },
+    "610010004076": {
+      "code": "610010004076",
+      "imageUrl": "https://coliseumgres.ru/assets/products/monza/Monza-Grey-60x120-5.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/monza/monca-fonovaia-plitka-grei-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "3a1301fb3a2dd4d9b3be767d0710f810d787b83625b47bd21153ff4dfa74a08f",
+      "asset": "/media/products/4e369d82a97a2a3bffe9.webp"
+    },
+    "610010006265": {
+      "code": "610010006265",
+      "imageUrl": "https://coliseumgres.ru/assets/products/bormio/Bormio-Tatami-Sand-20x120.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/bormio/bormio-tatami-send-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "60fb4028f62343b5eafd2366d376eb88c99edad8e9ec66d7ac342245b7083979",
+      "asset": "/media/products/49503b9bd2e6741d7866.webp"
+    },
+    "610010006266": {
+      "code": "610010006266",
+      "imageUrl": "https://coliseumgres.ru/assets/products/bormio/Bormio-Tatami-Honey-20x120.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/bormio/bormio-tatami-xani-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "e5356c22e677efb29e33bf81b2ff3f29fc979f04fd34d59485ce7a83a10de9f6",
+      "asset": "/media/products/e2d31a5190bf0aa4abcb.webp"
+    },
+    "610010006267": {
+      "code": "610010006267",
+      "imageUrl": "https://coliseumgres.ru/assets/products/bormio/Bormio-Tatami-Pepper-20x120.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/bormio/bormio-tatami-pepper-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "0e9d9a5e521e398ed3d63df4273a95ed50d9d2039e87ddcbc53b83a83b271571",
+      "asset": "/media/products/3c01e1877f86457f3503.webp"
+    },
+    "610010006268": {
+      "code": "610010006268",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ducale/Ducale-Sand-Tatami.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ducale/dukale-tatami-send-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "9cc583198ff40b71a223c97bb0d4043bbd0920c6f20cf31f95f25ef797e0457f",
+      "asset": "/media/products/4027b0b17bef8d90cf35.webp"
+    },
+    "610010006269": {
+      "code": "610010006269",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ducale/Ducale-Nut-Tatami.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ducale/dukale-tatami-nat-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "7f2d16f4d461cad154973c237161dc909dd441429f5e1b765cf28c5ef419bb61",
+      "asset": "/media/products/35b3e0c55e6ba003d76d.webp"
+    },
+    "610010006270": {
+      "code": "610010006270",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ducale/Ducale-Peppe-Tatami.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ducale/dukale-tatami-pepper-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "19bda14f94117e719c74b5ce704846c4785bc86e6df0c420362dbf55034defc8",
+      "asset": "/media/products/21eefddb129992fc6712.webp"
+    },
+    "610110001301": {
+      "code": "610110001301",
+      "imageUrl": "https://coliseumgres.ru/assets/products/riviera/Riviera-White-Mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/riviera/riviera-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "2c54927b179615a929136c29905d081b8b10bbf680f3fb6296d071306c89525c",
+      "asset": "/media/products/a7e95d26cb9cd28dab9b.webp"
+    },
+    "610110001302": {
+      "code": "610110001302",
+      "imageUrl": "https://coliseumgres.ru/assets/products/riviera/Riviera-Dark-Mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/riviera/riviera-mozaika-dark-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "7001d825660e039f8f6dc85cd3fa6bf6c2e2b2a9624a4ae1bc035a76e5d65962",
+      "asset": "/media/products/4974b0dc6c8cacadd47f.webp"
+    },
+    "610110001386": {
+      "code": "610110001386",
+      "imageUrl": "https://coliseumgres.ru/assets/products/monza/Monza-Mosaico-Cream-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/monza/monza-mozaika-krim-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "1d244d4fda6c34425f3f574f471efa15043bedfe1577f59cd3161c45d0ea28c7",
+      "asset": "/media/products/2130a6c45ad6b9f3ddb8.webp"
+    },
+    "610110001387": {
+      "code": "610110001387",
+      "imageUrl": "https://coliseumgres.ru/assets/products/monza/Monza-Mosaico-Grey-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/monza/monza-mozaika-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "33269e9fcc8b07f5a67196f7aee6459b2fce9e422e495a427074771d324d5855",
+      "asset": "/media/products/955fb80c2447a7fb1e6b.webp"
+    },
+    "610110001479": {
+      "code": "610110001479",
+      "imageUrl": "https://coliseumgres.ru/assets/products/vivaldi/Product-images/Vivaldi-White-Mosaico-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/vivaldi/vivaldi-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "9ade90107f941e372905685773204a82302652b35dd6d1bdea1f486c96d5657d",
+      "asset": "/media/products/6aa3d741b98ad95e834d.webp"
+    },
+    "610110001480": {
+      "code": "610110001480",
+      "imageUrl": "https://coliseumgres.ru/assets/products/vivaldi/Product-images/Vivaldi-Cream-Mosaico-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/vivaldi/vivaldi-mozaika-krim-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "df946856030f8ae777b345e1615b4df961e58cafae2d2e962ff90be636addfbb",
+      "asset": "/media/products/3ad0a393df1f0ee85960.webp"
+    },
+    "610110001481": {
+      "code": "610110001481",
+      "imageUrl": "https://coliseumgres.ru/assets/products/tivoli/Tivoli-White-Mosaico-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/tivoli/tivoli-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "3e6060db38860f0342d005849a0eb89f14b043a5e283f152bc0a8ed57a6cf38c",
+      "asset": "/media/products/056ed102355700bbf134.webp"
+    },
+    "610110001482": {
+      "code": "610110001482",
+      "imageUrl": "https://coliseumgres.ru/assets/products/tivoli/Tivoli-Grey-Mosaico-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/tivoli/tivoli-mozaika-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "6ccfa43b3186bbc671877d6799d87588c61059b90ca5ac819366e699d907381c",
+      "asset": "/media/products/006145e7553254016b70.webp"
+    },
+    "610110001483": {
+      "code": "610110001483",
+      "imageUrl": "https://coliseumgres.ru/assets/products/salento/pezzi-speciali/Salento-white-mosaico-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/salento/salento-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "bfb8d94e4e8f523d0b3fc3e44448db036cedf1a4c3cb47649559766351eff33b",
+      "asset": "/media/products/06129c5c672af52d470a.webp"
+    },
+    "610110001484": {
+      "code": "610110001484",
+      "imageUrl": "https://coliseumgres.ru/assets/products/salento/pezzi-speciali/Salento-cream-mosaico-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/salento/salento-mozaika-krim-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "daf320516d845df6193a516e453810ef98a2cc73396b86256fe93573a26343d9",
+      "asset": "/media/products/0e99b53db5b951ac2975.webp"
+    },
+    "610110001485": {
+      "code": "610110001485",
+      "imageUrl": "https://coliseumgres.ru/assets/products/salento/pezzi-speciali/Salento-grey-mosaico-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/salento/salento-mozaika-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "57cff414e93c40a98d8454350300aa96622b9b6770d15b7b0823a06872861d09",
+      "asset": "/media/products/7f9ddd0794353dc362d6.webp"
+    },
+    "610110001486": {
+      "code": "610110001486",
+      "imageUrl": "https://coliseumgres.ru/assets/products/rim/Rim-White-Mosaico-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/rim/rim-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "3b3d3fcd49f4dbde2a856050876b7e3cd1b83ba996ae61b1c95af391f97e9555",
+      "asset": "/media/products/d61e3dd9c9e85baff764.webp"
+    },
+    "610110001487": {
+      "code": "610110001487",
+      "imageUrl": "https://coliseumgres.ru/assets/products/rim/Rim-Sand-Mosaico-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/rim/rim-mozaika-send-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "6d997e094df61706f3fc99d99b2f76a19c4a67428a5b77e3923b255b4aafbfa0",
+      "asset": "/media/products/917f8835a0bf1fd0f57d.webp"
+    },
+    "610110001488": {
+      "code": "610110001488",
+      "imageUrl": "https://coliseumgres.ru/assets/products/rim/Rim-Grey-Mosaico-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/rim/rim-mozaika-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "fdeba77e3bcbe745c5d9ccaac21ff718d61e773effe1f49440e68a0f4283bd31",
+      "asset": "/media/products/2db16069e6f72c4a21f6.webp"
+    },
+    "610110001489": {
+      "code": "610110001489",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Lirica/Product-images/Lirica-Mosaico-White-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/lirika/lirika-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "902427bf36db955ed171fee8f9a2579cb02b9b8d00978165f1ed0b8aee966e32",
+      "asset": "/media/products/57362229b79c6dfdfb85.webp"
+    },
+    "610110001490": {
+      "code": "610110001490",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Lirica/Product-images/Lirica-Mosaico-Grey-30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/lirika/lirika-mozaika-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "885938cbcc55709d06c321689edd6a1db55c5a67828c1d8ea3e913d144451b51",
+      "asset": "/media/products/9bc5bf77fe66452566d5.webp"
+    },
+    "610010002665": {
+      "code": "610010002665",
+      "imageUrl": "https://coliseumgres.ru/assets/products/expo/Expo%CC%80_white_f05.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/expo/ekspo-fonovaia-plitka-uait-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "b2a0965f399cf40152205c2ab9a071f7aef4af24b55154e7c5e0909086a23228",
+      "asset": "/media/products/c001399fc830cb93460d.webp"
+    },
+    "610010002666": {
+      "code": "610010002666",
+      "imageUrl": "https://coliseumgres.ru/assets/products/expo/Expo%CC%80_grey_f03.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/expo/ekspo-fonovaia-plitka-grei-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "5a4b3d86c5cd71dd0ebe08c4269fabe26e393c29d68f9ebf0f3b80c7c0463315",
+      "asset": "/media/products/1f5a15cd846f34b44d32.webp"
+    },
+    "610010002667": {
+      "code": "610010002667",
+      "imageUrl": "https://coliseumgres.ru/assets/products/expo/Expo%CC%80_dark_f02.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/expo/ekspo-fonovaia-plitka-dark-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "e644d600c53f399fe1c7a882d9c6c42a0851ccd74d32307c97a563b001470c51",
+      "asset": "/media/products/57cea85c54062d2def53.webp"
+    },
+    "610010002670": {
+      "code": "610010002670",
+      "imageUrl": "https://coliseumgres.ru/assets/products/lifestyle/Lifestyle_terra_60x120_pr03B_f1.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/lifestyle/laifstail-fonovaia-plitka-terra-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "e4a4565ba944457678d203f7cb4458db0bb332265034b18a6f475176519b9096",
+      "asset": "/media/products/6e3c15022ead6489d57c.webp"
+    },
+    "610010002671": {
+      "code": "610010002671",
+      "imageUrl": "https://coliseumgres.ru/assets/products/lifestyle/Lifestyle_Snow_60x120_f03.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/lifestyle/laifstail-fonovaia-plitka-snou-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "d9bbfd1e35f5cbdfbc62745f005fb8dac186f4b30fb6a2f86eb44e6f2d40f277",
+      "asset": "/media/products/aaedfce4592132cc31a0.webp"
+    },
+    "610010002695": {
+      "code": "610010002695",
+      "imageUrl": "https://coliseumgres.ru/assets/products/fiamma/fiamma_white_60x60_2.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/fiamma/fiamma-fonovaia-plitka-uait-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "75fce011a7e4ba2dc23cd1fa33fade842fb7a05613f808793ca5c7d2c1f4d8e6",
+      "asset": "/media/products/e83aa47559525cef9832.webp"
+    },
+    "610010002696": {
+      "code": "610010002696",
+      "imageUrl": "https://coliseumgres.ru/assets/products/fiamma/fiamma_bronze_60x60_2.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/fiamma/fiamma-fonovaia-plitka-bronz-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "0a8be44952c91d0b1434055ea067fa3014afbccd9535b94597a44b145f971324",
+      "asset": "/media/products/99f11fa75d497c7ef451.webp"
+    },
+    "610010002743": {
+      "code": "610010002743",
+      "imageUrl": "https://coliseumgres.ru/assets/products/brera/Brera_60x120_white_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/brera/brera-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "be89623c76ba47644efb5e2323e9744c7c5e62263f4b514a73f016acd75deb63",
+      "asset": "/media/products/9998a379a082db9c4478.webp"
+    },
+    "610010002745": {
+      "code": "610010002745",
+      "imageUrl": "https://coliseumgres.ru/assets/products/michelangelo/Michelangelo_60x120_WARM_f06_2024-10-03-132131_biyk.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/michelangelo/mikelandzelo-fonovaia-plitka-vorm-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "6abcf712b9299355f671467454e0c32fe3d3a260183ff6276ee3e696058bb650",
+      "asset": "/media/products/23d8540d111c519b1863.webp"
+    },
+    "610010002746": {
+      "code": "610010002746",
+      "imageUrl": "https://coliseumgres.ru/assets/products/michelangelo/Michelangelo_60x120_COLD_f06_2024-10-03-132228_tahj.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/michelangelo/mikelandzelo-fonovaia-plitka-kold-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "2553f0c21e936a29527e98c83f1ca1cf30de226742621fda5e46d750a358cde3",
+      "asset": "/media/products/083864e89c95146785f9.webp"
+    },
+    "610010002747": {
+      "code": "610010002747",
+      "imageUrl": "https://coliseumgres.ru/assets/products/michelangelo/Michelangelo_60x120_DARK_f06.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/michelangelo/mikelandzelo-fonovaia-plitka-dark-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "a4ce5624f868b3993b8738a0fc9c7b16eda43bea94d94ab0607986c76af1a8cf",
+      "asset": "/media/products/ecc1ff3dc2556e24fff3.webp"
+    },
+    "610010002748": {
+      "code": "610010002748",
+      "imageUrl": "https://coliseumgres.ru/assets/products/michelangelo/Michelangelo_60x60_WARM_f06_2024-10-03-132401_bklp.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/michelangelo/mikelandzelo-fonovaia-plitka-vorm-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "57d2c9621404210c6ea1f76f72df24ee2c1389c88c7cf0212cfd031aab4a03e1",
+      "asset": "/media/products/a8749c02331c00716da6.webp"
+    },
+    "610010002749": {
+      "code": "610010002749",
+      "imageUrl": "https://coliseumgres.ru/assets/products/michelangelo/Michelangelo_60x60_COLD_f06_2024-10-03-132449_yszj.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/michelangelo/mikelandzelo-fonovaia-plitka-kold-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "d53f7f0242dae3d9208b8beb83cfed43ed047639bb2e6c3db16d09cbed6a316a",
+      "asset": "/media/products/0eda44273f3eaf5dd8e7.webp"
+    },
+    "610010002750": {
+      "code": "610010002750",
+      "imageUrl": "https://coliseumgres.ru/assets/products/michelangelo/Michelangelo_60x60_DARK_f06.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/michelangelo/mikelandzelo-fonovaia-plitka-dark-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "4b055f6a1174e0843e0c2ebf127b9aec9a3e0d6be719b17b8ffddf5cc352436d",
+      "asset": "/media/products/e489aa59af27367a46de.webp"
+    },
+    "610010002751": {
+      "code": "610010002751",
+      "imageUrl": "https://coliseumgres.ru/assets/products/natura/Natura_20x120_WHITE_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/natura/natura-fonovaia-plitka-uait-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "69e2e635c474053e6b146e2714f96e0a49aa5a827eca937df99d4e2745d05184",
+      "asset": "/media/products/5652cca7e35c02521fcc.webp"
+    },
+    "610010002752": {
+      "code": "610010002752",
+      "imageUrl": "https://coliseumgres.ru/assets/products/natura/Natura_20x120_HONEY_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/natura/natura-fonovaia-plitka-xani-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "d02672eaafcaa2d6f46f04559cd82c453a9ec703d5bd25f26e08a2eca29b9af1",
+      "asset": "/media/products/ae06d09592f1316a0555.webp"
+    },
+    "610010002753": {
+      "code": "610010002753",
+      "imageUrl": "https://coliseumgres.ru/assets/products/natura/Natura_20x120_NUT_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/natura/natura-fonovaia-plitka-nat-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "7c9336bb968260da6e74302685ad84055e5abaa72c8b4ccf45c580937901f6a1",
+      "asset": "/media/products/51ddde2bdd64a5627fc0.webp"
+    },
+    "610010002757": {
+      "code": "610010002757",
+      "imageUrl": "https://coliseumgres.ru/assets/products/san-siro/San_siro_60x120_WHITE_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/san-siro/san-siro-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "811d48066acd9fb49248bd070665e9cc3b18aecf88dc8bfcf64f39a7113db7fe",
+      "asset": "/media/products/f2e582fd39b15c0f7dcf.webp"
+    },
+    "610010002758": {
+      "code": "610010002758",
+      "imageUrl": "https://coliseumgres.ru/assets/products/san-siro/San_siro_60x120_GREY_f02.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/san-siro/san-siro-fonovaia-plitka-grei-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "9f72aa8746f399995d8d5c6554ab97762d53708b8c1e0b6c593ece8d2066d67b",
+      "asset": "/media/products/b0cf156c56460ff87162.webp"
+    },
+    "610010002759": {
+      "code": "610010002759",
+      "imageUrl": "https://coliseumgres.ru/assets/products/san-siro/San_siro_60x120_DARK_f06.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/san-siro/san-siro-fonovaia-plitka-dark-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "793727c6b599fe6b09cd5ec19b064819965c257392e15f0bdb3a4b45925cef32",
+      "asset": "/media/products/01927824bc0ecd985a2e.webp"
+    },
+    "610010002792": {
+      "code": "610010002792",
+      "imageUrl": "https://coliseumgres.ru/assets/products/contea/Contea_60x60_white_pr02mod_f06.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/contea/kontea-fonovaia-plitka-uait-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "9c9d18b574ba4f86778e66cebcfa5fdfecd1ef1a9c01d8b5f48621ed9a33d876",
+      "asset": "/media/products/e7458b01f073e100256e.webp"
+    },
+    "610010002793": {
+      "code": "610010002793",
+      "imageUrl": "https://coliseumgres.ru/assets/products/contea/Contea_60x60_grey_pr04_f06.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/contea/kontea-fonovaia-plitka-grei-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "57c08e270c333d016e1bfda6f30c0a3fb4e959dd145864a5350606493bb8d707",
+      "asset": "/media/products/a7f4e0459fce98a11880.webp"
+    },
+    "610010002794": {
+      "code": "610010002794",
+      "imageUrl": "https://coliseumgres.ru/assets/products/contea/Contea_60x120_white_pr02mod_f03.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/contea/kontea-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "3989955a2f64c7bbea769130398144534eac7168d77de15e3025dac8bbd8b7d8",
+      "asset": "/media/products/e6b6d9ee1e4fe017a001.webp"
+    },
+    "610010002795": {
+      "code": "610010002795",
+      "imageUrl": "https://coliseumgres.ru/assets/products/contea/Contea_60x120_grey_pr04_f05.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/contea/kontea-fonovaia-plitka-grei-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "ddfff02b034e6a430e4e129bce195dd51e16e32ebe48d27ddaa9f102c975f0f1",
+      "asset": "/media/products/445fac094917fd3f2083.webp"
+    },
+    "610010002796": {
+      "code": "610010002796",
+      "imageUrl": "https://coliseumgres.ru/assets/products/creta/Creta_White-60x60-P03_f06.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/creta/kreta-fonovaia-plitka-uait-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "d7e4bdaec9255e3bc4e34e99f90072178f400ac93a68adb3bec7b2735863ea40",
+      "asset": "/media/products/4fe78331ee41ab2250a6.webp"
+    },
+    "610010002797": {
+      "code": "610010002797",
+      "imageUrl": "https://coliseumgres.ru/assets/products/creta/Creta_Cream-60x60-P01_f06.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/creta/kreta-fonovaia-plitka-krim-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "86f146299b7fce1c758f61eee63306e258ec7cff08a682acc23d4434bdd05f79",
+      "asset": "/media/products/e6f7a5f405716da8fe44.webp"
+    },
+    "610010002798": {
+      "code": "610010002798",
+      "imageUrl": "https://coliseumgres.ru/assets/products/creta/Creta_Moka-60x60-P05_f06.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/creta/kreta-fonovaia-plitka-moka-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "871c21422cb0efaf76dbc757f81352ccafecfc28946f92f1d819be398e63bfe7",
+      "asset": "/media/products/6a5ddbc431228334e730.webp"
+    },
+    "610010002799": {
+      "code": "610010002799",
+      "imageUrl": "https://coliseumgres.ru/assets/products/creta/Creta_Clay-60x60-P04_f06.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/creta/kreta-fonovaia-plitka-klei-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "d471ab13acc93df2f64dededb9fe406e47dfa02ddd20284198fc615c8e7d94a4",
+      "asset": "/media/products/d3f5ac5486cdce4cfb78.webp"
+    },
+    "610010003166": {
+      "code": "610010003166",
+      "imageUrl": "https://coliseumgres.ru/assets/products/aurelia/Aurelia_60x120_beige_f5.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/aurelia/aurelia-fonovaia-plitka-bez-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "a8a2cca31ce799612e8f2b6f8e310a43407e15b1f93ffd6a48dd1ddc19c8dd04",
+      "asset": "/media/products/32e489e7ee7cc8e73d96.webp"
+    },
+    "610010005761": {
+      "code": "610010005761",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Canova/Canova_60x60_dolomite_pr01_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/canova/kanova-fonovaia-plitka-uait-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "36efc1ff7c02cad260c4b7f04d14db54bcc0d1a501048d734f16dd7d1f23ee37",
+      "asset": "/media/products/62d6eef45c8bf7b56b09.webp"
+    },
+    "610010005762": {
+      "code": "610010005762",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Canova/Canova_60x60_white_pr08_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/canova/kanova-fonovaia-plitka-send-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "5bc6fa34a5d717db9db49c556caa3f90a52628c54d805a9b714e45e8f25117ed",
+      "asset": "/media/products/62a7dc4862e936bd0cda.webp"
+    },
+    "610010005763": {
+      "code": "610010005763",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Canova/Canova_60x60_grey_pr04mod_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/canova/kanova-fonovaia-plitka-grei-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "a524b17ce97dcd6139196d3175d56be7386785991a403cc40c4ad72c799f2b83",
+      "asset": "/media/products/b68c97a635a2d35c30e1.webp"
+    },
+    "610010005764": {
+      "code": "610010005764",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Canova/Canova_60x60_dark_pr11_f02.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/canova/kanova-fonovaia-plitka-dark-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "c1cb36755732e8c660499aa4767826f4fa9493f2ded1257c3c7a5286fba387df",
+      "asset": "/media/products/4f8efc2023a403a6bfd7.webp"
+    },
+    "610010005765": {
+      "code": "610010005765",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Canova/Canova_60x120_White_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/canova/kanova-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "cbd647763d260e1e835df875252b4f13402d8d93e772b5758a22f2f35e534a71",
+      "asset": "/media/products/c3351ac7fb1ad4d58121.webp"
+    },
+    "610010005766": {
+      "code": "610010005766",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Canova/Canova_60x120_Sand_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/canova/kanova-fonovaia-plitka-send-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "15485622f0c9fccdcda5ee940749a3cf723e1704000ff2ea6e7b0204592231a1",
+      "asset": "/media/products/1cd39cd868b3fbeedd1c.webp"
+    },
+    "610010005767": {
+      "code": "610010005767",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Canova/Canova_60x120_Grey_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/canova/kanova-fonovaia-plitka-grei-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "4c7c3c197af0a9ddcb7fd0fd45a15e81a8e93c9dd57a7ee1b02a341b0225075b",
+      "asset": "/media/products/8dd56533c31a746a82a3.webp"
+    },
+    "610010005768": {
+      "code": "610010005768",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Canova/Canova_60x120_Dark__f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/canova/kanova-fonovaia-plitka-dark-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "3a42220bfdb77d806ad42f64eb03cb415ed97af6a6d845660dcb532a47b55413",
+      "asset": "/media/products/bd0dc72c791ea0231c98.webp"
+    },
+    "610010006271": {
+      "code": "610010006271",
+      "imageUrl": "https://coliseumgres.ru/assets/products/natura/Natura_30x30_WHITE_f08_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/natura/natura-tatami-uait-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "9b790b32e683432c3a43078d82944fd3e233f4f5e25c281f5189fcb71fbc53da",
+      "asset": "/media/products/41c9df89303c18666605.webp"
+    },
+    "610010006272": {
+      "code": "610010006272",
+      "imageUrl": "https://coliseumgres.ru/assets/products/natura/Natura_30x30_HONEY_f01_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/natura/natura-tatami-xani-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "04c9423647da82d0e2c7501813b73fde7cf7c60d53f0f84ccf8c3476ab7be9c1",
+      "asset": "/media/products/d9c1a0e233cbaa2b2fec.webp"
+    },
+    "610010006273": {
+      "code": "610010006273",
+      "imageUrl": "https://coliseumgres.ru/assets/products/natura/Natura_30x30_NUT_f05_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/natura/natura-tatami-nat-20x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "f1c0bb79c7315cfb3d973be62c58d08e1ebb010d4d2836a6e0141c53f92f30c9",
+      "asset": "/media/products/38ebed8c6d2974cabd7b.webp"
+    },
+    "610080000235": {
+      "code": "610080000235",
+      "imageUrl": "https://coliseumgres.ru/assets/products/fiamma/Fiamma_60x60_white_ins_frame_f08.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/fiamma/fiamma-fonovaia-plitka-uait-vstavka-freim-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "93be904124702a00164feb84ed8779b58ff718c70e4ac9b1d122f2958300d234",
+      "asset": "/media/products/85276a89fa34ba246dbd.webp"
+    },
+    "610110000973": {
+      "code": "610110000973",
+      "imageUrl": "https://coliseumgres.ru/assets/products/white_Mosaico-min.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/expo/expo-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "6ca5d0ff03733c97e51296a8a5f8b63b3b778fa2b0a84ae7af703f905cca3d05",
+      "asset": "/media/products/37a28d294801b7bfcfb6.webp"
+    },
+    "610110000974": {
+      "code": "610110000974",
+      "imageUrl": "https://coliseumgres.ru/assets/products/grey_Mosaico-min.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/expo/expo-mozaika-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "2dd17969d8a81313392e7301c5baa6e27c91c258f090e02ab9d7abd313badbb8",
+      "asset": "/media/products/af4f711f849e9dd12b55.webp"
+    },
+    "610110000975": {
+      "code": "610110000975",
+      "imageUrl": "https://coliseumgres.ru/assets/products/dark_Mosaico-min.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/expo/expo-mozaika-dark-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "ec4c7684459f19e3fbfdcae4497df60ae4ceb7a37dfa1fc30a4dda5a6b664f73",
+      "asset": "/media/products/b70490984f46aa848ce1.webp"
+    },
+    "610110000976": {
+      "code": "610110000976",
+      "imageUrl": "https://coliseumgres.ru/assets/products/white_Mosaico_Listelli-min.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/expo/expo-mozaika-grid-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "6e76337ce8549ed6ca12dc49784731454821f6e4d61d429fa1a2cbe36e6acb60",
+      "asset": "/media/products/5e2b61709c177637c891.webp"
+    },
+    "610110000977": {
+      "code": "610110000977",
+      "imageUrl": "https://coliseumgres.ru/assets/products/grey_Mosaico_Listelli-min.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/expo/expo-mozaika-grid-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "ca94b1564501b24b8ac2be728d1802859390cf63d593dfca1b2497e68fd68852",
+      "asset": "/media/products/d5f7d5b1acf74a518f8d.webp"
+    },
+    "610110000978": {
+      "code": "610110000978",
+      "imageUrl": "https://coliseumgres.ru/assets/products/dark_Mosaico_Listelli-min.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/expo/expo-mozaika-grid-dark-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "b3d510ea269f5960e81662fd0d59a3b7dd15785be9d2df4d3501000856de3f18",
+      "asset": "/media/products/6476d0a6026ddc10baf6.webp"
+    },
+    "610110001044": {
+      "code": "610110001044",
+      "imageUrl": "https://coliseumgres.ru/assets/products/fiamma/fiamma_white_mosaico-min.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/fiamma/fiamma-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "8e6c20bd4b30625d0e4cd65f6496d7e80e147ef352ffde0f449fb464742a78fb",
+      "asset": "/media/products/8792c2fb48508b1f0a88.webp"
+    },
+    "610110001045": {
+      "code": "610110001045",
+      "imageUrl": "https://coliseumgres.ru/assets/products/fiamma/fiamma_bronze_mosaico-min.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/fiamma/fiamma-mozaika-bronz-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "1814db3d04b21039650d689c693f8023724386a5da6ac7497cfb557be3a95a0e",
+      "asset": "/media/products/bb9aacdd097daf240015.webp"
+    },
+    "610110001102": {
+      "code": "610110001102",
+      "imageUrl": "https://coliseumgres.ru/assets/products/san-siro/San_siro_30x30_WHITE_f03_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/san-siro/san-siro-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "877f3a99a6e29e057f086508452d02ddbc29475e5e067c384cbdb8b7c85ee7c0",
+      "asset": "/media/products/c39764a8a79d66c88883.webp"
+    },
+    "610110001103": {
+      "code": "610110001103",
+      "imageUrl": "https://coliseumgres.ru/assets/products/san-siro/San_siro_30x30_GREY_f06_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/san-siro/san-siro-mozaika-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "6e81156bf66c8bfcf972001d73f4b6c48a78df3a789c788377339fd69b876fdb",
+      "asset": "/media/products/dd9a8181ffea706bc383.webp"
+    },
+    "610110001104": {
+      "code": "610110001104",
+      "imageUrl": "https://coliseumgres.ru/assets/products/san-siro/San_siro_30x30_DARK_f01_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/san-siro/san-siro-mozaika-dark-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "bb6f2e13d43a304ff4c376affd2b720403105ce40fa41b5042754fd0ea2c4ad1",
+      "asset": "/media/products/fe1fe07b2397ece94d83.webp"
+    },
+    "610110001105": {
+      "code": "610110001105",
+      "imageUrl": "https://coliseumgres.ru/assets/products/michelangelo/Michelangelo_30x30_WARM_f04_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/michelangelo/michelangelo-mozaika-vorm-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "6e657522689ecf931794af50083b0aef18a6e112c69fa4007e97fab4a56b27bf",
+      "asset": "/media/products/c1cfafd65bd60ebda430.webp"
+    },
+    "610110001106": {
+      "code": "610110001106",
+      "imageUrl": "https://coliseumgres.ru/assets/products/michelangelo/Michelangelo_30x30_COLD_f02_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/michelangelo/michelangelo-mozaika-kold-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "aac0a08cec33b61b6115c43408843fbc6e589277d4a0fcdd726e9d1cc8568fb8",
+      "asset": "/media/products/86feb33127b7a53a6557.webp"
+    },
+    "610110001107": {
+      "code": "610110001107",
+      "imageUrl": "https://coliseumgres.ru/assets/products/michelangelo/Michelangelo_30x30_DARK_f05_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/michelangelo/michelangelo-mozaika-dark-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "5b6b69d91b31ad3c26e744eccc3c3fc039431666c141face9276ebc8f49ca664",
+      "asset": "/media/products/d46210b2b2475820394b.webp"
+    },
+    "610110001125": {
+      "code": "610110001125",
+      "imageUrl": "https://coliseumgres.ru/assets/products/contea/contea_white_t36.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/contea/contea-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "616933163eda22aba1f85d38aa10c7ca2872b477cca1f099705bb8bf0cf83ee6",
+      "asset": "/media/products/16d3f0f8798f4c50c23a.webp"
+    },
+    "610110001126": {
+      "code": "610110001126",
+      "imageUrl": "https://coliseumgres.ru/assets/products/contea/contea_grey_t36.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/contea/contea-mozaika-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "8c63fbd578fda76689f08e8e3aff324687d27b5ef7641b5a148815cb9c2965db",
+      "asset": "/media/products/8403a76a6187b697f4c5.webp"
+    },
+    "610110001127": {
+      "code": "610110001127",
+      "imageUrl": "https://coliseumgres.ru/assets/products/creta/creta_white_t36.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/creta/creta-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "631f295684ccb599a64ef0abc3e734aebb85d6f7d08a45ef00f55cef96dbfcd9",
+      "asset": "/media/products/0505719e4074374910cb.webp"
+    },
+    "610110001128": {
+      "code": "610110001128",
+      "imageUrl": "https://coliseumgres.ru/assets/products/creta/creta_cream_t36.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/creta/creta-mozaika-krim-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "d7a568d13c6e928a6c7e106e420576ce4f0ad5cb0df899c086c1703bc31a3698",
+      "asset": "/media/products/e931c20abdf125454041.webp"
+    },
+    "610110001129": {
+      "code": "610110001129",
+      "imageUrl": "https://coliseumgres.ru/assets/products/creta/creta_moka_t36.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/creta/creta-mozaika-moka-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "46bcbf35f02909494fbbd71c342164592e511292ca5882dbb8c5f4565214b909",
+      "asset": "/media/products/bdaa289163ed8234d2e4.webp"
+    },
+    "610110001130": {
+      "code": "610110001130",
+      "imageUrl": "https://coliseumgres.ru/assets/products/creta/creta_clay_t36.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/creta/creta-mozaika-klei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "ff2278773440d3735090b211e8d2bf1407807db840ae744ab7660dc04a6ab965",
+      "asset": "/media/products/5dc8b74de0ffc2057fb2.webp"
+    },
+    "610110001256": {
+      "code": "610110001256",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Canova/Canova-White-Mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/canova/canova-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "370c5f5d5584af1e8f637437f1608cac106f1409f53c7d02254a4c33835da417",
+      "asset": "/media/products/71814d55fe91aa8a9563.webp"
+    },
+    "610110001257": {
+      "code": "610110001257",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Canova/Canova-Sand-Mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/canova/canova-mozaika-send-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "f9a0c84c9ea102d6ecdaf2b340877ebab44210d2b0b8c0ca01bb001f63cd808d",
+      "asset": "/media/products/c22b0806fa4f3440822c.webp"
+    },
+    "610110001258": {
+      "code": "610110001258",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Canova/Canova-Grey-Mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/canova/canova-mozaika-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "cd848adc773221a61d6c26111efc0444dbb94b2c13acddc22eb414b0379b4c9b",
+      "asset": "/media/products/dd77c87dfdd65e95a24a.webp"
+    },
+    "610110001259": {
+      "code": "610110001259",
+      "imageUrl": "https://coliseumgres.ru/assets/products/Canova/Canova-Dark-Mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/canova/canova-mozaika-dark-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "f8f2e6149f83e2be35934c029145b1e84a464298403685799bbe58bed87f1fec",
+      "asset": "/media/products/5f1df991eb8e5ed26a98.webp"
+    },
+    "610110001299": {
+      "code": "610110001299",
+      "imageUrl": "https://coliseumgres.ru/assets/products/aurelia/Aurelia-White-Mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/aurelia/aurelia-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "696cd40e015df5c08e65e84750fbb076f0521e5c74cc9a26a0d3a02c4f5e8f8f",
+      "asset": "/media/products/447ab5fe0b7f7b52134e.webp"
+    },
+    "610110001300": {
+      "code": "610110001300",
+      "imageUrl": "https://coliseumgres.ru/assets/products/aurelia/Aurelia-Beige-Mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/aurelia/aurelia-mozaika-bez-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "fd9b6fb9c20ea8cb6757fa8c838237a04cede18edee19c214245d6c6616af81a",
+      "asset": "/media/products/b37adfa17eccf45ee22e.webp"
+    },
+    "620110000172": {
+      "code": "620110000172",
+      "imageUrl": "https://coliseumgres.ru/assets/products/white_MosaicoHexagon-min.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/expo/expo-mozaika-geksagon-uait-25x29/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "d0e3487a38f65e64404109e6cd1cfa983aacee02ae7c37db3fc5f7b7731da1e1",
+      "asset": "/media/products/3a119a2247ed6efcbb9e.webp"
+    },
+    "620110000173": {
+      "code": "620110000173",
+      "imageUrl": "https://coliseumgres.ru/assets/products/grey_MosaicoHexagon-min.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/expo/expo-mozaika-geksagon-grei-25x29/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "3440be463f092e16366bf057452d9748e7a8143101339de74ed16f1ab9c48b17",
+      "asset": "/media/products/6ae8f482111b5de62868.webp"
+    },
+    "620110000177": {
+      "code": "620110000177",
+      "imageUrl": "https://coliseumgres.ru/assets/products/lifestyle/ITALON_COLISEUM_22_Lifestyle_Terra_Mos_Dec_20x22-min.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/lifestyle/lifestyle-mozaika-terra-205x227/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "405ce0a5b1ce417458b1ea34f82c02586e7876d8ab833c8cf36c3d16eeddd384",
+      "asset": "/media/products/6b62d4f214f1b00e73dc.webp"
+    },
+    "620110000178": {
+      "code": "620110000178",
+      "imageUrl": "https://coliseumgres.ru/assets/products/lifestyle/ITALON_COLISEUM_22_Lifestyle_Snow_Mos_Dec_20x22-min.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/lifestyle/lifestyle-mozaika-snou-205x227/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "884a7654d948979a099683e2bd4df6e69f7858154aa23710d5d16ad326d5ab88",
+      "asset": "/media/products/dbfe92c0ea9e707b173d.webp"
+    },
+    "610010000705": {
+      "code": "610010000705",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000705.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000705/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "a6a7525ec796c12ba6fdf65ed9a553134a4a24b6d9c22c8f15de42382ee82b9c",
+      "asset": "/media/products/d0d92ddc46c79dd429e2.webp"
+    },
+    "610010000706": {
+      "code": "610010000706",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000706.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000706/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "1b8508806c32472bdf459070fbdc85f7983af6431aaec51dd970663c3dce2c01",
+      "asset": "/media/products/0acb4453beed3e5f126d.webp"
+    },
+    "610010000707": {
+      "code": "610010000707",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000707.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000707/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "e4681c5007d144ea80b8db4898772ea640fdba1f633533f48cf18b389dba340e",
+      "asset": "/media/products/a989f633e456c5ec196c.webp"
+    },
+    "610010000708": {
+      "code": "610010000708",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000708.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000708/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "d6df9284905af67fd9d04ece747125e0e05a8877e66db422ddef466990fac1b3",
+      "asset": "/media/products/134aad132a62e2fe334a.webp"
+    },
+    "610010000709": {
+      "code": "610010000709",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000709.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000709/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "a508a014af9fe5e9340a49ef2fdba731886d9d8a2622f44ca514c0014ec674cf",
+      "asset": "/media/products/d85eba73115ae802e583.webp"
+    },
+    "610010000710": {
+      "code": "610010000710",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000710.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000710/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "eaa504a6b77176e3096dbc347655024f37e6037917346a6990503f0e47698515",
+      "asset": "/media/products/4c38c631866dc023e646.webp"
+    },
+    "610010000711": {
+      "code": "610010000711",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000711.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000711/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "fc2c04c81c635903ef7dc59ec067ac049f162f1705723e018a00037ccacbfbd9",
+      "asset": "/media/products/aec8500c38e039cae01e.webp"
+    },
+    "610010000712": {
+      "code": "610010000712",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000712.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000712/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "3a88913077b3508233b4a77f228e8eb74d01b0adbf1cc845e83f8d0514fc8e77",
+      "asset": "/media/products/3889341de5876a034854.webp"
+    },
+    "610010000713": {
+      "code": "610010000713",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000713.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000713/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "5405674b638161b43d0208eda7988790b24919a8c651ea80006a5fac4e19332e",
+      "asset": "/media/products/d85eba73115ae802e583.webp"
+    },
+    "610010000714": {
+      "code": "610010000714",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000714.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000714/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "49a59d9dcec477cf4689a52387a4297d164c2c53d9e696a72cb9f2381c3a71bd",
+      "asset": "/media/products/4c38c631866dc023e646.webp"
+    },
+    "610010000715": {
+      "code": "610010000715",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000715.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000715/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "491e2b99f487cc607fb2765024abb8baf80ec62bc03cccd39470524043dd2f83",
+      "asset": "/media/products/aec8500c38e039cae01e.webp"
+    },
+    "610010000716": {
+      "code": "610010000716",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000716.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000716/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "a2cb98a708d6028f9cfdad7ece54cc1187180bb74f651435da0df8cd0bca6f7e",
+      "asset": "/media/products/3889341de5876a034854.webp"
+    },
+    "610010000717": {
+      "code": "610010000717",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000717.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000717/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "5665bb5bafe877517d6eba08626e07845ebc4e7e4d5bc46424817aa327505e2f",
+      "asset": "/media/products/1967a07e63173969c873.webp"
+    },
+    "610010000718": {
+      "code": "610010000718",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000718.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000718/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "06e15f6a9cc59af0a7acdabb195bca50aca21c49b8b4e07524fc6672b52ecd7a",
+      "asset": "/media/products/f799ac05da48d0d07bc4.webp"
+    },
+    "610010000719": {
+      "code": "610010000719",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000719.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000719/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "069bb410b2ea7afd1af9781f767954437274c9e0b0d716127f062c4f49dd2072",
+      "asset": "/media/products/62ecc2581b866e73c377.webp"
+    },
+    "610010000720": {
+      "code": "610010000720",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000720.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000720/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "8227cd27f0b2db8ade654750f815d0e0b9c4e0de8abf80663f5a0cd775b28302",
+      "asset": "/media/products/5d098b71e330076e70aa.webp"
+    },
+    "610010000721": {
+      "code": "610010000721",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000721.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000721/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "30b4db7e595f105fd4de31c2c1735a0f7a0c7f3d4eebb8b1a5291577ce8e4abe",
+      "asset": "/media/products/bfddd8ff78566c89da3f.webp"
+    },
+    "610010000722": {
+      "code": "610010000722",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000722.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000722/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "7b042c9bef804bd822d6b776488a4e35967f3a5e3b8a62335819c5f673f983db",
+      "asset": "/media/products/9b574b6e670f879964b3.webp"
+    },
+    "610010000723": {
+      "code": "610010000723",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000723.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000723/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "ac354f2138cc38debd099d36fb5ee466ef26e39baa6d534012ee82c44eeff3e2",
+      "asset": "/media/products/ba37e818c9d719913172.webp"
+    },
+    "610010000724": {
+      "code": "610010000724",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000724.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000724/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "32d6c7380b105bdf024c9dc690a759882aa922a2b3e3107bea9a7454b823643b",
+      "asset": "/media/products/84874c8e30d20ca1bf55.webp"
+    },
+    "610010000725": {
+      "code": "610010000725",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000725.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000725/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "eee880b05f408b1e1fada80e41d5beb09e2d63ea61bd88599c7dd8bcabb9fbf6",
+      "asset": "/media/products/379a25a7801f1749be9c.webp"
+    },
+    "610010000726": {
+      "code": "610010000726",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000726.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000726/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "4a66e65653c599068c2a2acb02d12820c3713fae414c5f930ffea4a796c9a8de",
+      "asset": "/media/products/455cf8a694cdc58c3486.webp"
+    },
+    "610010000727": {
+      "code": "610010000727",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000727.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000727/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "5264308d6a46373b465cbc0450b5ffdcf554f9e739520f86ed0ddce6fdeaff15",
+      "asset": "/media/products/c064f7ff91e2b4d4d3f1.webp"
+    },
+    "610010000728": {
+      "code": "610010000728",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010000728.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010000728/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "4f8f2092c2dbac6f4d8b8db3c148a990183d2822add0d9451c3a9dee9222a4a4",
+      "asset": "/media/products/31c41cf5559a0734b9ec.webp"
+    },
+    "610010001199": {
+      "code": "610010001199",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010001199.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010001199/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "a2b344eea2fd666966da8e0efffef9b2c69c272775a08bf0bab936b3b30c4e7c",
+      "asset": "/media/products/84fa19422bdc788731bd.webp"
+    },
+    "610010001318": {
+      "code": "610010001318",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010001318.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010001318/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "3de0f8222a760ce7383bc0f9bc97d10d960c247dbc1ff1e135359838d68b1296",
+      "asset": "/media/products/91aee1ab11928d4a09a7.webp"
+    },
+    "610010001319": {
+      "code": "610010001319",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010001319.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010001319/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "ee026bff3a8c1a6812e1730a278d820d99ffa79380bc3e86207043a10ec2f703",
+      "asset": "/media/products/2f36bd7650899fd86c1d.webp"
+    },
+    "610010001320": {
+      "code": "610010001320",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010001320.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010001320/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "99bda711e113cb29fedeb1d0761ea4e1f6fceebecc7e3ed52d349f61d490547b",
+      "asset": "/media/products/105f8d97720837abbedd.webp"
+    },
+    "610010001321": {
+      "code": "610010001321",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010001321.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010001321/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "9b3ebd68848d81f03a489010f375d2f7ce931e560b52c44b86f0f3e896160663",
+      "asset": "/media/products/e138b3d9332c75e758fa.webp"
+    },
+    "610010001322": {
+      "code": "610010001322",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010001322.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010001322/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "960c167b2b929ee7ec96a10586292fdd130f34bfb60e0b7749efaee0613e7ecd",
+      "asset": "/media/products/4d24edc04090f19202a5.webp"
+    },
+    "610010001323": {
+      "code": "610010001323",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010001323.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010001323/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "9e375cab1340f001dec391aa7a10ffab713e4dec3c0f43dabc41ed741e5c50c6",
+      "asset": "/media/products/3de21b47dcb07885789a.webp"
+    },
+    "610010001324": {
+      "code": "610010001324",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010001324.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010001324/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "fa605450a3b5d100575c6789896467b56150ffaa0c09fd99ef330e667f0b7f37",
+      "asset": "/media/products/7bb41d8f3250917d3f56.webp"
+    },
+    "610010001325": {
+      "code": "610010001325",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010001325.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010001325/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "eb088787edc4f317c527f295847cb1a0e5796e63f9a3b9a9c472f450a354525a",
+      "asset": "/media/products/ce3b93bfceb48c09c12a.webp"
+    },
+    "610010001326": {
+      "code": "610010001326",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010001326.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010001326/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "dc6ee2de947506db40622c78f890796bb9562f1c9f43de6a1990b8bf0302290f",
+      "asset": "/media/products/d6e1ffe88f7299dd049c.webp"
+    },
+    "610010001327": {
+      "code": "610010001327",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010001327.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010001327/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "37945b6a96d465fd2822a3410623eabe917e51714638377e95b5ce47652d39ff",
+      "asset": "/media/products/06d3bfb0212d29c30c52.webp"
+    },
+    "610010001328": {
+      "code": "610010001328",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010001328.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010001328/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "26da719b9cbdb06fa89a5e1bf7cfb7e93c64bf3b4cde8fe80f4c987fa59ae89e",
+      "asset": "/media/products/f28ec89b669b66bb1f44.webp"
+    },
+    "610010002136": {
+      "code": "610010002136",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002136.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002136/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "e0750e20452a0c5c10924c83bb45762ddfa54d6c648220d1deee2ecda2ae4f1b",
+      "asset": "/media/products/1fdd3212f6dff0f75d11.webp"
+    },
+    "610010002662": {
+      "code": "610010002662",
+      "imageUrl": "https://coliseumgres.ru/assets/products/da-vinci/Davinci_white_60x60_f03_2024-10-03-142659_woqu.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/da-vinci/da-vinci-fonovaia-plitka-uait-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "6e485ee073b7e5873dc5375ba00943c5033506879927c5bab684f32d1689538f",
+      "asset": "/media/products/85372a48dce217593663.webp"
+    },
+    "610010002663": {
+      "code": "610010002663",
+      "imageUrl": "https://coliseumgres.ru/assets/products/da-vinci/Davinci_beige_60x60_f03_2024-10-03-142730_jzsu.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/da-vinci/da-vinci-fonovaia-plitka-bez-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "b543ea0c20ede7970511bd0a87f2f2be4bf22f5af3c4ad8e3b95e14e30e12e5b",
+      "asset": "/media/products/1cefe940acb3305cf245.webp"
+    },
+    "610010002664": {
+      "code": "610010002664",
+      "imageUrl": "https://coliseumgres.ru/assets/products/da-vinci/Davinci_brown_60x60_f03_2024-10-03-142801_nvrg.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/da-vinci/da-vinci-fonovaia-plitka-braun-60x60/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "363a869d512d3c745dd2a1fc3392e39ecb67d339d0e371f8332a6d17f5ac1ae0",
+      "asset": "/media/products/c2971e57beaf4391c22a.webp"
+    },
+    "610010002690": {
+      "code": "610010002690",
+      "imageUrl": "https://coliseumgres.ru/assets/products/palladio/Palladio_60x120_white_f06.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/palladio/palladio-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "d8acaaa41047372c4b7eb6f44689576402d44866c91a571177e038d87fcf126e",
+      "asset": "/media/products/d3513599c39626663318.webp"
+    },
+    "610010002691": {
+      "code": "610010002691",
+      "imageUrl": "https://coliseumgres.ru/assets/products/palladio/Palladio_60x120_black_f07.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/palladio/palladio-fonovaia-plitka-blek-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "a2e0e6c09c805003108240dda8231841b20f4186dba6ba41ba7528e2988f5b70",
+      "asset": "/media/products/3204779494a18596f2e4.webp"
+    },
+    "610010002692": {
+      "code": "610010002692",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ardesia/Ardesia_60x120_white_f03.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ardesia/ardesia-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "8540f52de130af3007f26e6ce9d2938f0936d7ffbceea10ec3e3caed976a93ae",
+      "asset": "/media/products/4ba3b7ddbdbad5f787b5.webp"
+    },
+    "610010002693": {
+      "code": "610010002693",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ardesia/Ardesia_60x120_grey_f09.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ardesia/ardesia-fonovaia-plitka-grei-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "d6f39b0e6fdd12694e2372bcf3face14cc5c3c52fff6eac69bf56fbcd9bf890b",
+      "asset": "/media/products/44f327d1be9ea073339c.webp"
+    },
+    "610010002694": {
+      "code": "610010002694",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ardesia/ardesia_black_60x120_3_2024-10-03-144132_ahks.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ardesia/ardesia-fonovaia-plitka-blek-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "24a8db5ec12c9cdb796cbd6a3d17357af88e8ab4378ea1f1b2957e4dca3927f0",
+      "asset": "/media/products/529e4e1c3dda6229b80b.webp"
+    },
+    "610010002727": {
+      "code": "610010002727",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002727.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002727/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "568909d2aeebd9423069abe986aa60d0fcd0266ddd9d4e4aca48172331792a2a",
+      "asset": "/media/products/0ca1a3c1e7e63806ea1e.webp"
+    },
+    "610010002728": {
+      "code": "610010002728",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002728.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002728/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "720d99de5aad44bb8e1199018a3a589222181b13d90f26ae54b1d2a25ecc0163",
+      "asset": "/media/products/ab1f393ef7f0fa010188.webp"
+    },
+    "610010002729": {
+      "code": "610010002729",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002729.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002729/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "bf3a4822ff2136f09d96d452dc50f6f9124de4e3c6e3b53b27ae2fa4340f379b",
+      "asset": "/media/products/270cb9e5568dab83801f.webp"
+    },
+    "610010002730": {
+      "code": "610010002730",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002730.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002730/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "285f2616dc658c2455c7302b07fab81bcacf929515e51826ec3661542f48cbda",
+      "asset": "/media/products/f63815367b63c516ef90.webp"
+    },
+    "610010002731": {
+      "code": "610010002731",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002731.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002731/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "100ae30899f1a87ff0d6aa9edd99a04216266a94c1df8e0062c6e6a02426027e",
+      "asset": "/media/products/27812514760062b2084c.webp"
+    },
+    "610010002732": {
+      "code": "610010002732",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002732.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002732/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "f39e32c3590dca3ec69992cd184b1ccd6c35e8f6bfc81dab633cd320e14b4672",
+      "asset": "/media/products/68a1e46dd206315fde49.webp"
+    },
+    "610010002733": {
+      "code": "610010002733",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002733.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002733/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "390ff212ca349762f0b1944e8e0b69d7feb424bd95861c95052d171106e658c2",
+      "asset": "/media/products/2a20c90d799590b878d0.webp"
+    },
+    "610010002734": {
+      "code": "610010002734",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002734.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002734/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "0de948c8cf0e1ed6529c2a44c1b8e03473fd11c1f33f0b398d561f42b5dd80a3",
+      "asset": "/media/products/532ddc5f0043131f235a.webp"
+    },
+    "610010002735": {
+      "code": "610010002735",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002735.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002735/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "d78b2d22b4271e3e2c3c0c959a366c280fed63ac77b5bf32e945bd605c796f1d",
+      "asset": "/media/products/a515adc8872d6a535f79.webp"
+    },
+    "610010002736": {
+      "code": "610010002736",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002736.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002736/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "5505626dcb7db3e880a4e52e27f7daa79b2178be2cddc9609aabde1ec2d6bfb6",
+      "asset": "/media/products/e7848de15dc91778e978.webp"
+    },
+    "610010002739": {
+      "code": "610010002739",
+      "imageUrl": "https://coliseumgres.ru/assets/products/astro/Astro_60x120_WHITE_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/astro/astro-fonovaia-plitka-uait-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "759f05da8e009e60e12c354bb00067fcdae9e71eb4b238cd8f69b0bfa756b2a5",
+      "asset": "/media/products/2d8a81a57c2655f41fe6.webp"
+    },
+    "610010002740": {
+      "code": "610010002740",
+      "imageUrl": "https://coliseumgres.ru/assets/products/astro/Astro_60x120_SILVER_f06.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/astro/astro-fonovaia-plitka-silver-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "58646cc2d0ceb971368e9b73b6ce026189e194412143ce00471555115d540e10",
+      "asset": "/media/products/7fdffeab5868d102c372.webp"
+    },
+    "610010002741": {
+      "code": "610010002741",
+      "imageUrl": "https://coliseumgres.ru/assets/products/astro/Astro_60x120_BLACK_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/astro/astro-fonovaia-plitka-blek-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "397eff12b80522c459aa05794ff60899953016072707cf9ad3d8af26794bba46",
+      "asset": "/media/products/bb5eb55815e3f48c6f33.webp"
+    },
+    "610010002742": {
+      "code": "610010002742",
+      "imageUrl": "https://coliseumgres.ru/assets/products/astro/Astro_60x120_OCEAN_f06.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/astro/astro-fonovaia-plitka-ousn-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "77dbae2b6374e85bfbacb487f65737d9797df109f1035420dc4a34a442e2aefc",
+      "asset": "/media/products/770b76ee758f826fdf15.webp"
+    },
+    "610010002744": {
+      "code": "610010002744",
+      "imageUrl": "https://coliseumgres.ru/assets/products/brera/Brera_60x120_grey_f01.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/brera/brera-fonovaia-plitka-grei-60x120/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "c07f56f397d8a35b946158d87de7402487c16bcb86cbf2482183023b21905dbf",
+      "asset": "/media/products/670be814fc11ffe92207.webp"
+    },
+    "610010002760": {
+      "code": "610010002760",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002760.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002760/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "44fc3f9944c394fdcc009ff74456f3fb8a6768ba75df8dea727a0acb38677086",
+      "asset": "/media/products/bbec99c00fae88eadda3.webp"
+    },
+    "610010002761": {
+      "code": "610010002761",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002761.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002761/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "72ab012103e93b4987d5fcc55b727e8d280512ddf946b8c224ab15ff7aae6e49",
+      "asset": "/media/products/eeaf25aabef8b5b38eac.webp"
+    },
+    "610010002762": {
+      "code": "610010002762",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002762.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002762/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "062d072fca5047eed28778b2a3819e07e269be7d81f603728f7cfee6fcdbfe88",
+      "asset": "/media/products/b7b4c579a986295b488d.webp"
+    },
+    "610010002763": {
+      "code": "610010002763",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002763.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002763/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "92891622896b0ef5f3d1e978337a030248ba8bb194d22d53397b955aef533f1a",
+      "asset": "/media/products/22cae3f2bf5a315732f7.webp"
+    },
+    "610010002764": {
+      "code": "610010002764",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002764.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002764/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "0357ffb100f86f63d1c7f16e042012b84b58571588e276b339493c83dbddf3c4",
+      "asset": "/media/products/e43bcd7de54203fae20b.webp"
+    },
+    "610010002765": {
+      "code": "610010002765",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010002765.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010002765/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "8523fd5ce0f5854c71fbd722e686bb7fc9e1a999ae65e7c67fe66bb7d4f25ef4",
+      "asset": "/media/products/d730fc732012a9d26c4c.webp"
+    },
+    "610010004077": {
+      "code": "610010004077",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010004077.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010004077/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "20c3ebf6889cf58a9ea1a990015ea409e03f1a8ba92a1d89dd6525a8215e69dc",
+      "asset": "/media/products/5b81542dab5c90f66529.webp"
+    },
+    "610010004078": {
+      "code": "610010004078",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010004078.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010004078/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "9728375a59efe8c46f72f47078b53a6f69f887806cdcc01a04de84b84c869df9",
+      "asset": "/media/products/fc360d2b82ed4a6ff13f.webp"
+    },
+    "610010004079": {
+      "code": "610010004079",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010004079.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010004079/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "e3a40e27c47143fdaf7b9cdbc35e77cce0ce7c0ac31e7bdb31cbb4bd751f427a",
+      "asset": "/media/products/75a1747e4a8230145a9e.webp"
+    },
+    "610010004097": {
+      "code": "610010004097",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010004097.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010004097/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "4240bd068eac6542c350e01aa2d42ffdb6bef1139f1034642d2d5e604d6991c8",
+      "asset": "/media/products/77df6d444fe192164a5e.webp"
+    },
+    "610010004098": {
+      "code": "610010004098",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010004098.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010004098/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "ec1ed53a9f3effd65febb944f0d30b93a3cd9148a5b417626c5db3ff924bb66a",
+      "asset": "/media/products/a71cb47a8c448d294018.webp"
+    },
+    "610010004099": {
+      "code": "610010004099",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010004099.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010004099/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "af9526330fcfa431eb1546e98d90e9042b46067b390984f21bc473381f7a243c",
+      "asset": "/media/products/2edfaade85b9262b3eda.webp"
+    },
+    "610010004100": {
+      "code": "610010004100",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010004100.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010004100/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "7154e4fb6d1feebc564fb0c2755f85257bc296e859d6aa36573cf9c68b7480cb",
+      "asset": "/media/products/cba5e876b278b10d4625.webp"
+    },
+    "610010004101": {
+      "code": "610010004101",
+      "imageUrl": "https://shop-italonceramica.am/images/product/o/keramogranit-610010004101.jpg",
+      "sourceUrl": "https://shop-italonceramica.am/product/610010004101/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "73ea18c41d26776606c3955224a25a0f81f7006ac84d262dd0e6616756a40318",
+      "asset": "/media/products/d4ed5079c30bb6ad63b7.webp"
+    },
+    "610110000967": {
+      "code": "610110000967",
+      "imageUrl": "https://coliseumgres.ru/assets/products/da-vinci/ITALON_COLISEUM_22_Da_Vinci_White_Mos_5x5_30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/da-vinci/da-vinci-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "ce323d6aaa3f7400bd4d14680d197ca2ac52dd2386701887113020ee44b61bbd",
+      "asset": "/media/products/94cf755c5a5d551faf56.webp"
+    },
+    "610110000968": {
+      "code": "610110000968",
+      "imageUrl": "https://coliseumgres.ru/assets/products/da-vinci/Da_Vinci_Beige_Mos_5x5_30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/da-vinci/da-vinci-mozaika-bez-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "e305e50878a537f228c8ee18eef7ebae10c3ea466726fab05f2fd94cdda4f612",
+      "asset": "/media/products/c4643bc53d66712c1787.webp"
+    },
+    "610110000969": {
+      "code": "610110000969",
+      "imageUrl": "https://coliseumgres.ru/assets/products/da-vinci/ITALON_COLISEUM_22_Da_Vinci_Brown_Mos_5x5_30x30.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/da-vinci/da-vinci-mozaika-braun-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "f583b2e4b774a8b14070495f2c0a277b7d459e8008ef889693cd2542270ad977",
+      "asset": "/media/products/aa4b239bb47128ffaabd.webp"
+    },
+    "610110000970": {
+      "code": "610110000970",
+      "imageUrl": "https://coliseumgres.ru/assets/products/da-vinci/ITALON_COLISEUM_22_Da_Vinci_White_Mos_Strip.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/da-vinci/da-vinci-mozaika-strip-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "7f700d10d9ce6cb3fcf8adb26ba4caf9bf01871c6d31503937870c21976075d7",
+      "asset": "/media/products/54d6b235774e01af05ff.webp"
+    },
+    "610110000971": {
+      "code": "610110000971",
+      "imageUrl": "https://coliseumgres.ru/assets/products/da-vinci/Da_Vinci_Beige_Mos_Strip.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/da-vinci/da-vinci-mozaika-strip-bez-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "b837509922d538f8232bead90217ea351d441e8096e43e2def3f64cc9a061f3a",
+      "asset": "/media/products/94c386ccb95593bbd23b.webp"
+    },
+    "610110000972": {
+      "code": "610110000972",
+      "imageUrl": "https://coliseumgres.ru/assets/products/da-vinci/ITALON_COLISEUM_22_Da_Vinci_Brown_Mos_Strip.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/da-vinci/da-vinci-mozaika-strip-braun-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "2681b3718ec7e85c67b1eeda7fe94b9063f20a919b1560a842e7d70ff2de05da",
+      "asset": "/media/products/341a304cf29d6b5bd756.webp"
+    },
+    "610110001030": {
+      "code": "610110001030",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ardesia/ardesia_white_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ardesia/ardesia-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "ab35c7fb8ced528212969380b829ba704866a010c63df76449c77594d4e725f7",
+      "asset": "/media/products/429ca293eafececec721.webp"
+    },
+    "610110001031": {
+      "code": "610110001031",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ardesia/ardesia_grey_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ardesia/ardesia-mozaika-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "281f6f9e8e5512186ceb32f5da682229588839f543cf561953098521c63f7bb6",
+      "asset": "/media/products/1d066c04d2b17a855bcb.webp"
+    },
+    "610110001032": {
+      "code": "610110001032",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ardesia/ardesia_black_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ardesia/ardesia-mozaika-blek-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "f7e344c6e0945b309ee6fc7f6b70896d5e9d2ead3ee03ea1f49cb53f2a50f88b",
+      "asset": "/media/products/f152b54f564565566223.webp"
+    },
+    "610110001033": {
+      "code": "610110001033",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ardesia/ardesia_white_mosaico_strip-Copia.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ardesia/ardesia-mozaika-strip-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "3277f8fa68d55d02a34f70ec83fbe44443ac244118a915f86143bdf25d4f4e44",
+      "asset": "/media/products/c900e3063896765d3ed8.webp"
+    },
+    "610110001034": {
+      "code": "610110001034",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ardesia/ardesia_grey_mosaico_strip-Copia.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ardesia/ardesia-mozaika-strip-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "f1bf89822abf4f04e35ee398fe38397dde26658f3d48056ad8a9d2df23e605f5",
+      "asset": "/media/products/880cd830156c8ba6e70b.webp"
+    },
+    "610110001035": {
+      "code": "610110001035",
+      "imageUrl": "https://coliseumgres.ru/assets/products/ardesia/ardesia_blak_mosaico_strip-Copia.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/ardesia/ardesia-mozaika-strip-blek-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "8aa04619a33c6e37feb9d1e3ac54e27118347fc0ffe79a7536a75dd042c27006",
+      "asset": "/media/products/f95b414bb8c616348a92.webp"
+    },
+    "610110001093": {
+      "code": "610110001093",
+      "imageUrl": "https://coliseumgres.ru/assets/products/astro/Astro_30x30_WHITE_f04_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/astro/astro-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "1c511e8e0c51fed41b026fde784750e9ab67e1dc043ff9f0c259c42ed7d4d1e7",
+      "asset": "/media/products/31bec7a445f700b0cfeb.webp"
+    },
+    "610110001094": {
+      "code": "610110001094",
+      "imageUrl": "https://coliseumgres.ru/assets/products/astro/Astro_30x30_SILVER_f05_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/astro/astro-mozaika-silver-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "647ba969f80a6c786cee4bf523fa31468ee37503d8d33a3c5e881486407c9d67",
+      "asset": "/media/products/c952766521b20d24e0a2.webp"
+    },
+    "610110001095": {
+      "code": "610110001095",
+      "imageUrl": "https://coliseumgres.ru/assets/products/astro/Astro_30x30_BLACK_f01_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/astro/astro-mozaika-blek-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "dc42685fd9567ff7eb9932ec46168879de871da84efbcd57ebe3e5d90b8c387a",
+      "asset": "/media/products/5a96628dc7d14b88780a.webp"
+    },
+    "610110001096": {
+      "code": "610110001096",
+      "imageUrl": "https://coliseumgres.ru/assets/products/astro/Astro_30x30_OCEAN_f01_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/astro/astro-mozaika-ousn-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "0a85d4e814190e9e652e4dcd0f4d66f5c61ba946dc06af5da2226cfb1f67439c",
+      "asset": "/media/products/e108005af6c847b19fef.webp"
+    },
+    "610110001097": {
+      "code": "610110001097",
+      "imageUrl": "https://coliseumgres.ru/assets/products/brera/Brera_30x30_white_f04_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/brera/brera-mozaika-uait-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "8e35b38ac9bd527905f33acab6b5d330d2c1fb9672ee9a0b3b8acfe21ae0a429",
+      "asset": "/media/products/5b79dfbfe26bd49e48af.webp"
+    },
+    "610110001098": {
+      "code": "610110001098",
+      "imageUrl": "https://coliseumgres.ru/assets/products/brera/Brera_30x30_grey_f04_mosaico.jpg",
+      "sourceUrl": "https://coliseumgres.ru/ru/brera/brera-mozaika-grei-30x30/",
+      "evidence": "Файл загружен владельцем сайта в репозиторий; имя файла равно артикулу",
+      "originalSha256": "7127cfc00301b75d096c5827789c1607499c7f3693e2cc22f125320f5e03a288",
+      "asset": "/media/products/6c91ea7558c82062d6ae.webp"
     }
   },
   "collections": {
