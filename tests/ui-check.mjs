@@ -94,6 +94,13 @@ if (!modeArg) {
       assert.match(s.$('#cart-status').textContent, /в браузере/);
       assert.equal(JSON.parse(s.win.localStorage.getItem('italon-cart-v1')).items[0].code, '610010001539');
     }
+    // «Очистить корзину»: первое нажатие просит подтверждения, второе очищает
+    assert.equal(s.$('#cart-clear').hidden, false);
+    s.$('#cart-clear').click(); assert.equal(s.$('[data-cart-count]').textContent, '1', 'после первого нажатия корзина цела');
+    assert.ok(s.$('#cart-clear').classList.contains('is-confirm'));
+    s.$('#cart-clear').click();
+    await until(() => s.$('[data-cart-count]').textContent === '0', 'clear cart');
+    assert.equal(s.$('#cart-clear').hidden, true);
     console.log(`ok: режим ${modeArg}`);
   } finally { await s.close(); }
 }

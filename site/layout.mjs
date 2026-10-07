@@ -102,6 +102,7 @@ function dialogs() {
 <p class="cart-status" id="cart-status" role="status"></p>
 <div class="cart-error" id="cart-error" role="alert" hidden><span></span><button type="button" class="btn btn--small btn--outline" id="cart-retry">Повторить</button></div>
 <div class="cart-list" id="cart-list"></div>
+<div class="cart-tools"><button type="button" class="remove-link cart-clear" id="cart-clear" hidden>Очистить корзину</button></div>
 <div class="cart-summary">
 <div class="cart-total"><span class="t-muted">Итого с НДС</span><strong id="cart-total">0 ₽</strong></div>
 <form class="quote-form" id="quote-form" novalidate>

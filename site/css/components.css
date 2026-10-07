@@ -218,6 +218,8 @@ a:hover .media > img, a:focus-visible .media > img, button:hover .media > img, .
 .qty input::-webkit-inner-spin-button, .qty input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 .remove-link { min-height: var(--tap); font-size: var(--fs-s); color: var(--text-2); text-decoration: underline; text-underline-offset: .2em; }
 .remove-link:hover { color: var(--error); }
+.cart-tools { display: flex; justify-content: flex-end; margin-top: var(--s-3); }
+.cart-clear.is-confirm { color: var(--error); }
 .cart-summary { margin-top: var(--s-6); padding-top: var(--s-5); border-top: 1px solid var(--text); display: grid; gap: var(--s-4); }
 .cart-total { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
 .cart-total strong { font-size: var(--fs-h3); font-weight: 500; font-variant-numeric: tabular-nums; }

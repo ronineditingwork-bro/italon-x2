@@ -120,6 +120,7 @@ export async function addToCart(code, packs) {
   }, 'Добавлено в корзину');
 }
 export const removeFromCart = code => mutate(items => items.filter(x => x.code !== code), 'Позиция удалена');
+export const clearCart = () => mutate(() => [], 'Корзина очищена');
 export const setPacks = (code, packs) => mutate(items => { const l = items.find(x => x.code === code); if (l) l.packs = packs; return items; });
 
 export async function openCart() {
@@ -160,6 +161,8 @@ function render() {
       button.textContent = on ? 'В корзине — открыть' : button.dataset.label;
     }
   }
+  const clear = $('#cart-clear');
+  if (clear) { clear.hidden = !shown.lines.length; if (!shown.lines.length) resetClear(); }
   const total = $('#cart-total');
   if (total) total.textContent = money(shown.totalKopecks);
   renderDiscount();
@@ -167,6 +170,22 @@ function render() {
   if (list) list.innerHTML = shown.lines.length ? shown.lines.map(cartItem).join('') : `<div class="empty-state"><strong>Корзина пока пуста</strong><p>Добавьте позиции из каталога или сохраните расчёт из калькулятора.</p><a class="btn btn--outline" href="${rootRel}catalog/">Открыть каталог</a></div>`;
   setExportState();
   document.dispatchEvent(new CustomEvent('italon:cart', { detail: { cart: shown, mode } }));
+}
+// «Очистить корзину» — в два нажатия, чтобы не стереть заказ случайно
+let clearTimer = 0;
+function resetClear() {
+  clearTimeout(clearTimer);
+  const button = $('#cart-clear');
+  if (button) { button.classList.remove('is-confirm'); button.textContent = 'Очистить корзину'; }
+}
+function onClear() {
+  const button = $('#cart-clear');
+  if (!button.classList.contains('is-confirm')) {
+    button.classList.add('is-confirm'); button.textContent = 'Нажмите ещё раз — удалить все позиции';
+    clearTimer = setTimeout(resetClear, 4000);
+    return;
+  }
+  resetClear(); clearCart();
 }
 function cartItem(line) {
   const p = line.product;
@@ -322,7 +341,7 @@ async function exportQuote(event) {
 
 // ---------------------------------------------------------------- события
 function onClick(event) {
-  const target = event.target.closest('[data-add],[data-product],[data-scene],[data-laying],[data-photo],[data-cart-open],[data-remove],[data-qty-step],#cart-retry');
+  const target = event.target.closest('[data-add],[data-product],[data-scene],[data-laying],[data-photo],[data-cart-open],[data-remove],[data-qty-step],#cart-retry,#cart-clear');
   if (!target || target.disabled) return;
   const d = target.dataset;
   if (target.matches('[data-cart-open]')) { event.preventDefault(); openCart(); return; }
@@ -336,6 +355,7 @@ function onClick(event) {
   if (d.scene) { event.preventDefault(); openScene(d.scene); return; }
   if (d.laying) { event.preventDefault(); openLaying(d.laying); return; }
   if (d.photo) { event.preventDefault(); openPhoto({ src: d.photo, alt: d.photoAlt, caption: d.photoCaption, width: d.photoWidth, height: d.photoHeight }); return; }
+  if (target.id === 'cart-clear') { onClear(); return; }
   if (d.remove) { removeFromCart(d.remove); return; }
   if (d.qtyStep) {
     const line = cart.lines.find(l => l.code === d.code);
@@ -373,7 +393,7 @@ export function initShop() {
   render();
   ensureCart().catch(() => {});
   window.Italon = {
-    cart: { add: addToCart, open: openCart, remove: removeFromCart, setPacks, get: () => shownCart(), ready: () => ensureCart(), get mode() { return mode; } },
+    cart: { add: addToCart, open: openCart, remove: removeFromCart, clear: clearCart, setPacks, get: () => shownCart(), ready: () => ensureCart(), get mode() { return mode; } },
     openProduct, openScene, openLaying, openPhoto, loadCatalog, toast,
     pricing: async () => (await loadCatalog()).pricing,
     root: rootRel,
