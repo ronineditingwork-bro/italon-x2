@@ -2,7 +2,7 @@ import { products, priceInfo, sections, calculateCart } from '../src/catalog.mjs
 import { cartStore } from './cart-store.mjs';
 import { normalizePhone, leadText, sendTelegram, clean } from './quote-lead.mjs';
 const json = (body, status = 200, headers = {}) => new Response(JSON.stringify(body), {
-  status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff', ...headers },
+  status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex', ...headers },
 });
 const hex = bytes => [...bytes].map(x => x.toString(16).padStart(2, '0')).join('');
 export async function handleApi(request, env) {

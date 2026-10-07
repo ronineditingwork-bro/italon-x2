@@ -138,8 +138,7 @@ export function layout(page, ctx, body) {
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 ${page.is404 ? `<script>${BASE_404}</script>\n` : ''}<title>${esc(title)}</title>
 <meta name="description" content="${esc(page.description || '')}">
-<meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#ffffff">
+${ctx.noindex || page.noindex || page.is404 ? '<meta name="robots" content="noindex, nofollow">\n' : ''}<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="${ctx.root}favicon.svg" type="image/svg+xml">
 <link rel="preload" href="${ctx.root}fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <script>${BOOT}</script>

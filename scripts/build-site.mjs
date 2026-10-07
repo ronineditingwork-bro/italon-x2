@@ -17,6 +17,9 @@ const out = resolve(root, 'public');
 const manifestPath = resolve(out, '.site-manifest.json');
 const quiet = process.argv.includes('--quiet') || process.env.SITE_BUILD_QUIET === '1';
 const started = Date.now();
+// Боевой адрес сайта для sitemap.xml. Предпросмотр (GitHub Pages) собирается с SITE_NOINDEX=1: страницы закрыты от индексации.
+const ORIGIN = (process.env.SITE_ORIGIN || 'https://italon-x2.ru').replace(/\/+$/, '');
+const NOINDEX = process.env.SITE_NOINDEX === '1';
 
 // ---------- 0. Очистка прошлой сборки ----------
 if (existsSync(manifestPath)) {
@@ -93,6 +96,7 @@ for (const page of pages) {
   const ctx = {
     root: pageRoot,
     path: page.path,
+    noindex: NOINDEX,
     data,
     buildId,
     /** Ссылка на путь сайта («/x2/») относительно текущей страницы */
@@ -106,6 +110,17 @@ for (const page of pages) {
   const body = await page.render(ctx);
   const html = layout(page, ctx, body).replace('<html lang="ru"', `<html lang="ru" data-build="${buildId}"`);
   await emit(isFile ? page.path.slice(1) : `${page.path.slice(1)}index.html`, html);
+}
+
+// ---------- 3. sitemap.xml и robots.txt ----------
+// В карту сайта попадают только публичные страницы: без 404 и страниц с noindex. Корзина — диалог без своего адреса, API и файлы данных адресов-страниц не имеют.
+const xml = text => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+if (NOINDEX) {
+  await emit('robots.txt', 'User-agent: *\nDisallow: /\n');
+} else {
+  const urls = pages.filter(p => !p.is404 && !p.noindex).map(p => ORIGIN + p.path).sort();
+  await emit('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `<url><loc>${xml(u)}</loc></url>`).join('\n')}\n</urlset>\n`);
+  await emit('robots.txt', `User-agent: *\nDisallow: /api/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);
 }
 
 // ---------- 4. Манифест ----------

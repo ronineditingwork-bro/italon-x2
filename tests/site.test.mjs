@@ -43,3 +43,27 @@ test('главная не загружает каталог и показыва�
   assert.match(html, /\+7 918 24 89 248/);
   assert.doesNotMatch(html, /<html[^>]*class="(?:[^"]* )?js[ "]/); // скрытие до анимации — только классом, который ставит скрипт
 });
+
+test('sitemap.xml: только публичные индексируемые страницы, адреса абсолютные и без повторов', async () => {
+  const xml = await readFile(resolve(pub, 'sitemap.xml'), 'utf8');
+  assert.match(xml, /^<\?xml version="1\.0" encoding="UTF-8"\?>\n<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
+  const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
+  assert.equal(new Set(urls).size, urls.length, 'повторы адресов');
+  const expected = pages.filter(p => !p.is404).map(p => 'https://italon-x2.ru' + p.path).sort();
+  assert.deepEqual(urls, expected);
+  assert.equal(urls.length, 1284);
+  for (const url of urls) {
+    assert.match(url, /^https:\/\/italon-x2\.ru\/([a-z0-9-]+\/)*$/, url);
+    assert.doesNotMatch(url, /\/404\.html|\/api\/|\?|yandex_|\.json/, url);
+  }
+  assert.ok(urls.includes('https://italon-x2.ru/') && urls.includes('https://italon-x2.ru/product/610010004077/'));
+  const robots = await readFile(resolve(pub, 'robots.txt'), 'utf8');
+  assert.match(robots, /^User-agent: \*\nDisallow: \/api\/\n\nSitemap: https:\/\/italon-x2\.ru\/sitemap\.xml\n$/);
+});
+
+test('индексация: страницы открыты, 404 закрыта', async () => {
+  const noindex = /<meta name="robots" content="noindex/;
+  assert.doesNotMatch(await readFile(fileFor('/'), 'utf8'), noindex);
+  assert.doesNotMatch(await readFile(fileFor('/product/610010004077/'), 'utf8'), noindex);
+  assert.match(await readFile(fileFor('/404.html'), 'utf8'), noindex);
+});

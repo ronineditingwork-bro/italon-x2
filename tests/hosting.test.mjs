@@ -80,7 +80,14 @@ test('independent hosting preserves cart semantics across a proxy and restart', 
       const page = await call(server.port, path); assert.equal(page.status, 200, path); assert.match(page.body.toString(), /<main id="main"/, path);
     }
     assert.equal((await call(server.port, '/salon')).headers.location, '/salon/');
-    const missing = await call(server.port, '/no-such-page/'); assert.equal(missing.status, 404); assert.match(missing.body.toString(), /Такой страницы нет/);
+    const sitemap = await call(server.port, '/sitemap.xml');
+    assert.equal(sitemap.status, 200); assert.match(sitemap.headers['content-type'], /^application\/xml/);
+    assert.match(sitemap.body.toString(), /<loc>https:\/\/italon-x2\.ru\/product\/610010004077\/<\/loc>/);
+    assert.doesNotMatch(sitemap.body.toString(), /\/404\.html|\/api\//);
+    assert.match((await call(server.port, '/robots.txt')).body.toString(), /Sitemap: https:\/\/italon-x2\.ru\/sitemap\.xml/);
+    assert.equal(home.headers['x-robots-tag'], undefined);
+    assert.match((await call(server.port, '/api/catalog')).headers['x-robots-tag'], /noindex/);
+    const missing = await call(server.port, '/no-such-page/'); assert.equal(missing.status, 404); assert.match(missing.headers['x-robots-tag'], /noindex/); assert.match(missing.body.toString(), /Такой страницы нет/);
     const clientCatalog = await call(server.port, '/data/catalog.json'); assert.equal(clientCatalog.status, 200); assert.equal(clientCatalog.json().products.length, 1202);
     assert.equal((await call(server.port, '/.site-manifest.json')).status, 404);
     for (const path of new Set(imagePaths)) {

@@ -20,10 +20,10 @@ const types = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.svg': 'image/svg+xml', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
   '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.txt': 'text/plain; charset=utf-8', '.ico': 'image/x-icon',
-  '.json': 'application/json; charset=utf-8',
+  '.json': 'application/json; charset=utf-8', '.xml': 'application/xml; charset=utf-8',
 };
 const sendJson = (res, status, body) => {
-  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex' });
   res.end(JSON.stringify(body));
 };
 
@@ -83,9 +83,11 @@ const server = createServer({ maxHeaderSize: 16384 }, async (req, res) => {
     const etag = `"${info.size.toString(16)}-${Math.floor(info.mtimeMs).toString(16)}"`;
     const headers = {
       'Content-Type': types[extname(filename).toLowerCase()] || 'application/octet-stream',
-      'Cache-Control': filename.endsWith('.html') || filename.endsWith('.json') ? 'no-cache' : 'public, max-age=3600',
+      'Cache-Control': /\.(html|json|xml|txt)$/.test(filename) ? 'no-cache' : 'public, max-age=3600',
       'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'strict-origin-when-cross-origin',
-      'X-Robots-Tag': 'noindex, nofollow', 'ETag': etag,
+      // Страницы открыты для индексации; закрыты 404 и файлы данных
+      ...(status !== 200 || filename.endsWith('.json') ? { 'X-Robots-Tag': 'noindex' } : {}),
+      'ETag': etag,
     };
     if (status === 200 && req.headers['if-none-match'] === etag) { res.writeHead(304, headers); res.end(); return; }
     res.writeHead(status, { ...headers, 'Content-Length': info.size });

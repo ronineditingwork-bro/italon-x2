@@ -16,6 +16,8 @@ backups/
 *.zip
 # сборка сайта (scripts/build-site.mjs) — генерируется в public/
 /public/.site-manifest.json
+/public/sitemap.xml
+/public/robots.txt
 /public/index.html
 /public/404.html
 /public/assets/
