@@ -40,11 +40,23 @@ test('/api/quote saves the lead and sends it to Telegram', async () => {
   } finally { close(); }
 });
 
-import { quoteDiscount } from '../src/discount.mjs';
-test('скидка за данные: адрес 2%, телефон 3%, ФИО 3%, проект 3%', () => {
-  assert.equal(quoteDiscount({}, 100000).percent, 0);
-  const all = quoteDiscount({ address: 'Краснодар, ул. Красная, 1', phone: '+7 918 248-92-48', customer: 'Иванов Иван Иванович', design: true }, 100000);
-  assert.equal(all.percent, 11); assert.equal(all.discountKopecks, 11000); assert.equal(all.payableKopecks, 89000);
-  assert.equal(quoteDiscount({ customer: 'Иван' }, 100).percent, 0);
-  assert.equal(quoteDiscount({ address: 'Краснодар' }, 100).percent, 0);
+import { quoteDiscount, volumePercent, nextTier } from '../src/discount.mjs';
+const full = { address: 'Краснодар, ул. Красная, 1', phone: '+7 918 248-92-48', customer: 'Иванов Иван Иванович' };
+test('ступени скидки по сумме заказа', () => {
+  const at = rub => volumePercent(rub * 100);
+  assert.deepEqual([49_999, 50_000, 99_999, 100_000, 200_000, 300_000, 450_000, 500_000, 800_000, 1_000_000, 2_500_000].map(at),
+    [0, 2, 2, 4, 5, 7, 7, 8, 10, 10, 10]);
+  assert.equal(nextTier(40_000_00).percent, 2);
+  assert.equal(nextTier(40_000_00).remainingKopecks, 10_000_00);
+  assert.equal(nextTier(900_000_00), null);
+});
+test('скидка = ступень + 2% за ФИО, телефон и адрес (только если заполнено всё)', () => {
+  assert.equal(quoteDiscount({}, 10_000_00).percent, 0);
+  const a = quoteDiscount(full, 10_000_00);
+  assert.equal(a.percent, 2); assert.equal(a.payableKopecks, 9_800_00);
+  const b = quoteDiscount(full, 250_000_00);
+  assert.equal(b.percent, 7); assert.equal(b.discountKopecks, 17_500_00); assert.equal(b.payableKopecks, 232_500_00);
+  assert.equal(quoteDiscount({ ...full, address: '' }, 250_000_00).percent, 5);
+  assert.equal(quoteDiscount({ ...full, customer: 'Иван' }, 250_000_00).percent, 5);
+  assert.equal(quoteDiscount({ ...full, phone: '123' }, 250_000_00).percent, 5);
 });

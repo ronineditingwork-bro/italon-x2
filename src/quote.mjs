@@ -114,7 +114,7 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   const totalText=money(disc.payableKopecks)+' руб.';let totalSize=23;
   while(font.widthOfTextAtSize(totalText,totalSize)>R-330)totalSize-=.5;
   right(totalText,R-14,y-49,totalSize);y-=92;
-  if(disc.percent){paragraph(`Скидка за данные: ${disc.parts.map(r=>`${r.label} ${r.percent}%`).join(', ')}.${details.design?' Скидка за дизайн-проект действует при получении проекта менеджером салона.':''}`,9,colors.muted,13);y-=6;}
+  if(disc.percent){paragraph(`Скидка: ${disc.parts.map(r=>`${r.label} ${r.percent}%`).join(', ')}.`,9,colors.muted,13);y-=6;}
   paragraph('Условия предложения',10,colors.ink,17);
   paragraph('Количество рассчитано с учётом целых упаковок и минимального заказа (одна коробка). Наличие, тон, калибр и сроки поставки уточняются при подтверждении заказа. Доставка рассчитывается отдельно.',8.7,colors.muted,13);
   y-=15;paragraph('Салон',10,colors.ink,17);

@@ -106,12 +106,11 @@ function dialogs() {
 <div class="cart-total"><span class="t-muted">Итого с НДС</span><strong id="cart-total">0 ₽</strong></div>
 <form class="quote-form" id="quote-form" novalidate>
 <h3 class="t-h4">Коммерческое предложение в PDF</h3>
-<label class="field"><span class="field__label">Телефон для связи <small>обязательно, скидка 3%</small></span><input class="input" id="quote-phone" type="tel" inputmode="tel" maxlength="30" placeholder="+7 900 000-00-00" autocomplete="tel" required></label>
-<label class="field"><span class="field__label">ФИО <small>скидка 3%</small></span><input class="input" id="quote-customer" maxlength="100" placeholder="Фамилия Имя Отчество" autocomplete="off"></label>
-<label class="field"><span class="field__label">Адрес объекта <small>скидка 2%</small></span><input class="input" id="quote-address" maxlength="200" placeholder="Город, улица, дом" autocomplete="street-address"></label>
+<label class="field"><span class="field__label">Телефон для связи <small>обязательно</small></span><input class="input" id="quote-phone" type="tel" inputmode="tel" maxlength="30" placeholder="+7 900 000-00-00" autocomplete="tel" required></label>
+<label class="field"><span class="field__label">ФИО <small>для скидки и защиты заказа</small></span><input class="input" id="quote-customer" maxlength="100" placeholder="Фамилия Имя Отчество" autocomplete="off"></label>
+<label class="field"><span class="field__label">Адрес объекта <small>для скидки и защиты заказа</small></span><input class="input" id="quote-address" maxlength="200" placeholder="Город, улица, дом" autocomplete="street-address"></label>
 <label class="field"><span class="field__label">Объект <small>необязательно</small></span><input class="input" id="quote-project" maxlength="150" placeholder="Название проекта" autocomplete="off"></label>
 <label class="field"><span class="field__label">Комментарий <small>необязательно</small></span><textarea class="textarea" id="quote-note" maxlength="500" rows="3" placeholder="Примечание для предложения"></textarea></label>
-<label class="check"><input type="checkbox" id="quote-design"> <span>Пришлю дизайн-проект менеджеру <small>скидка 3%</small></span></label>
 <p class="t-small" id="quote-discount" aria-live="polite"></p>
 <button type="submit" class="btn btn--block" id="quote-download" disabled>Скачать КП в PDF</button>
 </form>

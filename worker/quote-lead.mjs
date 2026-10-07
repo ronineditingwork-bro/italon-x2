@@ -25,7 +25,6 @@ export function leadText(lead, cart) {
     `Телефон: ${lead.phone}`,
     lead.customer && `ФИО: ${lead.customer}`,
     lead.address && `Адрес объекта: ${lead.address}`,
-    lead.design && 'Дизайн-проект: клиент пришлёт (скидка 3% — после получения)',
     lead.project && `Объект: ${lead.project}`,
     lead.note && `Комментарий: ${lead.note}`,
     '', ...lines, '', `Сумма с НДС: ${rub(cart.totalKopecks)}`,

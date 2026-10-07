@@ -11,7 +11,7 @@
 //   [data-cart-open]          — открыть корзину
 import { esc, money, number, fmt, titleRu, lower, packLabel, minimumLabel, productImage, productUrl, collectionUrl, priceHtml, normalize } from '../shared/format.mjs';
 import { createPricing, MAX_PACKS } from '../../src/pricing.mjs';
-import { quoteDiscount } from '../../src/discount.mjs';
+import { quoteDiscount, nextTier } from '../../src/discount.mjs';
 import { $, $$, ROOT, rootRel, openDialog, closeDialog, toast } from './ui.mjs';
 
 const html = document.documentElement;
@@ -271,18 +271,24 @@ async function quoteImages(cart) {
 }
 function quoteDetails() {
   return { phone: $('#quote-phone').value, customer: $('#quote-customer').value, address: $('#quote-address').value,
-    project: $('#quote-project').value, note: $('#quote-note').value, design: $('#quote-design').checked };
+    project: $('#quote-project').value, note: $('#quote-note').value };
 }
 function renderDiscount() {
   const out = $('#quote-discount'); if (!out) return;
-  const d = quoteDiscount(quoteDetails(), shownCart().totalKopecks || 0);
-  out.textContent = d.percent ? `Ваша скидка ${d.percent}%: −${money(d.discountKopecks)}. К оплате ${money(d.payableKopecks)}.` : 'Заполните поля — получите скидку до 11%.';
+  const total = shownCart().totalKopecks || 0, d = quoteDiscount(quoteDetails(), total), next = nextTier(total);
+  const lines = [];
+  if (d.percent) lines.push(`Ваша скидка ${d.percent}%: −${money(d.discountKopecks)}. К оплате ${money(d.payableKopecks)}.`);
+  const byVolume = d.parts.find(p => p.key === 'volume');
+  if (byVolume) lines.push(`За сумму заказа — ${byVolume.percent}%.`);
+  if (next) lines.push(`До скидки ${next.percent}% за сумму заказа осталось ${money(next.remainingKopecks)}.`);
+  if (!d.parts.some(p => p.key === 'data')) lines.push('Заполните ФИО, телефон и адрес объекта — ещё 2% скидки и регистрация защиты заказа.');
+  out.textContent = lines.join(' ');
 }
 
 async function sendLead(quote, phone) {
   const form = new FormData();
   form.set('phone', phone); form.set('customer', $('#quote-customer').value); form.set('project', $('#quote-project').value);
-  form.set('address', $('#quote-address').value); form.set('design', $('#quote-design').checked ? '1' : '');
+  form.set('address', $('#quote-address').value);
   form.set('note', $('#quote-note').value); form.set('filename', quote.filename);
   form.set('pdf', new Blob([quote.bytes], { type: 'application/pdf' }), quote.filename);
   const response = await fetch(new URL('api/quote', ROOT), { method: 'POST', body: form, credentials: 'same-origin' });

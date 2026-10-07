@@ -79,7 +79,7 @@ async function handleQuote(request, env, url) {
     const row = await cartStore(env).load(id);
     const cart = calculateCart(JSON.parse(row?.items || '[]'));
     if (!cart.lines.length) return json({ error: 'Корзина пуста.' }, 400);
-    const lead = { createdAt: now, phone, customer: clean(form.get('customer'), 100), project: clean(form.get('project'), 150), address: clean(form.get('address'), 200), design: !!form.get('design'), note: clean(form.get('note'), 500) };
+    const lead = { createdAt: now, phone, customer: clean(form.get('customer'), 100), project: clean(form.get('project'), 150), address: clean(form.get('address'), 200), note: clean(form.get('note'), 500) };
     const items = JSON.stringify(cart.lines.map(({ code, packs, totalKopecks }) => ({ code, packs, totalKopecks })));
     const saved = await env.DB.prepare('INSERT INTO quotes (created_at, customer, phone, project, note, items, total_kopecks) VALUES (?, ?, ?, ?, ?, ?, ?)')
       .bind(now, lead.customer, phone, lead.project, lead.note, items, cart.totalKopecks).run();
