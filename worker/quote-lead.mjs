@@ -63,13 +63,13 @@ export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch) 
   const results = await Promise.allSettled(chats.map(async chat => {
     let response = await fetchImpl(api('sendMessage'), { method: 'POST', signal: signal(),
       headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, text, parse_mode: 'HTML', disable_web_page_preview: true }) });
-    if (!response.ok) throw new Error('telegram sendMessage ' + response.status);
+    if (!response.ok) throw new Error('telegram sendMessage ' + response.status + ' ' + (await response.text().catch(() => '')).slice(0, 200));
     if (pdf) {
       const form = new FormData();
       form.set('chat_id', chat);
       form.set('document', new Blob([pdf], { type: 'application/pdf' }), filename);
       response = await fetchImpl(api('sendDocument'), { method: 'POST', body: form, signal: signal() });
-      if (!response.ok) throw new Error('telegram sendDocument ' + response.status);
+      if (!response.ok) throw new Error(`telegram sendDocument ${response.status} (pdf ${pdf.length} bytes) ` + (await response.text().catch(() => '')).slice(0, 200));
     }
   }));
   const failed = results.filter(r => r.status === 'rejected');
