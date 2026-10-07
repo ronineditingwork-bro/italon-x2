@@ -6,12 +6,12 @@ export const VOLUME_TIERS = [
   { from: 1_000_000, percent: 10 },
   { from: 800_000, percent: 10 },
   { from: 500_000, percent: 8 },
-  { from: 300_000, percent: 7 },
+  { from: 400_000, percent: 7 },
+  { from: 300_000, percent: 6 },
   { from: 200_000, percent: 5 },
   { from: 100_000, percent: 4 },
   { from: 50_000, percent: 2 },
 ];
-// В таблице нет строки 400–500 тыс. ₽: для неё действует ставка предыдущей ступени (7%).
 export const DATA_PERCENT = 2;
 
 export const hasFullData = d =>

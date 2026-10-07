@@ -45,9 +45,10 @@ const full = { address: 'Краснодар, ул. Красная, 1', phone: '+
 test('ступени скидки по сумме заказа', () => {
   const at = rub => volumePercent(rub * 100);
   assert.deepEqual([49_999, 50_000, 99_999, 100_000, 200_000, 300_000, 450_000, 500_000, 800_000, 1_000_000, 2_500_000].map(at),
-    [0, 2, 2, 4, 5, 7, 7, 8, 10, 10, 10]);
+    [0, 2, 2, 4, 5, 6, 7, 8, 10, 10, 10]);
   assert.equal(nextTier(40_000_00).percent, 2);
   assert.equal(nextTier(40_000_00).remainingKopecks, 10_000_00);
+  assert.equal(volumePercent(399_999_00), 6); assert.equal(volumePercent(400_000_00), 7);
   assert.equal(nextTier(900_000_00), null);
 });
 test('скидка = ступень + 2% за ФИО, телефон и адрес (только если заполнено всё)', () => {
