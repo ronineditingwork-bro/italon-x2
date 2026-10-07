@@ -13,24 +13,42 @@ export function normalizePhone(value) {
   return '+' + digits;
 }
 
-/** Текст заявки для Telegram. Цены и позиции берутся из корзины на сервере, а не от браузера. */
+const esc = text => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const qty = n => n.toLocaleString('ru-RU', { maximumFractionDigits: 3 }).replace(/\u00a0|\u202f/g, ' ');
+
+/**
+ * Текст заявки для Telegram в порядке полей формы DAS (полуавтомат: менеджер вносит заявку в DAS).
+ * Формат HTML: значения в <code> копируются нажатием. Цены DAS подставляет сам, поэтому здесь они только для контроля.
+ * Позиции и суммы берутся из корзины на сервере, а не от браузера.
+ */
 export function leadText(lead, cart) {
   const discount = quoteDiscount(lead, cart.totalKopecks);
-  const lines = cart.lines.map((l, i) =>
-    `${i + 1}. ${l.product.name}\n   арт. ${l.code} · ${l.packs} ${l.product.orderUnit}` +
-    (l.area ? ` · ${l.area} м²` : '') + ` · ${rub(l.totalKopecks)}`);
+  const missing = [];
+  if (!lead.customer) missing.push('ФИО / название объекта');
+  if (!lead.address) missing.push('адрес');
+  const objectName = [lead.project, lead.customer].filter(Boolean).join(' / ');
+  const comment = [lead.note, `Тел. ${lead.phone}`].filter(Boolean).join('. ');
+  const reason = discount.parts.map(r => `${r.label} ${r.percent}%`).join(' + ');
+  const code = value => `<code>${esc(value)}</code>`;
+  const lines = cart.lines.map((l, i) => `${i + 1}. ${code(l.code)} — ${esc(qty(l.quantity))} ${esc(l.product.unit)}\n    ${esc(l.product.name)}`);
   return [
-    '🧾 Новое КП — Italon Experience',
+    '🧾 <b>Новая заявка с сайта — Italon Experience</b>',
     `Время: ${new Date(lead.createdAt).toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })} (МСК)`,
-    `Телефон: ${lead.phone}`,
-    lead.customer && `ФИО: ${lead.customer}`,
-    lead.address && `Адрес объекта: ${lead.address}`,
-    lead.project && `Объект: ${lead.project}`,
-    lead.note && `Комментарий: ${lead.note}`,
-    '', ...lines, '', `Сумма с НДС: ${rub(cart.totalKopecks)}`,
-    discount.percent && `Скидка ${discount.percent}% (${discount.parts.map(r => r.label).join(', ')}): −${rub(discount.discountKopecks)}`,
-    `К оплате: ${rub(discount.payableKopecks)}`,
-  ].filter(x => x !== false && x !== undefined).join('\n').slice(0, 4000);
+    `Телефон клиента: ${code(lead.phone)}`,
+    '',
+    '<b>Для DAS (Новая заявка):</b>',
+    `• Скидка для конечного покупателя: <b>${discount.percent}%</b>${reason ? ` (${esc(reason)})` : ''}`,
+    '• Интернет заказ: да',
+    `• Название объекта / ФИО заказчика: ${objectName ? code(objectName) : '— не указано'}`,
+    `• Адрес объекта: ${lead.address ? code(lead.address) : '— не указан'}`,
+    `• Комментарий: ${code(comment)}`,
+    missing.length && `⚠️ Для DAS не хватает: ${esc(missing.join(', '))}. Уточните у клиента по телефону.`,
+    '',
+    '<b>Артикулы (количество):</b>', ...lines,
+    '',
+    `Для контроля: сумма с НДС ${esc(rub(cart.totalKopecks))}, к оплате со скидкой ${esc(rub(discount.payableKopecks))}.`,
+    'PDF коммерческого предложения — следующим сообщением.',
+  ].filter(x => x !== false && x !== undefined && x !== 0).join('\n').slice(0, 4000);
 }
 
 export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch) {
@@ -44,7 +62,7 @@ export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch) 
   // Каждому получателю отдельно: сбой у одного не мешает остальным; ошибка, только если не дошло никому.
   const results = await Promise.allSettled(chats.map(async chat => {
     let response = await fetchImpl(api('sendMessage'), { method: 'POST', signal: signal(),
-      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, text }) });
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, text, parse_mode: 'HTML', disable_web_page_preview: true }) });
     if (!response.ok) throw new Error('telegram sendMessage ' + response.status);
     if (pdf) {
       const form = new FormData();

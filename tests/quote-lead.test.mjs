@@ -27,11 +27,18 @@ test('/api/quote saves the lead and sends it to Telegram', async () => {
   try {
     assert.equal((await post({ phone: '123' })).status, 400);
     const pdf = new Blob(['%PDF-1.7 test'], { type: 'application/pdf' });
-    const ok = await post({ phone: '8 918 248 92 48', customer: 'Иван', pdf });
+    const ok = await post({ phone: '8 918 248 92 48', customer: 'Иванов Иван Иванович', address: 'Краснодар, ул. Красная, 1', pdf });
     assert.equal(ok.status, 200);
     assert.deepEqual(await ok.json(), { ok: true, sent: true, saved: true });
     assert.match(calls[0].url, /^https:\/\/relay\.example\/botT\/sendMessage/);
-    assert.match(JSON.parse(calls[0].init.body).text, /\+79182489248/);
+    const message = JSON.parse(calls[0].init.body);
+    assert.equal(message.parse_mode, 'HTML');
+    assert.match(message.text, /Для DAS/);
+    assert.match(message.text, /Скидка для конечного покупателя: <b>2%<\/b>/);
+    assert.match(message.text, /<code>Иванов Иван Иванович<\/code>/);
+    assert.match(message.text, /<code>620110000263<\/code> — /);
+    assert.doesNotMatch(message.text, /не хватает/);
+    assert.match(message.text, /\+79182489248/);
     assert.equal(calls.length, 4);
     assert.ok(calls.some(c => /sendDocument/.test(c.url)));
     assert.deepEqual(calls.filter(c => /sendMessage/.test(c.url)).map(c => JSON.parse(c.init.body).chat_id).sort(), ['-100500', '42']);
@@ -60,4 +67,13 @@ test('скидка = ступень + 2% за ФИО, телефон и адре
   assert.equal(quoteDiscount({ ...full, address: '' }, 250_000_00).percent, 5);
   assert.equal(quoteDiscount({ ...full, customer: 'Иван' }, 250_000_00).percent, 5);
   assert.equal(quoteDiscount({ ...full, phone: '123' }, 250_000_00).percent, 5);
+});
+
+test('сообщение для DAS предупреждает, чего не хватает, и экранирует HTML', async () => {
+  const { leadText } = await import('../worker/quote-lead.mjs');
+  const { calculateCart } = await import('../src/catalog.mjs');
+  const text = leadText({ createdAt: Date.now(), phone: '+79182489248', customer: '', address: '', project: '', note: '<b>x</b> & y' }, calculateCart([{ code: '620110000263', packs: 2 }]));
+  assert.match(text, /не хватает: ФИО \/ название объекта, адрес/);
+  assert.match(text, /&lt;b&gt;x&lt;\/b&gt; &amp; y/);
+  assert.match(text, /Скидка для конечного покупателя: <b>0%<\/b>/);
 });
