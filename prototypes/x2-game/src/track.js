@@ -22,7 +22,7 @@ export function buildTrack(seed = CONFIG.seed) {
     for (let i = 0; i < perZone; i++) {
       const rowStart = Math.round(start + (span / Math.max(1, perZone - 1)) * i);
       const brand = names[nameIndex % names.length];
-      patches.push({ id: patches.length, brand, rowStart, rowEnd: rowStart + brands.patchRows - 1, zone: z, tint: brands.tints[nameIndex % brands.tints.length] });
+      patches.push({ id: patches.length, brand, rowStart, rowEnd: rowStart + brands.patchRows - 1, zone: z, tint: brands.brandTints[brand] ?? brands.tints[nameIndex % brands.tints.length] });
       nameIndex++;
     }
   }

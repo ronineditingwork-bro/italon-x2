@@ -2,8 +2,10 @@
 import * as THREE from '../../vendor/three.module.js';
 import { CONFIG, DERIVED } from '../config.js';
 import { rowZ, zoneOfRow } from '../track.js';
-import { brandLabelTexture, x2DecalTexture, kraftTexture, glowTexture } from './textures.js';
+import { brandLabelTexture, x2DecalTexture, kraftTexture, glowTexture, marbleTexture, graniteTexture } from './textures.js';
 import { buildDecor, buildPool } from './decor.js';
+import { buildGround } from './ground.js';
+import { RoundedBoxGeometry } from '../../vendor/RoundedBoxGeometry.js';
 
 const TILE = CONFIG.grid.tile;
 const COLS = CONFIG.grid.columns;
@@ -12,24 +14,44 @@ const TOP_NEW = 0.03;
 const m4 = new THREE.Matrix4(), q0 = new THREE.Quaternion(), v3 = new THREE.Vector3(), s3 = new THREE.Vector3(), col = new THREE.Color();
 const hash = (a, b) => { let h = (a * 374761393 + b * 668265263) >>> 0; h = (h ^ (h >>> 13)) * 1274126177 >>> 0; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
 
+/** Каждая плитка берёт своё окно общей текстуры: узор не повторяется от плитки к плитке. */
+function uvJitter(mat) {
+  mat.onBeforeCompile = sh => {
+    sh.vertexShader = sh.vertexShader
+      .replace('#include <common>', '#include <common>\nattribute vec3 aUvOff;')
+      .replace('#include <uv_vertex>', `#include <uv_vertex>
+#ifdef USE_MAP
+  vec2 uvc = vMapUv - 0.5; if (aUvOff.z > 0.5) uvc = vec2(-uvc.y, uvc.x);
+  vMapUv = uvc * 0.5 + 0.5 + aUvOff.xy;
+#endif`);
+  };
+  return mat;
+}
+function uvOffsets(count, seed) {
+  const a = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) { a[i * 3] = hash(i, seed); a[i * 3 + 1] = hash(seed, i + 7); a[i * 3 + 2] = hash(i + 3, seed + 5) < 0.5 ? 0 : 1; }
+  return new THREE.InstancedBufferAttribute(a, 3);
+}
+
 export function createWorld(game, quality) {
   const group = new THREE.Group();
   const rows = DERIVED.rows, count = rows * COLS;
   const track = game.track;
 
   // --- основание и стыки ---
-  const base = new THREE.Mesh(new THREE.BoxGeometry(COLS * TILE + 0.4, 0.2, rows * TILE), new THREE.MeshStandardMaterial({ color: 0x2c2d30, roughness: 1 }));
+  const base = new THREE.Mesh(new THREE.BoxGeometry(COLS * TILE + 0.4, 0.2, rows * TILE), new THREE.MeshStandardMaterial({ color: 0x2a2b2e, roughness: 1 }));
   base.position.set(0, -0.2, -rows * TILE / 2); base.receiveShadow = true; group.add(base);
+  const startPad = new THREE.Mesh(new THREE.BoxGeometry(COLS * TILE + 0.4, 0.2, 44), new THREE.MeshStandardMaterial({ color: 0x8c8a85, roughness: 0.9 }));
+  startPad.position.set(0, -0.11, 22); startPad.receiveShadow = true; group.add(startPad);
 
-  // --- площадка перед стартом и общий фон земли ---
-  const pad = new THREE.Mesh(new THREE.BoxGeometry(COLS * TILE + 0.4, 0.2, 44), new THREE.MeshStandardMaterial({ color: 0x66696e, roughness: 0.9 }));
-  pad.position.set(0, -0.11, 22); pad.receiveShadow = true; group.add(pad);
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(400, rows * TILE + 200), new THREE.MeshStandardMaterial({ color: 0x6f7a55, roughness: 1 }));
-  ground.rotation.x = -Math.PI / 2; ground.position.set(0, -0.14, -rows * TILE / 2 + 20); ground.receiveShadow = true; group.add(ground);
+  // --- площадки, газоны, асфальт, клумбы рядом с дорожкой ---
+  group.add(buildGround());
 
   // --- старые плитки ---
   const oldGeo = new THREE.BoxGeometry(TILE - 0.07, 0.16, TILE - 0.07);
-  const oldMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.88 });
+  oldGeo.setAttribute('aUvOff', uvOffsets(count, 11));
+  const oldMat = uvJitter(new THREE.MeshStandardMaterial({ map: graniteTexture(), color: 0xffffff, roughness: 0.82 }));
+  oldMat.userData.env = 0.35;
   const oldTiles = new THREE.InstancedMesh(oldGeo, oldMat, count);
   oldTiles.receiveShadow = true;
   const patchOfRow = new Int16Array(rows).fill(-1);
@@ -43,15 +65,18 @@ export function createWorld(game, quality) {
       const patch = patchOfRow[r];
       col.set(patch >= 0 ? track.patches[patch].tint : zone.oldColor);
       const k = (hash(r, c) - 0.5) * 2 * zone.oldVary + (((r + c) & 1) ? 0.015 : -0.015);
-      col.offsetHSL(0, 0, k);
+      col.offsetHSL(0, 0, k).multiplyScalar(1.7);
       oldTiles.setColorAt(i, col);
     }
   }
   group.add(oldTiles);
 
   // --- новые плитки X2 (скрыты до укладки) ---
-  const newGeo = new THREE.BoxGeometry(TILE - 0.012, 0.22, TILE - 0.012);
-  const newTiles = new THREE.InstancedMesh(newGeo, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.5, metalness: 0.02 }), count);
+  const newGeo = new RoundedBoxGeometry(TILE - 0.014, 0.22, TILE - 0.014, 2, 0.02);
+  newGeo.setAttribute('aUvOff', uvOffsets(count, 29));
+  const newMat = uvJitter(new THREE.MeshStandardMaterial({ map: marbleTexture(), color: 0xffffff, roughness: 0.3, metalness: 0.0 }));
+  newMat.userData.env = 0.95;
+  const newTiles = new THREE.InstancedMesh(newGeo, newMat, count);
   newTiles.receiveShadow = true; newTiles.castShadow = false;
   const decalGeo = new THREE.PlaneGeometry(TILE * 0.52, TILE * 0.52); decalGeo.rotateX(-Math.PI / 2);
   const decals = new THREE.InstancedMesh(decalGeo, new THREE.MeshBasicMaterial({ map: x2DecalTexture(), transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 }), count);
@@ -59,7 +84,7 @@ export function createWorld(game, quality) {
   for (let i = 0; i < count; i++) {
     newTiles.setMatrixAt(i, hidden); decals.setMatrixAt(i, hidden);
     const r = (i / COLS) | 0, c = i % COLS;
-    col.set(0xe6dccb).offsetHSL(0, 0, (hash(r + 5, c + 9) - 0.5) * 0.045);
+    col.set(0xeadfcc).offsetHSL(0, 0, (hash(r + 5, c + 9) - 0.5) * 0.05);
     newTiles.setColorAt(i, col);
   }
   // границы InstancedMesh считаются один раз, а плитки появляются позже: отсечение по кадру отключаем
@@ -69,8 +94,9 @@ export function createWorld(game, quality) {
   // --- названия брендов на старом покрытии ---
   const labels = track.patches.map(p => {
     const mat = new THREE.MeshBasicMaterial({ map: brandLabelTexture(p.brand), transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -1, toneMapped: false });
-    const w = COLS * TILE * 0.92, mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, w / 4), mat);
-    mesh.rotation.x = -Math.PI / 2;
+    const w = (p.rowEnd - p.rowStart + 1) * TILE * 0.9, geo = new THREE.PlaneGeometry(w, w / 4);
+    geo.rotateX(-Math.PI / 2); geo.rotateY(Math.PI / 2);                  // надпись читается вдоль движения, снизу-вверх по кадру
+    const mesh = new THREE.Mesh(geo, mat);
     mesh.position.set(0, 0.016, (rowZ(p.rowStart) + rowZ(p.rowEnd)) / 2);
     group.add(mesh);
     return { p, mesh, laid: 0, total: (p.rowEnd - p.rowStart + 1) * COLS };
@@ -175,7 +201,7 @@ export function createWorld(game, quality) {
         if (ob.knock >= 1) ob.g.visible = false;
       }
     }
-    water.material.color.setHSL(0.5 + Math.sin(time * 0.6) * 0.01, 0.6, 0.5 + Math.sin(time * 1.3) * 0.015);
+    water.material.map.offset.set(time * 0.012, time * 0.007);
   }
 
   return {

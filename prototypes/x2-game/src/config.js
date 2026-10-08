@@ -53,6 +53,8 @@ export const CONFIG = {
     newSurfaceBrand: 'X2',
     patchRows: 8,          // длина участка с названием, рядов
     patchesPerZone: 3,
+    // цвет участка по бренду (как на концепте: терракот, графит, беж, сланец, розовато-коричневый)
+    brandTints: { 'Kerama Marazzi': 0xd9a982, 'Atlas Concorde': 0x7f8793, 'Atlas Concorde Russia': 0x8a8f98, 'Estima': 0xd2b997, 'FMG': 0x5a5e66, 'Rex': 0xb98c80, 'VitrA': 0xaab4b8, 'Laparet': 0xb9ae9a, 'Idalgo': 0x9ba39a, 'Creto': 0xc1a79a, 'Уральский гранит': 0x8c8a86 },
     tints: [0xb9a58a, 0x8f9aa3, 0xa9b49a, 0xc4a995, 0x99a2b8, 0xb5b0a2, 0xa18f86, 0xaeb7a6, 0x9c9a8e, 0xb7a6b0, 0x9fb1ad],
   },
 
@@ -73,14 +75,16 @@ export const CONFIG = {
   // --- качество ---
   quality: {
     default: 'auto',               // auto | high | low
-    high: { pixelRatio: 2, shadows: true, shadowMap: 2048, particles: 240, decor: 1.0 },
-    low:  { pixelRatio: 1.25, shadows: false, shadowMap: 0, particles: 70, decor: 0.45 },
+    high: { pixelRatio: 2, shadows: true, shadowMap: 2048, particles: 240, decor: 1.0, post: true, msaa: 4 },
+    low:  { pixelRatio: 1.25, shadows: false, shadowMap: 0, particles: 70, decor: 0.45, post: false, msaa: 0 },
   },
 
   camera: {
-    landscape: { fov: 34, height: 8.2, back: 12.5, ahead: 1.2, lookY: 0.7 },   // ahead — на сколько впереди робота камера смотрит
-    portrait:  { fov: 52, height: 10.2, back: 13.2, ahead: 2.6, lookY: 0.6 },
+    // камера стоит справа-сзади и смотрит по диагонали: робот бежит слева направо вверх, как на концепте
+    landscape: { fov: 30, side: 8.4, height: 7.6, back: 9.6, ahead: 3.4, lookY: 0.5, aimX: -0.8 },   // ahead — на сколько впереди робота камера смотрит
+    portrait:  { fov: 46, side: 6.6, height: 10.6, back: 11.2, ahead: 2.4, lookY: 0.4, aimX: -0.8 },
     follow: 0.5,                   // насколько камера смещается за роботом по X
+    robotYaw: -0.85,                // робот чуть повёрнут к камере, чтобы было видно лицо
   },
 };
 

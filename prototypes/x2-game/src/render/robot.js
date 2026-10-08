@@ -3,16 +3,17 @@
 import * as THREE from '../../vendor/three.module.js';
 import { RoundedBoxGeometry } from '../../vendor/RoundedBoxGeometry.js';
 import { kraftTexture, glowTexture } from './textures.js';
+import { CONFIG } from '../config.js';
 
 const rbox = (w, h, d, r = 0.04) => new RoundedBoxGeometry(w, h, d, 3, r);
 
 export function createRobot() {
   const M = {
-    white: new THREE.MeshStandardMaterial({ color: 0xece5d9, roughness: 0.6, metalness: 0.04 }),
-    limb: new THREE.MeshStandardMaterial({ color: 0xd9d3c7, roughness: 0.45, metalness: 0.35 }),
+    white: new THREE.MeshPhysicalMaterial({ color: 0xe2dacb, roughness: 0.46, metalness: 0.05, clearcoat: 0.55, clearcoatRoughness: 0.35 }),
+    limb: new THREE.MeshPhysicalMaterial({ color: 0xd8d1c3, roughness: 0.4, metalness: 0.3, clearcoat: 0.4, clearcoatRoughness: 0.4 }),
     dark: new THREE.MeshStandardMaterial({ color: 0x22262d, roughness: 0.5, metalness: 0.45 }),
     orange: new THREE.MeshStandardMaterial({ color: 0xf08a24, roughness: 0.42, metalness: 0.1 }),
-    face: new THREE.MeshStandardMaterial({ color: 0x0a1220, roughness: 0.18, metalness: 0.2 }),
+    face: new THREE.MeshPhysicalMaterial({ color: 0x070d18, roughness: 0.12, metalness: 0.3, clearcoat: 1, clearcoatRoughness: 0.05 }),
     eye: new THREE.MeshBasicMaterial({ color: 0x66ecff, toneMapped: false }),
     kraft: new THREE.MeshStandardMaterial({ map: kraftTexture(), roughness: 0.92 }),
     kraftPlain: new THREE.MeshStandardMaterial({ map: kraftTexture({ label: false }), roughness: 0.92 }),
@@ -20,9 +21,12 @@ export function createRobot() {
   };
   const mesh = (geo, mat, x = 0, y = 0, z = 0) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = false; return m; };
   const cyl = (r, h, mat, x = 0, y = 0, z = 0) => mesh(new THREE.CylinderGeometry(r, r, h, 10), mat, x, y, z);
-  const ball = (r, mat) => mesh(new THREE.SphereGeometry(r, 12, 10), mat);
+  const ball = (r, mat) => mesh(new THREE.SphereGeometry(r, 16, 12), mat);
+  // оранжевая накладка на внешней стороне шарнира (r — радиус диска, t не используется, x — выступ)
+  const ring = (r, t, x = 0, y = 0, z = 0) => { const m = mesh(new THREE.CylinderGeometry(r * 0.62, r * 0.62, 0.028, 16), M.orange, x, y, z); m.rotation.z = Math.PI / 2; return m; };
 
   const root = new THREE.Group();      // положение на мире
+  root.scale.setScalar(1.35);          // на экране робот должен читаться крупно, как на концепте
   const body = new THREE.Group();      // подпрыгивание и наклон
   root.add(body);
 
@@ -30,18 +34,18 @@ export function createRobot() {
   const HIP_Y = 0.74;
   const legs = [-1, 1].map(side => {
     const hip = new THREE.Group(); hip.position.set(side * 0.13, HIP_Y, 0.02);
-    hip.add(ball(0.065, M.dark));
-    hip.add(cyl(0.04, 0.36, M.limb, 0, -0.18, 0));
+    hip.add(ball(0.09, M.dark)); hip.add(ring(0.09, 0.014, side * 0.085));
+    hip.add(cyl(0.056, 0.36, M.limb, 0, -0.18, 0));
     const knee = new THREE.Group(); knee.position.y = -0.36; hip.add(knee);
-    knee.add(ball(0.062, M.orange));
-    knee.add(cyl(0.034, 0.34, M.limb, 0, -0.17, 0));
+    knee.add(ball(0.08, M.dark)); knee.add(ring(0.09, 0.02, side * 0.075));
+    knee.add(cyl(0.048, 0.34, M.limb, 0, -0.17, 0));
     const ankle = new THREE.Group(); ankle.position.y = -0.34; knee.add(ankle);
-    ankle.add(ball(0.05, M.dark));
-    const foot = mesh(rbox(0.13, 0.08, 0.3, 0.035), M.white, 0, -0.05, -0.07);
+    ankle.add(ball(0.068, M.dark)); ankle.add(ring(0.08, 0.016, side * 0.062));
+    const foot = mesh(rbox(0.17, 0.1, 0.38, 0.045), M.white, 0, -0.07, -0.09);
     foot.rotation.x = 0.1;                                   // клиновидная ступня
     ankle.add(foot);
-    ankle.add(mesh(rbox(0.11, 0.025, 0.28, 0.01), M.dark, 0, -0.095, -0.07));
-    ankle.add(mesh(rbox(0.1, 0.05, 0.08, 0.02), M.orange, 0, -0.05, -0.2));
+    ankle.add(mesh(rbox(0.15, 0.03, 0.36, 0.012), M.dark, 0, -0.125, -0.09));
+    ankle.add(mesh(rbox(0.12, 0.06, 0.1, 0.025), M.orange, 0, -0.07, -0.27));
     body.add(hip);
     return { hip, knee, ankle };
   });
@@ -59,7 +63,7 @@ export function createRobot() {
   head.add(mesh(rbox(0.46, 0.3, 0.03, 0.05), M.face, 0, 0.0, -0.268));      // экран лица
   const eyes = [-1, 1].map(s => { const e = mesh(rbox(0.07, 0.15, 0.02, 0.025), M.eye, s * 0.1, 0.01, -0.285); e.castShadow = false; head.add(e); return e; });
   const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture('rgba(130,240,255,0.9)', 'rgba(60,200,255,0.35)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false }));
-  glow.scale.set(0.5, 0.3, 1); glow.position.set(0, 0.01, -0.3); head.add(glow);
+  glow.material.opacity = 0.4; glow.scale.set(0.5, 0.3, 1); glow.position.set(0, 0.01, -0.3); head.add(glow);
   for (const s of [-1, 1]) {                                              // «уши»
     const ear = cyl(0.095, 0.06, M.dark, s * 0.32, 0, 0); ear.rotation.z = Math.PI / 2; head.add(ear);
     const cap = cyl(0.06, 0.07, M.orange, s * 0.345, 0, 0); cap.rotation.z = Math.PI / 2; head.add(cap);
@@ -69,14 +73,14 @@ export function createRobot() {
   // --- руки ---
   const arms = [-1, 1].map(side => {
     const shoulder = new THREE.Group(); shoulder.position.set(side * 0.285, 0.36, 0); torso.add(shoulder);
-    shoulder.add(ball(0.065, M.orange));
-    shoulder.add(cyl(0.032, 0.27, M.limb, 0, -0.135, 0));
+    shoulder.add(ball(0.105, M.white)); shoulder.add(ring(0.14, 0.02, side * 0.098));
+    shoulder.add(cyl(0.046, 0.27, M.limb, 0, -0.135, 0));
     const elbow = new THREE.Group(); elbow.position.y = -0.27; shoulder.add(elbow);
-    elbow.add(ball(0.05, M.dark));
-    elbow.add(cyl(0.028, 0.25, M.limb, 0, -0.125, 0));
+    elbow.add(ball(0.07, M.dark)); elbow.add(ring(0.1, 0.015, side * 0.062));
+    elbow.add(cyl(0.04, 0.25, M.limb, 0, -0.125, 0));
     const wrist = new THREE.Group(); wrist.position.y = -0.25; elbow.add(wrist);
-    wrist.add(mesh(rbox(0.07, 0.07, 0.09, 0.02), M.dark, 0, -0.03, 0));
-    for (const f of [-1, 1]) wrist.add(mesh(rbox(0.018, 0.08, 0.02, 0.006), M.dark, f * 0.03, -0.1, -0.02));  // «пальцы»
+    wrist.add(mesh(rbox(0.1, 0.08, 0.1, 0.025), M.dark, 0, -0.035, 0));
+    for (const f of [-1, 0, 1]) { const fg = mesh(rbox(0.024, 0.1, 0.026, 0.009), M.dark, f * 0.04, -0.12, -0.025 - (f === 0 ? 0.015 : 0)); fg.rotation.z = -f * 0.16; wrist.add(fg); }  // «пальцы»
     return { shoulder, elbow, wrist };
   });
 
@@ -109,7 +113,7 @@ export function createRobot() {
     const air = ctx.y > 0.02 ? 1 : 0;
     state.pose += (air - state.pose) * Math.min(1, dt * 14);                // 0 — бег, 1 — прыжок
     const p = state.phase, s = Math.sin(p), c = Math.cos(p);
-    state.targetYaw = ctx.showcase ? Math.PI : 0;
+    state.targetYaw = ctx.showcase ? Math.PI : CONFIG.camera.robotYaw;
     state.yaw += (state.targetYaw - state.yaw) * Math.min(1, dt * 5);
     const turn = THREE.MathUtils.clamp(-(ctx.vx || 0) * 0.045, -0.5, 0.5);
     root.rotation.y = state.yaw + (running ? turn : 0);
@@ -122,6 +126,7 @@ export function createRobot() {
     torso.rotation.z = running ? s * 0.035 : 0;
     head.rotation.z = running ? -s * 0.03 : Math.sin(performance.now() / 1300) * 0.04;
     head.rotation.x = running ? 0.03 : 0;
+    head.rotation.y = THREE.MathUtils.lerp(head.rotation.y, running ? -0.55 : 0, Math.min(1, dt * 6));      // голова повёрнута к камере, видно лицо
 
     legs.forEach((leg, i) => {
       const ph = p + (i ? Math.PI : 0);

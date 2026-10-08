@@ -19,7 +19,8 @@ export function mountGame(root, options = {}) {
   let canvas = root.querySelector('[data-view]');
   let stage = null, raf = 0, destroyed = false, last = 0, qualityChoice = options.quality || CONFIG.quality.default;
 
-  const resolveQuality = () => (qualityChoice === 'auto' ? autoQuality() : qualityChoice);
+  let autoDowngraded = false, slow = 0;
+  const resolveQuality = () => (qualityChoice === 'auto' ? (autoDowngraded ? 'low' : autoQuality()) : qualityChoice);
   ui.el.quality.value = qualityChoice;
 
   function startStage() {
@@ -59,7 +60,12 @@ export function mountGame(root, options = {}) {
   function frame(now) {
     if (destroyed) return;
     raf = requestAnimationFrame(frame);
-    const dt = Math.min(0.05, last ? (now - last) / 1000 : 0); last = now;
+    const raw = last ? (now - last) / 1000 : 0, dt = Math.min(0.05, raw); last = now;
+    // «Авто»: если на «высоком» кадры стабильно медленнее ~30 к/с, молча переходим на «лёгкое» качество
+    if (qualityChoice === 'auto' && !autoDowngraded && stage?.q.name === 'high' && game.phase === 'running' && raw > 0) {
+      slow = raw > 0.036 ? slow + raw : Math.max(0, slow - raw * 2);
+      if (slow > 2.5) { autoDowngraded = true; stopStage(true); freshCanvas(); startStage(); stage?.update(0, true); return; }
+    }
     if (game.phase === 'running') game.step(dt);
     stage?.update(dt, game.phase === 'paused');
     ui.tick();

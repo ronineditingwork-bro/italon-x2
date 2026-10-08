@@ -1,14 +1,15 @@
 // Летящие плиты и частицы. Объекты берутся из пула и не создаются во время забега.
 import * as THREE from '../../vendor/three.module.js';
-import { glowTexture } from './textures.js';
+import { glowTexture, marbleTexture } from './textures.js';
 
 export function createFx(maxParticles = 200, onLand = () => {}) {
   const group = new THREE.Group();
 
   // --- плиты (толщина слегка подчёркнута, чтобы был виден торец 20 мм) ---
   const slabGeo = new THREE.BoxGeometry(1.18, 0.26, 1.18);
-  const slabMat = new THREE.MeshStandardMaterial({ color: 0xe6dccb, roughness: 0.45 });
-  const edgeMat = new THREE.MeshStandardMaterial({ color: 0xbfb39d, roughness: 0.6 });
+  const marble = marbleTexture();
+  const slabMat = new THREE.MeshStandardMaterial({ map: marble, color: 0xf0e6d4, roughness: 0.28 }); slabMat.userData.env = 0.95;
+  const edgeMat = new THREE.MeshStandardMaterial({ map: marble, color: 0xb9ae9a, roughness: 0.5 });
   const pool = Array.from({ length: 56 }, () => {
     const m = new THREE.Mesh(slabGeo, [edgeMat, edgeMat, slabMat, edgeMat, edgeMat, edgeMat]);
     m.visible = false; m.castShadow = true; group.add(m);
