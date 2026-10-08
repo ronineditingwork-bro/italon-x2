@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Импорт фото артикулов из папок с JPG: имя файла = артикул (например 610010001530.jpg).
+"""Импорт фото артикулов из папок с JPG/PNG/WebP: имя файла = артикул (например 610010001530.jpg).
 
 Использование:
   python3 scripts/import-photos-folder.py --src папка1 [--src папка2 ...] [--sources таблица.xlsx] [--skip артикул ...]
@@ -31,7 +31,7 @@ if args.sources:
 dest = root / 'public/media/products'; dest.mkdir(parents=True, exist_ok=True)
 done, problems = 0, []
 for folder in args.src:
-    for path in sorted(Path(folder).glob('*.jpg')):
+    for path in sorted(p for p in Path(folder).iterdir() if p.suffix.lower() in ('.jpg', '.jpeg', '.png', '.webp')):
         code = path.stem
         if code in args.skip: problems.append((code, 'пропущен по просьбе')); continue
         if code not in targets: problems.append((code, 'нет в прайсе')); continue
