@@ -1,0 +1,14 @@
+{
+  "name": "x2-gorod-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "X2 / ГОРОД — прототип браузерной мини-игры (Three.js 0.160.0, лежит в vendor/)",
+  "scripts": {
+    "serve": "python3 -m http.server 4190 --bind 127.0.0.1",
+    "test": "node --test tests/game.test.mjs",
+    "test:e2e": "node tests/e2e.cjs"
+  },
+  "dependencies": {},
+  "vendored": { "three": "0.160.0" }
+}
