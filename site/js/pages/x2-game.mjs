@@ -1,4 +1,4 @@
-// Страница игры: сам движок (Three.js и правила) грузится отдельным фрагментом только после нажатия «Играть».
+// Страница игры: сам движок (Canvas 2D, правила, графика) грузится отдельным фрагментом только после нажатия «Играть».
 const stage = document.querySelector('[data-x2-game]');
 if (stage) {
   const view = stage.querySelector('[data-x2-game-view]');
@@ -14,7 +14,7 @@ if (stage) {
     if (app || loading) return;
     loading = true; startBtn.disabled = true; say('Загрузка игры…');
     try {
-      const { mountGame } = await import('../../../prototypes/x2-game/src/main.js');
+      const { mountGame } = await import('../../../prototypes/x2-run/src/main.js');
       app = mountGame(view);
       stage.classList.add('is-live'); poster.hidden = true; fullBtn.hidden = !stage.requestFullscreen && !stage.webkitRequestFullscreen;
       const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
