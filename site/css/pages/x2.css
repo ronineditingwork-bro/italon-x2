@@ -94,3 +94,12 @@
 .x2-scene__text > *, .x2-cta__inner > div:first-child > * { max-width: 100%; }
 .x2-scene__specs > div { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
 .x2-figures__list > div { min-width: 0; }
+
+/* ---------- Баннер игры ---------- */
+.x2-game-teaser { padding-block: var(--section); }
+.x2-game-teaser__inner { display: flex; justify-content: space-between; align-items: center; gap: var(--s-6); flex-wrap: wrap; padding: clamp(1.5rem, 1rem + 3vw, 3.5rem); background: #11141a; color: #f4efe6; }
+.x2-game-teaser__inner > div { display: grid; gap: var(--s-3); max-width: 38rem; }
+.x2-game-teaser__inner .eyebrow { color: #f6a21a; }
+.x2-game-teaser__inner .t-body { color: #e4ddcf; }
+.x2-game-teaser__inner .btn { background: #f6a21a; border-color: #f6a21a; color: #11141a; }
+.x2-game-teaser__inner .btn:hover { background: #ffb53d; border-color: #ffb53d; }

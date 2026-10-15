@@ -93,6 +93,16 @@ ${p ? `<p class="t-small">Фото: каталог Italon X2, с.&nbsp;${p.print
 </section>`;
 }
 
+function game(ctx) {
+  return `<section class="x2-game-teaser" aria-labelledby="game-teaser-title">
+<div class="wrap x2-game-teaser__inner" data-reveal>
+<div><p class="eyebrow">Игра</p><h2 class="t-h2" id="game-teaser-title">X2 / ГОРОД</h2>
+<p class="t-body">Робот с коробкой X2 бежит по кварталу и меняет старое покрытие на плиты 20&nbsp;мм. 60&nbsp;секунд, четыре зоны, без регистрации.</p></div>
+<a class="btn" href="${ctx.url('/x2/game/')}">Играть</a>
+</div>
+</section>`;
+}
+
 function list(ctx) {
   return `<section class="section x2-collections" id="x2-collections" aria-labelledby="x2c-title">
 <div class="wrap">
@@ -122,5 +132,6 @@ export default {
 ${intro()}
 ${scenes(ctx)}
 ${laying(ctx)}
+${game(ctx)}
 ${list(ctx)}`,
 };

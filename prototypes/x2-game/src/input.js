@@ -4,6 +4,11 @@ export function bindInput(root, game, { onPause } = {}) {
   const on = (el, ev, fn, opt) => { el.addEventListener(ev, fn, opt); cleanups.push(() => el.removeEventListener(ev, fn, opt)); };
 
   on(window, 'keydown', e => {
+    // на странице сайта рядом есть поля поиска и формы: игре достаются только клавиши во время забега и без служебных сочетаний
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    const active = game.phase === 'running';
+    if (!active && !(game.phase === 'paused' && (e.code === 'Escape' || e.code === 'KeyP'))) return;
+    const t = e.target; if (t?.closest?.('input,textarea,select,[contenteditable="true"],dialog[open]')) return;
     if (e.repeat && e.code !== 'ArrowLeft' && e.code !== 'ArrowRight') return;
     const k = e.code;
     if (k === 'ArrowLeft' || k === 'KeyA') { game.moveLane(-1); e.preventDefault(); }

@@ -80,7 +80,7 @@ function footer(ctx) {
 <nav class="footer-col" aria-labelledby="f-catalog"><h2 id="f-catalog">Каталог</h2>
 <a href="${u('/collections/')}">Коллекции</a><a href="${u('/x2/')}">X2 · улица</a><a href="${u('/catalog/')}">Все позиции</a><a href="${u('/catalog/')}?category=mosaic">Мозаика</a></nav>
 <nav class="footer-col" aria-labelledby="f-clients"><h2 id="f-clients">Клиентам</h2>
-<a href="${u('/calculator/')}">Калькулятор упаковок</a><a href="${u('/catalog/')}" data-cart-open>Корзина и КП в PDF</a><a href="${u('/inspiration/')}">Вдохновение</a></nav>
+<a href="${u('/calculator/')}">Калькулятор упаковок</a><a href="${u('/catalog/')}" data-cart-open>Корзина и КП в PDF</a><a href="${u('/inspiration/')}">Вдохновение</a><a href="${u('/x2/game/')}">Игра X2 / ГОРОД</a></nav>
 <nav class="footer-col" aria-labelledby="f-brand"><h2 id="f-brand">О бренде</h2>
 <a href="${u('/salon/')}">Салон Italon Experience</a><a href="${u('/collections/')}">Коллекции Italon</a><a href="${u('/x2/')}">X2 — 20 мм</a></nav>
 <div class="footer-col"><h2>Контакты</h2>

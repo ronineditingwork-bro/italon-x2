@@ -33,23 +33,23 @@ export const CSS = `
 .x2g .touch{position:absolute;left:0;right:0;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 96px);display:flex;justify-content:space-between;padding:0 max(18px,env(safe-area-inset-left));pointer-events:none}
 .x2g .touch button{pointer-events:auto;width:76px;height:76px;border-radius:50%;border:1px solid var(--line);background:rgba(17,19,23,.62);font-size:28px;touch-action:manipulation}
 .x2g .touch .lr{display:flex;gap:14px}
-.x2g .toast{position:absolute;left:50%;top:32%;transform:translate(-50%,-50%);padding:10px 26px;border-radius:16px;background:var(--glass);border:1px solid var(--line);font-size:clamp(22px,4vw,44px);font-weight:700;letter-spacing:.14em;text-transform:uppercase;pointer-events:none;opacity:0;transition:opacity .3s}
-.x2g .toast.on{opacity:1}
-.x2g .toast b{color:var(--x2)}
+.x2g .gtoast{position:absolute;left:50%;top:32%;transform:translate(-50%,-50%);padding:10px 26px;border-radius:16px;background:var(--glass);border:1px solid var(--line);font-size:clamp(22px,4vw,44px);font-weight:700;letter-spacing:.14em;text-transform:uppercase;pointer-events:none;opacity:0;transition:opacity .3s}
+.x2g .gtoast.on{opacity:1}
+.x2g .gtoast b{color:var(--x2)}
 .x2g .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(10,12,16,.32)}
-.x2g .overlay.menu{justify-content:flex-start;background:linear-gradient(90deg,rgba(10,12,16,.72) 0%,rgba(10,12,16,.35) 55%,rgba(10,12,16,0) 100%)}
+.x2g .overlay.gmenu{justify-content:flex-start;background:linear-gradient(90deg,rgba(10,12,16,.72) 0%,rgba(10,12,16,.35) 55%,rgba(10,12,16,0) 100%)}
 .x2g .card{width:min(520px,100%);max-height:100%;overflow:auto;padding:26px 28px 24px;border-radius:24px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.x2g .overlay.menu .card{margin-left:max(0px,3vw)}
+.x2g .overlay.gmenu .card{margin-left:max(0px,3vw)}
 .x2g .card h1,.x2g .card h2{margin:0 0 8px;font-size:clamp(34px,6vw,58px);line-height:1;letter-spacing:.04em;text-transform:uppercase}
 .x2g .card h1 b{color:var(--x2)}
 .x2g .card p{margin:0 0 12px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.5;color:var(--dim)}
 .x2g .card dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:14px 0 16px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}
 .x2g .card dt{color:var(--ink);font-weight:600}
 .x2g .card dd{margin:0;color:var(--dim)}
-.x2g .btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border:0;border-radius:14px;background:var(--x2);color:#1a1405;font-weight:800;font-size:18px;letter-spacing:.1em;text-transform:uppercase}
-.x2g .btn:hover{filter:brightness(1.08)}
-.x2g .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-.x2g .btn:focus-visible,.x2g button:focus-visible,.x2g select:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+.x2g .gbtn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border:0;border-radius:14px;background:var(--x2);color:#1a1405;font-weight:800;font-size:18px;letter-spacing:.1em;text-transform:uppercase}
+.x2g .gbtn:hover{filter:brightness(1.08)}
+.x2g .gbtn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.x2g .gbtn:focus-visible,.x2g button:focus-visible,.x2g select:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
 .x2g .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .x2g .opts{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:13px;color:var(--dim);align-items:center}
 .x2g select{background:#20242b;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit}
@@ -71,9 +71,9 @@ export const CSS = `
   .x2g .score{left:max(14px,env(safe-area-inset-left));transform:none;top:calc(max(12px,env(safe-area-inset-top)) + 56px);font-size:15px;padding:5px 12px}
   .x2g .lives{left:auto;right:max(14px,env(safe-area-inset-right));top:calc(max(12px,env(safe-area-inset-top)) + 56px);font-size:0;padding:9px 12px;gap:7px}
   .x2g .wide{top:calc(max(12px,env(safe-area-inset-top)) + 100px);font-size:12px;padding:5px 12px;white-space:nowrap}
-  .x2g .toast{top:30%;font-size:clamp(18px,5.4vw,30px);padding:8px 18px;text-align:center;max-width:92%}
-  .x2g .overlay.menu{background:linear-gradient(0deg,rgba(10,12,16,.82) 0%,rgba(10,12,16,.4) 70%,rgba(10,12,16,0) 100%);align-items:flex-end}
-  .x2g .overlay.menu .card{margin:0;padding:16px 16px 14px;max-height:64%}
+  .x2g .gtoast{top:30%;font-size:clamp(18px,5.4vw,30px);padding:8px 18px;text-align:center;max-width:92%}
+  .x2g .overlay.gmenu{background:linear-gradient(0deg,rgba(10,12,16,.82) 0%,rgba(10,12,16,.4) 70%,rgba(10,12,16,0) 100%);align-items:flex-end}
+  .x2g .overlay.gmenu .card{margin:0;padding:16px 16px 14px;max-height:64%}
   .x2g .touch button{width:68px;height:68px}
 }
 @media (prefers-reduced-motion:reduce){.x2g *{transition:none!important}}

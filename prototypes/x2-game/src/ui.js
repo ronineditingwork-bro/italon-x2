@@ -17,7 +17,7 @@ export function mountMarkup(root) {
   <div class="pill timer"><span data-time aria-label="Осталось времени">01:00</span><button data-act="pause" aria-label="Пауза">❚❚</button></div>
   <div class="lives" data-lives aria-label="Осталось попыток">Попытки ${'<i></i>'.repeat(CONFIG.run.lives)}</div>
   <div class="wide" data-wide hidden>Широкая укладка <span data-wide-t></span></div>
-  <div class="toast" data-toast></div>
+  <div class="gtoast" data-toast></div>
   <div class="touch" data-touch hidden>
     <div class="lr"><button data-act="left" aria-label="Влево">◀</button><button data-act="right" aria-label="Вправо">▶</button></div>
     <button data-act="jump" aria-label="Прыжок">▲</button>
@@ -28,7 +28,7 @@ export function mountMarkup(root) {
     <p class="hint" data-hint>Свайп — сменить полосу</p>
   </div>
 </div>
-<section class="overlay menu" data-menu>
+<section class="overlay gmenu" data-menu>
   <div class="card" role="dialog" aria-labelledby="x2-title">
     <h1 id="x2-title"><b>X2</b> / ГОРОД</h1>
     <p>Маленький робот с коробкой X2 на спине бежит по кварталу и меняет старое покрытие на утолщённый керамогранит X2 (20&nbsp;мм). Уложите как можно больше за 60&nbsp;секунд: парковка, подъезд к дому, тротуар и территория у бассейна.</p>
@@ -38,7 +38,7 @@ export function mountMarkup(root) {
       <dt>Коробки X2</dt><dd>укладка сразу на все три полосы на ${CONFIG.run.wideDuration}&nbsp;секунды</dd>
       <dt>Попытки</dt><dd>${CONFIG.run.lives} столкновения — и забег окончен. Низкие препятствия можно перепрыгнуть</dd>
     </dl>
-    <div class="row"><button class="btn" data-act="start">Начать забег</button></div>
+    <div class="row"><button class="gbtn" data-act="start">Начать забег</button></div>
     <div class="opts">
       <label>Качество <select data-quality><option value="auto">Авто</option><option value="high">Высокое</option><option value="low">Сниженное</option></select></label>
       <label><input type="checkbox" data-touch-toggle> Экранные кнопки</label>
@@ -47,16 +47,16 @@ export function mountMarkup(root) {
 </section>
 <section class="overlay" data-pause hidden>
   <div class="card" role="dialog" aria-labelledby="x2-pause"><h2 id="x2-pause">Пауза</h2><p>Забег остановлен. Возобновление — по вашему действию.</p>
-    <div class="row"><button class="btn" data-act="resume">Продолжить</button><button class="btn ghost" data-act="menu">В меню</button></div></div>
+    <div class="row"><button class="gbtn" data-act="resume">Продолжить</button><button class="gbtn ghost" data-act="menu">В меню</button></div></div>
 </section>
 <section class="overlay" data-end hidden>
   <div class="card" role="dialog" aria-labelledby="x2-end"><h2 id="x2-end" data-end-title>Забег окончен</h2><p data-end-text></p>
     <div class="stat"><span class="big" data-end-area>0 м²</span><span>Пройдено зон</span><b data-end-zones>0 из 4</b><span>Осталось попыток</span><b data-end-lives>0</b><span>Собрано коробок X2</span><b data-end-pickups>0</b></div>
-    <div class="row"><button class="btn" data-act="again">Ещё раз</button><button class="btn ghost" data-act="menu">В меню</button></div></div>
+    <div class="row"><button class="gbtn" data-act="again">Ещё раз</button><button class="gbtn ghost" data-act="menu">В меню</button></div></div>
 </section>
 <section class="overlay nogl" data-nogl hidden>
   <div class="card"><h2>3D недоступно</h2><p>Не удалось запустить трёхмерную графику: браузер или устройство не поддерживает WebGL либо он отключён. Попробуйте другой браузер или включите аппаратное ускорение.</p>
-    <div class="row"><button class="btn ghost" data-act="retry">Повторить</button></div></div>
+    <div class="row"><button class="gbtn ghost" data-act="retry">Повторить</button></div></div>
 </section>`;
   return root;
 }
