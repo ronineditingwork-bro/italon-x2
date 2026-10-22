@@ -15,6 +15,8 @@
 | [FINAL-CHECK.md](FINAL-CHECK.md) | Финальная проверка: Pages, CI, сервер, копии, совместимость |
 | [CHECKLIST.md](CHECKLIST.md) | Чек-лист внедрения и возврата прежней версии |
 | [vps/README.md](vps/README.md) | Проверка VPS только на чтение (`preflight.sh`) |
+| [vps/POWERSHELL.md](vps/POWERSHELL.md) | Установка копий и выкладки на VPS: готовые команды для PowerShell, по блокам |
+| [RELEASE-CANDIDATE.md](RELEASE-CANDIDATE.md) | Версия-кандидат для `main`: что проверено, что изменится, что остаётся |
 | [FEATURES-ROLLOUT.md](FEATURES-ROLLOUT.md) | Подбор по описанию и по картинке: поиск, требования, план внедрения |
 | [backup-yandex.md](backup-yandex.md) | Копии в Yandex Object Storage, оценка стоимости, ключи |
 
