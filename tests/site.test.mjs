@@ -51,7 +51,7 @@ test('sitemap.xml: только публичные индексируемые с
   assert.equal(new Set(urls).size, urls.length, 'повторы адресов');
   const expected = pages.filter(p => !p.is404).map(p => 'https://italon-x2.ru' + p.path).sort();
   assert.deepEqual(urls, expected);
-  assert.equal(urls.length, 1285);
+  assert.equal(urls.length, 1286);
   for (const url of urls) {
     assert.match(url, /^https:\/\/italon-x2\.ru\/([a-z0-9-]+\/)*$/, url);
     assert.doesNotMatch(url, /\/404\.html|\/api\/|\?|yandex_|\.json/, url);
