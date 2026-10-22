@@ -1,0 +1,10 @@
+[Unit]
+Description=Italon: зашифрованная резервная копия базы заявок
+After=docker.service
+OnFailure=italon-backup-failed.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/lib/italon-backup/backup-run.sh
+Nice=10
+IOSchedulingClass=idle
+TimeoutStartSec=1800

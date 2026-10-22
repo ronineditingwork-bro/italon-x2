@@ -13,7 +13,7 @@ await import('./build-site.mjs');
 await cp(resolve(root, 'public'), resolve(output, 'public'), { recursive: true, filter: source => !source.endsWith('.site-manifest.json') });
 await build({ entryPoints: [resolve(root, 'hosting/api-entry.mjs')], outfile: resolve(output, 'server/api.mjs'),
   bundle: true, format: 'esm', platform: 'node', target: 'node24', minify: true, legalComments: 'linked' });
-for (const name of ['server.mjs', 'database.mjs', 'import-carts.mjs', 'backup.mjs']) {
+for (const name of ['server.mjs', 'database.mjs', 'import-carts.mjs', 'backup.mjs', 'backup-verify.mjs']) {
   await cp(resolve(root, 'hosting', name), resolve(output, 'server', name));
 }
 for (const name of ['Dockerfile', 'compose.yaml', 'Caddyfile', '.env.example', '.dockerignore']) {

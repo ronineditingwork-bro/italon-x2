@@ -1,0 +1,7 @@
+[Unit]
+Description=Italon: ежедневная проверка, что копия делается
+[Timer]
+OnCalendar=*-*-* 09:10:00 Europe/Moscow
+Persistent=true
+[Install]
+WantedBy=timers.target
