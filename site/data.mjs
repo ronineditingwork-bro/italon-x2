@@ -73,6 +73,7 @@ export const nav = [
   { path: '/collections/', label: 'Коллекции' },
   { path: '/x2/', label: 'X2 · улица' },
   { path: '/catalog/', label: 'Каталог' },
+  { path: '/picker/', label: 'Подбор' },
   { path: '/calculator/', label: 'Калькулятор' },
   { path: '/inspiration/', label: 'Вдохновение' },
   { path: '/salon/', label: 'Салон' },

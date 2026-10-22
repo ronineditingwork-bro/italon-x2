@@ -72,7 +72,17 @@ const catalog = {
 };
 const catalogJson = JSON.stringify(catalog);
 await emit('data/catalog.json', catalogJson);
-const buildId = createHash('sha256').update(catalogJson + JSON.stringify(hashes)).digest('hex').slice(0, 10);
+// Признаки внешнего вида фото для подбора по описанию и по изображению (data/picker-features.json считается scripts/build-picker-features.cjs)
+let pickerJson = '';
+const featuresPath = resolve(root, 'data/picker-features.json');
+if (existsSync(featuresPath)) {
+  const features = JSON.parse(await readFile(featuresPath, 'utf8'));
+  const items = {};
+  for (const p of catalog.products) if (p.image?.src && features.items[p.image.src]) items[p.image.src] = features.items[p.image.src].f;
+  pickerJson = JSON.stringify({ v: features.version, items });
+  await emit('data/picker.json', pickerJson);
+}
+const buildId = createHash('sha256').update(catalogJson + pickerJson + JSON.stringify(hashes)).digest('hex').slice(0, 10);
 
 // ---------- 3. Страницы ----------
 const { layout } = await import(pathToFileURL(resolve(site, 'layout.mjs')).href);

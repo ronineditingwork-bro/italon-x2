@@ -78,7 +78,7 @@ function footer(ctx) {
 <div class="footer-brand"><a class="logo" href="${u('/')}" aria-label="Italon Experience — на главную">${logo()}</a>
 <p>Салон Italon Experience в Краснодаре. Керамогранит и плитка Italon, X2 20&nbsp;мм для открытых пространств.</p></div>
 <nav class="footer-col" aria-labelledby="f-catalog"><h2 id="f-catalog">Каталог</h2>
-<a href="${u('/collections/')}">Коллекции</a><a href="${u('/x2/')}">X2 · улица</a><a href="${u('/catalog/')}">Все позиции</a><a href="${u('/catalog/')}?category=mosaic">Мозаика</a></nav>
+<a href="${u('/collections/')}">Коллекции</a><a href="${u('/x2/')}">X2 · улица</a><a href="${u('/catalog/')}">Все позиции</a><a href="${u('/picker/')}">Подбор по описанию и фото</a><a href="${u('/catalog/')}?category=mosaic">Мозаика</a></nav>
 <nav class="footer-col" aria-labelledby="f-clients"><h2 id="f-clients">Клиентам</h2>
 <a href="${u('/calculator/')}">Калькулятор упаковок</a><a href="${u('/catalog/')}" data-cart-open>Корзина и КП в PDF</a><a href="${u('/inspiration/')}">Вдохновение</a><a href="${u('/x2/game/')}">Игра X2 / ГОРОД</a></nav>
 <nav class="footer-col" aria-labelledby="f-brand"><h2 id="f-brand">О бренде</h2>
