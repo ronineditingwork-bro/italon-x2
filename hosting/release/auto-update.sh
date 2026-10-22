@@ -5,7 +5,8 @@
 # изменить логику выкладки новым коммитом нельзя. Саму выкладку делает deploy-release.sh (проверка на кандидате, откат при сбое).
 set -u
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; . "$HERE/lib.sh"
-[ -f /etc/italon-autoupdate.env ] && . /etc/italon-autoupdate.env      # REPO, BRANCH — те же настройки, что у прежнего автообновления
+# Настройки (REPO, BRANCH) — только из /etc/italon-release.env (подключает lib.sh). Файл прежнего автообновления /etc/italon-autoupdate.env НЕ читается и не меняется:
+# возврат на прежний механизм не требует правки конфигурации.
 [ -e "$APP_DIR/.freeze" ] && exit 0
 remote=$(git ls-remote "$REPO" "refs/heads/$BRANCH" 2>/dev/null | cut -f1)
 [ -n "$remote" ] || { log "GitHub недоступен или ветки $BRANCH нет — пропуск"; exit 0; }

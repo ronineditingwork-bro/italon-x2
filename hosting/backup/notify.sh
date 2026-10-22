@@ -11,9 +11,10 @@ envval() { grep -E "^$1=" "$APP_DIR/.env" 2>/dev/null | head -1 | cut -d= -f2- |
 token="${TELEGRAM_BOT_TOKEN:-$(envval TELEGRAM_BOT_TOKEN)}"
 chat="${BACKUP_ALERT_CHAT_ID:-${TELEGRAM_CHAT_ID:-$(envval TELEGRAM_CHAT_ID)}}"; chat="${chat%%,*}"
 base="${TELEGRAM_API_BASE:-$(envval TELEGRAM_API_BASE)}"; base="${base:-https://api.telegram.org}"; base="${base%/}"
+relay="${TELEGRAM_RELAY_KEY:-$(envval TELEGRAM_RELAY_KEY)}"      # ключ ретранслятора Cloudflare (если включён RELAY_KEY)
 if [ -z "$token" ] || [ -z "$chat" ]; then echo "notify: Telegram не настроен, сообщение только в журнал: $text" >&2; exit 0; fi
 if [ -n "${NOTIFY_DRY_RUN:-}" ]; then echo "NOTIFY $text"; exit 0; fi
 payload=$(python3 -c 'import json,sys; print(json.dumps({"chat_id": sys.argv[1], "text": sys.argv[2], "disable_web_page_preview": True}))' "$chat" "$text")
-curl -fsS -m 20 -X POST -H 'Content-Type: application/json' -d "$payload" "$base/bot$token/sendMessage" >/dev/null 2>&1 \
+curl -fsS -m 20 -X POST -H 'Content-Type: application/json' ${relay:+-H "X-Relay-Key: $relay"} -d "$payload" "$base/bot$token/sendMessage" >/dev/null 2>&1 \
   || echo "notify: не удалось отправить уведомление в Telegram" >&2
 exit 0

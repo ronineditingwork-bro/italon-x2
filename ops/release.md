@@ -85,9 +85,9 @@
 Делается человеком, в спокойное время, заранее; **пока не выполняйте — нужно ваше разрешение на каждый шаг, затрагивающий VPS.** Сайт работает на прежнем механизме всё время до шага 8.
 
 **Подготовка (ничего не меняет в работе сайта):**
-0. Условия: свободно ≥ 4 ГБ диска (проверка: `df -h /`; скрипт откажется работать при < 3 ГБ), есть `docker compose`, `git`, `curl`, `python3`. Память: измерено локально — сборка сайта пиковая ≈ 180 МБ (`node`), образ Docker ≈ 430 МБ на диске (общий слой Node + ≈ 75 МБ на версию), контейнер приложения < 100 МБ. Сборка идёт с `--max-old-space-size=512`. **Рекомендуется swap 2 ГБ** (`fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile`, строка в `/etc/fstab`) — иначе на 1 ГБ ядро может убить сборку (OOM); при OOM кандидат не запускается, а рабочий сайт не затрагивается.
+0. Условия: свободно ≥ 4 ГБ диска (скрипт выкладки откажется работать при < 3 ГБ), есть `docker compose`, `git`, `curl`, `python3`. Память: измерено локально — сборка сайта пиково ≈ 180 МБ, образ Docker ≈ 430 МБ на диске (общий слой Node + ≈ 75 МБ на версию), контейнер приложения < 100 МБ; сборка идёт с `--max-old-space-size=512`. **Swap 2 ГБ уже создаёт прежний установочный скрипт** (`deploy-reg-ru.sh`, шаг 1/6) — это надо подтвердить (`ops/vps/preflight.sh` покажет); если swap нет, создайте его до установки, иначе на 1 ГБ ядро может убить сборку (OOM). При OOM кандидат не запускается, а рабочий сайт не затрагивается.
 1. Снимок VPS у Reg.ru (панель) — резервная точка «до всего».
-2. Проверить фактическое состояние: `cat /etc/italon-autoupdate.env`, `systemctl list-timers | grep italon`, `docker compose -f /opt/italon-x2/compose.yaml ps`, `docker images`.
+2. Проверить фактическое состояние **командами только для чтения**: `sudo bash ops/vps/preflight.sh --db > preflight.txt` (описание — `ops/vps/README.md`; скрипт ничего не меняет и не печатает секреты). Устранить все строки `[ПРОБЛЕМА]`.
 3. `git clone --depth 1 -b <ветка после слияния в main> …` в `/tmp`, затем `sudo bash hosting/release/install.sh` — **только копирует файлы** (`/usr/local/lib/italon-release`, `italon-rollback`, `italon-compose`, `compose.release.yaml` в `/opt/italon-x2`), ничего не включает. Прежний таймер продолжает работать.
 4. Резервные копии (`backup.md`): установка, ключ `age` на вашем компьютере, хранилище в РФ, пробный запуск, **проверка восстановления**, затем `--enable`.
 5. **Метка версии «до перехода»:** `cd /opt/italon-x2 && docker tag $(docker compose images -q app) italon-x2-app:before-release && echo before-release > .deployed-tag`. Это единственная нужная команда для отката на то, что работает сейчас.
@@ -97,16 +97,15 @@
 **Переключение (первая настоящая выкладка):**
 8. `systemctl disable --now italon-autoupdate.timer` (чтобы два механизма не работали одновременно; текущая версия остаётся работать), затем вручную: `/usr/local/lib/italon-release/deploy-release.sh <sha main>` с открытым `tail -f`; перерыв — секунды. Проверить сайт, форму заявки (тестовая, потом удалить/пометить), `italon-rollback --list`.
 9. Если что-то не так — `italon-rollback before-release` (§3). Сайт вернётся на образ, собранный старым способом, заявки на месте.
-10. Если всё хорошо: `/etc/italon-autoupdate.env` — `BRANCH=main`; `systemctl enable --now italon-release-update.timer`. Наблюдать неделю: `tail -f /var/log/italon-release.log`, сообщения в Telegram.
+10. Если всё хорошо: `systemctl enable --now italon-release-update.timer` (настройки нового механизма — в `/etc/italon-release.env`, по умолчанию `BRANCH=main`; **`/etc/italon-autoupdate.env` прежнего механизма не меняется**). Наблюдать неделю: `tail -f /var/log/italon-release.log`, сообщения в Telegram.
 
 **Чего не делать:** не запускать одновременно прежнее и новое автообновление; не удалять `/opt/italon-x2/.env`, тома `cart_data`/`caddy_data`; не включать `RELEASE_PROMOTION`.
 
 ## 9. Откат на прежний механизм (полностью)
 
 1. `systemctl disable --now italon-release-update.timer`
-2. В `/etc/italon-autoupdate.env` вернуть `BRANCH=ccr-943f3ebb-rcco8n`.
-3. `systemctl enable --now italon-autoupdate.timer` (или `/usr/local/bin/italon-autoupdate`): прежний скрипт сам пересоберёт сайт `docker compose up -d --build`.
-   Побочный эффект: его `rsync --delete` удалит служебные файлы нового механизма в `/opt/italon-x2` (`.deployed-tag`, `compose.release.yaml` …); образы Docker и база остаются. Перед повторным переходом выполните §8, шаги 3 и 5 заново.
+2. `systemctl enable --now italon-autoupdate.timer` (или `/usr/local/bin/italon-autoupdate`): прежний скрипт сам пересоберёт сайт `docker compose up -d --build`. Его настройки (`/etc/italon-autoupdate.env`, ветка `ccr-943f3ebb-rcco8n`) мы не меняли, править ничего не нужно.
+3. Побочный эффект: его `rsync --delete` удалит служебные файлы нового механизма в `/opt/italon-x2` (`.deployed-tag`, `compose.release.yaml` …); образы Docker и база остаются. Перед повторным переходом выполните §8, шаги 3 и 5 заново.
 
 ## 10. Риски и ограничения
 
@@ -115,3 +114,25 @@
 - Доверие держится на аккаунте владельца GitHub (запись в `main`) и на самом GitHub (результаты Actions). Сервер не защитит от захвата аккаунта владельца: включите 2FA.
 - Закреплять `actions/checkout`/`setup-node` по SHA и включить Dependabot — желательно, пока не сделано.
 - Публичный API GitHub: лимит 60 запросов/час на IP; вызывается только при появлении нового коммита, этого достаточно.
+
+## 11. Совместимость новой установки с действующим автообновлением
+
+Проверено чтением скриптов и тестом `tests/install-compat.test.mjs` (6 проверок).
+
+| Что | Прежний механизм | Новый механизм | Вывод |
+|---|---|---|---|
+| Службы systemd | `italon-autoupdate.{service,timer}` | `italon-release-update.*`, `italon-backup*` | имена разные; установка **ничего не включает** |
+| Команды | `/usr/local/bin/italon-autoupdate` | `italon-rollback`, `italon-compose` | не пересекаются |
+| Настройки | `/etc/italon-autoupdate.env` (REPO, BRANCH) | `/etc/italon-release.env` (необязательный) | новый **не читает и не меняет** файл прежнего (исправлено: раньше читал) |
+| Журналы | `/var/log/italon-autoupdate.log` | `/var/log/italon-release.log` | разные |
+| Замок | `/var/lock/italon-autoupdate.lock` | тот же файл | **общий** (исправлено: был отдельный): два механизма не могут выкладывать одновременно |
+| Каталог сборки | `/opt/italon-x2-src` (shallow clone ветки) | тот же каталог (fetch по sha, `checkout -f`) | совместимо под общим замком; клон без полной истории |
+| Каталог сайта `/opt/italon-x2` | `rsync -a --delete`, исключения: `.env`, `.deployed-commit`, `.attempted-commit` | добавляет `compose.release.yaml`, `.deployed-tag`, `.previous-tag`, `.freeze`, `.rejected-commit`, `releases.log` | пока работает только прежний механизм, новые файлы он **удалит** при своей выкладке — это безопасно до переключения; `.env` и база не затрагиваются |
+| Образы Docker | `italon-x2-app:latest` (тег переписывается при его сборке) | `italon-x2-app:<sha12>` и `before-release` | теги разные; очистка образов нового механизма трогает только `sha12` |
+| Состояние | `.deployed-commit` (sha ветки) | то же имя, тот же смысл | совместимо |
+| swap | создаёт 2 ГБ, если swap нет | ничего не создаёт | прежний уже подготовил |
+
+**Предупреждения.**
+1. Повторный запуск прежнего установщика (`curl …/deploy-reg-ru.sh | bash` из его же инструкции) **заново включит прежний таймер** и пересоберёт сайт старым способом. После переключения на новый механизм так не делайте; если сделали — выключите `italon-autoupdate.timer` снова.
+2. Между установкой скриптов (§8, шаг 3) и переключением (шаг 8) прежнее автообновление продолжает работать и при своей выкладке сотрёт `compose.release.yaml` из `/opt/italon-x2`; `install.sh` кладёт его заново. Поэтому шаги 3 → 6 → 8 делают подряд, без пауз в днях.
+3. Пока работают оба таймера (этого быть не должно), выкладку выполнит тот, кто первым взял замок; второй тихо завершится.

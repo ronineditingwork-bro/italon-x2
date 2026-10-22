@@ -11,7 +11,7 @@ DOCKER="${DOCKER:-docker}"
 REPO="${REPO:-https://github.com/ronineditingwork-bro/italon-x2}"
 BRANCH="${BRANCH:-main}"
 NOTIFY="${NOTIFY:-$HERE/notify.sh}"
-LOCK="${LOCK:-/var/lock/italon-deploy.lock}"
+LOCK="${LOCK:-/var/lock/italon-autoupdate.lock}"   # тот же замок, что у прежнего автообновления: два механизма не могут выкладывать одновременно
 MIN_FREE_MB="${MIN_FREE_MB:-3000}"
 
 log() { echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $*"; }

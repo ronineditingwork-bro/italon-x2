@@ -34,7 +34,7 @@ jobs:
       - name: Тесты проверок и скриптов (каталог, согласие, резервные копии, выкладка)
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq age >/dev/null
-          node --test --test-concurrency=1 tests/verify-catalog.test.mjs tests/legal-consent.test.mjs tests/backup.test.mjs tests/release-scripts.test.mjs tests/verify-ci.test.mjs tests/ci-config.test.mjs
+          node --test --test-concurrency=1 tests/verify-catalog.test.mjs tests/legal-consent.test.mjs tests/backup.test.mjs tests/release-scripts.test.mjs tests/verify-ci.test.mjs tests/vps-preflight.test.mjs tests/install-compat.test.mjs tests/notify.test.mjs tests/ci-config.test.mjs
       - name: Тест сервера (полная сборка, корзина, перезапуск, резервная копия, smoke выкладки)
         run: npm run test:hosting
       - name: Сборка сайта и проверка целостности каталога

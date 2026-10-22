@@ -92,9 +92,9 @@ if [ -n "$RCLONE_REMOTE" ]; then
 fi
 
 STEP="ротация"
-( cd "$LOCAL_DIR" && ls -1 | grep -E '^cart-.*\.age$' | NOW="$STAMP" python3 "$HERE/prune.py" | while read -r old; do rm -f "$LOCAL_DIR/$old" "$LOCAL_DIR/${old%.age}.manifest.json"; done )
+( cd "$LOCAL_DIR" && ls -1 | grep -E '^cart-.*\.age$' | NOW="$STAMP" KEEP_DAILY="${LOCAL_KEEP_DAILY:-7}" KEEP_WEEKLY="${LOCAL_KEEP_WEEKLY:-0}" KEEP_MONTHLY="${LOCAL_KEEP_MONTHLY:-0}" python3 "$HERE/prune.py" | while read -r old; do rm -f "$LOCAL_DIR/$old" "$LOCAL_DIR/${old%.age}.manifest.json"; done )
 if [ -n "$RCLONE_REMOTE" ]; then
-  $RCLONE lsf "$RCLONE_REMOTE" | grep -E '^cart-.*\.age$' | NOW="$STAMP" python3 "$HERE/prune.py" | while read -r old; do
+  $RCLONE lsf "$RCLONE_REMOTE" | grep -E '^cart-.*\.age$' | NOW="$STAMP" KEEP_DAILY="${KEEP_DAILY:-14}" KEEP_WEEKLY="${KEEP_WEEKLY:-8}" KEEP_MONTHLY="${KEEP_MONTHLY:-12}" python3 "$HERE/prune.py" | while read -r old; do
     $RCLONE deletefile "$RCLONE_REMOTE/$old"; $RCLONE deletefile "$RCLONE_REMOTE/${old%.age}.manifest.json" || true
   done
 fi

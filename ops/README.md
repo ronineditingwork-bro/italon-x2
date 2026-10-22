@@ -12,6 +12,10 @@
 | [legal/pd-audit.md](legal/pd-audit.md) | Маршрут персональных данных, риски по 152-ФЗ, что нужно решить владельцу |
 | [STAGE1-REPORT.md](STAGE1-REPORT.md) | Итог этапа: что сделано и проверено, что осталось, риски |
 | [READINESS.md](READINESS.md) | Готовность после интеграции с main, блокирующие проблемы |
+| [FINAL-CHECK.md](FINAL-CHECK.md) | Финальная проверка: Pages, CI, сервер, копии, совместимость |
+| [CHECKLIST.md](CHECKLIST.md) | Чек-лист внедрения и возврата прежней версии |
+| [vps/README.md](vps/README.md) | Проверка VPS только на чтение (`preflight.sh`) |
+| [backup-yandex.md](backup-yandex.md) | Копии в Yandex Object Storage, оценка стоимости, ключи |
 
 Файлы-«рельсы»:
 
