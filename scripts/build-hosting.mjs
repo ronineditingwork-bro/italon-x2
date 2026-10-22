@@ -20,6 +20,7 @@ for (const name of ['Dockerfile', 'compose.yaml', 'Caddyfile', '.env.example', '
   await cp(resolve(root, 'hosting', name), resolve(output, name));
 }
 await cp(resolve(root, 'drizzle'), resolve(output, 'drizzle'), { recursive: true });
+await cp(resolve(root, 'hosting/release/compose.release.yaml'), resolve(output, 'compose.release.yaml'));
 await cp(resolve(root, 'hosting/TRANSFER.md'), resolve(output, 'TRANSFER.md'));
 const sourceFiles = execFileSync('git', ['ls-files', '-z'], { cwd: root }).toString().split('\0').filter(Boolean);
 const newFiles = execFileSync('git', ['ls-files', '--others', '--exclude-standard', '-z'], { cwd: root }).toString().split('\0').filter(name =>

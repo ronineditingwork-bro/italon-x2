@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { request } from 'node:http';
 import { mkdtemp, rm, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -72,6 +72,13 @@ test('independent hosting preserves cart semantics across a proxy and restart', 
     assert.equal(catalog.status, 200); assert.equal(catalog.json().products.length, 1202);
     const productPhoto = catalog.json().products.find(product => product.image?.src)?.image.src;
     assert.ok(productPhoto);
+    // проверка выкладки (hosting/release/smoke.mjs) должна проходить на настоящем сервере: те же страницы, фото и защита по Host
+    const smoke = spawnSync(process.execPath, [resolve(import.meta.dirname, '../hosting/release/smoke.mjs'), 'italon-x2.ru', '1202'], { env: { ...process.env, SMOKE_PORT: String(server.port) }, encoding: 'utf8' });
+    assert.equal(smoke.status, 0, smoke.stdout + smoke.stderr); assert.equal(JSON.parse(smoke.stdout).catalogItems, 1202);
+    const smokeLive = spawnSync(process.execPath, [resolve(import.meta.dirname, '../hosting/release/smoke.mjs'), 'italon-x2.ru', '1202', 'live'], { env: { ...process.env, SMOKE_PORT: String(server.port) }, encoding: 'utf8' });
+    assert.equal(smokeLive.status, 0, smokeLive.stdout + smokeLive.stderr);
+    const tooMany = spawnSync(process.execPath, [resolve(import.meta.dirname, '../hosting/release/smoke.mjs'), 'italon-x2.ru', '1203'], { env: { ...process.env, SMOKE_PORT: String(server.port) }, encoding: 'utf8' });
+    assert.equal(tooMany.status, 1, 'проверка должна ловить «потерянные» позиции');
     const homeImages = [...home.body.toString().matchAll(/src="(media\/(?:collections|laying)\/[^" ]+)"/g)].map(match => '/' + match[1]);
     assert.ok(homeImages.length >= 6, 'главная показывает фото коллекций');
     const imagePaths = [productPhoto, ...homeImages];
