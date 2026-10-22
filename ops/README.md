@@ -15,6 +15,7 @@
 | [FINAL-CHECK.md](FINAL-CHECK.md) | Финальная проверка: Pages, CI, сервер, копии, совместимость |
 | [CHECKLIST.md](CHECKLIST.md) | Чек-лист внедрения и возврата прежней версии |
 | [vps/README.md](vps/README.md) | Проверка VPS только на чтение (`preflight.sh`) |
+| [FEATURES-ROLLOUT.md](FEATURES-ROLLOUT.md) | Подбор по описанию и по картинке: поиск, требования, план внедрения |
 | [backup-yandex.md](backup-yandex.md) | Копии в Yandex Object Storage, оценка стоимости, ключи |
 
 Файлы-«рельсы»:
