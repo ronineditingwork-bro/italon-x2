@@ -1,0 +1,103 @@
+# Проверка каждого коммита и запроса на слияние: синтаксис, тесты, сборка сайта, целостность каталога, образ Docker, браузерные сценарии.
+# Этот файл НИЧЕГО НЕ ВЫКЛАДЫВАЕТ: у него нет доступа к серверу и секретов (только read-доступ к коду).
+# Выкладка идёт отдельным путём: после успешной проверки ветки main workflow «Promote release» (выключен по умолчанию)
+# переносит коммит в ветку release, а сервер забирает только её (ops/release.md).
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  FORCE_COLOR: '0'
+jobs:
+  verify:
+    name: Тесты, сборка, целостность каталога
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Установка зависимостей
+        run: npm ci --no-audit --no-fund
+      - name: Синтаксис
+        run: npm run check
+      - name: Модульные тесты (каталог, расчёт, заявки, сайт)
+        run: node --test --test-concurrency=1 tests/core.test.mjs tests/site.test.mjs tests/quote-lead.test.mjs
+      - name: Тесты проверок и скриптов (каталог, согласие, резервные копии, выкладка)
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq age >/dev/null
+          node --test --test-concurrency=1 tests/verify-catalog.test.mjs tests/legal-consent.test.mjs tests/backup.test.mjs tests/release-scripts.test.mjs tests/ci-config.test.mjs
+      - name: Тест сервера (полная сборка, корзина, перезапуск, резервная копия, smoke выкладки)
+        run: npm run test:hosting
+      - name: Сборка сайта и проверка целостности каталога
+        run: |
+          npm run build:site
+          RELEASE_BUILD=1 node scripts/verify-catalog.mjs | tee catalog-report.json
+      - name: Интерфейс корзины и КП (happy-dom)
+        run: node tests/ui-check.mjs
+      - name: Игра
+        run: node --test prototypes/x2-run/tests/game.test.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-report
+          path: catalog-report.json
+          if-no-files-found: ignore
+
+  browser:
+    name: Браузерные сценарии (каталог, карточка, калькулятор, заявка, игра)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    needs: verify
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Playwright (только для проверок, в зависимости проекта не добавляется)
+        run: npm install --no-save --no-audit --no-fund playwright@1.49.1 && npx playwright install --with-deps chromium
+      - name: Сайт на настоящем сервере с тестовой базой
+        run: node tests/site-smoke.cjs
+      - name: Игра в браузере
+        run: |
+          (cd prototypes/x2-run && python3 -m http.server 4192 --bind 127.0.0.1 >/dev/null 2>&1 &)
+          sleep 2
+          node prototypes/x2-run/tests/e2e.cjs
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-screenshots
+          path: test-results/
+          if-no-files-found: ignore
+
+  image:
+    name: Образ Docker собирается и отвечает
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    needs: verify
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - name: Сборка образа (без публикации)
+        run: docker build -t italon-ci-app .hosting-runtime/release
+      - name: Запуск и проверка (smoke тем же скриптом, что и на сервере)
+        run: |
+          docker run -d --name app -e APP_ORIGIN=https://italon-x2.ru -e DB_PATH=/data/cart.sqlite -v "$RUNNER_TEMP/data:/data" --user 0 italon-ci-app
+          for i in $(seq 1 30); do docker exec app node -e "fetch('http://127.0.0.1:3000/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))" && break; sleep 2; done
+          docker exec -i app node - italon-x2.ru 1000 < hosting/release/smoke.mjs
+          docker logs app | tail -5
