@@ -52,7 +52,9 @@ SNAP_IN="/data/backups/.snap-$STAMP.sqlite"
 $DOCKER compose exec -T app node server/backup.mjs "$SNAP_IN" >/dev/null
 
 STEP="проверка целостности копии"
-$DOCKER compose exec -T app node server/backup-verify.mjs "$SNAP_IN" --migrate-check > "$WORK/manifest.json"
+# проверяющий скрипт подаётся с сервера через stdin: работает и со старым образом сайта (до перехода на выкладку образов), где его ещё нет
+VERIFY="$HERE/backup-verify.mjs"; [ -f "$VERIFY" ] || VERIFY="$HERE/../backup-verify.mjs"
+$DOCKER compose exec -T -e DATABASE_MODULE=/app/server/database.mjs -e MIGRATIONS_DIR=/app/drizzle app node --input-type=module - "$SNAP_IN" --migrate-check < "$VERIFY" > "$WORK/manifest.json"
 python3 - "$WORK/manifest.json" <<'PY'
 import json, sys
 m = json.load(open(sys.argv[1]))

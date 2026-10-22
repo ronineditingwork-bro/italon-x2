@@ -43,8 +43,8 @@ if (migrateCheck) {
   try {
     const copy = resolve(dir, 'copy.sqlite');
     copyFileSync(path, copy);
-    const { openDatabase } = await import('./database.mjs');
-    const opened = openDatabase(copy, process.env.MIGRATIONS_DIR || resolve(import.meta.dirname, '../drizzle'));
+    const { openDatabase } = await import(process.env.DATABASE_MODULE || './database.mjs');
+    const opened = openDatabase(copy, process.env.MIGRATIONS_DIR || resolve(import.meta.dirname || '.', '../drizzle'));
     try {
       const after = opened.database.prepare('SELECT COUNT(*) AS n FROM quotes').get().n;
       if (Number(after) !== report.quotes.count) fail('после применения миграций число заявок изменилось');

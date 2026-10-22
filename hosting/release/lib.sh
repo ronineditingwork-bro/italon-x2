@@ -16,7 +16,8 @@ MIN_FREE_MB="${MIN_FREE_MB:-3000}"
 
 log() { echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $*"; }
 alert() { "$NOTIFY" "$1" >/dev/null 2>&1 || true; }
-compose() { (cd "$APP_DIR" && APP_TAG="${APP_TAG:-$(cat "$APP_DIR/.deployed-tag" 2>/dev/null || echo none)}" $DOCKER compose -f compose.yaml -f compose.release.yaml "$@"); }
+# compose.release.yaml подключается только если он уже лежит рядом: до первой выкладки рабочий сайт работает на прежней схеме (build: .)
+compose() { (cd "$APP_DIR" && local f=(-f compose.yaml); [ -f compose.release.yaml ] && f+=(-f compose.release.yaml); APP_TAG="${APP_TAG:-$(cat "$APP_DIR/.deployed-tag" 2>/dev/null || echo none)}" $DOCKER compose "${f[@]}" "$@"); }
 env_value() { { grep -E "^$1=" "$APP_DIR/.env" 2>/dev/null || true; } | head -1 | cut -d= -f2- | tr -d '\r"'; }
 domain() { local d; d="$(env_value DOMAIN)"; echo "${d:-italon-x2.ru}"; }
 tag_of() { echo "${1:0:12}"; }

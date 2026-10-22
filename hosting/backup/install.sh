@@ -6,7 +6,7 @@ set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEST=/usr/local/lib/italon-backup
 apt-get update -qq && apt-get install -y -qq age rclone python3 curl >/dev/null
-install -d -m 755 "$DEST"; install -m 755 "$HERE"/backup-run.sh "$HERE"/restore-test.sh "$HERE"/notify.sh "$HERE"/watchdog.sh "$HERE"/prune.py "$DEST"/
+install -d -m 755 "$DEST"; install -m 644 "$HERE"/../backup-verify.mjs "$DEST"/ && install -m 755 "$HERE"/backup-run.sh "$HERE"/restore-test.sh "$HERE"/notify.sh "$HERE"/watchdog.sh "$HERE"/prune.py "$DEST"/
 install -d -m 700 /etc/italon-backup /var/backups/italon /var/lib/italon-backup
 [ -f /etc/italon-backup.env ] || install -m 600 "$HERE/italon-backup.env.example" /etc/italon-backup.env
 install -m 644 "$HERE"/systemd/*.service "$HERE"/systemd/*.timer /etc/systemd/system/

@@ -18,7 +18,7 @@ echo "Каталог проверки: $WORK (будет удалён после
 echo "Расшифровано: $(stat -c %s "$WORK/restored.sqlite") байт"
 
 if command -v node >/dev/null 2>&1 && [ -z "${ITALON_APP_DIR:-}" ]; then
-  node "${VERIFY:-$HERE/../backup-verify.mjs}" "$WORK/restored.sqlite" --migrate-check > "$WORK/report.json"
+  node "${VERIFY:-$( [ -f "$HERE/backup-verify.mjs" ] && echo "$HERE/backup-verify.mjs" || echo "$HERE/../backup-verify.mjs")}" "$WORK/restored.sqlite" --migrate-check > "$WORK/report.json"
 else
   (cd "${ITALON_APP_DIR:?нужен Node.js либо ITALON_APP_DIR с docker compose}" && docker compose run --rm -T --no-deps -v "$WORK:/restore:ro" --entrypoint node app server/backup-verify.mjs /restore/restored.sqlite --migrate-check) > "$WORK/report.json"
 fi

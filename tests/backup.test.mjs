@@ -24,8 +24,10 @@ T="${T}"; R="${root}"
 map() { echo "\${1/#\\/data/$T/data}"; }
 [ "$1" = compose ] || exit 90; shift
 case "$1" in
-  exec) shift; [ "$1" = -T ] && shift; shift   # app
-    if [ "$1" = node ]; then script="$2"; shift 2; args=(); for a in "$@"; do case "$a" in /data/*) args+=("$(map "$a")");; *) args+=("$a");; esac; done
+  exec) shift; [ "$1" = -T ] && shift; while [ "$1" = -e ]; do shift 2; done; shift   # app
+    if [ "$1" = node ] && [ "$2" = --input-type=module ]; then shift 3; args=(); for a in "$@"; do case "$a" in /data/*) args+=("$(map "$a")");; *) args+=("$a");; esac; done
+      DB_PATH="$T/data/cart.sqlite" MIGRATIONS_DIR="$R/drizzle" DATABASE_MODULE="$R/hosting/database.mjs" exec "${process.execPath}" "$R/hosting/backup-verify.mjs" "\${args[@]}" </dev/null
+    elif [ "$1" = node ]; then script="$2"; shift 2; args=(); for a in "$@"; do case "$a" in /data/*) args+=("$(map "$a")");; *) args+=("$a");; esac; done
       DB_PATH="$T/data/cart.sqlite" MIGRATIONS_DIR="$R/drizzle" exec "${process.execPath}" "$R/hosting/$(basename "$script")" "\${args[@]}"
     elif [ "$1" = rm ]; then shift; [ "$1" = -f ] && shift; for a in "$@"; do rm -f "$(map "$a")"; done; else exit 91; fi ;;
   cp) shift; src="\${1#app:}"; cp "$(map "$src")" "$2" ;;
