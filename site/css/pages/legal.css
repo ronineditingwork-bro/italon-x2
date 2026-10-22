@@ -1,0 +1,7 @@
+/* Юридические страницы (/privacy/, /consent/) и блок согласия в форме КП. */
+.legal { max-width: 52rem; display: grid; gap: var(--s-4); }
+.legal h2 { font-size: var(--fs-l, 1.25rem); margin-top: var(--s-5); }
+.legal p, .legal li { line-height: 1.6; }
+.legal-draft { padding: var(--s-4); border: 2px solid #c4220e; background: #fff4f2; color: #7a140a; font-size: var(--fs-s); }
+.legal-table { width: 100%; border-collapse: collapse; font-size: var(--fs-s); }
+.legal-table th, .legal-table td { text-align: left; vertical-align: top; padding: var(--s-3); border: 1px solid var(--line); }

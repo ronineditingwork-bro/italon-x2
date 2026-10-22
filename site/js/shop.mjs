@@ -308,6 +308,7 @@ async function sendLead(quote, phone) {
   const form = new FormData();
   form.set('phone', phone); form.set('customer', $('#quote-customer').value); form.set('project', $('#quote-project').value);
   form.set('address', $('#quote-address').value);
+  if ($('#quote-consent')?.checked) form.set('consent', '1');
   form.set('note', $('#quote-note').value); form.set('filename', quote.filename);
   form.set('pdf', new Blob([quote.bytes], { type: 'application/pdf' }), quote.filename);
   const response = await fetch(new URL('api/quote', ROOT), { method: 'POST', body: form, credentials: 'same-origin' });
@@ -333,8 +334,11 @@ async function exportQuote(event) {
     const quote = await createQuote(cart, quoteDetails(), new Uint8Array(font), { images });
     download(quote.bytes, quote.filename, 'application/pdf');
     let sent = true;
-    if (mode === 'server') sent = await sendLead(quote, phoneInput.value).catch(() => false);
-    toast(sent ? 'Коммерческое предложение готово' : 'КП скачано. Заявку отправить не удалось — позвоните нам: +7 918 24 89 248');
+    // Если на странице есть отметка согласия (152-ФЗ), без неё заявка менеджеру не отправляется: КП остаётся только у клиента.
+    const consentBox = $('#quote-consent'), consented = !consentBox || consentBox.checked;
+    if (mode === 'server' && consented) sent = await sendLead(quote, phoneInput.value).catch(() => false);
+    toast(!consented ? 'КП скачано. Менеджеру заявка не отправлена — отметьте согласие или позвоните нам: +7 918 24 89 248'
+      : sent ? 'Коммерческое предложение готово' : 'КП скачано. Заявку отправить не удалось — позвоните нам: +7 918 24 89 248');
   } catch (error) { showError(error.message || 'Не удалось сформировать PDF.'); }
   finally { exporting = false; button.textContent = 'Скачать КП в PDF'; setExportState(); }
 }

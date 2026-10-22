@@ -53,7 +53,7 @@ const server = createServer({ maxHeaderSize: 16384 }, async (req, res) => {
       }
       const request = new Request(url, { method: req.method, headers,
         ...(!['GET', 'HEAD'].includes(req.method) ? { body: Buffer.concat(chunks) } : {}) });
-      const response = await handleApi(request, { DB: storage.DB, TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID, TELEGRAM_API_BASE: process.env.TELEGRAM_API_BASE });
+      const response = await handleApi(request, { DB: storage.DB, TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID, TELEGRAM_API_BASE: process.env.TELEGRAM_API_BASE, TELEGRAM_RELAY_KEY: process.env.TELEGRAM_RELAY_KEY, REQUIRE_CONSENT: process.env.REQUIRE_CONSENT, CONSENT_VERSION: process.env.CONSENT_VERSION });
       res.writeHead(response.status, Object.fromEntries(response.headers));
       res.end(Buffer.from(await response.arrayBuffer()));
       return;

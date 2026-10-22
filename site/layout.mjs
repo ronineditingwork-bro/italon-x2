@@ -2,6 +2,7 @@
 // Страница отдаёт только содержимое <main>; см. site/README.md → «Как добавить страницу».
 import { esc, CLOSE, CART_ICON } from './shared/format.mjs';
 import { nav, salon, priceNote, stats } from './data.mjs';
+import { enabled as pdEnabled, formBlock } from './legal/texts.mjs';
 
 /** Встроенный загрузчик: классы на <html> до первой отрисовки (без мигания).
  *  js — JS включён; reveal — можно прятать [data-reveal] до появления (нет reduced-motion);
@@ -82,7 +83,7 @@ function footer(ctx) {
 <nav class="footer-col" aria-labelledby="f-clients"><h2 id="f-clients">Клиентам</h2>
 <a href="${u('/calculator/')}">Калькулятор упаковок</a><a href="${u('/catalog/')}" data-cart-open>Корзина и КП в PDF</a><a href="${u('/inspiration/')}">Вдохновение</a><a href="${u('/x2/game/')}">Игра X2 / ГОРОД</a></nav>
 <nav class="footer-col" aria-labelledby="f-brand"><h2 id="f-brand">О бренде</h2>
-<a href="${u('/salon/')}">Салон Italon Experience</a><a href="${u('/collections/')}">Коллекции Italon</a><a href="${u('/x2/')}">X2 — 20 мм</a></nav>
+<a href="${u('/salon/')}">Салон Italon Experience</a><a href="${u('/collections/')}">Коллекции Italon</a><a href="${u('/x2/')}">X2 — 20 мм</a>${pdEnabled ? `<a href="${u('/privacy/')}">Политика обработки персональных данных</a>` : ''}</nav>
 <div class="footer-col"><h2>Контакты</h2>
 <address>${esc(salon.address).replace(/, (\d+)$/, ',&nbsp;$1')}</address>${salon.hours.map(([d, t]) => `<span>${esc(d)}: ${esc(t)}</span>`).join('')}
 <a href="${salon.phoneHref}">${esc(salon.phone)}</a><a href="mailto:${salon.email}">${esc(salon.email)}</a></div>
@@ -92,7 +93,7 @@ function footer(ctx) {
 </footer>`;
 }
 
-function dialogs() {
+function dialogs(ctx) {
   const close = label => `<button type="button" class="dialog__close" data-dialog-close aria-label="${label}">${CLOSE}</button>`;
   return `<dialog class="dialog" id="product-dialog" aria-labelledby="product-dialog-title">${close('Закрыть карточку')}<div class="dialog__scroll" id="product-dialog-body"></div></dialog>
 <dialog class="dialog dialog--photo" id="photo-dialog" aria-labelledby="photo-dialog-title">${close('Закрыть фото')}<div class="dialog__scroll" id="photo-dialog-body"></div></dialog>
@@ -112,7 +113,7 @@ function dialogs() {
 <label class="field"><span class="field__label">Адрес объекта <small>для скидки и защиты заказа</small></span><input class="input" id="quote-address" maxlength="200" placeholder="Город, улица, дом" autocomplete="street-address"></label>
 <label class="field"><span class="field__label">Объект <small>необязательно</small></span><input class="input" id="quote-project" maxlength="150" placeholder="Название проекта" autocomplete="off"></label>
 <label class="field"><span class="field__label">Комментарий <small>необязательно</small></span><textarea class="textarea" id="quote-note" maxlength="500" rows="3" placeholder="Примечание для предложения"></textarea></label>
-<p class="t-small" id="quote-discount" aria-live="polite"></p>
+<p class="t-small" id="quote-discount" aria-live="polite"></p>${pdEnabled ? '\n' + formBlock(ctx.url('/privacy/'), ctx.url('/consent/')) : ''}
 <button type="submit" class="btn btn--block" id="quote-download" disabled>Скачать КП в PDF</button>
 </form>
 <p class="t-small">В PDF войдут товары, количество, цены и итог. Доставка рассчитывается отдельно. Скачивание предложения не оформляет заказ; менеджер салона свяжется с вами по указанному телефону. Нажимая «Скачать», вы соглашаетесь на обработку контактных данных для подготовки предложения. ${esc(priceNote)}.</p>
@@ -156,7 +157,7 @@ ${body}
 ${footer(ctx)}
 ${menu(ctx)}
 ${search(ctx)}
-${dialogs()}
+${dialogs(ctx)}
 </body>
 </html>
 `;

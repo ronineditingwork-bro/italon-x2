@@ -13,7 +13,7 @@ import { pathToFileURL } from 'node:url';
 
 const root = resolve(import.meta.dirname, '..');
 const site = resolve(root, 'site');
-const out = resolve(root, 'public');
+const out = resolve(process.env.SITE_OUT_DIR || resolve(root, 'public'));
 const manifestPath = resolve(out, '.site-manifest.json');
 const quiet = process.argv.includes('--quiet') || process.env.SITE_BUILD_QUIET === '1';
 const started = Date.now();

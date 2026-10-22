@@ -263,3 +263,9 @@ input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; a
 /* вся карточка товара — ссылка на страницу товара (большая цель нажатия); кнопка «+» над ней */
 .product-card__title a::after { content: ""; position: absolute; inset: 0; z-index: 0; }
 .product-card__add { z-index: 2; }
+
+/* Согласие на обработку персональных данных в форме КП (появляется только при сборке с PD_CONSENT=1) */
+.consent { display: grid; gap: var(--s-2); margin-block: var(--s-3); }
+.consent__check { align-items: flex-start; min-height: 0; }
+.consent__check input { margin-top: .2rem; flex: none; }
+.consent__check a { text-decoration: underline; }
