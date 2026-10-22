@@ -52,7 +52,7 @@ git -C "$SRC" checkout -q -f "$SHA"
 
 STEP="сборка сайта"
 mkdir -p "$RELEASES"
-$DOCKER run --rm -e RELEASE_BUILD=1 -v "$SRC":/src -w /src node:24-bookworm-slim bash -c \
+$DOCKER run --rm -e RELEASE_BUILD=1 -e NODE_OPTIONS=--max-old-space-size=512 -v "$SRC":/src -w /src node:24-bookworm-slim bash -c \
   'apt-get update -qq && apt-get install -y -qq git >/dev/null && git config --global --add safe.directory /src && npm ci --no-audit --no-fund --loglevel=error && npm run build && node scripts/verify-catalog.mjs'
 rm -rf "${RELEASES:?}/${TAG:?}"; cp -a "$SRC/.hosting-runtime/release" "$RELEASES/$TAG"
 [ -f "$RELEASES/$TAG/compose.release.yaml" ] || cp "$HERE/compose.release.yaml" "$RELEASES/$TAG/compose.release.yaml"
@@ -113,7 +113,7 @@ fi
 
 STEP="фиксация версии"
 SWITCHED=0
-echo "$PREV_TAG" > "$APP_DIR/.previous-tag"; echo "$TAG" > "$APP_DIR/.deployed-tag"; echo "$SHA" > "$APP_DIR/.deployed-commit"; rm -f "$APP_DIR/.attempted-commit"
+[ "$PREV_TAG" = "$TAG" ] || echo "$PREV_TAG" > "$APP_DIR/.previous-tag"; echo "$TAG" > "$APP_DIR/.deployed-tag"; echo "$SHA" > "$APP_DIR/.deployed-commit"; rm -f "$APP_DIR/.attempted-commit"
 record_release "$SHA" "$TAG" deployed
 # оставляем последние KEEP_RELEASES образов и каталогов релизов (текущий и предыдущий — всегда)
 keep="$(printf '%s\n%s\n' "$TAG" "$PREV_TAG"; ls -1t "$RELEASES" | grep -E '^[0-9a-f]{12}$' | head -n "$KEEP_RELEASES")"
