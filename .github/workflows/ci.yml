@@ -1,7 +1,7 @@
 # Проверка каждого коммита и запроса на слияние: синтаксис, тесты, сборка сайта, целостность каталога, образ Docker, браузерные сценарии.
 # Этот файл НИЧЕГО НЕ ВЫКЛАДЫВАЕТ: у него нет доступа к серверу и секретов (только read-доступ к коду).
-# Выкладка идёт отдельным путём: после успешной проверки ветки main workflow «Promote release» (выключен по умолчанию)
-# переносит коммит в ветку release, а сервер забирает только её (ops/release.md).
+# Сервер сам проверяет через публичный API GitHub, что на коммите успешно прошли ВСЕ задания этого файла (hosting/release/verify-ci.py);
+# поэтому имена заданий (name:) нельзя менять без правки списка в verify-ci.py (тест tests/verify-ci.test.mjs это проверяет). См. ops/release.md.
 name: CI
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
       - name: Тесты проверок и скриптов (каталог, согласие, резервные копии, выкладка)
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq age >/dev/null
-          node --test --test-concurrency=1 tests/verify-catalog.test.mjs tests/legal-consent.test.mjs tests/backup.test.mjs tests/release-scripts.test.mjs tests/ci-config.test.mjs
+          node --test --test-concurrency=1 tests/verify-catalog.test.mjs tests/legal-consent.test.mjs tests/backup.test.mjs tests/release-scripts.test.mjs tests/verify-ci.test.mjs tests/ci-config.test.mjs
       - name: Тест сервера (полная сборка, корзина, перезапуск, резервная копия, smoke выкладки)
         run: npm run test:hosting
       - name: Сборка сайта и проверка целостности каталога
@@ -53,7 +53,7 @@ jobs:
           if-no-files-found: ignore
 
   browser:
-    name: Браузерные сценарии (каталог, карточка, калькулятор, заявка, игра)
+    name: Браузерные сценарии
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     needs: verify

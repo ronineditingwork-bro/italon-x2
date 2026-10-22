@@ -40,9 +40,9 @@ test('promote-release выключен без переменной RELEASE_PROMO
   assert.doesNotMatch(p, /--force|-f\b|\+HEAD/, 'без принудительной записи');
 });
 
-test('новый автообновитель следит только за веткой release, прежний механизм не изменён (отпечатки файлов)', () => {
+test('новый автообновитель берёт main только с подтверждением проверок GitHub, скрипты выкладки не из скачанного коммита; прежний механизм не изменён (отпечатки файлов)', () => {
   const u = read('hosting/release/auto-update.sh'), lib = read('hosting/release/lib.sh');
-  assert.match(lib, /BRANCH="\$\{BRANCH:-release\}"/); assert.ok(!u.includes(LIVE_BRANCH) && !lib.includes(LIVE_BRANCH));
+  assert.match(lib, /BRANCH="\$\{BRANCH:-main\}"/); assert.match(u, /verify-ci\.py/); assert.match(u, /exec "\$HERE\/deploy-release\.sh"/, 'выкладка идёт установленным скриптом, а не скриптом из скачанного коммита'); assert.ok(u.indexOf('VERIFY_CI') < u.indexOf('deploy-release.sh"'), 'проверка CI раньше выкладки'); assert.ok(!u.includes(LIVE_BRANCH) && !lib.includes(LIVE_BRANCH));
   const pins = Object.fromEntries(read('ops/legacy-deploy.sha256').trim().split('\n').map(l => { const [h, f] = l.split(/\s+/); return [f, h]; }));
   assert.deepEqual(Object.keys(pins).sort(), ['hosting/auto-update.sh', 'hosting/deploy-reg-ru.sh']);
   for (const [f, h] of Object.entries(pins)) assert.equal(createHash('sha256').update(readFileSync(resolve(root, f))).digest('hex'), h,

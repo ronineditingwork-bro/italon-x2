@@ -6,6 +6,8 @@ set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; DEST=/usr/local/lib/italon-release
 install -d -m 755 "$DEST"
 install -m 755 "$HERE"/lib.sh "$HERE"/deploy-release.sh "$HERE"/rollback.sh "$HERE"/auto-update.sh "$HERE"/notify.sh "$HERE"/italon-compose "$DEST"/
+command -v python3 >/dev/null || apt-get install -y -qq python3 >/dev/null
+install -m 755 "$HERE"/verify-ci.py "$DEST"/
 install -m 644 "$HERE"/smoke.mjs "$HERE"/compose.release.yaml "$DEST"/
 ln -sf "$DEST/rollback.sh" /usr/local/bin/italon-rollback; ln -sf "$DEST/italon-compose" /usr/local/bin/italon-compose
 install -m 644 "$HERE"/systemd/*.service "$HERE"/systemd/*.timer /etc/systemd/system/; systemctl daemon-reload

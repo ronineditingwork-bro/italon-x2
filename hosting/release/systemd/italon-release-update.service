@@ -1,5 +1,5 @@
 [Unit]
-Description=Italon: выкладка проверенной версии (ветка release)
+Description=Italon: выкладка проверенной версии (ветка main, только с зелёными проверками GitHub Actions)
 After=network-online.target docker.service
 [Service]
 Type=oneshot

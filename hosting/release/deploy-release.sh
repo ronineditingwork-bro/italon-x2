@@ -45,12 +45,9 @@ LIVE_ITEMS="$(live_items || true)"; LIVE_ITEMS="${LIVE_ITEMS:-0}"
 log "версия $TAG; сейчас работает ${PREV_TAG:-неизвестно}; позиций на рабочем сайте: $LIVE_ITEMS"
 
 STEP="получение исходников"
-if [ -d "$SRC/.git" ]; then
-  git -C "$SRC" fetch -q --depth 1 origin "$SHA" 2>/dev/null || git -C "$SRC" fetch -q --depth 1 origin "$BRANCH"
-  git -C "$SRC" checkout -q -f "$SHA"
-else
-  mkdir -p "$SRC"; git clone -q "$REPO" "$SRC"; git -C "$SRC" checkout -q -f "$SHA"
-fi
+if [ ! -d "$SRC/.git" ]; then mkdir -p "$SRC"; git -C "$SRC" init -q; git -C "$SRC" remote add origin "$REPO"; fi   # без полной истории: на VPS с 1 ГБ памяти и небольшим диском
+git -C "$SRC" fetch -q --depth 1 origin "$SHA" 2>/dev/null || git -C "$SRC" fetch -q --depth 1 origin "$BRANCH"
+git -C "$SRC" checkout -q -f "$SHA"
 [ "$(git -C "$SRC" rev-parse HEAD)" = "$SHA" ] || { echo "получен не тот коммит"; false; }
 
 STEP="сборка сайта"

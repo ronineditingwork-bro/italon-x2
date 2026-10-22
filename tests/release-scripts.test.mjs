@@ -72,14 +72,15 @@ case "$1" in
 esac
 exit 0
 `);
+  writeFileSync(resolve(T, 'bin/verify-ci'), `#!/usr/bin/env bash\nv="${T}/ci-verdict"; if [ -f "$v" ]; then cat "$v" | sed -n 2,99p; exit $(head -1 "$v"); fi; echo OK; exit 0\n`);
   writeFileSync(resolve(T, 'bin/notify'), `#!/usr/bin/env bash\necho "$1" >> "${T}/alerts.log"\n`);
-  for (const f of ['docker', 'notify']) chmodSync(resolve(T, 'bin', f), 0o755);
+  for (const f of ['docker', 'notify', 'verify-ci']) chmodSync(resolve(T, 'bin', f), 0o755);
   const env = { ...process.env, PATH: `${T}/bin:${process.env.PATH}`, ITALON_RELEASE_CONF: '/nonexistent', APP_DIR: app, SRC: resolve(T, 'src'), RELEASES: resolve(T, 'releases'), REPO: resolve(T, 'origin.git'),
-    NOTIFY: resolve(T, 'bin/notify'), LOCK: resolve(T, 'lock'), HEALTH_SLEEP: '0', MIN_FREE_MB: '1', SKIP_BACKUP: '1', BRANCH: 'release' };
+    NOTIFY: resolve(T, 'bin/notify'), LOCK: resolve(T, 'lock'), HEALTH_SLEEP: '0', MIN_FREE_MB: '1', SKIP_BACKUP: '1', BRANCH: 'release', VERIFY_CI: resolve(T, 'bin/verify-ci') };
   const run = (script, args = [], extra = {}) => spawnSync('bash', [resolve(rel, script), ...args], { env: { ...env, ...extra }, encoding: 'utf8' });
   const read = f => existsSync(resolve(T, f)) ? readFileSync(resolve(T, f), 'utf8') : '';
   const readApp = f => existsSync(resolve(app, f)) ? readFileSync(resolve(app, f), 'utf8').trim() : null;
-  return { T, app, sha1, sha2, tag2: sha2.slice(0, 12), env, run, read, readApp, flag: n => writeFileSync(resolve(T, n), ''), badSmoke: tag => appendFileSync(resolve(T, 'bad-smoke'), tag + '\n'), badHealth: tag => appendFileSync(resolve(T, 'bad-health'), tag + '\n') };
+  return { T, app, sha1, sha2, verdict: (code, text = '') => writeFileSync(resolve(T, 'ci-verdict'), code + '\n' + text + '\n'), tag2: sha2.slice(0, 12), env, run, read, readApp, flag: n => writeFileSync(resolve(T, n), ''), badSmoke: tag => appendFileSync(resolve(T, 'bad-smoke'), tag + '\n'), badHealth: tag => appendFileSync(resolve(T, 'bad-health'), tag + '\n') };
 }
 const done = s => rmSync(s.T, { recursive: true, force: true });
 const events = s => s.read('events').split('\n').filter(Boolean);
@@ -203,6 +204,26 @@ test('автообновление: следит только за веткой 
     s.flag('fail-candidate-smoke'); s.run('auto-update.sh');
     const log1 = s.read('docker.log').length; s.run('auto-update.sh');
     assert.equal(s.read('docker.log').length, log1, 'вторая попытка той же версии не запускалась');
+  } finally { done(s); }
+});
+
+test('автообновление: коммит без подтверждённых проверок GitHub не выкладывается (ждём / отклоняем один раз с сообщением), с подтверждёнными — выкладывается', () => {
+  const s = sandbox();
+  try {
+    writeFileSync(resolve(s.app, '.deployed-commit'), s.sha2);
+    spawnSync('bash', ['-c', `git checkout -q release && echo v3 > f && git commit -qam v3 && git push -q origin release`], { cwd: resolve(s.T, 'origin-work') });
+    const sha3 = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: resolve(s.T, 'origin-work'), encoding: 'utf8' }).stdout.trim();
+    s.verdict(10, 'проверки ещё не завершены');
+    assert.equal(s.run('auto-update.sh').status, 0); assert.equal(s.read('docker.log'), '', 'пока проверки идут — ничего не запускалось'); assert.equal(s.read('alerts.log'), '', 'ожидание — не повод для тревоги');
+    s.verdict(12, 'GitHub API недоступен');
+    assert.equal(s.run('auto-update.sh').status, 0); assert.equal(s.read('docker.log'), '', 'GitHub недоступен — не выкладываем');
+    s.verdict(11, 'проверки не пройдены: Образ Docker: failure');
+    assert.equal(s.run('auto-update.sh').status, 0); assert.equal(s.read('docker.log'), '');
+    assert.match(s.read('alerts.log'), /не выкладывается/); const alerts = s.read('alerts.log');
+    assert.equal(s.run('auto-update.sh').status, 0); assert.equal(s.read('alerts.log'), alerts, 'о том же коммите второй раз не сообщаем');
+    assert.equal(s.readApp('.deployed-commit'), s.sha2, 'рабочая версия не менялась');
+    s.verdict(0, 'OK');
+    assert.equal(s.run('auto-update.sh').status, 0); assert.equal(s.readApp('.deployed-commit'), sha3, 'после подтверждения проверок выложено');
   } finally { done(s); }
 });
 
