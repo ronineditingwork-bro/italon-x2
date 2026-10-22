@@ -89,10 +89,18 @@ test('резервная копия: снимок → проверка → ши�
     const ok = spawnSync('bash', [resolve(sh, 'restore-test.sh'), resolve(s.T, 'local', local[0]), s.key], { encoding: 'utf8', env: { ...process.env, TMPDIR: s.T } });
     assert.equal(ok.status, 0, ok.stderr + ok.stdout);
     assert.match(ok.stdout, /Паспорт копии совпал/); assert.match(ok.stdout, /ВОССТАНОВЛЕНИЕ ПРОВЕРЕНО/);
+    // кроссплатформенная проверка (Node) — для запуска на компьютере владельца из PowerShell
+    const js = spawnSync(process.execPath, [resolve(sh, 'restore-check.mjs'), resolve(s.T, 'local', local[0]), s.key], { encoding: 'utf8' });
+    assert.equal(js.status, 0, js.stderr + js.stdout);
+    assert.match(js.stdout, /Паспорт копии совпал/); assert.match(js.stdout, /ВОССТАНОВЛЕНИЕ ПРОВЕРЕНО/);
+    const jsBad = spawnSync(process.execPath, [resolve(sh, 'restore-check.mjs'), resolve(s.T, 'local', local[0]), resolve(s.T, 'owner.key.нет')], { encoding: 'utf8' });
+    assert.notEqual(jsBad.status, 0);
     // чужой ключ не открывает копию
     const other = resolve(s.T, 'other.key'); spawnSync('age-keygen', ['-o', other]);
     const bad = spawnSync('bash', [resolve(sh, 'restore-test.sh'), resolve(s.T, 'local', local[0]), other], { encoding: 'utf8', env: { ...process.env, TMPDIR: s.T } });
     assert.notEqual(bad.status, 0);
+    const jsOther = spawnSync(process.execPath, [resolve(sh, 'restore-check.mjs'), resolve(s.T, 'local', local[0]), other], { encoding: 'utf8' });
+    assert.notEqual(jsOther.status, 0); assert.match(jsOther.stderr, /не расшифровал/);
   } finally { rmSync(s.T, { recursive: true, force: true }); }
 });
 

@@ -28,7 +28,7 @@ fail() {
     record_release "$SHA" "$TAG" failed-before-switch
     alert "⚠️ Italon: выкладка версии ${TAG} остановлена на шаге «$STEP». Рабочий сайт не менялся (работает ${PREV_TAG:-прежняя версия})."
   fi
-  echo "$SHA" > "$APP_DIR/.attempted-commit"
+  [ "$DRY" = 1 ] || echo "$SHA" > "$APP_DIR/.attempted-commit"      # пробный прогон не должен «отравлять» автообновление: после исправления причины версию можно выкладывать
   cleanup; exit "$code"
 }
 exec 8>"$LOCK"; flock -n 8 || { log "уже идёт другая выкладка"; exit 0; }

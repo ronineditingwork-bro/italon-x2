@@ -176,6 +176,17 @@ test('после переключения приложение не поднял
   } finally { done(s); }
 });
 
+test('неудачный dry-run не помечает версию как «пробовали» (автообновление потом сможет её выложить), а неудачная настоящая выкладка помечает', () => {
+  const s = sandbox();
+  try {
+    s.flag('fail-candidate-smoke');
+    assert.notEqual(s.run('deploy-release.sh', [s.sha2, '--dry-run']).status, 0);
+    assert.equal(s.readApp('.attempted-commit'), null, 'после неудачного dry-run метки нет');
+    assert.notEqual(s.run('deploy-release.sh', [s.sha2]).status, 0);
+    assert.equal(s.readApp('.attempted-commit'), s.sha2, 'после неудачной настоящей выкладки метка есть');
+  } finally { done(s); }
+});
+
 test('freeze: при файле .freeze выкладка не начинается вообще', () => {
   const s = sandbox();
   try {
