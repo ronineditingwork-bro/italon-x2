@@ -135,6 +135,10 @@ test('выдача: у каждого результата есть причин
   assert.ok(r.results.length >= 10); const keys = new Set();
   for (const x of r.results) { assert.ok(x.reasons.length > 0, x.p.name); const key = `${x.p.collectionId}|${x.p.image.src}`; assert.ok(!keys.has(key), 'дубль ' + x.p.name); keys.add(key); assert.ok(rawProducts.some(p => p.code === x.p.code)); }
 });
+test('выдача: «терраццо» находит Палладио, а мрамор его не показывает', () => {
+  const t = top('терраццо', 2); assert.ok(t.length === 2 && t.every(x => /ПАЛЛАДИО/.test(x.p.name)), t.map(x => x.p.name).join('; '));
+  assert.ok(!top('мрамор', 20).some(x => /ПАЛЛАДИО/.test(x.p.name)));
+});
 test('выдача: мозаика и декор не вылезают в обычный запрос, но находятся по просьбе', () => {
   for (const x of top('серый мрамор', 10)) assert.equal(x.p.category, 'plate', x.p.name);
   const m = top('мозаика серая', 8); assert.ok(m.length === 8 && m.every(x => x.p.category === 'mosaic'));

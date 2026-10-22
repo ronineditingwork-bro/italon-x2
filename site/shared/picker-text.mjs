@@ -187,6 +187,7 @@ const NAME_HINTS = {
   concrete: /ЛОФТ|ЭТЕРНУМ|ЦЕМЕНТ|БЕТОН|КОНТИНУУМ|КОСМОС|СЕРФЕЙС|ФОГ|КЛАУД|АСТРО|СКАЙЛАЙН/i,
   metal: /АЙРОН|КОРТЕН|КАРБОН|СТЕЛЛАРИС|МЕТАЛ/i,
   onyx: /ОНИКС/i,
+  terrazzo: /ПАЛЛАДИО|ТЕРРАЦЦО|КРОШК/i,
   travertine: /ТРАВЕРТ|ВЭЙВ|ТАТАМИ/i,
 };
 export function attributesOf(product, feat) {
@@ -201,14 +202,14 @@ export function attributesOf(product, feat) {
   const hint = k => NAME_HINTS[k].test(name) ? 1 : 0;
   const decor = product.category === 'decor' ? 1 : 0;
   const looks = {
-    marble: clamp(Math.max(veinRaw * (1 - woodRaw * 0.7), hint('marble') * 0.55 + veinRaw * 0.35)),
+    marble: clamp(Math.max(veinRaw * (1 - woodRaw * 0.7), hint('marble') * 0.55 + veinRaw * 0.35) * (1 - hint('terrazzo') * 0.95)),
     wood: clamp(Math.max(woodRaw, hint('wood') * 0.6 + woodRaw * 0.4)),
     stone: clamp(Math.max(grainRaw * 0.9 + cloudRaw * 0.3, hint('stone') * 0.6 + grainRaw * 0.3 + cloudRaw * 0.2) * (1 - veinRaw * 0.5)),
     concrete: clamp(Math.max(cloudRaw * trap(C, -1, 0, 9, 16) * 0.9 + plainRaw * 0.2 * trap(C, -1, 0, 8, 14), hint('concrete') * 0.6 + cloudRaw * 0.3) * (1 - veinRaw * 0.9)),
     metal: clamp(hint('metal') * 0.7 + cloudRaw * 0.2),
     travertine: clamp(Math.max(woodRaw * trap(L, 60, 70, 96, 100) * trap(C, 5, 8, 22, 30), hint('travertine') * 0.7)),
     onyx: clamp(hint('onyx') * 0.9),
-    terrazzo: clamp(grainRaw * clamp(t.edges * 3) * (1 - plainRaw)),
+    terrazzo: clamp(Math.max(grainRaw * clamp(t.edges * 3) * (1 - plainRaw) * 0.6, hint('terrazzo') * 0.9)),
     plain: clamp(plainRaw * (1 - decor * 0.8)),
     textile: clamp(grainRaw * 0.5 * trap(C, -1, 0, 12, 20) * plainRaw * 0.8 + (/КОТТОН|ЛЕН|ТКАН/i.test(name) ? 0.8 : 0)),
     pattern: clamp(decor * 0.7 + clamp((feat.spread[1] + feat.spread[2] - 8) / 14) * 0.5 + clamp(t.strong * 8) * 0.2),
