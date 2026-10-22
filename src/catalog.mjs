@@ -1,12 +1,15 @@
 import raw from '../data/italon-price-2026-07.json' with { type: 'json' };
 import images from '../data/product-images.json' with { type: 'json' };
+import { createPricing, MAX_PACKS } from './pricing.mjs';
 
 export const priceInfo = { source: raw.source, validFrom: raw.validFrom, currency: 'RUB', vatIncluded: true };
 export const sections = [
   { id: 'italon', label: 'Italon', available: true },
   { id: 'x2', label: 'X2', available: true },
-  { id: 'coliseum', label: 'Coliseum', available: false },
+  { id: 'coliseum', label: 'Coliseum', available: true },
+  { id: 'contract', label: 'Контракт', available: true },
 ];
+const SECTION_BY_LINE = { X2: 'x2', 'Italon Coliseum': 'coliseum', 'Italon Контракт': 'contract' };
 const unique = new Map();
 const roundUp = n => Math.ceil(n - 1e-9);
 for (const series of raw.series) for (const row of series.items) {
@@ -19,17 +22,15 @@ for (const series of raw.series) for (const row of series.items) {
   const unit = row.unit === 'Кв.м' ? 'м²' : 'шт';
   const boxed = row.boxonly === true;
   const unitsPerPack = unit === 'м²' ? row.box : (boxed ? row.pcs : 1);
-  const palletMinimum = /паллета/i.test(row.min);
-  const pieceMinimum = Number(row.min.match(/^(\d+)\s*ШТ/i)?.[1] || 1);
-  const minPacks = palletMinimum && row.box > 0 && row.pallet > 0
-    ? roundUp(row.pallet / row.box)
-    : Math.max(1, roundUp(pieceMinimum / (unitsPerPack || 1)));
-  const canOrder = Number.isFinite(unitsPerPack) && unitsPerPack > 0 &&
-    (!palletMinimum || (row.box > 0 && row.pallet > 0));
+  // Продаём не только паллетами: в прайсе у многих позиций стоит «1 паллета», но минимальный заказ у нас — 1 коробка.
+  const pieceMinimum = Number(row.min.match(/^(\d+)\s*ШТ/i)?.[1] || 0); // явный минимум в штуках («2 ШТ») — как в прайсе
+  const minPacks = pieceMinimum ? Math.max(1, roundUp(pieceMinimum / (unitsPerPack || 1))) : 1;
+  const canOrder = Number.isFinite(unitsPerPack) && unitsPerPack > 0;
+  const minimum = /паллета/i.test(row.min) ? '1 коробка' : (row.min || '1 шт');
   const crate = row.code === '450080000001';
   unique.set(row.code, {
     code: row.code, name: row.name, latin: row.latin,
-    section: series.line === 'X2' ? 'x2' : 'italon',
+    section: SECTION_BY_LINE[series.line] || 'italon',
     collectionId: crate ? 'packaging' : series.slug,
     collection: crate ? 'Упаковка' : series.series,
     format: crate ? '' : row.fmt, finish: crate ? '' : row.finish,
@@ -38,41 +39,11 @@ for (const series of raw.series) for (const row of series.items) {
     unitMilliPerPack: Math.round((unitsPerPack || 0) * 1000),
     piecesPerPack: boxed ? row.pcs : 1, areaPerPack: crate ? null : row.box,
     palletArea: crate ? null : row.pallet, minPacks,
-    minimum: row.min || '1 шт', canOrder,
-    image: crate ? null : images.products[row.code] || images.collections[series.slug] || null,
+    minimum, canOrder,
+    image: crate ? images.products[row.code] || null : images.products[row.code] || images.collections[series.slug] || null,
   });
 }
 export const products = [...unique.values()];
 export const productMap = new Map(products.map(p => [p.code, p]));
-export const MAX_PACKS = 9999;
-export function lineFor(code, packs) {
-  const product = productMap.get(code);
-  if (!product || !product.canOrder) throw new Error('Материал недоступен для расчёта.');
-  if (!Number.isSafeInteger(packs) || packs < product.minPacks || packs > MAX_PACKS)
-    throw new Error(`Количество для ${code}: от ${product.minPacks} до ${MAX_PACKS} ${product.orderUnit}`);
-  const quantityMilli = packs * product.unitMilliPerPack;
-  const totalKopecks = Math.round(product.priceKopecks * quantityMilli / 1000);
-  return { code, packs, product, quantity: quantityMilli / 1000, totalKopecks,
-    area: product.areaPerPack ? Math.round(packs * product.areaPerPack * 1000) / 1000 : null,
-    pieces: product.piecesPerPack ? packs * product.piecesPerPack : null };
-}
-export function calculateCart(items) {
-  if (!Array.isArray(items) || items.length > 150) throw new Error('В корзине может быть до 150 позиций.');
-  const seen = new Set();
-  const lines = items.map(item => {
-    if (!item || typeof item.code !== 'string' || seen.has(item.code)) throw new Error('Некорректная позиция корзины.');
-    seen.add(item.code);
-    return lineFor(item.code, item.packs);
-  });
-  return { lines, totalKopecks: lines.reduce((sum, l) => sum + l.totalKopecks, 0), priceInfo };
-}
-export function calculateArea(code, area, reserve = 10) {
-  const p = productMap.get(code);
-  if (!p || p.unit !== 'м²' || !p.canOrder) throw new Error('Выберите плитку с ценой за м².');
-  if (!Number.isFinite(area) || area <= 0 || area > 100000 || ![0, 5, 10, 15, 20].includes(reserve))
-    throw new Error('Укажите площадь от 0 до 100 000 м² и допустимый запас.');
-  const target = area * (100 + reserve) / 100;
-  const packsBeforeMinimum = roundUp(target / p.unitsPerPack);
-  const packs = Math.max(p.minPacks, packsBeforeMinimum);
-  return { ...lineFor(code, packs), areaRequested: area, reserve, target, minimumApplied: packs > packsBeforeMinimum };
-}
+export { MAX_PACKS };
+export const { lineFor, calculateCart, calculateArea } = createPricing(productMap, priceInfo);

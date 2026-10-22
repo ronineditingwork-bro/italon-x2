@@ -1,0 +1,5 @@
+[Unit]
+Description=Italon: уведомление о сбое резервной копии
+[Service]
+Type=oneshot
+ExecStart=/usr/local/lib/italon-backup/notify.sh "⚠️ Italon: служба резервного копирования завершилась сбоем (systemd). Смотрите: journalctl -u italon-backup -n 50"

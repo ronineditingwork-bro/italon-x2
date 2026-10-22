@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { request } from 'node:http';
 import { mkdtemp, rm, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -61,7 +61,7 @@ test('independent hosting preserves cart semantics across a proxy and restart', 
   try {
     assert.equal(JSON.parse(await run('server/import-carts.mjs', { DB_PATH: dbPath }, snapshot)).imported, 1);
     server = await start(dbPath);
-    assert.equal((await call(server.port, '/healthz')).json().catalogItems, 993);
+    assert.equal((await call(server.port, '/healthz')).json().catalogItems, 1202);
     const home = await call(server.port, '/');
     assert.equal(home.status, 200); assert.match(home.body.toString(), /Italon Experience/); assert.match(home.body.toString(), /Бабушкина/);
     assert.equal((await call(server.port, '/', { headers: { Host: 'other.example' } })).status, 421);
@@ -69,10 +69,34 @@ test('independent hosting preserves cart semantics across a proxy and restart', 
     assert.equal((await call(server.port, '/.env')).status, 404);
     assert.equal((await call(server.port, '/%2e%2e/%2e%2e/server/api.mjs')).status, 404);
     const catalog = await call(server.port, '/api/catalog');
-    assert.equal(catalog.status, 200); assert.equal(catalog.json().products.length, 993);
+    assert.equal(catalog.status, 200); assert.equal(catalog.json().products.length, 1202);
     const productPhoto = catalog.json().products.find(product => product.image?.src)?.image.src;
     assert.ok(productPhoto);
-    const imagePaths = [productPhoto, ...[...home.body.toString().matchAll(/src="(\/media\/(?:collections|laying)\/[^" ]+)"/g)].map(match => match[1])];
+    // проверка выкладки (hosting/release/smoke.mjs) должна проходить на настоящем сервере: те же страницы, фото и защита по Host
+    const smoke = spawnSync(process.execPath, [resolve(import.meta.dirname, '../hosting/release/smoke.mjs'), 'italon-x2.ru', '1202'], { env: { ...process.env, SMOKE_PORT: String(server.port) }, encoding: 'utf8' });
+    assert.equal(smoke.status, 0, smoke.stdout + smoke.stderr); assert.equal(JSON.parse(smoke.stdout).catalogItems, 1202);
+    const smokeLive = spawnSync(process.execPath, [resolve(import.meta.dirname, '../hosting/release/smoke.mjs'), 'italon-x2.ru', '1202', 'live'], { env: { ...process.env, SMOKE_PORT: String(server.port) }, encoding: 'utf8' });
+    assert.equal(smokeLive.status, 0, smokeLive.stdout + smokeLive.stderr);
+    const tooMany = spawnSync(process.execPath, [resolve(import.meta.dirname, '../hosting/release/smoke.mjs'), 'italon-x2.ru', '1203'], { env: { ...process.env, SMOKE_PORT: String(server.port) }, encoding: 'utf8' });
+    assert.equal(tooMany.status, 1, 'проверка должна ловить «потерянные» позиции');
+    const homeImages = [...home.body.toString().matchAll(/src="(media\/(?:collections|laying)\/[^" ]+)"/g)].map(match => '/' + match[1]);
+    assert.ok(homeImages.length >= 6, 'главная показывает фото коллекций');
+    const imagePaths = [productPhoto, ...homeImages];
+    // многостраничный сайт: разделы, страницы коллекций и товаров, 404, каталог для клиента
+    for (const path of ['/collections/', '/collections/aura/', '/x2/', '/catalog/', '/calculator/', '/salon/', '/inspiration/', '/product/620110000263/']) {
+      const page = await call(server.port, path); assert.equal(page.status, 200, path); assert.match(page.body.toString(), /<main id="main"/, path);
+    }
+    assert.equal((await call(server.port, '/salon')).headers.location, '/salon/');
+    const sitemap = await call(server.port, '/sitemap.xml');
+    assert.equal(sitemap.status, 200); assert.match(sitemap.headers['content-type'], /^application\/xml/);
+    assert.match(sitemap.body.toString(), /<loc>https:\/\/italon-x2\.ru\/product\/610010004077\/<\/loc>/);
+    assert.doesNotMatch(sitemap.body.toString(), /\/404\.html|\/api\//);
+    assert.match((await call(server.port, '/robots.txt')).body.toString(), /Sitemap: https:\/\/italon-x2\.ru\/sitemap\.xml/);
+    assert.equal(home.headers['x-robots-tag'], undefined);
+    assert.match((await call(server.port, '/api/catalog')).headers['x-robots-tag'], /noindex/);
+    const missing = await call(server.port, '/no-such-page/'); assert.equal(missing.status, 404); assert.match(missing.headers['x-robots-tag'], /noindex/); assert.match(missing.body.toString(), /Такой страницы нет/);
+    const clientCatalog = await call(server.port, '/data/catalog.json'); assert.equal(clientCatalog.status, 200); assert.equal(clientCatalog.json().products.length, 1202);
+    assert.equal((await call(server.port, '/.site-manifest.json')).status, 404);
     for (const path of new Set(imagePaths)) {
       const photo = await call(server.port, path); assert.equal(photo.status, 200, path);
       assert.equal(photo.headers['content-type'], 'image/webp'); assert.equal(photo.body.subarray(8, 12).toString(), 'WEBP');
@@ -88,7 +112,7 @@ test('independent hosting preserves cart semantics across a proxy and restart', 
     assert.equal((await put({ version: 4, items: [] })).status, 409);
     assert.equal((await call(server.port, '/api/cart', { method: 'PUT', headers: { Cookie: cookie, Origin: 'https://example.com', 'Content-Type': 'application/json' }, body: { version: 5, items: [] } })).status, 403);
     assert.equal((await call(server.port, '/api/cart', { headers: { Cookie: cookie, 'Sec-Fetch-Site': 'cross-site' } })).status, 403);
-    assert.equal((await put({ version: 5, items: [{ code: '610010001539', packs: 35 }] })).status, 400);
+    assert.equal((await put({ version: 5, items: [{ code: '610010001539', packs: 0 }] })).status, 400);
     assert.equal((await put(' '.repeat(20001))).status, 413);
     await server.stop(); server = null;
     server = await start(dbPath);

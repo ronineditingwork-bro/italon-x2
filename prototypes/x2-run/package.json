@@ -1,0 +1,13 @@
+{
+  "name": "x2-run-prototype",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "X2 / ГОРОД — 2D-игра в духе Contra: бег, прыжки и стрельба плитами (Canvas 2D, без внешних библиотек)",
+  "scripts": {
+    "serve": "python3 -m http.server 4192 --bind 127.0.0.1",
+    "test": "node --test tests/game.test.mjs",
+    "test:e2e": "node tests/e2e.cjs"
+  },
+  "dependencies": {}
+}

@@ -20,9 +20,10 @@ const types = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.svg': 'image/svg+xml', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
   '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.txt': 'text/plain; charset=utf-8', '.ico': 'image/x-icon',
+  '.json': 'application/json; charset=utf-8', '.xml': 'application/xml; charset=utf-8',
 };
 const sendJson = (res, status, body) => {
-  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex' });
   res.end(JSON.stringify(body));
 };
 
@@ -40,9 +41,10 @@ const server = createServer({ maxHeaderSize: 16384 }, async (req, res) => {
     if (url.pathname.startsWith('/api/')) {
       const chunks = [];
       let size = 0;
+      const limit = url.pathname === '/api/quote' ? 3_000_000 : 20000;
       for await (const chunk of req.iterator({ destroyOnReturn: false })) {
         size += chunk.length;
-        if (size > 20000) { sendJson(res, 413, { error: 'Слишком большая корзина.' }); req.resume(); return; }
+        if (size > limit) { sendJson(res, 413, { error: 'Слишком большая корзина.' }); req.resume(); return; }
         chunks.push(chunk);
       }
       const headers = new Headers();
@@ -51,7 +53,7 @@ const server = createServer({ maxHeaderSize: 16384 }, async (req, res) => {
       }
       const request = new Request(url, { method: req.method, headers,
         ...(!['GET', 'HEAD'].includes(req.method) ? { body: Buffer.concat(chunks) } : {}) });
-      const response = await handleApi(request, { DB: storage.DB });
+      const response = await handleApi(request, { DB: storage.DB, TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID, TELEGRAM_API_BASE: process.env.TELEGRAM_API_BASE, TELEGRAM_RELAY_KEY: process.env.TELEGRAM_RELAY_KEY, REQUIRE_CONSENT: process.env.REQUIRE_CONSENT, CONSENT_VERSION: process.env.CONSENT_VERSION });
       res.writeHead(response.status, Object.fromEntries(response.headers));
       res.end(Buffer.from(await response.arrayBuffer()));
       return;
@@ -64,20 +66,31 @@ const server = createServer({ maxHeaderSize: 16384 }, async (req, res) => {
     if (pathname.includes('\0') || pathname.includes('\\') || pathname.split('/').some(part => part.startsWith('.'))) {
       return sendJson(res, 404, { error: 'Страница не найдена.' });
     }
-    const filename = resolve(publicRoot, '.' + (pathname === '/' ? '/index.html' : pathname));
+    // Многостраничный сайт: «/раздел/» → «/раздел/index.html»; «/раздел» без слэша → редирект на «/раздел/».
+    let filename = resolve(publicRoot, '.' + (pathname.endsWith('/') ? pathname + 'index.html' : pathname));
     if (!filename.startsWith(publicRoot + sep)) return sendJson(res, 404, { error: 'Страница не найдена.' });
-    let info;
-    try { info = await stat(filename); } catch (error) { if (['ENOENT', 'ENOTDIR'].includes(error.code)) return sendJson(res, 404, { error: 'Страница не найдена.' }); throw error; }
-    if (!info.isFile()) return sendJson(res, 404, { error: 'Страница не найдена.' });
+    let info, status = 200;
+    try { info = await stat(filename); } catch (error) { if (!['ENOENT', 'ENOTDIR'].includes(error.code)) throw error; }
+    if (info?.isDirectory() && !extname(pathname)) {
+      try { if ((await stat(resolve(filename, 'index.html'))).isFile()) { res.writeHead(301, { Location: url.pathname + '/' + url.search }); res.end(); return; } } catch {}
+    }
+    if (!info?.isFile()) {
+      // HTML-страница 404 для адресов без расширения, JSON — для файлов
+      const notFound = resolve(publicRoot, '404.html');
+      if (extname(pathname) && extname(pathname) !== '.html') return sendJson(res, 404, { error: 'Страница не найдена.' });
+      try { info = await stat(notFound); filename = notFound; status = 404; } catch { return sendJson(res, 404, { error: 'Страница не найдена.' }); }
+    }
     const etag = `"${info.size.toString(16)}-${Math.floor(info.mtimeMs).toString(16)}"`;
     const headers = {
       'Content-Type': types[extname(filename).toLowerCase()] || 'application/octet-stream',
-      'Cache-Control': pathname.endsWith('.html') || ['/', '/app.js', '/styles.css'].includes(pathname) ? 'no-cache' : 'public, max-age=3600',
+      'Cache-Control': /\.(html|json|xml|txt)$/.test(filename) ? 'no-cache' : 'public, max-age=3600',
       'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'strict-origin-when-cross-origin',
-      'X-Robots-Tag': 'noindex, nofollow', 'ETag': etag,
+      // Страницы открыты для индексации; закрыты 404 и файлы данных
+      ...(status !== 200 || filename.endsWith('.json') ? { 'X-Robots-Tag': 'noindex' } : {}),
+      'ETag': etag,
     };
-    if (req.headers['if-none-match'] === etag) { res.writeHead(304, headers); res.end(); return; }
-    res.writeHead(200, { ...headers, 'Content-Length': info.size });
+    if (status === 200 && req.headers['if-none-match'] === etag) { res.writeHead(304, headers); res.end(); return; }
+    res.writeHead(status, { ...headers, 'Content-Length': info.size });
     if (req.method === 'HEAD') { res.end(); return; }
     await pipeline(createReadStream(filename), res);
   } catch (error) {

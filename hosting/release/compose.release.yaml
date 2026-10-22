@@ -1,0 +1,7 @@
+# Дополнение к compose.yaml для выкладки готовых образов: приложение запускается из образа с тегом (sha коммита).
+# Откат = запуск предыдущего тега (секунды, без сборки). Тома с заявками и сертификатами не затрагиваются.
+# Использование: APP_TAG=<тег> docker compose -f compose.yaml -f compose.release.yaml up -d --no-build --no-deps app
+services:
+  app:
+    image: italon-x2-app:${APP_TAG:?задайте APP_TAG}
+    pull_policy: never

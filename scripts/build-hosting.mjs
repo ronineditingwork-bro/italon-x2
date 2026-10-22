@@ -8,19 +8,19 @@ const root = resolve(import.meta.dirname, '..');
 const output = resolve(root, '.hosting-runtime/release');
 await rm(output, { recursive: true, force: true });
 await mkdir(resolve(output, 'server'), { recursive: true });
-await cp(resolve(root, 'public'), resolve(output, 'public'), { recursive: true });
-await build({ entryPoints: [resolve(root, 'src/app.mjs')], outdir: resolve(output, 'public'), entryNames: 'app',
-  chunkNames: 'chunks/[name]-[hash]', bundle: true, splitting: true, format: 'esm', platform: 'browser',
-  target: 'es2022', minify: true, legalComments: 'linked', define: { 'process.env.NODE_ENV': '"production"' } });
+// сайт (site/ → public/: страницы, assets, data/catalog.json) собирается перед копированием
+await import('./build-site.mjs');
+await cp(resolve(root, 'public'), resolve(output, 'public'), { recursive: true, filter: source => !source.endsWith('.site-manifest.json') });
 await build({ entryPoints: [resolve(root, 'hosting/api-entry.mjs')], outfile: resolve(output, 'server/api.mjs'),
   bundle: true, format: 'esm', platform: 'node', target: 'node24', minify: true, legalComments: 'linked' });
-for (const name of ['server.mjs', 'database.mjs', 'import-carts.mjs', 'backup.mjs']) {
+for (const name of ['server.mjs', 'database.mjs', 'import-carts.mjs', 'backup.mjs', 'backup-verify.mjs']) {
   await cp(resolve(root, 'hosting', name), resolve(output, 'server', name));
 }
 for (const name of ['Dockerfile', 'compose.yaml', 'Caddyfile', '.env.example', '.dockerignore']) {
   await cp(resolve(root, 'hosting', name), resolve(output, name));
 }
 await cp(resolve(root, 'drizzle'), resolve(output, 'drizzle'), { recursive: true });
+await cp(resolve(root, 'hosting/release/compose.release.yaml'), resolve(output, 'compose.release.yaml'));
 await cp(resolve(root, 'hosting/TRANSFER.md'), resolve(output, 'TRANSFER.md'));
 const sourceFiles = execFileSync('git', ['ls-files', '-z'], { cwd: root }).toString().split('\0').filter(Boolean);
 const newFiles = execFileSync('git', ['ls-files', '--others', '--exclude-standard', '-z'], { cwd: root }).toString().split('\0').filter(name =>

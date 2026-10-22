@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>X2 / ГОРОД — игра</title>
+<style>
+  html, body { height: 100%; margin: 0; background: #1b1511; overflow: hidden; }
+  #game { position: fixed; inset: 0; }
+</style>
+</head>
+<body>
+<div id="game"></div>
+<script type="module">
+  import { mountGame } from './src/main.js';
+  const app = mountGame(document.getElementById('game'));
+  if (new URLSearchParams(location.search).has('test')) window.__X2__ = app;
+  addEventListener('pagehide', () => app.destroy());
+</script>
+</body>
+</html>

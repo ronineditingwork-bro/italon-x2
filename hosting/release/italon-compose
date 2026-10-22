@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# docker compose для рабочего сайта с правильными файлами и тегом текущей версии: italon-compose ps | logs app | exec -T app …
+APP_DIR="${APP_DIR:-/opt/italon-x2}"
+cd "$APP_DIR" && APP_TAG="${APP_TAG:-$(cat .deployed-tag 2>/dev/null || echo none)}" exec docker compose -f compose.yaml -f compose.release.yaml "$@"

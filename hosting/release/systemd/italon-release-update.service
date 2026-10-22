@@ -1,0 +1,8 @@
+[Unit]
+Description=Italon: выкладка проверенной версии (ветка release)
+After=network-online.target docker.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/lib/italon-release/auto-update.sh
+StandardOutput=append:/var/log/italon-release.log
+StandardError=append:/var/log/italon-release.log

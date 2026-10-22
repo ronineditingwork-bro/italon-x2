@@ -1,0 +1,5 @@
+[Unit]
+Description=Italon: проверка свежести резервной копии
+[Service]
+Type=oneshot
+ExecStart=/usr/local/lib/italon-backup/watchdog.sh

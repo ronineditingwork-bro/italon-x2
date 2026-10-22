@@ -2,11 +2,15 @@ import { products } from './catalog.mjs';
 import images from '../data/context-images.json' with { type: 'json' };
 
 const groups = new Map();
+const sentence = s => s.toLocaleLowerCase('ru-RU').replace(/^./u, c => c.toLocaleUpperCase('ru-RU')).replace(/[xх]2/gi, 'X2');
+// «ШАРМ ДЕЛЮКС» → «Шарм делюкс», а латинские названия (SAN SIRO, DA VINCI) — «San Siro», «Da Vinci»
+const collectionLabel = name => /[A-Za-z]/.test(name) && !/[А-Яа-яЁё]/.test(name)
+  ? name.toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase()).replace(/x2/gi, 'X2') : sentence(name);
 for (const product of products) {
   if (product.collectionId === 'packaging') continue;
   const group = groups.get(product.collectionId) || {
     id: product.collectionId,
-    label: product.collection.toLocaleLowerCase('ru-RU').replace(/^./u, c => c.toLocaleUpperCase('ru-RU')).replace(/[xх]2/gi, 'X2'),
+    label: collectionLabel(product.collection),
     section: product.section,
     count: 0,
     image: images.collections[product.collectionId] || null,
