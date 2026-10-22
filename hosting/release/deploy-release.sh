@@ -62,6 +62,7 @@ rm -rf "${RELEASES:?}/${TAG:?}"; cp -a "$SRC/.hosting-runtime/release" "$RELEASE
 
 STEP="сборка образа"
 $DOCKER build -q -t "$IMAGE:$TAG" --label "org.opencontainers.image.revision=$SHA" "$RELEASES/$TAG" >/dev/null
+rm -rf "${RELEASES:?}/${TAG:?}/source"        # снимок исходников (~165 МБ) для выкладки не нужен: экономим диск маленького VPS
 
 STEP="проверка кандидата на копии боевой базы"
 TMP="$(mktemp -d "$RELEASES/.candidate-XXXXXX")"; chmod 777 "$TMP"
