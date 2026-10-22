@@ -82,9 +82,9 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
           await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [pt(1, cx, cy)] });
           for (let i = 1; i <= 6; i++) await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [pt(1, cx + i * 15, cy + i * 8)] });
           await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-          const p1 = [cx - 40, cy], p2 = [cx + 40, cy];
-          await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [pt(1, ...p1), pt(2, ...p2)] });
-          for (let i = 1; i <= 8; i++) { const a = i * 0.08, r = 40 + i * 9; await wait(30); await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [pt(1, cx - r * Math.cos(a), cy - r * Math.sin(a)), pt(2, cx + r * Math.cos(a), cy + r * Math.sin(a))] }); }
+          await wait(500); const ob = await page.locator('[data-orb]').boundingBox(), py = [cy, 170, 330, 240].find(y => !ob || Math.abs(ob.y + ob.height / 2 - y) > 80); const p1 = [cx - 40, py], p2 = [cx + 40, py];
+          await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [pt(1, ...p1), pt(2, ...p2)] }); await wait(120);
+          for (let i = 1; i <= 8; i++) { const a = i * 0.08, r = 40 + i * 9; await wait(30); await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [pt(1, cx - r * Math.cos(a), py - r * Math.sin(a)), pt(2, cx + r * Math.cos(a), py + r * Math.sin(a))] }); }
           await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await wait(200);
         }
         const c1 = JSON.parse(await api(page, '(l)=>JSON.stringify(l.st.cam)')), c = JSON.parse(c0);

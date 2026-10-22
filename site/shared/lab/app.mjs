@@ -60,7 +60,7 @@ export async function startLab(root, cfg) {
     cam: { center: [0, 0], rot: 0, tilt: 0.62, ppcm: 4 }, format: '60x60', turned: false, jointMm: 2, jointColor: 'white', bond: 'straight',
     compare: false, split: 0.5, second: 0, tone: 0.05, sweep: { on: false }, exposure: 1,
   };
-  let angle = LIGHT_PRESETS.evening.phase, auto = !reduced, dragMode = 'move', dirty = true, lastT = 0, trans = null, splitAnim = null, touched = false, exporting = false, lite = lite0, shareSize = 'story';
+  let hoverUntil = 0, intro0 = performance.now(), angle = LIGHT_PRESETS.evening.phase, auto = !reduced, dragMode = 'move', dirty = true, lastT = 0, trans = null, splitAnim = null, touched = false, exporting = false, lite = lite0, shareSize = 'story';
   let target = { ...lightAt('evening', angle) };
   const cssSize = () => { const r = canvas.getBoundingClientRect(); return [Math.max(1, r.width), Math.max(1, r.height)]; };
   const tileDims = () => { const f = FORMATS.find(x => x.id === st.format); return st.turned ? { w: f.h, h: f.w } : { w: f.w, h: f.h }; };
@@ -153,9 +153,10 @@ export async function startLab(root, cfg) {
     gesture = { rotateBtn: e.button === 2 || e.shiftKey || e.button === 1 }; if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; gesture.d = Math.hypot(a[0] - b[0], a[1] - b[1]); gesture.ang = Math.atan2(b[1] - a[1], b[0] - a[0]); }
     if (auto === true && false) setAuto(false);
   });
+  canvas.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') orb.style.pointerEvents = ''; });
   canvas.addEventListener('contextmenu', e => e.preventDefault());
   canvas.addEventListener('pointermove', e => {
-    if (!ptrs.has(e.pointerId)) return; const prev = ptrs.get(e.pointerId), cur = pos(e), [w, h] = cssSize(); ptrs.set(e.pointerId, cur);
+    if (!ptrs.has(e.pointerId)) { if (e.pointerType === 'mouse' && e.buttons === 0 && !orbDrag) { const [px, py] = pos(e); moveLightTo(px, py); hoverUntil = performance.now() + 2500; orb.style.pointerEvents = 'none'; } return; } const prev = ptrs.get(e.pointerId), cur = pos(e), [w, h] = cssSize(); ptrs.set(e.pointerId, cur);
     if (ptrs.size === 1) {
       if (dragMode === 'rotate' || gesture?.rotateBtn) { pivotRotate((cur[0] - prev[0]) * 0.006, w / 2, h / 2); st.cam.tilt = clampTilt(st.cam.tilt + (cur[1] - prev[1]) * 0.004); syncSliders(); }
       else panBy(st.cam, prev[0], prev[1], cur[0], cur[1], w, h);
@@ -200,10 +201,12 @@ export async function startLab(root, cfg) {
     const dt = Math.min(0.1, (now - lastT) / 1000 || 0.016); lastT = now;
     let animating = false;
     if (!orbDrag) {
-      if (auto) { angle += dt * LIGHT_PRESETS[st.mode].speed; target = lightAt(st.mode, angle, st.heightK); }
+      if (auto && now > hoverUntil) { angle += dt * LIGHT_PRESETS[st.mode].speed; target = lightAt(st.mode, angle, st.heightK); }
       const k = 1 - Math.exp(-dt * (auto ? 9 : 5)); const dx = target.x - st.light.x, dy = target.y - st.light.y, dh = target.h - st.light.h;
       if (Math.abs(dx) + Math.abs(dy) + Math.abs(dh) > 0.01) { st.light.x += dx * k; st.light.y += dy * k; st.light.h += dh * k; animating = true; }
       if (auto) animating = true;
+    }
+    { const ip = (now - intro0) / 2200; if (ip < 1 && !reduced) { st.exposure = 0.1 + 0.9 * (1 - Math.pow(1 - Math.max(0, ip), 3)); animating = true; } else if (st.exposure !== 1) { st.exposure = 1; dirty = true; }
     }
     if (trans) { const p = (now - trans.t0) / trans.dur; if (p >= 1) { trans = null; st.sweep = { on: false }; } else st.sweep = sweepFor(p, canvas.width / canvas.height); animating = true; }
     if (splitAnim) { const p = (now - splitAnim.t0) / splitAnim.dur; if (p >= 1) { splitAnim = null; st.split = 0.5; } else { st.split = p < 0.5 ? 0.5 + 0.46 * easeInOut(p * 2) : 0.96 - 0.92 * easeInOut((p - 0.5) * 2) ; if (p > 0.5) st.split = 0.96 - 0.92 * easeInOut((p - 0.5) * 2); } placeSplit(); animating = true; }
