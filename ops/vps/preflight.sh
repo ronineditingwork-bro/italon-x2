@@ -6,8 +6,14 @@
 #   --db      дополнительно открыть базу заявок ТОЛЬКО НА ЧТЕНИЕ внутри работающего контейнера (число записей, quick_check)
 #   --no-net  не проверять сеть (GitHub, Docker Hub, Telegram, Яндекс)
 # Запускать от root (нужен доступ к docker и /var/lib/docker). Вывод не содержит персональных данных.
+# БЕЗОПАСНОСТЬ ВЫВОДА: конфигурации показываются только именами и состоянием («задана/пуста»); значения не печатаются, кроме ветки/адреса репозитория
+# (из адреса вырезаются логин и пароль). Строки журналов проходят через фильтр. Кроме того, ВЕСЬ вывод скрипта целиком проходит через фильтр
+# redact(): он маскирует токены Telegram/GitHub, ключи age, Bearer-заголовки, пары «имя=значение» для секретных имён, секретные параметры
+# в адресах, логин:пароль в адресах и любые длинные «непрозрачные» строки (≥ 32 символов). Коммиты показываются сокращёнными (12 символов).
 set -u
 APP_DIR="${APP_DIR:-/opt/italon-x2}"
+AUTOUPDATE_ENV="${AUTOUPDATE_ENV:-/etc/italon-autoupdate.env}"     # переопределяется только в тестах
+AUTOUPDATE_LOG="${AUTOUPDATE_LOG:-/var/log/italon-autoupdate.log}"
 REPO="${REPO:-https://github.com/ronineditingwork-bro/italon-x2}"
 LIVE_BRANCH="${LIVE_BRANCH:-ccr-943f3ebb-rcco8n}"
 DB=0; NET=1
@@ -19,11 +25,25 @@ warn(){ printf '  [ВНИМАНИЕ]  %s\n' "$*"; WARN=$((WARN+1)); }
 bad() { printf '  [ПРОБЛЕМА]  %s\n' "$*"; BAD=$((BAD+1)); }
 info(){ printf '  %s\n' "$*"; }
 have() { command -v "$1" >/dev/null 2>&1; }
-envkeys() { [ -f "$APP_DIR/.env" ] || { info ".env нет"; return; }; while IFS='=' read -r k v; do case "$k" in ''|\#*) continue;; esac; v="${v%\"}"; v="${v#\"}"; [ -n "$v" ] && s="задана" || s="ПУСТА"; printf '    %s: %s\n' "$k" "$s"; done < "$APP_DIR/.env"; }
+redact() { # фильтр: ни один секрет не должен дойти до отчёта, даже если команда напечатала его сама
+  sed -E \
+    -e 's#(://)[^/@[:space:]]+@#\1***@#g' \
+    -e 's#[0-9]{6,}:[A-Za-z0-9_-]{20,}#[ТОКЕН-СКРЫТ]#g' \
+    -e 's#AGE-SECRET-KEY-[A-Za-z0-9]+#[КЛЮЧ-СКРЫТ]#g' \
+    -e 's#(gh[pousr]_|github_pat_|xox[abp]-|sk-|AKIA|ya29\.|y0_|t1\.|AQVN)[A-Za-z0-9_.-]{8,}#[ТОКЕН-СКРЫТ]#g' \
+    -e 's#([Aa]uthorization:?[[:space:]]+)([A-Za-z]+[[:space:]]+)?[^[:space:]]+#\1***#g' \
+    -e 's#([Bb]earer|[Bb]asic)[[:space:]]+[^[:space:]]+#\1 ***#g' \
+    -e 's#("[A-Za-z0-9_.-]*([Tt]oken|[Ss]ecret|[Pp]ass(word|wd)?|[Kk]ey|[Cc]redential|[Aa]uth)[A-Za-z0-9_.-]*"[[:space:]]*:[[:space:]]*")[^"]*#\1***#g' \
+    -e 's#([A-Za-z0-9_.-]*([Tt]oken|[Ss]ecret|[Pp]ass(word|wd)?|[Kk]ey|[Cc]redential|[Aa]uth|[Ss]ignature|[Ss]ig)[A-Za-z0-9_.-]*)[[:space:]]*[=:][[:space:]]*[^[:space:]"&,;]+#\1=***#g' \
+    -e 's#([?&][A-Za-z0-9_.-]+)=[^&[:space:]"]{12,}#\1=***#g' \
+    -e 's#[A-Za-z0-9+_=-]{32,}#[ДЛИННАЯ-СТРОКА-СКРЫТА]#g'
+}
+envkeys() { [ -f "$APP_DIR/.env" ] || { info ".env нет"; return; }; while IFS='=' read -r k v; do case "$k" in ''|\#*) continue;; esac; v="${v%\"}"; v="${v#\"}"; [ -n "$v" ] && s="задана" || s="ПУСТА"; printf '    %s — %s\n' "$k" "$s"; done < "$APP_DIR/.env"; }
 envval() { grep -E "^$1=" "$APP_DIR/.env" 2>/dev/null | head -1 | cut -d= -f2- | tr -d '\r"' | sed "s/^'//; s/'$//"; }
 http() { # аргументы: url [таймаут]; печатает код и время, ничего не сохраняет
   local out; out=$(curl -sS -m "${2:-12}" -o /dev/null -w '%{http_code} %{time_total}s' "$1" 2>/dev/null) || out="нет-ответа"; echo "$out"; }
 
+body() {
 echo "Italon preflight (только чтение) — $(date -u +%FT%TZ) — хост $(hostname)"
 
 sec "1. Система, память, swap, диск"
@@ -62,11 +82,24 @@ fi
 sec "3. Текущая версия сайта и прежнее автообновление"
 info "/healthz через локальный Caddy (с сервера, без DNS): $(curl -sS -m 10 --resolve italon-x2.ru:443:127.0.0.1 https://italon-x2.ru/healthz 2>/dev/null | head -c 200)"
 info "боевой адрес снаружи (код и время): $(http https://italon-x2.ru/healthz)"
-[ -f "$APP_DIR/.deployed-commit" ] && info "выложен коммит: $(cat "$APP_DIR/.deployed-commit")" || warn "нет $APP_DIR/.deployed-commit"
-[ -f "$APP_DIR/.attempted-commit" ] && info "последняя попытка: $(cat "$APP_DIR/.attempted-commit")"
-[ -f /etc/italon-autoupdate.env ] && { info "/etc/italon-autoupdate.env:"; sed 's/^/    /' /etc/italon-autoupdate.env; } || warn "нет /etc/italon-autoupdate.env"
+[ -f "$APP_DIR/.deployed-commit" ] && info "выложен коммит: $(cut -c1-12 "$APP_DIR/.deployed-commit")" || warn "нет $APP_DIR/.deployed-commit"
+[ -f "$APP_DIR/.attempted-commit" ] && info "последняя попытка: $(cut -c1-12 "$APP_DIR/.attempted-commit")"
+if [ -f "$AUTOUPDATE_ENV" ]; then
+  info "$AUTOUPDATE_ENV (имя — состояние; значения не печатаются, кроме ветки и адреса репозитория без логина/пароля):"
+  while IFS='=' read -r k v; do case "$k" in ''|\#*) continue;; esac; v="${v%\"}"; v="${v#\"}"; v="${v%\'}"; v="${v#\'}"
+    case "$k" in
+      REPO) printf '    REPO: %s\n' "$(echo "$v" | sed -E 's#(://)[^/@]*@#\1#; s#\?.*$##')";;
+      BRANCH) printf '    BRANCH: %s\n' "$v";;
+      *) [ -n "$v" ] && printf '    %s — задана\n' "$k" || printf '    %s — ПУСТА\n' "$k";;
+    esac
+  done < "$AUTOUPDATE_ENV"
+else warn "нет $AUTOUPDATE_ENV"; fi
 [ -x /usr/local/bin/italon-autoupdate ] && info "sha256 /usr/local/bin/italon-autoupdate: $(sha256sum /usr/local/bin/italon-autoupdate | cut -c1-16)…" || warn "нет /usr/local/bin/italon-autoupdate"
-[ -f /var/log/italon-autoupdate.log ] && { info "журнал автообновления (последние 5 строк):"; tail -n 5 /var/log/italon-autoupdate.log | sed 's/^/    /'; }
+if [ -f "$AUTOUPDATE_LOG" ]; then
+  info "журнал автообновления (последние 5 строк, с маскировкой секретов, не длиннее 160 символов):"
+  tail -n "${AUTOUPDATE_LOG_LINES:-5}" "$AUTOUPDATE_LOG" | cut -c1-160 | redact | sed 's/^/    /'
+  info "ошибок в последних 200 строках журнала: $(tail -n 200 "$AUTOUPDATE_LOG" | grep -ci 'ОШИБКА\|error\|fail')"
+fi
 [ -d /opt/italon-x2-src/.git ] && info "каталог сборки /opt/italon-x2-src: есть, $(du -sm /opt/italon-x2-src 2>/dev/null | cut -f1) МБ"
 info "файлы $APP_DIR (имена):"; ls -A "$APP_DIR" 2>/dev/null | tr '\n' ' ' | sed 's/^/    /'; echo
 info ".env (только имена и «задана/пуста»):"; envkeys
@@ -118,11 +151,14 @@ sec "7. Сеть: GitHub, Docker Hub, Telegram, Яндекс Object Storage"
   tok=$(curl -sS -m 12 "https://auth.docker.io/token?service=registry.docker.io&scope=repository:ratelimitpreview/test:pull" 2>/dev/null | python3 -c 'import json,sys; print(json.load(sys.stdin)["token"])' 2>/dev/null)
   if [ -n "$tok" ]; then curl -sSI -m 12 -H "Authorization: Bearer $tok" https://registry-1.docker.io/v2/ratelimitpreview/test/manifests/latest 2>/dev/null | grep -i '^ratelimit' | sed 's/^/    Docker Hub /' | tr -d '\r'; else warn "не удалось получить токен Docker Hub для проверки лимита"; fi
   tg=$(http https://api.telegram.org 8); info "api.telegram.org:           $tg"; case "$tg" in 000*|нет-ответа*) warn "api.telegram.org с этого сервера недоступен — уведомления об ошибках пойдут только через ретранслятор (TELEGRAM_API_BASE)";; esac
-  base=$(envval TELEGRAM_API_BASE); if [ -n "$base" ]; then info "ретранслятор Telegram (только хост): $(echo "$base" | sed -E 's#^(https?://[^/]+).*#\1#')  → $(http "$(echo "$base" | sed -E 's#^(https?://[^/]+).*#\1#')" 8)"; else info "TELEGRAM_API_BASE не задан"; fi
+  base=$(envval TELEGRAM_API_BASE); if [ -n "$base" ]; then info "ретранслятор Telegram: задан (адрес не печатается) → отвечает: $(http "$(echo "$base" | sed -E 's#^(https?://[^/]+).*#\1#')" 8)"; else info "TELEGRAM_API_BASE не задан"; fi
   info "storage.yandexcloud.net:    $(http https://storage.yandexcloud.net) (403/404 = доступен)"
 fi
 
 sec "Итог"
 echo "  Проблем: $BAD; предупреждений: $WARN"
 [ "$BAD" -eq 0 ] && echo "  Критичных проблем для установки нет." || echo "  Есть проблемы — установку не начинать, пока не устранены."
+}
+
+body 2>&1 | redact
 exit 0

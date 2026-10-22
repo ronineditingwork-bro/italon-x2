@@ -33,9 +33,46 @@ function sandbox() {
   stub('curl', `case "$*" in *rate_limit*) echo '{"resources":{"core":{"remaining":59,"limit":60}}}';; *auth.docker.io*) echo '{"token":"t"}';; *) :;; esac`);
   stub('git', `[ "$1" = ls-remote ] && echo "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb	refs/heads/main" || exit 77`);
   stub('openssl', 'exit 1'); stub('timedatectl', 'echo "System clock synchronized: yes"'); stub('dmesg', 'exit 0'); stub('getent', 'echo "140.82.121.4 github.com"'); stub('swapon', 'echo "/swapfile file 2G 0B -2"');
-  const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, APP_DIR: app };
+  writeFileSync(resolve(T, 'autoupdate.env'), AUTOUPDATE_ENV_TEXT); writeFileSync(resolve(T, 'autoupdate.log'), AUTOUPDATE_LOG_TEXT);
+  const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, APP_DIR: app, AUTOUPDATE_ENV: resolve(T, 'autoupdate.env'), AUTOUPDATE_LOG: resolve(T, 'autoupdate.log'), AUTOUPDATE_LOG_LINES: '50' };
   return { T, app, data, log, env, run: args => spawnSync('bash', [script, ...args], { env, encoding: 'utf8' }), calls: () => readFileSync(log, 'utf8').trim().split('\n') };
 }
+
+
+// Фиктивные секреты: НИ ОДНО из этих значений не должно попасть в отчёт.
+const SECRETS = {
+  repoPassword: 'ghp_FAKEPASSWORDINURL0123456789abcdefgh',
+  ghToken: 'ghp_FAKEGITHUBTOKEN0123456789ABCDEFGHIJ',
+  botToken: '123456789:AAFAKEBOTTOKENVALUE0123456789abcdef',
+  plainPassword: 'hunter2-NotARealPassword',
+  relayKey: 'FAKE-RELAY-KEY-VALUE-9f8e7d6c5b4a',
+  ageKey: 'AGE-SECRET-KEY-1FAKEAGESECRETKEY0123456789ABCDEFGHJKLMNPQ',
+  hex64: 'd2a84f1b9c6e0357a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718',
+  bearer: 'FAKEBEARERTOKENxyz789',
+  urlKey: 'FAKEQUERYSECRET987654321',
+  jsonToken: 'FAKEJSONTOKENVALUE123',
+  yandexKey: 'YCAJEFAKEACCESSKEYID0123456',
+  relayHost: 'secret-relay-name.workers.dev',
+};
+const AUTOUPDATE_ENV_TEXT = [
+  `REPO=https://deploy:${SECRETS.repoPassword}@github.com/ronineditingwork-bro/italon-x2?token=${SECRETS.urlKey}`,
+  'BRANCH=ccr-943f3ebb-rcco8n',
+  `GITHUB_TOKEN=${SECRETS.ghToken}`,
+  `TELEGRAM_BOT_TOKEN=${SECRETS.botToken}`,
+  `ADMIN_PASSWORD=${SECRETS.plainPassword}`,
+  'EMPTY_SETTING=',
+  '',
+].join('\n');
+const AUTOUPDATE_LOG_TEXT = [
+  '2026-10-22T07:00:00Z новый коммит abcdef0 — обновляю',
+  `2026-10-22T07:00:05Z curl: (22) https://api.telegram.org/bot${SECRETS.botToken}/sendMessage`,
+  `2026-10-22T07:00:06Z git fetch https://deploy:${SECRETS.repoPassword}@github.com/x/y failed`,
+  `2026-10-22T07:00:07Z Authorization: Bearer ${SECRETS.bearer}`,
+  `2026-10-22T07:00:08Z GET https://s3.example/obj?X-Amz-Signature=${SECRETS.hex64}&key=${SECRETS.urlKey}`,
+  `2026-10-22T07:00:09Z {"token":"${SECRETS.jsonToken}","ok":false}`,
+  `2026-10-22T07:00:10Z relay_key=${SECRETS.relayKey} ${SECRETS.ageKey} ${SECRETS.hex64} access ${SECRETS.yandexKey}`,
+  '2026-10-22T07:00:11Z ОШИБКА обновления (код 1)',
+].join('\n');
 
 const READ_ONLY = {
   docker: /^docker (--version|info|ps|images|system df|inspect |compose (version|ps)|compose exec -T app node -e )/,
@@ -60,8 +97,8 @@ test('preflight: только чтение — все вызовы внешни�
     const after = tree(s.T).replace(/calls\.log:[^|]*\|?/, '');
     assert.equal(after, before, 'файлы песочницы не изменились');
     assert.doesNotMatch(r.stdout + r.stderr, /SECRET-TOKEN-VALUE/, 'токен бота не печатается');
-    assert.match(r.stdout, /TELEGRAM_BOT_TOKEN: задана/); assert.match(r.stdout, /TELEGRAM_RELAY_KEY: ПУСТА/);
-    assert.match(r.stdout, /https:\/\/relay\.example\.workers\.dev/); assert.doesNotMatch(r.stdout, /relay\.example\.workers\.dev\/path/, 'путь ретранслятора (может содержать секрет) не печатается');
+    assert.match(r.stdout, /TELEGRAM_BOT_TOKEN — задана/); assert.match(r.stdout, /TELEGRAM_RELAY_KEY — ПУСТА/);
+    assert.doesNotMatch(r.stdout, /relay\.example\.workers\.dev/, 'адрес ретранслятора не печатается совсем');
     assert.match(r.stdout, /прежнее автообновление работает/); assert.match(r.stdout, /Итог/);
   } finally { rmSync(s.T, { recursive: true, force: true }); }
 });
@@ -81,4 +118,38 @@ test('preflight: в тексте скрипта нет команд измене
   const code = readFileSync(script, 'utf8').split('\n').filter(l => !/^\s*#/.test(l)).join('\n');
   assert.doesNotMatch(code, /\b(rm|mv|cp|chmod|chown|tee|truncate|dd|mkdir|touch|apt-get|apt|systemctl\s+(start|stop|restart|enable|disable|reload|daemon-reload|mask|kill)|docker\s+(run|rm|rmi|build|pull|push|stop|start|restart|kill|tag|prune|network|volume\s+rm)|compose\s+(up|down|restart|stop|start|build|pull|run|rm)|git\s+(clone|fetch|pull|checkout|reset|push|commit)|sed\s+-i|swapoff|swapon\s+\/)\b/, 'команда изменения в preflight.sh');
   assert.doesNotMatch(code, />>|>\s*\/(?!dev\/null)|>\s*\$|>\s*"/, 'запись в файл');
+});
+
+test('preflight: фиктивные секреты из конфигурации, журнала, .env и вывода команд не попадают в отчёт; полезная диагностика остаётся', () => {
+  const s = sandbox();
+  try {
+    // команды сами «случайно» печатают секреты: docker inspect и /healthz — глобальный фильтр обязан их скрыть
+    writeFileSync(resolve(s.T, 'bin/docker'), readFileSync(resolve(s.T, 'bin/docker'), 'utf8').replace('echo "running health=healthy', `echo "ENV TELEGRAM_BOT_TOKEN=${SECRETS.botToken} password=${SECRETS.plainPassword} ${SECRETS.ageKey}"; echo "running health=healthy`));
+    writeFileSync(resolve(s.T, 'bin/curl'), readFileSync(resolve(s.T, 'bin/curl'), 'utf8').replace('*) :;;', `*/healthz*) echo '{"ok":true,"catalogItems":1202,"apiToken":"${SECRETS.jsonToken}"}';; *) :;;`));
+    writeFileSync(resolve(s.app, '.env'), readFileSync(resolve(s.app, '.env'), 'utf8') + `YANDEX_SECRET_KEY=${SECRETS.yandexKey}\nTELEGRAM_API_BASE=https://${SECRETS.relayHost}/x\n`);
+    for (const args of [['--db'], ['--no-net'], []]) {
+      const r = s.run(args);
+      assert.equal(r.status, 0, r.stderr);
+      const out = r.stdout + r.stderr;
+      for (const [name, value] of Object.entries(SECRETS)) assert.ok(!out.includes(value), `секрет «${name}» попал в отчёт (${args.join(' ') || 'без параметров'})`);
+      assert.doesNotMatch(out, /AGE-SECRET-KEY-1FAKE|:AAFAKE|ghp_FAKE/, 'маски известных форматов');
+      // диагностика осталась
+      assert.match(out, /REPO: https:\/\/github\.com\/ronineditingwork-bro\/italon-x2\s/, 'адрес репозитория показан без логина/пароля и параметров');
+      assert.match(out, /BRANCH: ccr-943f3ebb-rcco8n/);
+      assert.match(out, /GITHUB_TOKEN — задана/); assert.match(out, /TELEGRAM_BOT_TOKEN — задана/); assert.match(out, /ADMIN_PASSWORD — задана/); assert.match(out, /EMPTY_SETTING — ПУСТА/);
+      assert.match(out, /новый коммит abcdef0/, 'обычные строки журнала видны');
+      assert.match(out, /ошибок в последних 200 строках журнала: [1-9]/);
+      assert.match(out, /прежнее автообновление работает/); assert.match(out, /Итог/);
+      assert.match(out, /выложен коммит: a{12}\s*$/m, 'коммит показан сокращённо (12 символов)');
+    }
+  } finally { rmSync(s.T, { recursive: true, force: true }); }
+});
+
+test('preflight: режим «только чтение» сохраняется и с фильтром (журнал и конфигурация читаются, но не изменяются)', () => {
+  const s = sandbox();
+  try {
+    const before = readFileSync(resolve(s.T, 'autoupdate.env'), 'utf8') + readFileSync(resolve(s.T, 'autoupdate.log'), 'utf8');
+    s.run(['--db']);
+    assert.equal(readFileSync(resolve(s.T, 'autoupdate.env'), 'utf8') + readFileSync(resolve(s.T, 'autoupdate.log'), 'utf8'), before);
+  } finally { rmSync(s.T, { recursive: true, force: true }); }
 });
