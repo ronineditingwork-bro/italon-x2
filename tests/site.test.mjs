@@ -49,7 +49,7 @@ test('sitemap.xml: только публичные индексируемые с
   assert.match(xml, /^<\?xml version="1\.0" encoding="UTF-8"\?>\n<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
   const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
   assert.equal(new Set(urls).size, urls.length, 'повторы адресов');
-  const expected = pages.filter(p => !p.is404).map(p => 'https://italon-x2.ru' + p.path).sort();
+  const expected = pages.filter(p => !p.is404 && !p.noindex).map(p => 'https://italon-x2.ru' + p.path).sort();
   assert.deepEqual(urls, expected);
   assert.equal(urls.length, 1286);
   for (const url of urls) {
