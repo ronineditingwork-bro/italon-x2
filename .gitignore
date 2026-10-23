@@ -18,6 +18,8 @@ backups/
 *.tif
 *.tiff
 *.pdf
+# рабочая папка конвейера слэбов (scripts/lab-slabs-sync.mjs): состояние, отчёты, промежуточные WebP, сеанс загрузчика
+/incoming/
 # сборка сайта (scripts/build-site.mjs) — генерируется в public/
 /public/.site-manifest.json
 /public/sitemap.xml

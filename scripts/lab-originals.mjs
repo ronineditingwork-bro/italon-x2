@@ -13,6 +13,7 @@
 // без указанного источника (--source-url) и подтверждения соответствия (--evidence) запись не добавляется.
 //
 // Хранение: файлы — public/media/lab/<код>-<sha8>.<расширение> (в Git), список — data/lab-originals.json, сборка сайта публикует public/data/lab-originals.json.
+// Необязательно: face — метка фейса основного файла (F1), faces — [{ face, file, sha256, mobile? }] другие фейсы той же плиты; их пишет scripts/lab-slabs-sync.mjs.
 import { readFile, writeFile, copyFile, mkdir } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -43,7 +44,13 @@ export async function buildOriginals({ products, manifestPath = MANIFEST, dir = 
     };
     const main = load(o); if (typeof main === 'string') { reject(main); continue; }
     const mob = o.mobile ? load(o.mobile) : null; if (typeof mob === 'string') { reject(`мобильная версия: ${mob}`); continue; }
-    out.items[code] = { ...main, ...(mob ? { mobile: mob } : {}), sourceUrl: o.sourceUrl, evidence: o.evidence };
+    const faces = [];                                            // другие фейсы той же плиты (настоящие снимки, не зеркальные копии); ошибка в одном не отключает основной файл
+    for (const f of o.faces || []) {
+      const fm = load(f), fmob = f.mobile ? load(f.mobile) : null, why = typeof fm === 'string' ? fm : typeof fmob === 'string' ? `мобильная версия: ${fmob}` : '';
+      if (why) { log(`оригинал ${code}, фейс ${f.face}: ${why}`); continue; }
+      faces.push({ face: String(f.face || ''), ...fm, ...(fmob ? { mobile: fmob } : {}) });
+    }
+    out.items[code] = { ...main, ...(mob ? { mobile: mob } : {}), ...(o.face ? { face: o.face } : {}), ...(faces.length ? { faces } : {}), sourceUrl: o.sourceUrl, evidence: o.evidence };
   }
   return out;
 }

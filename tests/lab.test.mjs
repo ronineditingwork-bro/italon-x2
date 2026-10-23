@@ -252,3 +252,39 @@ test('сборка оригиналов: нужен источник и подт
   assert.equal(r.rejected.length, 6); const why = Object.fromEntries(r.rejected.map(x => [x.code, x.reason])); assert.match(why['600180000072'], /мобильная версия: пропорции/); assert.match(why['600180000133'], /пропорции/); assert.match(why['600180000132'], /источник/); assert.match(why['600180000086'], /контрольная/); assert.match(why['600180000087'], /нет файла/); assert.match(why['000000000000'], /каталоге/);
   assert.deepEqual((await buildOriginals({ products, manifestPath: resolve(dir, 'none.json'), dir: media })).items, {}, 'нет файла списка — нет оригиналов');
 });
+// --- конвейер ARCHITALON (scripts/lab-slabs-sync.mjs): сопоставление файла с артикулом и дополнительные фейсы
+test('файл ARCHITALON сопоставляется с артикулом только однозначно; другой формат и неизвестное — не присваиваются', async () => {
+  const { slabTargets } = await import('../scripts/lab-slab-targets.mjs'), { prepareTargets, matchSource } = await import('../scripts/lab-slabs-match.mjs');
+  const all = slabTargets(products); assert.equal(all.count, 57); assert.ok(all.items.every(t => t.collectionId !== 'packaging'));
+  const t = prepareTargets(all.items), m = (a, e) => matchSource(t, a, e);
+  // имена реальных архивов (первые пять слэбов)
+  assert.deepEqual([['aura-calacatta-sky-120x278.zip', 'calacatta_sky_120x278_F3.tif'], ['magma-alpi-green-120x278.zip', 'alpi_green_120x278_F1.tif'], ['magma-dover-tiger-120x278.zip', 'dover_tiger_120x278_F4.tif'],
+    ['status-copper-120x278.zip', 'copper_120x278_F2.tif'], ['status-corten-120x278.zip', 'corten_120x278_F1.tif']].map(([a, e]) => [m(a, e).code, m(a, e).face]),
+  [['600180000076', 'F3'], ['600180000072', 'F1'], ['600180000073', 'F4'], ['600180000087', 'F2'], ['600180000086', 'F1']]);
+  // сокращённые русские названия каталога ↔ латиница
+  assert.equal(m('charme-deluxe-120x278.zip', 'bianco_michelangelo_120x278_F1.tif').code, '600180000004');
+  assert.equal(m('charme-deluxe-sahara-noir.zip', 'F1.tif').code, '600180000008');
+  assert.equal(m('continuum-stone-beige-120x278.zip', 'F2.tif').code, '600180000033');
+  assert.equal(m('avantgarde-calacatta-warm.zip', 'a.tif').code, '600180000062');
+  assert.equal(m('stellaris-calacatta-gold.zip', 'a.tif').code, '600180000044', 'Калакатта Голд есть и в Метрополисе — решает коллекция');
+  assert.equal(m('metropolis-calacatta-gold.zip', 'a.tif').code, '600180000019');
+  assert.equal(m('forum.zip', 'forum_slim_polar_120x278.tif').code, '600180000078');
+  // не хватает слова, чужой формат, посторонний файл
+  assert.equal(m('forum.zip', 'forum_polar_120x278.tif').status, 'none', 'Слим или Стоун — неизвестно');
+  assert.equal(m('stellaris-calacatta-gold-120x278.zip', 'calacatta_gold_60x120_F1.tif').status, 'other-format', 'формат в имени файла важнее имени архива');
+  assert.equal(m('photos.zip', 'IMG_0001.jpg').status, 'none');
+  // одинаково подходят два артикула — карантин
+  const twins = prepareTargets([{ code: '1', collection: 'ФОРУМ', name: 'ФОРУМ ПОЛАР 120X278' }, { code: '2', collection: 'ФОРУМ', name: 'ФОРУМ ПОЛАР 120X278' }]);
+  assert.deepEqual([matchSource(twins, 'forum-polar.zip').status, matchSource(twins, 'forum-polar.zip').candidates], ['ambiguous', ['1', '2']]);
+});
+test('оригиналы: дополнительные фейсы публикуются списком faces; битый фейс не отключает основной файл', async () => {
+  const dir = mkdtempSync(resolve(tmpdir(), 'lab-faces-')), media = resolve(dir, 'media'); mkdirSync(media);
+  writeFileSync(resolve(media, 'f1.png'), png(720, 1668)); writeFileSync(resolve(media, 'f2.png'), png(721, 1669)); writeFileSync(resolve(media, 'sq.png'), png(800, 800));
+  writeFileSync(resolve(dir, 'man.json'), JSON.stringify({ v: 1, items: { '600180000076': { file: 'f1.png', face: 'F1', sourceUrl: 'architalon:a.zip/F1.tif', evidence: 'проверено',
+    faces: [{ face: 'F2', file: 'f2.png', mobile: { file: 'f2.png' } }, { face: 'F3', file: 'sq.png' }, { face: 'F4', file: 'missing.png' }] } } }));
+  const log = [], r = await buildOriginals({ products, manifestPath: resolve(dir, 'man.json'), dir: media, log: m => log.push(m) });
+  const it = r.items['600180000076']; assert.equal(it.src, 'media/lab/f1.png'); assert.equal(it.face, 'F1'); assert.equal(r.rejected.length, 0);
+  assert.deepEqual(it.faces, [{ face: 'F2', src: 'media/lab/f2.png', width: 721, height: 1669, mobile: { src: 'media/lab/f2.png', width: 721, height: 1669 } }]);
+  assert.equal(log.length, 2); assert.match(log[0], /F3: пропорции/); assert.match(log[1], /F4: нет файла/);
+  assert.equal(applyOriginals(products, r).find(p => p.code === '600180000076').image.src, 'media/lab/f1.png', 'лаборатория по-прежнему берёт основной файл');
+});

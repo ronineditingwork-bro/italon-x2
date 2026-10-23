@@ -10,7 +10,18 @@
       },
       "sourceUrl": "architalon:aura-calacatta-sky-120x278.zip/calacatta_sky_120x278_F1.tif",
       "evidence": "Текстура ARCHITALON (Italon), архив aura-calacatta-sky-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «АУРА КАЛАКАТТА СКАЙ 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
-      "addedOn": "2026-10-23"
+      "addedOn": "2026-10-23",
+      "face": "F1",
+      "provenance": {
+        "archive": "aura-calacatta-sky-120x278.zip",
+        "entry": "calacatta_sky_120x278_F1.tif",
+        "crc32": "de656473",
+        "size": 67853884,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": null,
+        "finish": "СИЛК И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4
+      }
     },
     "600180000072": {
       "file": "600180000072-d98c7ce2.webp",
@@ -21,7 +32,18 @@
       },
       "sourceUrl": "architalon:magma-alpi-green-120x278.zip/alpi_green_120x278_F1.tif",
       "evidence": "Текстура ARCHITALON (Italon), архив magma-alpi-green-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «МАГМА АЛЬПИ ГРИН 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
-      "addedOn": "2026-10-23"
+      "addedOn": "2026-10-23",
+      "face": "F1",
+      "provenance": {
+        "archive": "magma-alpi-green-120x278.zip",
+        "entry": "alpi_green_120x278_F1.tif",
+        "crc32": "0ee1f4ff",
+        "size": 83074396,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": null,
+        "finish": "СИЛК И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 3
+      }
     },
     "600180000073": {
       "file": "600180000073-067ce799.webp",
@@ -32,7 +54,18 @@
       },
       "sourceUrl": "architalon:magma-dover-tiger-120x278.zip/dover_tiger_120x278_F1.tif",
       "evidence": "Текстура ARCHITALON (Italon), архив magma-dover-tiger-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «МАГМА ДОВЕР ТАЙГЕР 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
-      "addedOn": "2026-10-23"
+      "addedOn": "2026-10-23",
+      "face": "F1",
+      "provenance": {
+        "archive": "magma-dover-tiger-120x278.zip",
+        "entry": "dover_tiger_120x278_F1.tif",
+        "crc32": "d444b8ef",
+        "size": 83191288,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": null,
+        "finish": "СИЛК И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4
+      }
     },
     "600180000087": {
       "file": "600180000087-abdfe6a1.webp",
@@ -43,7 +76,18 @@
       },
       "sourceUrl": "architalon:status-copper-120x278.zip/copper_120x278_F1.tif",
       "evidence": "Текстура ARCHITALON (Italon), архив status-copper-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «СТАТУС КОППЕР 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
-      "addedOn": "2026-10-23"
+      "addedOn": "2026-10-23",
+      "face": "F1",
+      "provenance": {
+        "archive": "status-copper-120x278.zip",
+        "entry": "copper_120x278_F1.tif",
+        "crc32": "39d8d72a",
+        "size": 95936504,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": null,
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4
+      }
     },
     "600180000086": {
       "file": "600180000086-8c679c3a.webp",
@@ -54,7 +98,18 @@
       },
       "sourceUrl": "architalon:status-corten-120x278.zip/corten_120x278_F1.tif",
       "evidence": "Текстура ARCHITALON (Italon), архив status-corten-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «СТАТУС КОРТЕН 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
-      "addedOn": "2026-10-23"
+      "addedOn": "2026-10-23",
+      "face": "F1",
+      "provenance": {
+        "archive": "status-corten-120x278.zip",
+        "entry": "corten_120x278_F1.tif",
+        "crc32": "e841c85e",
+        "size": 94746544,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": null,
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4
+      }
     }
   }
 }
