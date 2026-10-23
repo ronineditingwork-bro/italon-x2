@@ -177,6 +177,7 @@
 .lab-card { display: flex; flex-direction: column; gap: 3px; padding: 0; text-align: left; font: inherit; color: var(--l-text); background: none; border: 0; cursor: pointer; text-decoration: none; min-width: 0; content-visibility: auto; contain-intrinsic-size: 220px; }
 .lab-card__img { position: relative; display: block; aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: #1a1a1e; border: 1px solid var(--l-line); margin-bottom: 6px; transition: border-color .2s; }
 .lab-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lab-card__img img[hidden] { display: none; }
 .lab-card:hover .lab-card__img { border-color: rgba(217, 185, 138, .7); }
 .lab-card.is-current .lab-card__img { border-color: var(--l-accent); box-shadow: 0 0 0 1px var(--l-accent); }
 .lab-card em { position: absolute; left: 6px; bottom: 6px; font-style: normal; font-size: 10.5px; letter-spacing: .02em; padding: 3px 7px; border-radius: 10px; background: rgba(8, 8, 10, .78); color: var(--l-accent); backdrop-filter: blur(6px); }
@@ -202,14 +203,14 @@
 @media (max-width: 760px) {
   .lab__brand span { display: none; }
   .lab__top { grid-template-columns: auto 1fr auto; }
-  .lab__hero { top: 84px; }
+  .lab__hero { top: 108px; }
   .lab__hero h1 { font-size: clamp(40px, 13vw, 64px); }
   .lab__lead { font-size: 13px; margin-top: 14px; }
   .lab__gallery { left: 0; right: 0; bottom: calc(52px + env(safe-area-inset-bottom)); padding: 0 12px; transition: bottom .3s; }
   .lab__gallery-head p { display: none; }
   .lab__gallery-head h2 { font-size: 18px; }
   .lab-mat { width: 88px; } .lab-mat b { font-size: 12.5px; } .lab-mat small { font-size: 10px; }
-  .lab__status { top: 58px; }
+  .lab__status { top: 56px; font-size: 11.5px; max-width: 92vw; }
   .lab__panel { inset: auto 0 0 0; width: auto; max-height: 340px; border-radius: 20px 20px 0 0; border-width: 1px 0 0; padding-bottom: env(safe-area-inset-bottom); }
   .lab__panel.is-folded { max-height: calc(48px + env(safe-area-inset-bottom)); }
   .lab:has(.lab__panel:not(.is-folded)) .lab__gallery { bottom: 346px; }
