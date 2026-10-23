@@ -29,6 +29,7 @@ export class Canvas2DView {
     const m = [ppcm * b.R[0], -ppcm * b.U[0], ppcm * b.R[1], -ppcm * b.U[1]];
     const ox = W / 2 - (m[0] * cam.center[0] + m[2] * cam.center[1]), oy = H / 2 - (m[1] * cam.center[0] + m[3] * cam.center[1]);
     g.setTransform(m[0], m[1], m[2], m[3], ox, oy);
+    if (state.wall) { const r = state.wall.rect; g.beginPath(); g.rect(r[0], r[1], r[2] - r[0], r[3] - r[1]); g.clip(); }
     g.fillStyle = jc.color || '#' + mat.avgHex; g.fillRect(x0, y0, x1 - x0, y1 - y0);
     const img = mat.source, iw = img.width || img.naturalWidth, ih = img.height || img.naturalHeight;
     for (let row = r0; row <= r1; row++) {
@@ -37,8 +38,14 @@ export class Canvas2DView {
         const tx = col * px + shift + joint / 2, ty = row * py + joint / 2;
         const c = col + HASH_OFFSET, r = row + HASH_OFFSET, a = hash2(c, r), bb = hash2(c + 7919, r + 104729), cc = hash2(r * 31 + 5, c * 17 + 3), dd = hash2(c ^ 23505, r ^ 112755);
         const sw = Math.min(1, w / mat.photo[0]), sh = Math.min(1, h / mat.photo[1]);
-        g.save(); g.translate(tx + (a > 0.5 ? w : 0), ty + (bb > 0.5 ? 0 : h)); g.scale(a > 0.5 ? -1 : 1, bb > 0.5 ? 1 : -1);
-        g.drawImage(img, cc * (1 - sw) * iw, dd * (1 - sh) * ih, sw * iw, sh * ih, 0, 0, w, h); g.restore();
+        const vary = !state.wall; g.save();
+        if (state.turn) {                            // плита повёрнута: рисунок поворачивается на 90° против часовой стрелки, а не растягивается
+          g.translate(tx, ty + h); g.scale(1, -1); g.translate(0, h); g.rotate(-Math.PI / 2); g.drawImage(img, 0, 0, iw, ih, 0, 0, h, w);
+        } else {
+          g.translate(tx + (vary && a > 0.5 ? w : 0), ty + (vary && bb > 0.5 ? 0 : h)); g.scale(vary && a > 0.5 ? -1 : 1, vary && bb > 0.5 ? 1 : -1);
+          g.drawImage(img, vary ? cc * (1 - sw) * iw : 0, vary ? dd * (1 - sh) * ih : 0, sw * iw, sh * ih, 0, 0, w, h);
+        }
+        g.restore();
       }
     }
     g.restore();

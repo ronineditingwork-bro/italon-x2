@@ -82,7 +82,12 @@ if (existsSync(featuresPath)) {
   pickerJson = JSON.stringify({ v: features.version, items });
   await emit('data/picker.json', pickerJson);
 }
-const buildId = createHash('sha256').update(catalogJson + pickerJson + JSON.stringify(hashes)).digest('hex').slice(0, 10);
+// Оригиналы высокого разрешения для MATERIAL LAB (data/lab-originals.json → проверка → public/data/lab-originals.json); подробности — scripts/lab-originals.mjs
+const { buildOriginals } = await import(pathToFileURL(resolve(root, 'scripts/lab-originals.mjs')).href);
+const originals = await buildOriginals({ products: catalog.products, log: m => !quiet && console.warn('lab:', m) });
+const originalsJson = JSON.stringify({ v: 1, items: originals.items });
+await emit('data/lab-originals.json', originalsJson);
+const buildId = createHash('sha256').update(catalogJson + pickerJson + originalsJson + JSON.stringify(hashes)).digest('hex').slice(0, 10);
 
 // ---------- 3. Страницы ----------
 const { layout } = await import(pathToFileURL(resolve(site, 'layout.mjs')).href);

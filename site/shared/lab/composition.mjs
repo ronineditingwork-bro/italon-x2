@@ -10,6 +10,7 @@ export function encode(s) {
   q.set('l', String(MODES.indexOf(s.mode) < 0 ? 0 : MODES.indexOf(s.mode)));
   if (s.mode === 'time') q.set('h', String(Math.round(((s.hour % 24) + 24) % 24 * 10) / 10));
   q.set('f', s.format + (s.turned ? 'r' : '')); q.set('j', String(s.jointMm)); q.set('c', s.jointColor); q.set('k', s.bond);
+  if (s.view === 'slabs') { q.set('w', 's'); q.set('n', String(s.slabs || 2)); }
   if (s.cam) q.set('v', [s.cam.rot, s.cam.tilt, s.cam.ppcm].map(x => Math.round(x * 100) / 100).join(','));
   return q.toString();
 }
@@ -23,6 +24,7 @@ export function decode(text) {
   const j = Number(q.get('j')); if (q.has('j') && Number.isFinite(j)) out.jointMm = clamp(j, 0, JOINT_MAX_MM);
   const c = q.get('c'); if (JOINT_COLORS.some(x => x.id === c)) out.jointColor = c;
   const k = q.get('k'); if (BONDS.some(x => x.id === k)) out.bond = k;
+  if (q.get('w') === 's') { out.view = 'slabs'; const n = Math.round(Number(q.get('n'))); out.slabs = Number.isFinite(n) ? clamp(n, 1, 4) : 2; }
   const v = (q.get('v') || '').split(',').map(Number); if (v.length === 3 && v.every(Number.isFinite)) out.cam = { rot: clamp(v[0], -7, 7), tilt: clamp(v[1], 0, 1.08), ppcm: clamp(v[2], 1.2, 40) };
   return out;
 }

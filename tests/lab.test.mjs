@@ -11,7 +11,13 @@ import { buildNormalMap, averageColor } from '../site/shared/lab/maps.mjs';
 import { detectTier, Adaptive, LEVELS, START_LEVEL } from '../site/shared/lab/perf.mjs';
 import { choreograph, sweepFor, lightAt, easeInOut } from '../site/shared/lab/motion.mjs';
 import { FEATURED, FEATURED_CODES, featuredEntries } from '../site/shared/lab/materials.mjs';
-import { labAsset, parseFormat, cleanName, surfaceFor, toEntry, buildIndex, search, classify, filterEntries, facetsOf, sortEntries, HD_MIN_SIDE, COLOR_FAMILIES } from '../site/shared/lab/catalog.mjs';
+import { labAsset, parseFormat, cleanName, surfaceFor, toEntry, buildIndex, search, classify, filterEntries, facetsOf, sortEntries, HD_MIN_SIDE, COLOR_FAMILIES, SLAB_FORMAT, SLAB_PRIORITY, isSlab, slabList, checkOriginal, applyOriginals } from '../site/shared/lab/catalog.mjs';
+import { imageSize } from '../site/shared/lab/image-size.mjs';
+import { buildOriginals } from '../scripts/lab-originals.mjs';
+import { lightAtWall, WALL_PRESETS } from '../site/shared/lab/motion.mjs';
+import { deflateSync } from 'node:zlib';
+import { mkdtempSync, writeFileSync, mkdirSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { skyAt, formatHour, presetOf, PRESETS, WORLD } from '../site/shared/lab/timeofday.mjs';
 import { encode, decode } from '../site/shared/lab/composition.mjs';
 import { attributesOf } from '../site/shared/picker-text.mjs';
@@ -174,4 +180,68 @@ test('движение: шторка перехода покрывает кад�
   assert.ok(st(7).cam.ppcm > st(0).cam.ppcm); assert.equal(easeInOut(0), 0); assert.equal(easeInOut(1), 1);
   const tb = { ...base, mode: 'time', hour: 13 }, tt = t => choreograph(tb, t, { duration: 7 });
   assert.ok(tt(0).hour < tt(3.5).hour && tt(3.5).hour < tt(7).hour && tt(0).sky && tt(7).sky.key === 'moon', 'в режиме суток ролик — смена времени суток');
+});
+
+// ------------------------------------------------------------------------------------------------ слэбы 120×278
+test('слэбы: в каталоге ровно 57 изделий 120×278 из 16 коллекций; ящик и мозаика не входят; примеры из задачи идут первыми', () => {
+  const slabs = slabList(entries); assert.equal(slabs.length, 57); assert.equal(new Set(slabs.map(e => e.collectionId)).size, 16);
+  assert.ok(slabs.every(e => e.formatKey === SLAB_FORMAT && e.eligible && e.photo[0] === 120 && e.photo[1] === 278)); assert.ok(!slabs.some(e => e.code === '450080000001'), 'транспортный ящик');
+  assert.deepEqual(slabs.slice(0, SLAB_PRIORITY.length).map(e => e.code), SLAB_PRIORITY); assert.ok(isSlab(slabs[0]) && !isSlab(eligible.find(e => e.formatKey === '60X60')));
+  const p = products.filter(p => String(p.format).toUpperCase() === SLAB_FORMAT && String(p.name).toUpperCase().indexOf('ЯЩИК') < 0); assert.ok(p.length >= 57);
+  assert.ok(slabs.every(e => e.imgW >= 147 && e.imgW <= 150 && e.imgH === 341), 'все 57 фото каталога — 147–150×341'); assert.ok(slabs.every(e => e.quality === 'lite' && e.surf.relief === 0 && e.surf.micro === 0), 'упрощённый режим без дорисовки');
+  assert.ok(slabs.every(e => /^\d{12}$/.test(e.code) && e.priceText.includes('₽') && e.href.endsWith(`product/${e.code}/`)), 'цены и ссылки — из каталога');
+  const named = Object.fromEntries(slabs.map(e => [e.code, e.name])); assert.equal(named['600180000132'], 'Прима Деним Рэд'); assert.equal(named['600180000133'], 'Прима Волкано Грин'); assert.equal(named['600180000086'], 'Статус Кортен'); assert.equal(named['600180000076'], 'Аура Калакатта Скай'); assert.equal(named['600180000072'], 'Магма Альпи Грин');
+});
+test('слэбы находятся поиском по названию, коллекции и артикулу', () => {
+  assert.equal(search(index, 'калакатта').filter(isSlab)[0].code.slice(0, 8), '60018000'); assert.equal(search(index, '600180000133')[0].name, 'Прима Волкано Грин'); 
+  assert.ok(search(index, 'стелларис', { limit: 200 }).filter(isSlab).length >= 9, 'коллекция Стелларис: 9 слэбов'); assert.ok(search(index, '120x278', { limit: 200 }).filter(isSlab).length >= 50);
+});
+test('имена слэбов: сокращённый префикс коллекции раскрывается', () => { assert.equal(cleanName('ПРИ.ВОЛКАНО ГРИН 120X278 ЛЮКС', 'ПРИМА'), 'Прима Волкано Грин'); assert.equal(cleanName('АВА.БЛЭК 120X278', 'АВАНГАРД'), 'Авангард Блэк'); assert.equal(cleanName('СТАТУС КОРТЕН 120X278', 'СТАТУС'), 'Статус Кортен'); });
+test('свет у стены: орбита в границах, высота — расстояние от стены', () => {
+  for (let a = 0; a < 7; a += 0.5) for (const m of ['day', 'evening', 'side']) { const l = lightAtWall(m, a); assert.ok(Math.abs(l.x) <= 160 && Math.abs(l.y) <= 90 && l.h >= 6 && l.h <= 100, JSON.stringify(l)); }
+  assert.ok(WALL_PRESETS.side.h < WALL_PRESETS.day.h, 'боковой свет скользит ближе к стене');
+});
+test('ссылка на композицию хранит раздел слэбов и число плит', () => {
+  const s = { view: 'slabs', slabs: 3, code: '600180000076', second: '600180000133', compare: true, mode: 'evening', hour: 13, format: '60x60', turned: true, jointMm: 3, jointColor: 'tone', bond: 'straight', cam: { rot: 0, tilt: 0.04, ppcm: 1.4 } };
+  const back = decode(encode(s)); assert.equal(back.view, 'slabs'); assert.equal(back.slabs, 3); assert.equal(back.code, '600180000076'); assert.equal(back.turned, true); assert.equal(decode('w=s&n=99').slabs, 4); assert.equal(decode('w=s&n=x').slabs, 2); assert.equal(decode('m=600180000076').view, undefined);
+});
+// --- оригиналы высокого разрешения
+const png = (w, h) => {
+  const crcT = new Uint32Array(256).map((_, n) => { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; return c >>> 0; });
+  const crc = b => { let c = 0xffffffff; for (const x of b) c = crcT[(c ^ x) & 255] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; };
+  const chunk = (t, d) => { const len = Buffer.alloc(4); len.writeUInt32BE(d.length); const td = Buffer.concat([Buffer.from(t), d]), c = Buffer.alloc(4); c.writeUInt32BE(crc(td)); return Buffer.concat([len, td, c]); };
+  const ihdr = Buffer.alloc(13); ihdr.writeUInt32BE(w, 0); ihdr.writeUInt32BE(h, 4); ihdr[8] = 8; ihdr[9] = 2;
+  const raw = Buffer.alloc((w * 3 + 1) * h); for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const o = y * (w * 3 + 1) + 1 + x * 3; raw[o] = (x * 255 / w) | 0; raw[o + 1] = (y * 255 / h) | 0; raw[o + 2] = 128; }
+  return Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), chunk('IHDR', ihdr), chunk('IDAT', deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]);
+};
+test('размер файла по заголовку: PNG, JPEG, WebP; мусор — null', () => {
+  assert.deepEqual(imageSize(png(321, 123)), { type: 'png', width: 321, height: 123 });
+  const jpg = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0, 4, 0, 0, 0xff, 0xc0, 0, 17, 8, 0x06, 0x84, 0x02, 0xd0, 3, 1, 0x22, 0, 2, 0x11, 1, 3, 0x11, 1]); assert.deepEqual(imageSize(jpg), { type: 'jpeg', width: 720, height: 1668 });
+  const webp = Buffer.alloc(30); webp.write('RIFF', 0); webp.write('WEBP', 8); webp.write('VP8X', 12); webp.writeUIntLE(719, 24, 3); webp.writeUIntLE(1667, 27, 3); assert.deepEqual(imageSize(webp), { type: 'webp', width: 720, height: 1668 });
+  assert.equal(imageSize(Buffer.from('not an image at all, just text')), null);
+});
+test('оригинал принимается только с совпадающими пропорциями и достаточным размером; растягивать нельзя', () => {
+  const slab = products.find(p => p.code === '600180000076'), ok = { src: 'media/lab/x.jpg', width: 720, height: 1668 };
+  assert.equal(checkOriginal(slab, ok), ''); assert.match(checkOriginal(slab, { ...ok, width: 1668, height: 720 }), /пропорции/); assert.match(checkOriginal(slab, { ...ok, width: 1000, height: 1000 }), /пропорции/);
+  assert.match(checkOriginal(slab, { ...ok, width: 300, height: 695 }), /меньше/); assert.match(checkOriginal(slab, { src: 'x' }), /размер/); assert.match(checkOriginal({ format: 'МОЗАИКА 30X30' }, ok), /формат/);
+  const out = applyOriginals(products, { items: { '600180000076': ok, '600180000133': { ...ok, width: 900, height: 900 } } });
+  const a = out.find(p => p.code === '600180000076'), b = out.find(p => p.code === '600180000133'); assert.equal(a.image.width, 720); assert.equal(a.image.original, true); assert.equal(b.image.width, products.find(p => p.code === '600180000133').image.width, 'неподходящий оригинал игнорируется');
+  const e = toEntry(a, { root: './' }); assert.equal(e.quality, 'hd'); assert.equal(e.original, true); assert.ok(e.surf.relief > 0 && e.maxPpcm === 40); assert.equal(applyOriginals(products, null), products);
+});
+test('сборка оригиналов: нужен источник и подтверждение, файл с верными пропорциями и контрольной суммой; всё лишнее отклоняется с причиной', async () => {
+  const dir = mkdtempSync(resolve(tmpdir(), 'lab-orig-')), media = resolve(dir, 'media'); mkdirSync(media);
+  const good = png(720, 1668), bad = png(800, 800); writeFileSync(resolve(media, 'good.png'), good); writeFileSync(resolve(media, 'bad.png'), bad);
+  const { createHash } = await import('node:crypto'), sha = b => createHash('sha256').update(b).digest('hex');
+  const man = { v: 1, items: {
+    '600180000076': { file: 'good.png', sha256: sha(good), sourceUrl: 'https://example.test/original', evidence: 'проверено вручную по артикулу' },
+    '600180000133': { file: 'bad.png', sourceUrl: 'https://example.test/x', evidence: 'проверено' },
+    '600180000132': { file: 'good.png', evidence: 'нет источника' },
+    '600180000086': { file: 'good.png', sha256: 'deadbeef', sourceUrl: 'https://example.test/y', evidence: 'проверено' },
+    '600180000087': { file: 'missing.png', sourceUrl: 'https://example.test/z', evidence: 'проверено' },
+    '000000000000': { file: 'good.png', sourceUrl: 'https://example.test/q', evidence: 'нет в каталоге' } } };
+  writeFileSync(resolve(dir, 'man.json'), JSON.stringify(man)); const log = [];
+  const r = await buildOriginals({ products, manifestPath: resolve(dir, 'man.json'), dir: media, log: m => log.push(m) });
+  assert.deepEqual(Object.keys(r.items), ['600180000076']); assert.equal(r.items['600180000076'].width, 720); assert.equal(r.items['600180000076'].src, 'media/lab/good.png');
+  assert.equal(r.rejected.length, 5); const why = Object.fromEntries(r.rejected.map(x => [x.code, x.reason])); assert.match(why['600180000133'], /пропорции/); assert.match(why['600180000132'], /источник/); assert.match(why['600180000086'], /контрольная/); assert.match(why['600180000087'], /нет файла/); assert.match(why['000000000000'], /каталоге/);
+  assert.deepEqual((await buildOriginals({ products, manifestPath: resolve(dir, 'none.json'), dir: media })).items, {}, 'нет файла списка — нет оригиналов');
 });

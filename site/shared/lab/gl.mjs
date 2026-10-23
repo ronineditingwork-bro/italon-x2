@@ -20,6 +20,7 @@ uniform int uSlotOf[2]; uniform vec2 uPhoto[2]; uniform vec4 uSurf[2]; uniform v
 uniform int uSweepOn; uniform float uSweepPos; uniform vec2 uSweepDir; uniform float uSweepSoft; uniform float uSweepLine; uniform float uSweepGlow;
 uniform int uMode; uniform vec3 uLight; uniform vec2 uCenter; uniform float uExposure; uniform float uTime;
 uniform vec3 uSunDir, uSunCol, uSkyAmb, uLampCol, uGlow;
+uniform int uWall; uniform vec4 uWallRect; uniform int uTurn;
 uniform int uQ; uniform int uDebug; uniform float uTone; uniform float uAspect;
 uniform sampler2D uAlbedo0, uAlbedo1, uNormal0, uNormal1;
 out vec4 outColor;
@@ -86,6 +87,8 @@ Lit lighting(vec3 P) {
     vec2 h = lp.xy - uCenter; float el = mix(0.07, 0.42, clamp((lp.z - 8.0) / 110.0, 0.0, 1.0));
     vec3 d = vec3(normalize(h + 1e-4) * cos(el), sin(el)); o.L = normalize(d);
     o.color = vec3(0.96, 0.975, 1.0) * 3.6; o.amb = vec3(0.045, 0.05, 0.06); o.shadowK = 1.0; o.envK = 0.25;
+  } else if (uWall == 1) {      // сутки у стены: ключевой свет сбоку, цвет и сила — по часу суток
+    o.L = normalize(vec3(uSunDir.x * 0.9, 0.25 + 0.45 * max(uSunDir.z, 0.0), 0.62)); o.color = uSunCol * (uSunCol.b > uSunCol.r ? 2.6 : 0.85); o.amb = uSkyAmb * 0.8; o.shadowK = 0.9; o.envK = clamp(dot(uSkyAmb, vec3(0.33)) * 1.4, 0.05, 0.9);
   } else {                      // сутки: солнце или луна сквозь окно + свет неба
     o.L = uSunDir; o.color = uSunCol * windowMask(P, uSunDir); o.amb = uSkyAmb; o.shadowK = 0.9; o.envK = clamp(dot(uSkyAmb, vec3(0.33)) * 1.6, 0.05, 1.0);
   }
@@ -93,7 +96,7 @@ Lit lighting(vec3 P) {
 }
 
 // приближённые тени рельефа и шва: шагаем по лучу к свету по карте высот
-float reliefShadow(vec3 L, vec3 P, float jointK, float relief, float h0, vec2 uv, vec2 duvdp, int s, float shadowK) {
+float reliefShadow(vec3 L, vec3 P, float jointK, float relief, float h0, vec2 uv, vec4 jac, int s, float shadowK) {
   float sh = 1.0;
   if (L.z <= 0.015) return 0.0;
   if (jointK > 0.5) {
@@ -105,7 +108,7 @@ float reliefShadow(vec3 L, vec3 P, float jointK, float relief, float h0, vec2 uv
     float maxD = clamp(relief * 10.0, 0.15, 1.6);
     for (int i = 1; i <= 6; i++) {
       float dist = maxD * float(i) / 6.0;
-      vec2 uv2 = vec2(mirror1(uv.x + dir2.x * dist * duvdp.x), mirror1(uv.y + dir2.y * dist * duvdp.y));
+      vec2 uv2 = vec2(mirror1(uv.x + dist * (dir2.x * jac.x + dir2.y * jac.y)), mirror1(uv.y + dist * (dir2.x * jac.z + dir2.y * jac.w)));
       float hs = texN(s, uv2).a * relief; float rayH = h0 + slope * dist;
       sh = min(sh, 1.0 - clamp((hs - rayH) / (0.03 + relief * 0.12), 0.0, 1.0) * shadowK);
     }
@@ -127,24 +130,26 @@ vec3 lightTerm(vec3 L, vec3 lc, float sh, vec3 N, vec3 V, vec3 albedo, float rou
 // ---- один материал в одной точке ---------------------------------------------------------------------------------------------------
 vec3 shadeMat(int m, vec3 P, vec3 V) {
   Tile t = tileAt(P.xy);
-  vec4 S = uSurf[m]; int s = uSlotOf[m]; vec2 ph = uPhoto[m];
+  vec4 S = uSurf[m]; int s = uSlotOf[m]; vec2 ph = uTurn == 1 ? uPhoto[m].yx : uPhoto[m]; bool vary = uWall == 0;
   vec3 N = vec3(0.0, 0.0, 1.0); vec3 albedo; float rough = S.x; float relief = S.y; float h0 = 0.0; float jointK = 0.0;
-  vec2 duvdp = vec2(0.0); vec2 uv = vec2(0.5); float specK = 1.0;
+  vec4 jac = vec4(0.0); vec2 uv = vec2(0.5); float specK = 1.0;
   Lit Li = lighting(P);
   if (t.inside) {
     int c = t.col + OFF, r = t.row + OFF;
     float a = hash2(c, r), b = hash2(c + 7919, r + 104729), cc = hash2(r * 31 + 5, c * 17 + 3), dd = hash2(c ^ 23505, r ^ 112755);
-    bool fx = a > 0.5, fy = b > 0.5;
+    bool fx = vary && a > 0.5, fy = vary && b > 0.5;
     vec2 tuv = vec2(t.l.x / uTile.x, t.l.y / uTile.y);
     if (fx) tuv.x = 1.0 - tuv.x; if (fy) tuv.y = 1.0 - tuv.y;
     vec2 sw = vec2(uTile.x / ph.x, uTile.y / ph.y);
     vec2 off = vec2(sw.x < 1.0 ? cc * (1.0 - sw.x) : 0.0, sw.y < 1.0 ? dd * (1.0 - sw.y) : 0.0);
     vec2 puv = off + tuv * sw;
-    uv = vec2(mirror1(puv.x), 1.0 - mirror1(puv.y));
-    duvdp = vec2((fx ? -1.0 : 1.0) * sw.x / uTile.x, -(fy ? -1.0 : 1.0) * sw.y / uTile.y);
+    vec2 q2 = vec2(mirror1(puv.x), mirror1(puv.y)); vec2 uvp = uTurn == 1 ? vec2(q2.y, 1.0 - q2.x) : q2;     // поворот плиты на 90°: рисунок поворачивается, а не растягивается
+    uv = vec2(uvp.x, 1.0 - uvp.y);
+    float dxu = (fx ? -1.0 : 1.0) * sw.x / uTile.x, dyv = (fy ? -1.0 : 1.0) * sw.y / uTile.y;
+    jac = uTurn == 1 ? vec4(0.0, dyv, dxu, 0.0) : vec4(dxu, 0.0, 0.0, -dyv);
     albedo = texA(s, uv).rgb;
-    albedo *= 1.0 + (a - 0.5) * uTone;
-    vec4 nmh = texN(s, uv); vec2 nxy = nmh.xy * 2.0 - 1.0; if (fx) nxy.x = -nxy.x; if (fy) nxy.y = -nxy.y;
+    if (vary) albedo *= 1.0 + (a - 0.5) * uTone;
+    vec4 nmh = texN(s, uv); vec2 nxy = nmh.xy * 2.0 - 1.0; if (uTurn == 1) nxy = vec2(-nxy.y, nxy.x); if (fx) nxy.x = -nxy.x; if (fy) nxy.y = -nxy.y;
     float ns = clamp(relief / 0.07, 0.0, 3.2);
     nxy *= ns;
     if (uQ < 2 && S.z > 0.0) { vec2 mp = P.xy * 9.0; nxy += (vec2(vnoise(mp), vnoise(mp + 17.3)) - 0.5) * 2.0 * S.z; }
@@ -163,11 +168,11 @@ vec3 shadeMat(int m, vec3 P, vec3 V) {
   float ao = jointK > 0.5 ? 0.78 : mix(0.82, 1.0, smoothstep(0.0, 0.35, t.edge));
   if (relief > 0.004) ao *= mix(0.78, 1.0, clamp(h0 / relief, 0.0, 1.0));
   vec3 col = albedo * Li.amb * ao;
-  if (dot(Li.color, Li.color) > 1e-5) col += lightTerm(Li.L, Li.color, reliefShadow(Li.L, P, jointK, relief, h0, uv, duvdp, s, Li.shadowK), N, V2, albedo, rough, F0, specK);
+  if (dot(Li.color, Li.color) > 1e-5) col += lightTerm(Li.L, Li.color, reliefShadow(Li.L, P, jointK, relief, h0, uv, jac, s, Li.shadowK), N, V2, albedo, rough, F0, specK);
   if (uMode == 3) {              // лампа в комнате: её положение — «шар света»
     vec3 d = uLight - P; float r = length(d); vec3 Ll = d / r; float att = 1.0 / (1.0 + pow(r / 95.0, 2.0));
     vec3 lc = uLampCol * att;
-    if (dot(lc, lc) > 1e-5) col += lightTerm(Ll, lc, reliefShadow(Ll, P, jointK, relief, h0, uv, duvdp, s, 0.8), N, V2, albedo, rough, F0, specK);
+    if (dot(lc, lc) > 1e-5) col += lightTerm(Ll, lc, reliefShadow(Ll, P, jointK, relief, h0, uv, jac, s, 0.8), N, V2, albedo, rough, F0, specK);
   }
   if (uQ < 2) {
     vec3 R = reflect(-V2, N); float NV = max(dot(N, V2), 1e-3); float fe = F0 + (1.0 - F0) * pow(1.0 - NV, 5.0);
@@ -196,11 +201,29 @@ vec3 shadeWall(vec3 P) {
   return col;
 }
 
+vec3 surfaceAt(vec3 P, vec3 V, float mB) {
+  vec3 c0 = vec3(0.0), c1 = vec3(0.0);
+  if (mB < 0.998) c0 = shadeMat(0, P, V);
+  if (mB > 0.002) c1 = shadeMat(1, P, V);
+  return mix(c0, c1, mB);
+}
+// ---- окружение стены: тёмный зал; полированный пол отражает стену (само отражение считается тем же вызовом surfaceAt, что и стена) ----
+vec3 backdropBase(vec3 P) {
+  vec3 col = vec3(0.016, 0.016, 0.019);
+  float x0 = uWallRect.x, x1 = uWallRect.z, y0 = uWallRect.y;
+  if (P.y < y0) {
+    float dist = y0 - P.y, inX = step(x0, P.x) * step(P.x, x1);
+    col += uAvg[0] * 0.05 * exp(-dist / 30.0) * inX;
+    vec3 d = uLight - vec3(P.x, P.y, 0.0); col += uLampCol * 0.006 / (1.0 + dot(d, d) / 9000.0);
+  }
+  return col;
+}
+
 void main() {
   vec2 p = gl_FragCoord.xy - 0.5 * uRes;
   vec3 d = normalize(uF + uR * (p.x / uFpx) + uU * (p.y / uFpx));
   vec2 suv = gl_FragCoord.xy / uRes;
-  bool room = uMode == 3 && uDebug == 0;
+  bool room = uMode == 3 && uWall == 0 && uDebug == 0;
   bool hasFloor = d.z < -0.0006; float tf = hasFloor ? -uEye.z / d.z : 1e9;
   if (hasFloor && room && (uEye + d * tf).y > WALL_Y) { hasFloor = false; tf = 1e9; }
   vec3 col; float t = tf;
@@ -217,7 +240,19 @@ void main() {
     if (uDebug == 1) { Tile tt = tileAt(P.xy); int c = tt.col + OFF, r = tt.row + OFF; outColor = vec4(hash2(c, r), tt.inside ? 1.0 : 0.0, clamp(tt.edge * 8.0 + 0.5, 0.0, 1.0), 1.0); return; }
     float mB = 0.0; float dd = 0.0;
     if (uSweepOn == 1) { dd = dot(vec2((suv.x - 0.5) * uAspect, suv.y - 0.5), uSweepDir); mB = 1.0 - smoothstep(uSweepPos - uSweepSoft, uSweepPos + uSweepSoft, dd); }
-    if (mB <= 0.002) col = shadeMat(0, P, V); else if (mB >= 0.998) col = shadeMat(1, P, V); else col = mix(shadeMat(0, P, V), shadeMat(1, P, V), mB);
+    vec3 Ps = P; float wgt = 1.0, keep = 0.0; vec3 base = vec3(0.0);
+    if (uWall == 1) {                       // край стены сглаживается по размеру пикселя на поверхности; пол отражает стену
+      float fp = tf / uFpx / max(-d.z, 0.2), e = min(min(P.x - uWallRect.x, uWallRect.z - P.x), min(P.y - uWallRect.y, uWallRect.w - P.y)), cov = clamp(e / max(fp, 1e-4) + 0.5, 0.0, 1.0);
+      base = backdropBase(P); wgt = cov; keep = 1.0 - cov;
+      if (cov <= 0.0) {
+        float dist = uWallRect.y - P.y, inX = step(uWallRect.x, P.x) * step(P.x, uWallRect.z);
+        wgt = P.y < uWallRect.y ? exp(-dist / 55.0) * 0.42 * inX : 0.0; keep = 1.0;
+        Ps = vec3(clamp(P.x, uWallRect.x + 0.01, uWallRect.z - 0.01), uWallRect.y + max(dist, 0.0), 0.0);
+        if (Ps.y >= uWallRect.w) wgt = 0.0;
+      }
+    }
+    col = base * keep;
+    if (wgt > 0.01) col += surfaceAt(Ps, V, mB) * wgt;
     if (uSweepOn == 1) {
       float g = exp(-pow((dd - uSweepPos) / 0.012, 2.0)) * uSweepGlow;
       float line = (1.0 - smoothstep(0.0, 0.0016, abs(dd - uSweepPos))) * uSweepLine;
@@ -341,6 +376,7 @@ export class LabGL {
     const sky = state.sky || { sunDir: [0, 0.6, 0.8], sunCol: [0, 0, 0], amb: [0.1, 0.1, 0.1], lamp: [0, 0, 0], glow: [0.1, 0.1, 0.1], exposure: 1 };
     gl.uniform3f(u.uSunDir, ...sky.sunDir); gl.uniform3f(u.uSunCol, ...sky.sunCol); gl.uniform3f(u.uSkyAmb, ...sky.amb); gl.uniform3f(u.uLampCol, ...sky.lamp); gl.uniform3f(u.uGlow, ...sky.glow);
     gl.uniform1f(u.uExposure, (EXPOSURE[state.mode] ?? 1) * (state.mode === 'time' ? sky.exposure : 1) * (state.exposure ?? 1)); gl.uniform1f(u.uTime, time);
+    gl.uniform1i(u.uWall, state.wall ? 1 : 0); gl.uniform4f(u.uWallRect, ...(state.wall?.rect || [0, 0, 0, 0])); gl.uniform1i(u.uTurn, state.turn ? 1 : 0);
     gl.uniform1i(u.uQ, state.q ?? LEVELS[this.level].q); gl.uniform1i(u.uDebug, debug ? 1 : 0); gl.uniform1f(u.uTone, state.tone ?? 0.05);
     gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, slots[0].albedo); gl.uniform1i(u.uAlbedo0, 0);
     gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, slots[1].albedo); gl.uniform1i(u.uAlbedo1, 1);

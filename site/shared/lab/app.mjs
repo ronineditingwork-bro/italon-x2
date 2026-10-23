@@ -5,10 +5,10 @@ import { Canvas2DView } from './canvas2d.mjs';
 import { unproject, project, panBy, zoomAt, clampTilt, basis } from './camera.mjs';
 import { FORMATS, tileAt, variantOf, jointCm } from './layout.mjs';
 import { detectTier, Adaptive, LEVELS, START_LEVEL } from './perf.mjs';
-import { lightAt, LIGHT_PRESETS, sweepFor, easeInOut, clamp01 } from './motion.mjs';
+import { lightAt, lightAtWall, LIGHT_PRESETS, WALL_PRESETS, sweepFor, easeInOut, clamp01 } from './motion.mjs';
 import { exportStill, exportVideo, videoSupport, EXPORT_SIZES } from './export.mjs';
 import { skyAt, formatHour, presetOf, PRESETS, ROOM_CAM } from './timeofday.mjs';
-import { toEntry, buildIndex, classify } from './catalog.mjs';
+import { toEntry, buildIndex, classify, applyOriginals, slabList, isSlab, SLAB_FORMAT, SLAB_PRIORITY } from './catalog.mjs';
 import { createCatalogUI } from './catalog-ui.mjs';
 import { matCard } from './ui.mjs';
 import { encode, decode } from './composition.mjs';
@@ -18,6 +18,7 @@ import { FEATURED_CODES } from './materials.mjs';
 
 const $ = (r, s) => r.querySelector(s), $$ = (r, s) => [...r.querySelectorAll(s)];
 const PIXEL_CAP = [2.8e6, 2.0e6, 1.2e6, 0.7e6, 0.45e6];
+const SLAB_W = 120, SLAB_H = 278, SLAB_MAX_ROWS_TURNED = 2;
 const HINTS = {
   day: 'Рассеянный свет из окна и далёкое солнце. Положение шара задаёт направление лучей.',
   evening: 'Тёплая лампа рядом с поверхностью: яркое пятно, быстрое затухание, мягкие тени швов.',
@@ -66,19 +67,32 @@ export async function startLab(root, cfg) {
 
   // ---- состояние -----------------------------------------------------------------------------------------------------------
   const st = {
-    a: 0, b: 0, mode: 'evening', light: { x: 40, y: 30, h: 60 }, heightK: 1, hour: 13,
+    view: 'floor', slabs: 2, a: 0, b: 0, mode: 'evening', light: { x: 40, y: 30, h: 60 }, heightK: 1, hour: 13,
     cam: { center: [0, 0], rot: 0, tilt: 0.62, ppcm: 4 }, format: '60x60', turned: false, jointMm: 2, jointColor: 'white', bond: 'straight',
     compare: false, split: 0.5, tone: 0.05, sweep: { on: false }, exposure: 1,
   };
   let angle = LIGHT_PRESETS.evening.phase, hoverUntil = 0, intro0 = performance.now(), auto = !reduced, dragMode = 'move', dirty = true, lastT = 0, trans = null, splitAnim = null, camAnim = null, hourAnim = null, dayPlay = false, camBefore = null;
-  let touched = false, exporting = false, lite = lite0, shareSize = 'story', selToken = 0, slotsKey = '', recents = [];
+  let slabsCache = null, floorSaved = null, touched = false, exporting = false, lite = lite0, shareSize = 'story', selToken = 0, slotsKey = '', recents = [];
   let target = { ...lightAt('evening', angle) };
   const cssSize = () => { const r = canvas.getBoundingClientRect(); return [Math.max(1, r.width), Math.max(1, r.height)]; };
-  const tileDims = () => { const f = FORMATS.find(x => x.id === st.format); return st.turned ? { w: f.h, h: f.w } : { w: f.w, h: f.h }; };
-  const zl = () => [1.2, Math.max(2, cur.maxPpcm || 40)];
+  const tileDims = () => { if (st.view === 'slabs') return st.turned ? { w: SLAB_H, h: SLAB_W } : { w: SLAB_W, h: SLAB_H }; const f = FORMATS.find(x => x.id === st.format); return st.turned ? { w: f.h, h: f.w } : { w: f.w, h: f.h }; };
+  /** Стена из слэбов в реальном масштабе (см): число плит, прямоугольник, центр. Плиты стоят вертикально; повёрнутые — горизонтально, не выше двух. */
+  function wallGeom() {
+    const t = tileDims(), j = jointCm(st.jointMm), cols = st.turned ? 1 : st.slabs, rows = st.turned ? Math.min(st.slabs, SLAB_MAX_ROWS_TURNED) : 1, px = t.w + j, py = t.h + j;
+    const x0 = j / 2, y0 = j / 2, x1 = cols * px - j / 2, y1 = rows * py - j / 2;
+    return { cols, rows, rect: [x0, y0, x1, y1], w: x1 - x0, h: y1 - y0, cx: (x0 + x1) / 2, cy: (y0 + y1) / 2 };
+  }
+  /** Камера «стена целиком»: стена помещается в полосу между верхней строкой и галереей и стоит по её центру. */
+  function wallCam(extra = {}) {
+    const g = wallGeom(), [w, h] = cssSize(), gh = $(root, '[data-gallery]').offsetHeight, open = !$(root, '[data-panel]').classList.contains('is-folded');
+    const galBottom = mobile ? (open ? 346 : 52) : Math.max(12, Math.min(30, h * 0.03)), top = mobile ? 100 : 70, bottom = Math.max(top + 120, h - galBottom - gh - 10), bandH = bottom - top;     // не по текущему положению галереи (оно может быть посреди анимации), а по её итоговому
+    const ppcm = Math.max(0.5, Math.min(0.86 * w / g.w, 0.92 * bandH / g.h, 40)), shift = (h / 2 - (top + bottom) / 2) / ppcm;
+    return { center: [g.cx, g.cy - shift], rot: 0, tilt: 0.04, ppcm, ...extra };
+  }
+  const zl = () => [st.view === 'slabs' ? 0.5 : 1.2, Math.max(2, cur.maxPpcm || 40)];
   const fitZoom = () => { const [w] = cssSize(); st.cam.ppcm = Math.min(zl()[1], Math.max(1.2, w / (mobile ? 130 : 230))); };
   const fallbackless = () => tier !== 'fallback';
-  const resetView = () => { camAnim = null; st.cam.center = [0, 0]; st.cam.rot = 0; st.cam.tilt = fallbackless() ? 0.62 : 0; fitZoom(); if (st.mode === 'time') flyCam(ROOM_CAM); syncSliders(); dirty = true; };
+  const resetView = () => { camAnim = null; if (st.view === 'slabs') { Object.assign(st.cam, wallCam({ tilt: fallbackless() ? 0.04 : 0 })); syncSliders(); dirty = true; return; } st.cam.center = [0, 0]; st.cam.rot = 0; st.cam.tilt = fallbackless() ? 0.62 : 0; fitZoom(); if (st.mode === 'time') flyCam(ROOM_CAM); syncSliders(); dirty = true; };
   function flyCam(to, ms = 1100) { camAnim = { from: { center: [...st.cam.center], rot: st.cam.rot, tilt: st.cam.tilt, ppcm: st.cam.ppcm }, to: { center: [...(to.center || st.cam.center)], rot: to.rot ?? st.cam.rot, tilt: to.tilt ?? st.cam.tilt, ppcm: to.ppcm ?? st.cam.ppcm }, t0: performance.now(), dur: reduced ? 1 : ms }; dirty = true; }
   function resize() {
     const [w, h] = cssSize(), dpr = Math.min(devicePixelRatio || 1, 2), lv = LEVELS[view.level ?? level] || LEVELS[0];
@@ -94,7 +108,8 @@ export async function startLab(root, cfg) {
   }
   function syncSlots() { const w = wanted(), key = w.slots.map(m => m.key).join('|'); if (key !== slotsKey) { view.setSlots(w.slots); slotsKey = key; } return w; }
   function renderState() {
-    const w = wanted(), s = { ...st, a: w.a, b: w.b, tile: tileDims(), joint: jointCm(st.jointMm), light: { ...st.light } };
+    const w = wanted(), s = { ...st, a: w.a, b: w.b, tile: tileDims(), joint: jointCm(st.jointMm), light: { ...st.light }, turn: st.turned };
+    if (st.view === 'slabs') { s.wall = { rect: wallGeom().rect }; s.tone = 0; s.bond = 'straight'; }
     const sw = { ...st.sweep };
     if (st.compare && secM && !trans) { const aspect = canvas.width / canvas.height; Object.assign(sw, { on: true, pos: (st.split - 0.5) * aspect, dir: [1, 0], soft: 0.0015, line: true, glow: 0 }); }
     else if (trans) sw.line = false; else sw.on = false;
@@ -104,7 +119,7 @@ export async function startLab(root, cfg) {
   // ---- UI: материал, витрина, товар -----------------------------------------------------------------------------------------------
   const strip = $(root, '[data-strip]');
   function renderStrip() {
-    const list = [...recents.filter(r => !featured.some(f => f.code === r.code)), ...featured];
+    const list = st.view === 'slabs' ? (slabsCache || []) : [...recents.filter(r => !featured.some(f => f.code === r.code)), ...featured];
     strip.innerHTML = list.map(m => matCard(m)).join('');
     $$(strip, '[data-mat]').forEach(b => { const on = b.dataset.mat === cur.code; b.setAttribute('aria-checked', String(on)); if (on) { try { const l = b.offsetLeft - strip.clientWidth / 2 + b.offsetWidth / 2; strip.scrollTo({ left: Math.max(0, l), behavior: reduced || !touched ? 'auto' : 'smooth' }); } catch {} } });
   }
@@ -112,13 +127,23 @@ export async function startLab(root, cfg) {
     $(root, '[data-second-img]').src = sec.image; $(root, '[data-second-name]').textContent = sec.name; $(root, '[data-second-code]').textContent = `арт. ${sec.code} · ${sec.quality === 'hd' ? 'полная симуляция' : 'упрощённо'}`;
     $$(root, '[data-second]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.second === sec.code)));
   };
+  function updateNotice() {
+    const n = $(root, '[data-notice]'), m = cur;
+    if (m.quality === 'hd') { n.hidden = true; return; }
+    $(root, '[data-notice-text]').textContent = st.view === 'slabs' ? `Эскизный просмотр: фото каталога ${m.imgW}×${m.imgH} px, детали не дорисовываются.` : `Упрощённый просмотр: фото ${m.imgW}×${m.imgH} px.`;
+    const a = $(root, '[data-notice-link]'); a.href = m.href; n.hidden = false;
+  }
+  function renderQuick() {
+    const list = st.view === 'slabs' ? (slabsCache || []).slice(0, 10) : featured, q = $(root, '[data-second-quick]');
+    q.innerHTML = list.map(m => `<button type="button" role="radio" aria-checked="${m.code === sec.code}" data-second="${m.code}" title="${m.name}"><img src="${m.image}" alt="${m.name}" width="44" height="44" loading="lazy" decoding="async"></button>`).join('');
+  }
   function updateItem() {
     const m = cur; $(root, '[data-item-collection]').textContent = m.collection; $(root, '[data-item-name]').textContent = m.name;
     $(root, '[data-item-meta]').textContent = `Арт. ${m.code} · ${m.format} · ${m.finish}`; $(root, '[data-item-price]').textContent = m.priceText || '';
     $(root, '[data-item-quality]').textContent = m.quality === 'hd' ? `Полная симуляция света: фото ${m.imgW}×${m.imgH} px.` : `Упрощённый режим: фото ${m.imgW}×${m.imgH} px. Рельеф и зерно не дорисовываются, приближение ограничено.`;
     const link = $(root, '[data-item-link]'); link.href = m.href; const add = $(root, '[data-item-add]');
     if (add) { add.dataset.add = m.code; add.disabled = m.canOrder === false; add.textContent = 'В корзину'; delete add.dataset.label; document.dispatchEvent(new CustomEvent('italon:cart-refresh')); }
-    root.dataset.material = m.code; root.dataset.quality = m.quality;
+    root.dataset.material = m.code; root.dataset.quality = m.quality; updateNotice();
   }
   function touch() { if (!touched) { touched = true; root.classList.add('is-touched'); } }
   let loadingTimer = 0;
@@ -131,7 +156,7 @@ export async function startLab(root, cfg) {
     clearTimeout(loadingTimer); if (my !== selToken) return false; if (!silent) say('');
     const old = curM; if (st.compare && sec.code === entry.code) { sec = cur; secM = old; syncSecond(); }
     cur = entry; curM = m;
-    if (!featured.some(f => f.code === entry.code)) recents = [entry, ...recents.filter(r => r.code !== entry.code)].slice(0, 4);
+    if (st.view === 'floor' && !featured.some(f => f.code === entry.code)) recents = [entry, ...recents.filter(r => r.code !== entry.code)].slice(0, 4);
     if (animate && !st.compare && !reduced && !exporting) trans = { fromM: old, toM: m, t0: performance.now(), dur: 1500 };
     renderStrip(); updateItem(); if (st.cam.ppcm > zl()[1]) flyCam({ ppcm: zl()[1] }, 700); dirty = true; touch(); return true;
   }
@@ -143,7 +168,8 @@ export async function startLab(root, cfg) {
   // ---- каталог ---------------------------------------------------------------------------------------------------------------------
   const loader = {
     async catalog() {
-      const products = cfg.loadProducts ? await cfg.loadProducts() : (await fetchJson(cfg.catalogUrl)).products;
+      let products = cfg.loadProducts ? await cfg.loadProducts() : (await fetchJson(cfg.catalogUrl)).products;
+      try { const man = cfg.loadOriginals ? await cfg.loadOriginals() : (cfg.originalsUrl ? await fetchJson(cfg.originalsUrl) : null); if (man) products = applyOriginals(products, man); } catch { /* оригиналов нет — работаем с фото каталога */ }
       const fe = new Map(featured.map(f => [f.code, f])), byCode = new Map(), prods = new Map(products.map(p => [p.code, p]));
       const entries = products.map(p => { const e = fe.get(p.code) || toEntry(p, { root: HOME_ROOT, imageUrl: cfg.imageUrl }); byCode.set(p.code, e); return e; });
       return { entries, eligible: entries.filter(e => e.eligible), index: buildIndex(products, p => byCode.get(p.code)), byCode, products: prods };
@@ -156,10 +182,51 @@ export async function startLab(root, cfg) {
     },
   };
   const catalogUI = createCatalogUI(root, { loader, featuredCodes: FEATURED_CODES, getCurrent: () => cur, getSecond: () => sec, onPick: (entry, mode) => (mode === 'second' ? selectSecond(entry) : selectEntry(entry)) });
-  $$(root, '[data-open-catalog]').forEach(b => b.addEventListener('click', () => { touch(); catalogUI.open('main', b); }));
-  $(root, '[data-second-open]').addEventListener('click', e => catalogUI.open('second', e.currentTarget));
+  const SLAB_SCOPE = () => ({ format: SLAB_FORMAT, title: 'Слэбы 120×278', sub: 'Большие плиты 120 × 278 см: поиск по названию и артикулу, фильтры по коллекции и цвету', order: SLAB_PRIORITY });
+  const openCatalog = (mode, from) => catalogUI.open(mode, from, st.view === 'slabs' ? SLAB_SCOPE() : null);
+  $$(root, '[data-open-catalog]').forEach(b => b.addEventListener('click', () => { touch(); openCatalog('main', b); }));
+  $(root, '[data-second-open]').addEventListener('click', e => openCatalog('second', e.currentTarget));
   // предзагрузка каталога, когда браузер свободен — окно открывается мгновенно
   (window.requestIdleCallback || (f => setTimeout(f, 2500)))(() => catalogUI.ensure().catch(() => {}), { timeout: 6000 });
+
+  // ---- раздел «Слэбы 120×278»: стена из больших плит в реальном масштабе -----------------------------------------------------------
+  function applyViewUi() {
+    const slabs = st.view === 'slabs';
+    $$(root, '[data-for="slabs"]').forEach(e => { e.hidden = !slabs; }); $$(root, '[data-for="floor"]').forEach(e => { e.hidden = slabs; });
+    $$(root, '[data-view]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.view === st.view)));
+    $(root, '[data-gallery-title]').textContent = slabs ? 'Слэбы 120×278' : 'Выберите материал';
+    $(root, '[data-gallery-sub]').textContent = slabs ? `${(slabsCache || []).length} больших плит в масштабе стены · ${new Set((slabsCache || []).map(e => e.collectionId)).size} коллекций` : `${featured.length} популярных материалов для быстрого старта`;
+    $(root, '[data-open-label]').textContent = slabs ? 'Все слэбы' : 'Все материалы';
+    $(root, '[data-turn-label]').textContent = slabs ? (st.turned ? 'Поставить вертикально' : 'Положить горизонтально') : 'Повернуть на 90°';
+    $(root, '[data-turn]').setAttribute('aria-pressed', String(st.turned));
+    $$(root, '[data-format]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.format === st.format)));
+    $$(root, '[data-slabs]').forEach(b => b.setAttribute('aria-checked', String(+b.dataset.slabs === st.slabs)));
+    $$(root, '[data-jc]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.jc === st.jointColor)));
+    $$(root, '[data-seg="bond"]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.value === st.bond)));
+    $(root, '[data-joint]').value = st.jointMm; $(root, '[data-joint-out]').textContent = String(st.jointMm).replace('.', ',');
+  }
+  let viewBusy = false;
+  async function setView(v, { code, second, instant = false } = {}) {
+    if (viewBusy) return false; if (v === st.view) { applyViewUi(); return true; } viewBusy = true; touch();
+    try {
+      if (v === 'slabs') {
+        say('Загружаю слэбы…'); let d; try { d = await catalogUI.ensure(); } catch (e) { say('Не удалось загрузить каталог слэбов: ' + e.message); applyViewUi(); return false; }
+        const slabs = slabList(d.entries); if (!slabs.length) { say('В каталоге нет слэбов 120×278.'); applyViewUi(); return false; } slabsCache = slabs; say('');
+        floorSaved = { cur, sec, format: st.format, turned: st.turned, bond: st.bond, jointMm: st.jointMm, jointColor: st.jointColor, mode: st.mode, cam: { center: [...st.cam.center], rot: st.cam.rot, tilt: st.cam.tilt, ppcm: st.cam.ppcm } };
+        if (st.compare) await setCompare(false); camBefore = null; selToken++; trans = null; st.sweep = { on: false };
+        st.view = 'slabs'; root.dataset.labView = 'slabs'; st.turned = false; st.bond = 'straight'; st.jointMm = 3; st.jointColor = 'tone';
+        const pick = slabs.find(x => x.code === code) || (isSlab(cur) ? cur : slabs[0]); cur = pick; curM = await loadMaterial(pick); sec = slabs.find(x => x.code === second) || slabs.find(x => x.code !== pick.code);
+        setMode(st.mode, { fly: false }); applyViewUi(); renderStrip(); renderQuick(); syncSecond(); updateItem();
+        const cam = wallCam({ ppcm: Math.min(wallCam().ppcm, zl()[1]) }); if (instant || reduced) Object.assign(st.cam, cam); else flyCam(cam, 1100); syncSliders();
+      } else {
+        const f = floorSaved || { cur: featured[2] || featured[0], sec: featured[0], format: '60x60', turned: false, bond: 'straight', jointMm: 2, jointColor: 'white', mode: 'evening' };
+        st.view = 'floor'; root.dataset.labView = 'floor'; Object.assign(st, { format: f.format, turned: f.turned, bond: f.bond, jointMm: f.jointMm, jointColor: f.jointColor }); selToken++; trans = null; st.sweep = { on: false };
+        cur = f.cur; curM = await loadMaterial(cur); sec = f.sec; setMode(f.mode === 'time' ? 'evening' : f.mode, { fly: false }); applyViewUi(); renderStrip(); renderQuick(); syncSecond(); updateItem();
+        if (f.cam) { if (instant || reduced) Object.assign(st.cam, f.cam); else flyCam(f.cam, 1000); } syncSliders();
+      }
+      dirty = true; return true;
+    } finally { viewBusy = false; applyViewUi(); }
+  }
 
   // ---- режимы света и сутки ------------------------------------------------------------------------------------------------------
   const clock = $(root, '[data-clock]');
@@ -168,9 +235,16 @@ export async function startLab(root, cfg) {
     const h = st.hour; $(root, '[data-hour]').value = h; $(root, '[data-hour-out]').textContent = formatHour(h); const p = PRESETS.find(x => x.id === presetOf(h));
     clock.textContent = `${formatHour(h)} · ${p.label}`; $$(root, '[data-tpreset]').forEach(b => b.setAttribute('aria-checked', String(Math.abs(+b.dataset.at - h) < 0.35)));
   }
+  const lightFor = (mode, a, k) => (st.view === 'slabs' ? lightAtWall(mode, a, k) : lightAt(mode, a, k));
+  const presetOf2 = mode => (st.view === 'slabs' ? WALL_PRESETS[mode] : LIGHT_PRESETS[mode]);
   function setMode(mode, { fly = true } = {}) {
     const was = st.mode; st.mode = mode; $$(root, '[data-mode]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.mode === mode)));
-    $(root, '[data-mode-hint]').textContent = HINTS[mode]; root.dataset.mode = mode; clock.hidden = mode !== 'time';
+    $(root, '[data-mode-hint]').textContent = st.view === 'slabs' && mode === 'time' ? 'Стена в течение суток: цвет и сила света меняются от утра к ночи, лампа у стены — шар света.' : HINTS[mode]; root.dataset.labMode = mode; clock.hidden = mode !== 'time';
+    if (st.view === 'slabs') {
+      if (mode === 'time') { target = { x: -70, y: 40, h: 42 }; st.light = { ...target }; setAuto(false); updateClock(); }
+      else { angle = LIGHT_PRESETS[mode].phase; target = lightAtWall(mode, angle, st.heightK); if (was === 'time') setAuto(!reduced); }
+      stopDay(); syncSliders(); dirty = true; return;
+    }
     if (mode === 'time') {
       if (was !== 'time') { camBefore = { center: [...st.cam.center], rot: st.cam.rot, tilt: st.cam.tilt, ppcm: st.cam.ppcm }; if (fly) flyCam(ROOM_CAM, 1300); else Object.assign(st.cam, { ...ROOM_CAM, center: [...ROOM_CAM.center] }); }
       target = { x: -45, y: -8, h: 95 }; st.light = { ...target }; setAuto(false); updateClock();
@@ -191,11 +265,14 @@ export async function startLab(root, cfg) {
   seg('[data-drag]', 'drag', v => { dragMode = v; });
   seg('[data-size]', 'size', v => { shareSize = v; });
   root.addEventListener('click', e => {
-    const b = e.target.closest('[data-mat]'); if (b) { const code = b.dataset.mat, ent = [...recents, ...featured].find(f => f.code === code); if (ent) selectEntry(ent); }
-    const s2 = e.target.closest('[data-second]'); if (s2) { const ent = featured.find(f => f.code === s2.dataset.second); if (ent) selectSecond(ent); }
+    const b = e.target.closest('[data-mat]'); if (b) { const code = b.dataset.mat, ent = [...recents, ...featured, ...(slabsCache || [])].find(f => f.code === code); if (ent) selectEntry(ent); }
+    const s2 = e.target.closest('[data-second]'); if (s2) { const ent = [...featured, ...(slabsCache || [])].find(f => f.code === s2.dataset.second); if (ent) selectSecond(ent); }
     const tp = e.target.closest('[data-tpreset]'); if (tp) { if (st.mode !== 'time') setMode('time'); stopDay(); setHour(+tp.dataset.at, { animate: true }); touch(); }
   });
-  $(root, '[data-turn]').addEventListener('click', e => { st.turned = !st.turned; e.currentTarget.setAttribute('aria-pressed', String(st.turned)); dirty = true; touch(); });
+  const refitWall = () => { if (st.view === 'slabs') flyCam(wallCam({ ppcm: Math.min(wallCam().ppcm, zl()[1]) }), 700); };
+  $(root, '[data-turn]').addEventListener('click', e => { st.turned = !st.turned; e.currentTarget.setAttribute('aria-pressed', String(st.turned)); applyViewUi(); refitWall(); dirty = true; touch(); });
+  seg('[data-slabs]', 'slabs', v => { st.slabs = +v; refitWall(); });
+  seg('[data-view]', 'view', v => { setView(v); });
   $(root, '[data-auto]').addEventListener('click', () => setAuto(!auto));
   $(root, '[data-reset]').addEventListener('click', resetView);
   $(root, '[data-day-play]').addEventListener('click', () => {
@@ -205,13 +282,13 @@ export async function startLab(root, cfg) {
   });
   const onInput = (sel, fn) => $(root, sel).addEventListener('input', e => { fn(+e.target.value); dirty = true; touch(); });
   onInput('[data-joint]', v => { st.jointMm = v; $(root, '[data-joint-out]').textContent = String(v).replace('.', ','); });
-  onInput('[data-height]', v => { st.heightK = v; if (st.mode === 'time') { st.light.h = target.h = 40 + 55 * v; } else target = lightAt(st.mode, angle, v); });
+  onInput('[data-height]', v => { st.heightK = v; if (st.mode === 'time') { st.light.h = target.h = (st.view === 'slabs' ? 20 : 40) + 55 * v; } else target = lightFor(st.mode, angle, v); });
   onInput('[data-tilt]', v => { camAnim = null; st.cam.tilt = clampTilt(v); });
   onInput('[data-rot]', v => { camAnim = null; pivotRotate(v - st.cam.rot, cssSize()[0] / 2, cssSize()[1] / 2); });
   onInput('[data-hour]', v => { stopDay(); hourAnim = null; st.hour = v; updateClock(); });
   // вкладки и сворачивание панели
   const tabs = $$(root, '[data-tab]'), panel = $(root, '[data-panel]');
-  const unfold = open => { panel.classList.toggle('is-folded', !open); $(root, '[data-fold]').setAttribute('aria-expanded', String(open)); };
+  const unfold = open => { panel.classList.toggle('is-folded', !open); $(root, '[data-fold]').setAttribute('aria-expanded', String(open)); if (st.view === 'slabs' && mobile) setTimeout(refitWall, 340); };
   const openTab = (id, focus) => { tabs.forEach(tb => { const on = tb.dataset.tab === id; tb.setAttribute('aria-selected', String(on)); tb.tabIndex = on ? 0 : -1; if (on && focus) tb.focus(); }); $$(root, '[data-pane]').forEach(p => { p.hidden = p.dataset.pane !== id; }); unfold(true); };
   tabs.forEach(tb => { tb.tabIndex = tb.getAttribute('aria-selected') === 'true' ? 0 : -1; tb.addEventListener('click', () => { touch(); if (tb.getAttribute('aria-selected') === 'true' && !panel.classList.contains('is-folded')) unfold(false); else openTab(tb.dataset.tab); if (tb.dataset.tab === 'time' && st.mode !== 'time') { /* вид сутки включается кнопкой режима или пресетом */ } }); });
   $(root, '[data-panel] .lab__tabs').addEventListener('keydown', e => { if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return; const i = tabs.findIndex(x => x === document.activeElement); if (i < 0) return; const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; openTab(n.dataset.tab, true); e.preventDefault(); });
@@ -289,7 +366,7 @@ export async function startLab(root, cfg) {
     requestAnimationFrame(frame); if (document.hidden || exporting) { lastT = now; return; }
     const dt = Math.min(0.1, (now - lastT) / 1000 || 0.016); lastT = now; let animating = false;
     if (!orbDrag) {
-      if (auto && now > hoverUntil && st.mode !== 'time') { angle += dt * LIGHT_PRESETS[st.mode].speed; target = lightAt(st.mode, angle, st.heightK); }
+      if (auto && now > hoverUntil && st.mode !== 'time') { angle += dt * presetOf2(st.mode).speed; target = lightFor(st.mode, angle, st.heightK); }
       const k = 1 - Math.exp(-dt * (auto ? 9 : 5)); const dx = target.x - st.light.x, dy = target.y - st.light.y, dh = target.h - st.light.h;
       if (Math.abs(dx) + Math.abs(dy) + Math.abs(dh) > 0.01) { st.light.x += dx * k; st.light.y += dy * k; st.light.h += dh * k; animating = true; }
       if (auto && st.mode !== 'time') animating = true;
@@ -341,7 +418,7 @@ export async function startLab(root, cfg) {
     modal.hidden = false; document.addEventListener('keydown', modalKey); $(root, '[data-modal-close]').focus();
   }
   const info = () => ({ collection: cur.collection, title: cur.name, code: cur.code, url: (cfg.siteUrl || 'italon-x2.ru') + cur.path });
-  const composition = () => ({ code: cur.code, second: sec?.code, compare: st.compare, mode: st.mode, hour: st.hour, format: st.format, turned: st.turned, jointMm: st.jointMm, jointColor: st.jointColor, bond: st.bond, cam: st.cam });
+  const composition = () => ({ view: st.view, slabs: st.slabs, code: cur.code, second: sec?.code, compare: st.compare, mode: st.mode, hour: st.hour, format: st.format, turned: st.turned, jointMm: st.jointMm, jointColor: st.jointColor, bond: st.bond, cam: st.cam });
   const shareUrl = () => `${cfg.shareBase || (location.origin + location.pathname)}#${encode(composition())}`;
   const exportLevel = () => (tier === 'fallback' ? 4 : lite ? 3 : Math.min(2, Math.max(0, level)));
   const shot = $(root, '[data-shot]'), vid = $(root, '[data-video]'), prog = $(root, '[data-progress]'), vhint = $(root, '[data-video-hint]');
@@ -377,7 +454,7 @@ export async function startLab(root, cfg) {
   const ro = new ResizeObserver(() => { resize(); dirty = true; }); ro.observe(canvas);
   view.onlost = () => say('Графика была сброшена системой — восстанавливаю…'); view.onrestored = () => { say(''); slotsKey = ''; dirty = true; };
   if (qmode !== 'auto') setQuality(qmode, false); else $$(root, '[data-q]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.q === qmode)));
-  renderStrip(); syncSecond(); updateItem(); fitZoom(); st.light = { ...target }; syncSliders(); describePerf(); say('');
+  renderStrip(); renderQuick(); syncSecond(); updateItem(); applyViewUi(); fitZoom(); st.light = { ...target }; syncSliders(); describePerf(); say('');
   setMode('evening'); updateClock();
   if (hash.format) { st.format = hash.format; st.turned = !!hash.turned; $$(root, '[data-format]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.format === st.format))); $(root, '[data-turn]').setAttribute('aria-pressed', String(st.turned)); }
   if (hash.jointMm !== undefined) { st.jointMm = hash.jointMm; $(root, '[data-joint]').value = hash.jointMm; $(root, '[data-joint-out]').textContent = String(hash.jointMm).replace('.', ','); }
@@ -386,15 +463,18 @@ export async function startLab(root, cfg) {
   if (hash.hour !== undefined) st.hour = hash.hour;
   if (hash.mode && hash.mode !== 'evening') { setMode(hash.mode, { fly: false }); if (hash.mode === 'time') updateClock(); }
   if (hash.cam && hash.mode !== 'time') Object.assign(st.cam, hash.cam);
-  if (hash.code && !hashEntry) catalogUI.ensure().then(d => { const e = d.byCode.get(hash.code); if (e?.eligible) selectEntry(e, { animate: false }); }).catch(() => {});
-  if (hash.second) catalogUI.ensure().then(async d => { const e = d.byCode.get(hash.second); if (e?.eligible) { sec = e; await setCompare(true); } }).catch(() => {});
+  if (hash.view === 'slabs') {
+    if (hash.slabs) st.slabs = hash.slabs; if (hash.format === undefined) { /* стена */ }
+    catalogUI.ensure().then(async d => { if (hash.jointMm !== undefined) st.jointMm = hash.jointMm; const ok = await setView('slabs', { code: hash.code, second: hash.second, instant: true }); if (!ok) return; if (hash.turned !== undefined) st.turned = !!hash.turned; if (hash.jointMm !== undefined) st.jointMm = hash.jointMm; if (hash.jointColor) st.jointColor = hash.jointColor; if (hash.mode) setMode(hash.mode, { fly: false }); if (hash.hour !== undefined) { st.hour = hash.hour; updateClock(); } if (hash.cam) Object.assign(st.cam, hash.cam); applyViewUi(); if (hash.second) { const e = d.byCode.get(hash.second); if (isSlab(e)) { sec = e; await setCompare(true); } } dirty = true; }).catch(() => {});
+  } else if (hash.code && !hashEntry) catalogUI.ensure().then(d => { const e = d.byCode.get(hash.code); if (e?.eligible) selectEntry(e, { animate: false }); }).catch(() => {});
+  if (hash.second && hash.view !== 'slabs') catalogUI.ensure().then(async d => { const e = d.byCode.get(hash.second); if (e?.eligible) { sec = e; await setCompare(true); } }).catch(() => {});
   if (tier === 'fallback') say('Упрощённый вид: WebGL 2 недоступен, наклон и тени рельефа отключены.');
   else if (tier === 'low') say('Включён упрощённый режим: ' + (t.reason || 'слабое устройство') + '.');
   setTimeout(() => touch(), 14000); setTimeout(() => { if (status.textContent.startsWith('Включён') || status.textContent.startsWith('Упрощённый')) say(''); }, 7000);
   requestAnimationFrame(frame);
   const api = {
     lib: { tileAt, variantOf, unproject, project, basis }, st, view, get tier() { return tier; }, get level() { return view.level ?? level; }, setAuto, setMode, setHour, selectEntry, selectSecond, setCompare, resetView, renderState, resize, adaptive, canvas, catalog: catalogUI,
-    get trans() { return trans; }, get cur() { return cur; }, get sec() { return sec; }, featured, markDirty: () => { dirty = true; }, openTab, shareUrl, composition, loadMaterial, syncSlots, get loadedCount() { return matCache.size; },
+    get trans() { return trans; }, get cur() { return cur; }, get sec() { return sec; }, featured, setView, wallGeom, wallCam, get slabs() { return slabsCache; }, markDirty: () => { dirty = true; }, openTab, shareUrl, composition, loadMaterial, syncSlots, get loadedCount() { return matCache.size; },
   };
   root.labApi = api; return api;
 }

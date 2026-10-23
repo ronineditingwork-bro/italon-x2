@@ -3,12 +3,21 @@
 // как их искать и фильтровать. Новые коллекции и более качественные фото попадают в лабораторию сами, как только появляются в каталоге.
 import { normalize, titleRu, money, fmt, media } from '../format.mjs';
 import { COLORS } from '../picker-text.mjs';
+import { SLAB_PRIORITY } from './materials.mjs';
 
 /** Порог «полной симуляции» — меньшая сторона фото, пикселей. Всё меньше показывается в упрощённом режиме без дорисовки деталей. */
 export const HD_MIN_SIDE = 700;
 /** Позиции, которые лаборатория не берёт: мозаика, декор, упаковка (у них нет «лица» плитки для укладки). */
 const NOT_A_TILE = /МОЗАИКА|ДЕКОР|ВСТАВКА|БОРДЮР|ПЛИНТУС|ФРИЗ|СТРИП|ЯЩИК|ПАЛЛЕТ/i;
 
+/** Большие слэбы: формат, который показывает отдельный режим лаборатории («стена»). */
+export const SLAB_FORMAT = '120X278';
+export { SLAB_PRIORITY };
+export const isSlab = e => e?.formatKey === SLAB_FORMAT && !!e.eligible;
+export const slabList = entries => {
+  const rank = new Map(SLAB_PRIORITY.map((c, i) => [c, i])), byName = (a, b) => a.collection.localeCompare(b.collection, 'ru') || a.name.localeCompare(b.name, 'ru') || a.code.localeCompare(b.code);
+  return entries.filter(isSlab).sort((a, b) => (rank.has(a.code) ? rank.get(a.code) : 99) - (rank.has(b.code) ? rank.get(b.code) : 99) || byName(a, b));
+};
 export const parseFormat = format => { const m = String(format || '').toUpperCase().replace(/Х/g, 'X').match(/^(\d+(?:\.\d+)?)X(\d+(?:\.\d+)?)$/); return m ? [Number(m[1]), Number(m[2])] : null; };
 
 /** Пригодна ли позиция для лаборатории и в каком качестве. Чистая функция от записи каталога. */
@@ -24,8 +33,10 @@ export function labAsset(p) {
 }
 
 /** «ПРИ.ДЕНИМ РЭД 120X278 ЛЮКС» → читаемое имя без размера; «РИВЬЕРА УАЙТ 60 РЕТ» → «Ривьера Уайт». */
-export function cleanName(name) {
-  return String(name || '').replace(/\s+\d+(?:[.,]\d+)?\s*(?:X|Х)\s*\d+(?:[.,]\d+)?(?=\s|$)/gi, '').replace(/\s+\d+\s*РЕ[TТ](?=\s|$)/gi, '').replace(/\s+(ЛЮКС|СИЛК|РЕ[TТ])$/i, '')
+export function cleanName(name, collection = '') {
+  let n = String(name || ''); const m = n.match(/^([А-ЯЁA-Z]{2,5})\.\s*/u), col = String(collection || '').trim();
+  if (m && col && col.toUpperCase().startsWith(m[1].toUpperCase()) && col.length > m[1].length) n = col + ' ' + n.slice(m[0].length);        // «ПРИ.ДЕНИМ РЭД» + коллекция «ПРИМА» → «ПРИМА ДЕНИМ РЭД»
+  return n.replace(/\s+\d+(?:[.,]\d+)?\s*(?:X|Х)\s*\d+(?:[.,]\d+)?(?=\s|$)/gi, '').replace(/\s+\d+\s*РЕ[TТ](?=\s|$)/gi, '').replace(/\s+(ЛЮКС|СИЛК|РЕ[TТ])$/i, '')
     .trim().toLocaleLowerCase('ru-RU').replace(/(^|[\s.-])\S/gu, c => c.toLocaleUpperCase('ru-RU')).replace(/\bx2\b/gi, 'X2');
 }
 
@@ -49,10 +60,10 @@ export function toEntry(p, { root = './', imageUrl } = {}) {
   const a = labAsset(p);
   const url = imageUrl ? imageUrl(p) : (p.image?.src ? media(root, p.image.src) : null);
   return {
-    code: p.code, name: cleanName(p.name), rawName: p.name, latin: p.latin || '', collection: titleRu(p.collection), collectionId: p.collectionId || '', format: fmt(p.format), formatKey: String(p.format || ''),
+    code: p.code, name: cleanName(p.name, p.collection), rawName: p.name, latin: p.latin || '', collection: titleRu(p.collection), collectionId: p.collectionId || '', format: fmt(p.format), formatKey: String(p.format || ''),
     finish: String(p.finish || '').toLowerCase(), priceText: p.priceKopecks > 0 ? `${money(p.priceKopecks)} за ${p.unit || 'м²'}` : '', canOrder: p.canOrder !== false,
     path: `/product/${p.code}/`, href: `${root}product/${p.code}/`, image: url, imgW: p.image?.width || 0, imgH: p.image?.height || 0,
-    eligible: a.eligible && !!url, quality: a.quality || null, photo: a.photo || null, maxPpcm: a.maxPpcm || 40, reason: a.eligible && !url ? 'фото доступно только на сайте' : a.reason || '',
+    original: !!p.image?.original, eligible: a.eligible && !!url, quality: a.quality || null, photo: a.photo || null, maxPpcm: a.maxPpcm || 40, reason: a.eligible && !url ? 'фото доступно только на сайте' : a.reason || '',
     surf: surfaceFor(p, a.quality),
   };
 }
@@ -141,4 +152,23 @@ export function sortEntries(entries, how = 'popular', featuredCodes = []) {
   if (how === 'name') return arr.sort(byName);
   if (how === 'code') return arr.sort((a, b) => a.code.localeCompare(b.code));
   return arr.sort((a, b) => (rank.has(a.code) ? rank.get(a.code) : 999) - (rank.has(b.code) ? rank.get(b.code) : 999) || (a.quality === 'hd' ? 0 : 1) - (b.quality === 'hd' ? 0 : 1) || byName(a, b));
+}
+
+// ------------------------------------------------------------------------------------------------ оригиналы высокого разрешения
+// Оригиналы лежат в public/media/lab/, их список и происхождение (источник, подтверждение соответствия артикулу) — в data/lab-originals.json;
+// сборка проверяет их и публикует public/data/lab-originals.json. Лаборатория подменяет фото позиции только если оригинал прошёл проверку:
+// пропорции совпадают с форматом изделия (допуск 3 %), меньшая сторона не меньше HD_MIN_SIDE. Ничего не растягивается и не дорисовывается.
+export const ORIGINAL_ASPECT_TOLERANCE = 0.03;
+export function checkOriginal(product, o) {
+  const f = parseFormat(product?.format); if (!f) return 'неизвестный формат изделия';
+  if (!o?.src || !(o.width > 0) || !(o.height > 0)) return 'нет размеров файла';
+  if (Math.min(o.width, o.height) < HD_MIN_SIDE) return `меньшая сторона ${Math.min(o.width, o.height)} px меньше ${HD_MIN_SIDE}`;
+  const want = f[0] / f[1], got = o.width / o.height;
+  if (Math.abs(got / want - 1) > ORIGINAL_ASPECT_TOLERANCE) return `пропорции ${got.toFixed(3)} не совпадают с форматом ${product.format} (${want.toFixed(3)})`;
+  return '';
+}
+/** Позиции каталога с подставленными проверенными оригиналами. manifest = public/data/lab-originals.json: { v, items: { код: { src, width, height } } }. */
+export function applyOriginals(products, manifest) {
+  const items = manifest?.items || {}; if (!Object.keys(items).length) return products;
+  return products.map(p => { const o = items[p.code]; return o && !checkOriginal(p, o) ? { ...p, image: { ...p.image, src: o.src.replace(/^\//, ''), width: o.width, height: o.height, original: true } } : p; });
 }

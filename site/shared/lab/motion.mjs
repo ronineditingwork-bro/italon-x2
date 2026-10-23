@@ -16,6 +16,13 @@ export function lightAt(mode, angle, heightK = 1) {
   return { x: Math.cos(angle) * p.r, y: Math.sin(angle) * p.r * 0.7, h: Math.max(6, p.h * heightK) };
 }
 
+/** Свет у стены (режим слэбов): координаты относительно центра стены, h — расстояние от стены (см). Свет скользит вдоль стены слева направо. */
+export const WALL_PRESETS = { day: { rx: 120, ry: 70, h: 90, speed: 0.20 }, evening: { rx: 95, ry: 55, h: 38, speed: 0.30 }, side: { rx: 150, ry: 20, h: 14, speed: 0.18 }, time: { rx: 0, ry: 0, h: 42, speed: 0 } };
+export function lightAtWall(mode, angle, heightK = 1) {
+  const p = WALL_PRESETS[mode] || WALL_PRESETS.day;
+  return { x: Math.cos(angle) * p.rx, y: Math.sin(angle) * p.ry + 10, h: Math.max(6, p.h * heightK) };
+}
+
 /** Переход A → B диагональной «шторкой света». Возвращает параметры для шейдера: шторка идёт слева направо, новый материал — слева от линии. */
 export function sweepFor(progress, aspect, dir = [0.94, 0.34]) {
   const n = Math.hypot(dir[0], dir[1]), d = [dir[0] / n, dir[1] / n];

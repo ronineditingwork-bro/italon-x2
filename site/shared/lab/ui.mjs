@@ -39,6 +39,7 @@ export function labMarkup({ featured, shop = true, home = './' }) {
 ${shop ? `<button type="button" class="lab__cart" data-cart-open aria-haspopup="dialog" aria-label="Корзина">${I.cart}<span class="cart-count" data-cart-count aria-hidden="true">0</span></button>` : '<span></span>'}
 </header>
 
+<div class="lab-views" role="radiogroup" aria-label="Раздел лаборатории"><button type="button" role="radio" aria-checked="true" data-view="floor">Материалы</button><button type="button" role="radio" aria-checked="false" data-view="slabs">Слэбы 120×278</button></div>
 <section class="lab__hero" data-hero aria-labelledby="lab-title">
 <h1 id="lab-title">MATERIAL LAB</h1>
 <p class="lab__sub">Свет. Фактура. Архитектура.</p>
@@ -47,7 +48,8 @@ ${shop ? `<button type="button" class="lab__cart" data-cart-open aria-haspopup="
 </section>
 
 <section class="lab__gallery" data-gallery aria-label="Материалы">
-<div class="lab__gallery-head"><div><h2>Выберите материал</h2><p>${featured.length} популярных материалов для быстрого старта</p></div><button type="button" class="lab-btn lab-btn--ghost" data-open-catalog>Все материалы ${I.arrow}</button></div>
+<div class="lab__notice" data-notice hidden><span data-notice-text></span><a data-notice-link href="#">Открыть карточку</a></div>
+<div class="lab__gallery-head"><div><h2 data-gallery-title>Выберите материал</h2><p data-gallery-sub>${featured.length} популярных материалов для быстрого старта</p></div><button type="button" class="lab-btn lab-btn--ghost" data-open-catalog><span data-open-label>Все материалы</span> ${I.arrow}</button></div>
 <div class="lab__strip" data-strip role="radiogroup" aria-label="Материал">${featured.map((m, i) => matCard(m, i)).join('')}</div>
 </section>
 
@@ -73,14 +75,18 @@ ${[['light', 'Свет'], ['layout', 'Укладка'], ['compare', 'Сравн�
 <label class="lab-field"><span>Поворот</span><input type="range" min="-3.14" max="3.14" step="0.01" value="0" data-rot aria-label="Поворот поверхности"></label>
 </section>
 <section class="lab__pane" id="pane-layout" role="tabpanel" aria-labelledby="tab-layout" data-pane="layout" hidden>
-<p class="lab-label">Формат плитки, см</p>
-<div class="lab-chips" role="radiogroup" aria-label="Формат плитки">${FORMATS.map(f => `<button type="button" role="radio" aria-checked="${f.id === '60x60'}" data-format="${f.id}">${f.label}</button>`).join('')}</div>
-<div class="lab__row"><button type="button" class="lab-btn" data-turn aria-pressed="false">Повернуть на 90°</button></div>
+<div data-for="slabs" hidden><p class="lab-label">Плит в стене</p>
+<div class="lab-chips" role="radiogroup" aria-label="Число плит">${[1, 2, 3, 4].map(n => `<button type="button" role="radio" aria-checked="${n === 2}" data-slabs="${n}">${n}</button>`).join('')}</div>
+<p class="lab__hint">Каждая плита — 120 × 278 см, швы вертикальные. При повороте плиты ложатся горизонтально (до двух в высоту).</p>
+<p class="lab__hint lab__hint--note">Показан один рисунок лицевой стороны, повторённый на всех плитах. Книжное зеркалирование (bookmatch) не имитируется: у реальных плит рисунок может отличаться.</p></div>
+<div data-for="floor"><p class="lab-label">Формат плитки, см</p>
+<div class="lab-chips" role="radiogroup" aria-label="Формат плитки">${FORMATS.map(f => `<button type="button" role="radio" aria-checked="${f.id === '60x60'}" data-format="${f.id}">${f.label}</button>`).join('')}</div></div>
+<div class="lab__row"><button type="button" class="lab-btn" data-turn aria-pressed="false"><span data-turn-label>Повернуть на 90°</span></button></div>
 <label class="lab-field"><span>Шов, мм <output data-joint-out>2</output></span><input type="range" min="0" max="${JOINT_MAX_MM}" step="0.5" value="2" data-joint aria-label="Ширина шва, миллиметров"></label>
 <p class="lab-label">Цвет шва</p>
 <div class="lab-swatches" role="radiogroup" aria-label="Цвет шва">${JOINT_COLORS.map((c, i) => `<button type="button" role="radio" aria-checked="${i === 1}" data-jc="${c.id}" title="${esc(c.label)}" aria-label="${esc(c.label)}"><i style="${c.color ? `background:${c.color}` : 'background:linear-gradient(135deg,#8d8a82 50%,#4b4944 50%)'}"></i></button>`).join('')}</div>
-<p class="lab-label">Раскладка</p>
-${seg('bond', BONDS.map(b => [b.id, b.label]), 'straight')}
+<div data-for="floor"><p class="lab-label">Раскладка</p>
+${seg('bond', BONDS.map(b => [b.id, b.label]), 'straight')}</div>
 </section>
 <section class="lab__pane" id="pane-compare" role="tabpanel" aria-labelledby="tab-compare" data-pane="compare" hidden>
 <div class="lab__row"><button type="button" class="lab-btn lab-btn--wide" data-compare aria-pressed="false">Сравнить два материала</button></div>

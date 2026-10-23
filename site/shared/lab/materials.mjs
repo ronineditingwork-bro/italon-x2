@@ -22,3 +22,6 @@ export function featuredEntries(products, entryOf) {
     return { ...e, tagline: f.tagline, surf: e.quality === 'hd' ? f.surf : e.surf, featured: true };
   });
 }
+
+/** Слэбы 120×278, которые показываются первыми (примеры из задачи #1); остальные 52 идут по коллекциям. Порядок показа, а не список товаров: данные берутся из каталога. */
+export const SLAB_PRIORITY = ['600180000076', '600180000133', '600180000132', '600180000086', '600180000072'];

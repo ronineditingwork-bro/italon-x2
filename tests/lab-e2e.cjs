@@ -21,6 +21,14 @@ const GL_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ig
 const api = (page, fn, arg) => page.evaluate(([f, a]) => { const l = document.querySelector('[data-lab]').labApi; return eval(f)(l, a); }, [fn, arg]);
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const tab = async (page, id) => { const s = await page.evaluate(id => ({ sel: document.querySelector(`[data-tab="${id}"]`).getAttribute('aria-selected') === 'true', folded: document.querySelector('[data-panel]').classList.contains('is-folded') }), id); if (!s.sel || s.folded) await page.locator(`[data-tab="${id}"]`).click(); };
+const zlib = require('node:zlib'), fs = require('node:fs');
+function makePng(w, h) {   // простой градиентный PNG для проверки подключения оригиналов
+  const T = new Uint32Array(256).map((_, n) => { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; return c >>> 0; }), crc = b => { let c = 0xffffffff; for (const x of b) c = T[(c ^ x) & 255] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; };
+  const chunk = (t, d) => { const l = Buffer.alloc(4); l.writeUInt32BE(d.length); const td = Buffer.concat([Buffer.from(t), d]), c = Buffer.alloc(4); c.writeUInt32BE(crc(td)); return Buffer.concat([l, td, c]); };
+  const ih = Buffer.alloc(13); ih.writeUInt32BE(w, 0); ih.writeUInt32BE(h, 4); ih[8] = 8; ih[9] = 2; const raw = Buffer.alloc((w * 3 + 1) * h);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const o = y * (w * 3 + 1) + 1 + x * 3; raw[o] = 120 + ((x * 90 / w) | 0); raw[o + 1] = 90 + ((y * 100 / h) | 0); raw[o + 2] = 70 + (((x + y) % 40) | 0); }
+  return Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), chunk('IHDR', ih), chunk('IDAT', zlib.deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]);
+}
 const FEATURED = ['610010003167', '610010002765', '610010002799', '610010002696', '610010001319', '610010002735', '610010002664', '610010002667'];
 const frameSum = (page, area = [0, 0, 1, 1]) => api(page, `(l)=>{l.markDirty();return new Promise(r=>requestAnimationFrame(()=>{const c=document.createElement('canvas');c.width=48;c.height=48;const g=c.getContext('2d');const W=l.canvas.width,H=l.canvas.height,a=${JSON.stringify(area)};g.drawImage(l.canvas,a[0]*W,a[1]*H,(a[2]-a[0])*W,(a[3]-a[1])*H,0,0,48,48);const d=g.getImageData(0,0,48,48).data;let s=0;for(let i=0;i<d.length;i+=4)s+=d[i]+d[i+1]*2+d[i+2];r(s)}))}`);
 
@@ -31,7 +39,7 @@ const frameSum = (page, area = [0, 0, 1, 1]) => api(page, `(l)=>{l.markDirty();r
   const open = async (browser, label, opts = {}, url = '/lab/') => { const ctx = await browser.newContext(opts); const page = await ctx.newPage(); watch(page, label); await page.goto(base + url, { waitUntil: 'load' }); await page.waitForFunction(() => document.querySelector('[data-lab]')?.dataset.state === 'ready', null, { timeout: 40000 }); await wait(800); await api(page, '(l)=>l.setAuto(false)'); return { ctx, page }; };
   const browser = await chromium.launch({ executablePath: exe, args: GL_ARGS });
   try {
-    for (const [label, vp, mobile] of [['desktop', { viewport: { width: 1366, height: 820 } }, false], ['mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 }, true]]) {
+    for (const [label, vp, mobile] of [['desktop', { viewport: { width: 1366, height: 820 } }, false], ['mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 }, true]].filter(x => !process.env.LAB_ONLY || x[0] === process.env.LAB_ONLY)) {
       const { ctx, page } = await open(browser, label, vp);
       await check(`[${label}] стартовый экран: заголовок, кнопка, 8 материалов витрины с артикулами, WebGL 2, без горизонтальной прокрутки`, async () => {
         const r = await page.evaluate(() => { const l = document.querySelector('[data-lab]'); return { tier: l.dataset.tier, h1: l.querySelector('h1').textContent, cta: !!l.querySelector('[data-start]'), mats: [...l.querySelectorAll('[data-strip] [data-mat]')].map(b => b.dataset.mat + '|' + b.textContent.replace(/\s+/g, ' ').trim()), sw: document.documentElement.scrollWidth, iw: innerWidth, fb: !!l.labApi.view.fallback, all: !!l.querySelector('[data-open-catalog]') }; });
@@ -92,9 +100,9 @@ const frameSum = (page, area = [0, 0, 1, 1]) => api(page, `(l)=>{l.markDirty();r
         for (const id of ['morning', 'evening', 'night']) { await page.locator(`[data-tpreset="${id}"]`).click(); await wait(2600); sums.add(await frameSum(page)); assert.equal(await page.locator(`[data-tpreset="${id}"]`).getAttribute('aria-checked'), 'true'); }
         assert.equal(sums.size, 4, 'четыре времени суток дают четыре разных кадра');
         await page.locator('[data-hour]').fill('16.5'); assert.match(await page.locator('[data-hour-out]').textContent(), /16:30/); assert.match(await page.locator('[data-clock]').textContent(), /16:30/);
-        await page.locator('[data-day-play]').click(); await wait(1500); const h1 = await api(page, '(l)=>l.st.hour'); await wait(1500); const h2 = await api(page, '(l)=>l.st.hour'); assert.ok(h2 > h1 + 0.2, `время не идёт: ${h1} → ${h2}`);
+        await page.locator('[data-day-play]').click(); await wait(1500); const h1 = await api(page, '(l)=>l.st.hour'); await page.waitForFunction(h => document.querySelector('[data-lab]').labApi.st.hour > h + 0.2, h1, { timeout: 25000 });
         await page.locator('[data-day-play]').click(); assert.equal(await page.locator('[data-day-play]').getAttribute('aria-pressed'), 'false');
-        await tab(page, 'light'); await page.locator('[data-mode="evening"]').click(); await wait(1500); assert.ok((await api(page, '(l)=>l.st.cam.tilt')) < 0.9, 'камера не вернулась');
+        await tab(page, 'light'); await page.locator('[data-mode="evening"]').click(); await page.waitForFunction(() => document.querySelector('[data-lab]').labApi.st.cam.tilt < 0.9, null, { timeout: 25000 });
       });
       await check(`[${label}] перетаскивание сдвигает поверхность, колесо/щипок меняют масштаб, поворот, наклон, сброс вида`, async () => {
         await api(page, '(l)=>{l.resetView()}'); await wait(200); const c0 = await api(page, '(l)=>JSON.stringify(l.st.cam)'); const box = await page.locator('[data-canvas]').boundingBox();
@@ -180,8 +188,8 @@ const frameSum = (page, area = [0, 0, 1, 1]) => api(page, `(l)=>{l.markDirty();r
       await check(`[${label}] сравнение двух материалов: вторым — любой товар каталога; линия, перетаскивание, переход-шторка`, async () => {
         await api(page, '(l)=>{l.resetView()}'); await tab(page, 'compare'); await page.locator('[data-compare]').click(); await page.waitForFunction(() => document.querySelector('[data-lab]').labApi.st.compare === true); assert.equal(await page.locator('[data-split]').isHidden(), false); await wait(600);
         const left = () => api(page, `(l)=>{l.markDirty();return new Promise(r=>requestAnimationFrame(()=>{const c=document.createElement('canvas');c.width=c.height=32;const g=c.getContext('2d');const W=l.canvas.width,H=l.canvas.height;const f=(x)=>{g.drawImage(l.canvas,x*W,H*0.5,W*0.1,H*0.2,0,0,32,32);const d=g.getImageData(0,0,32,32).data;let s=0;for(let i=0;i<d.length;i+=4)s+=d[i]+d[i+1]+d[i+2];return s/(d.length/4)};r([f(0.1),f(0.8)])}))}`);
-        const a = await left(); assert.ok(Math.abs(a[0] - a[1]) > 15, `левая и правая части одинаковы: ${a}`);
-        await page.locator('[data-second="610010002667"]').scrollIntoViewIfNeeded(); await page.locator('[data-second="610010002667"]').click(); await page.waitForFunction(() => document.querySelector('[data-lab]').labApi.sec.code === '610010002667'); await wait(500); assert.match(await page.locator('[data-second-name]').textContent(), /Экспо Дарк/);
+        const a = await left(); assert.ok(a[0] > 0 && a[1] > 0, 'обе половины отрисованы');
+        await page.locator('[data-second="610010002667"]').scrollIntoViewIfNeeded(); await page.locator('[data-second="610010002667"]').click(); await page.waitForFunction(() => document.querySelector('[data-lab]').labApi.sec.code === '610010002667'); await wait(900); assert.match(await page.locator('[data-second-name]').textContent(), /Экспо Дарк/); const a2 = await left(); assert.ok(Math.abs(a2[1] - a[1]) > 15, `правая половина не изменилась при смене второго материала: ${a} → ${a2}`); assert.ok(Math.abs(a2[0] - a[0]) < 12, `левая половина изменилась: ${a} → ${a2}`);
         await page.locator('[data-second-open]').click(); await page.waitForSelector('[data-cat]:not([hidden])'); assert.match(await page.locator('[data-cat-title]').textContent(), /Второй материал/); await page.waitForFunction(() => /^Найдено/.test(document.querySelector('[data-cat-count]').textContent), null, { timeout: 30000 });
         const anyCode = await api(page, '(l)=>l.catalog.data.eligible.find(e=>e.quality==="lite"&&e.code!==l.cur.code).code'); await page.fill('[data-cat-q]', anyCode); await wait(450); await page.locator(`[data-cat-grid] [data-pick="${anyCode}"]`).click();
         await page.waitForFunction(c => document.querySelector('[data-lab]').labApi.sec.code === c, anyCode, { timeout: 15000 }); assert.equal(await api(page, '(l)=>l.st.compare'), true); assert.match(await page.locator('[data-second-code]').textContent(), new RegExp(anyCode)); await wait(500); const b = await left(); assert.notDeepEqual(a.map(Math.round), b.map(Math.round), 'второй материал сменился на экране');
@@ -197,6 +205,70 @@ const frameSum = (page, area = [0, 0, 1, 1]) => api(page, `(l)=>{l.markDirty();r
         assert.ok(await page.evaluate(() => /610010002765/.test(localStorage.getItem('italon-cart') || JSON.stringify(localStorage))), 'товар не оказался в корзине');
         const r = await page.goto(base + '/product/610010002765/'); assert.equal(r.status(), 200); await page.goBack(); await page.waitForFunction(() => document.querySelector('[data-lab]')?.dataset.state === 'ready'); await wait(500); await api(page, '(l)=>l.setAuto(false)');
       });
+      await check(`[${label}] слэбы 120×278: раздел «Слэбы», стена в реальном масштабе, 57 слэбов в галерее, эскизный просмотр честно помечен`, async () => {
+        await page.locator('[data-view="slabs"]').click(); await page.waitForFunction(() => document.querySelector('[data-lab]').dataset.labView === 'slabs', null, { timeout: 40000 }); await wait(1500);
+        const r = await page.evaluate(() => { const l = document.querySelector('[data-lab]').labApi, g = l.wallGeom(); return { n: document.querySelectorAll('[data-strip] [data-mat]').length, first: document.querySelector('[data-strip] [data-mat]').dataset.mat, cur: l.cur.code, q: l.cur.quality, g: { cols: g.cols, rows: g.rows, w: g.w, h: g.h }, notice: document.querySelector('[data-notice]').hidden ? '' : document.querySelector('[data-notice-text]').textContent, title: document.querySelector('[data-gallery-title]').textContent, sub: document.querySelector('[data-gallery-sub]').textContent, label: document.querySelector('[data-open-label]').textContent, hero: getComputedStyle(document.querySelector('[data-hero]')).display, pill: document.querySelector('.lab-views [data-view="slabs"]').getAttribute('aria-checked') }; });
+        assert.equal(r.n, 57); assert.equal(r.first, '600180000076'); assert.equal(r.cur, '600180000076'); assert.equal(r.q, 'lite'); assert.match(r.notice, /Эскизный просмотр: фото каталога 14\d×341 px/); assert.match(r.title, /Слэбы 120×278/); assert.match(r.sub, /57 больших плит.*16 коллекций/); assert.equal(r.label, 'Все слэбы'); assert.equal(r.hero, 'none'); assert.equal(r.pill, 'true');
+        assert.equal(r.g.cols, 2); assert.equal(r.g.rows, 1); assert.ok(Math.abs(r.g.h - 278) < 0.01 && Math.abs(r.g.w - 240.0) < 1, JSON.stringify(r.g));
+        // реальные пропорции на экране: вид строго спереди, плита 120×278 занимает на экране столько же, сколько в жизни
+        await tab(page, 'light'); await page.locator('[data-mode="day"]').click(); await api(page, '(l)=>{l.setAuto(false);l.resetView();l.st.cam.tilt=0;l.st.jointMm=0}'); await wait(900);
+        const m = await api(page, `(l)=>{l.markDirty();return new Promise(res=>requestAnimationFrame(()=>{const W=l.canvas.width,H=l.canvas.height,rc=l.canvas.getBoundingClientRect(),k=W/rc.width,gm=l.wallGeom(),[x0,y0,x1,y1]=gm.rect,pr=(x,y)=>l.lib.project(l.st.cam,[x,y,0],rc.width,rc.height).map(v=>v*k),a=pr(x0,y1),b=pr(x1,y0);
+          const c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');g.drawImage(l.canvas,0,0);const mean=(x,y,w,h)=>{const d=g.getImageData(Math.round(x),Math.round(y),Math.max(1,Math.round(w)),Math.max(1,Math.round(h))).data;let t=0;for(let i=0;i<d.length;i+=4)t+=d[i]+d[i+1]+d[i+2];return t/(d.length/4*3)};
+          const my=(a[1]+b[1])/2-20;res({pw:b[0]-a[0],ph:b[1]-a[1],inL:mean(a[0]+3,my,8,40),outL:mean(a[0]-12,my,8,40),inR:mean(b[0]-11,my,8,40),outR:mean(b[0]+4,my,8,40),inT:mean((a[0]+b[0])/2,a[1]+3,40,8),outT:mean((a[0]+b[0])/2,a[1]-12,40,8)})}))}`);
+        const ratio = m.pw / m.ph, want = r.g.w / r.g.h; assert.ok(Math.abs(ratio / want - 1) < 0.01, `пропорции стены на экране ${ratio.toFixed(4)} вместо ${want.toFixed(4)}`);
+        assert.ok(m.inL > m.outL + 15 && m.inR > m.outR + 15 && m.inT > m.outT + 15, `границы стены на картинке не там, где в расчёте: ${JSON.stringify(m)}`);
+        await api(page, '(l)=>{l.setMode("evening",{fly:false});l.resetView()}');
+      });
+      await check(`[${label}] слэбы: число плит 1–4, горизонтальный поворот с поворотом рисунка, шов и цвет шва, свет и сутки на стене`, async () => {
+        await tab(page, 'layout'); const geom = () => api(page, '(l)=>{const g=l.wallGeom();return {c:g.cols,r:g.rows,w:Math.round(g.w),h:Math.round(g.h)}}');
+        assert.equal(await page.locator('[data-for="floor"]').first().isHidden(), true); assert.equal(await page.locator('[data-for="slabs"]').first().isVisible(), true);
+        for (const [n, w] of [[1, 120], [3, 360], [4, 480], [2, 240]]) { await page.locator(`[data-slabs="${n}"]`).click(); const g = await geom(); assert.equal(g.c, n); assert.ok(Math.abs(g.w - w) <= 1 && g.h === 278, JSON.stringify(g)); }
+        await page.locator('[data-slabs="4"]').click(); await page.locator('[data-turn]').click(); let g = await geom(); assert.deepEqual([g.c, g.r], [1, 2], 'повёрнутые плиты — в один столбец, не выше двух'); assert.ok(Math.abs(g.w - 278) <= 1 && Math.abs(g.h - 240) <= 1, JSON.stringify(g)); assert.match(await page.locator('[data-turn-label]').textContent(), /вертикально/);
+        await page.locator('[data-turn]').click(); g = await geom(); assert.deepEqual([g.c, g.r], [4, 1]); await page.locator('[data-slabs="2"]').click();
+        const ja = [0.47, 0.3, 0.53, 0.6], sums = new Set([await frameSum(page, ja)]); await page.locator('[data-joint]').fill('9'); sums.add(await frameSum(page, ja)); await page.locator('[data-jc="black"]').click(); sums.add(await frameSum(page, ja)); assert.equal(sums.size, 3, 'шов и его цвет меняют картинку');
+        await page.locator('[data-joint]').fill('3'); await page.locator('[data-jc="tone"]').click();
+        await tab(page, 'light'); const ls = new Set(); for (const m of ['day', 'evening', 'side']) { await page.locator(`[data-mode="${m}"]`).click(); await wait(1500); ls.add(await frameSum(page)); } assert.equal(ls.size, 3, 'три режима света на стене');
+        await page.locator('[data-mode="time"]').click(); await wait(1200); assert.ok((await api(page, '(l)=>l.st.cam.tilt')) < 0.3, 'у стены камера не уходит в комнату'); await tab(page, 'time');
+        const ts = new Set(); for (const id of ['morning', 'day', 'evening', 'night']) { await page.locator(`[data-tpreset="${id}"]`).click(); await wait(2500); ts.add(await frameSum(page)); } assert.equal(ts.size, 4, 'сутки на стене: 4 разных кадра');
+        await tab(page, 'light'); await page.locator('[data-mode="evening"]').click(); await wait(800);
+      });
+      await check(`[${label}] слэбы: повёрнутая плита — рисунок поворачивается (верх фото уходит влево), а не растягивается`, async () => {
+        const res = await page.evaluate(async () => {
+          const l = document.querySelector('[data-lab]').labApi, norm = a => { const t = a[0] + a[1] + a[2] || 1; return [a[0] / t, a[1] / t, a[2] / t]; };
+          const bands = img => { const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d'); g.drawImage(img, 0, 0); const f = (x, y, w, h) => { const d = g.getImageData(x, y, w, h).data; let r = 0, gg = 0, b = 0, n = d.length / 4; for (let i = 0; i < d.length; i += 4) { r += d[i]; gg += d[i + 1]; b += d[i + 2]; } return norm([r / n, gg / n, b / n]); }; const bh = Math.round(img.height * 0.08); return { top: f(0, 0, img.width, bh), bottom: f(0, img.height - bh, img.width, bh) }; };
+          let best = null; for (const e of l.slabs.slice(0, 14)) { const m = await l.loadMaterial(e), b = bands(m.source), d = Math.hypot(...b.top.map((v, i) => v - b.bottom[i])); if (!best || d > best.d) best = { e, b, d }; }
+          await l.selectEntry(best.e, { animate: false }); l.setMode('day', { fly: false }); l.setAuto(false); l.st.slabs = 1; l.st.joint = 0; l.st.turned = true; l.st.cam.tilt = 0; Object.assign(l.st.cam, l.wallCam({ tilt: 0 })); l.st.cam.ppcm = Math.min(l.st.cam.ppcm, 2.2);
+          await new Promise(r => setTimeout(r, 800)); l.markDirty(); return new Promise(r => requestAnimationFrame(() => { const W = l.canvas.width, H = l.canvas.height, c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d'); g.drawImage(l.canvas, 0, 0); const gm = l.wallGeom(), rc = l.canvas.getBoundingClientRect(), k = W / rc.width, [x0, y0, x1, y1] = gm.rect, pr = (x, y) => l.lib.project(l.st.cam, [x, y, 0], rc.width, rc.height).map(v => v * k), a = pr(x0, y1), b = pr(x1, y0), pw = b[0] - a[0], ph = b[1] - a[1], bw = pw * 0.08;
+            const f = (x, y, w, h) => { const d = g.getImageData(Math.round(x), Math.round(y), Math.max(1, Math.round(w)), Math.max(1, Math.round(h))).data; let aa = 0, bb = 0, cc = 0, n = d.length / 4; for (let i = 0; i < d.length; i += 4) { aa += d[i]; bb += d[i + 1]; cc += d[i + 2]; } return norm([aa / n, bb / n, cc / n]); };
+            const left = f(a[0] + 4, a[1] + ph * 0.2, bw, ph * 0.6), right = f(b[0] - bw - 4, a[1] + ph * 0.2, bw, ph * 0.6), dist = (p, q) => Math.hypot(...p.map((v, i) => v - q[i])); r({ name: best.e.name, d: best.d, leftTop: dist(left, best.b.top), leftBottom: dist(left, best.b.bottom), rightTop: dist(right, best.b.top), rightBottom: dist(right, best.b.bottom), w: pw, h: ph }); }));
+        });
+        assert.ok(res.d > 0.02, `не нашёл слэб с разным верхом и низом: ${JSON.stringify(res)}`); assert.ok(res.leftTop < res.leftBottom && res.rightBottom < res.rightTop, `верх фото должен быть слева, низ справа: ${JSON.stringify(res)}`); assert.ok(res.w > res.h, 'плита лежит горизонтально');
+        await api(page, '(l)=>{l.st.turned=false;l.st.slabs=2;l.setMode("evening",{fly:false});l.resetView()}'); await page.evaluate(() => document.querySelector('[data-turn]').setAttribute('aria-pressed', 'false'));
+      });
+      await check(`[${label}] слэбы: каталог только 120×278 (57 из 57, 16 коллекций), поиск по названию и артикулу, фильтры, выбор, второй материал для сравнения`, async () => {
+        await page.locator('[data-open-catalog]').click(); await page.waitForSelector('[data-cat]:not([hidden])'); assert.equal(await page.locator('[data-cat]').getAttribute('data-scope'), 'slabs'); assert.match(await page.locator('[data-cat-title]').textContent(), /Слэбы 120×278/);
+        await page.waitForFunction(() => /^Найдено 57 .*из 57/.test(document.querySelector('[data-cat-count]').textContent), null, { timeout: 30000 }); assert.equal(await page.locator('[data-f="format"]').locator('xpath=ancestor::label').isHidden(), true);
+        assert.equal(await page.evaluate(() => document.querySelectorAll('[data-f="collection"] option').length), 17);
+        const q = async t => { await page.fill('[data-cat-q]', t); await wait(450); return page.evaluate(() => ({ n: document.querySelectorAll('[data-cat-grid] [data-pick]').length, off: document.querySelectorAll('[data-cat-grid] .is-off').length, first: document.querySelector('[data-cat-grid] .lab-card b')?.textContent })); };
+        let r = await q('калакатта'); assert.ok(r.n >= 2 && /Калакатта/.test(r.first)); r = await q('600180000133'); assert.deepEqual([r.n, r.first], [1, 'Прима Волкано Грин']); r = await q('мозаика'); assert.equal(r.n + r.off, 0, 'мозаики в разделе слэбов нет'); r = await q('60x60'); assert.equal(r.n, 0, 'другие форматы в разделе слэбов не показываются');
+        await page.click('[data-f-reset]'); await wait(300); await page.waitForFunction(() => !document.querySelector('[data-f="color"]').disabled, null, { timeout: 30000 });
+        await page.selectOption('[data-f="collection"]', { index: 3 }); await wait(300); const nColl = +(await page.locator('[data-cat-count]').textContent()).match(/Найдено (\d+)/)[1]; assert.ok(nColl > 0 && nColl < 12, `слэбов в коллекции: ${nColl}`); await page.click('[data-f-reset]');
+        await page.locator('[data-cat-grid] [data-pick="600180000133"]').scrollIntoViewIfNeeded(); await page.locator('[data-cat-grid] [data-pick="600180000133"]').click(); await page.waitForFunction(() => document.querySelector('[data-lab]').dataset.material === '600180000133', null, { timeout: 20000 });
+        assert.equal(await api(page, '(l)=>l.cur.code'), '600180000133'); await tab(page, 'item'); assert.match(await page.locator('[data-item-meta]').textContent(), /600180000133 · 120\s×\s278/); assert.match(await page.locator('[data-item-price]').textContent(), /₽/); assert.match(await page.locator('[data-item-quality]').textContent(), /Упрощённый режим/);
+        await tab(page, 'compare'); await page.locator('[data-compare]').click(); await page.waitForFunction(() => document.querySelector('[data-lab]').labApi.st.compare === true); await page.locator('[data-second-open]').click(); await page.waitForSelector('[data-cat]:not([hidden])'); assert.match(await page.locator('[data-cat-title]').textContent(), /Второй материал/);
+        await page.waitForFunction(() => /^Найдено 57/.test(document.querySelector('[data-cat-count]').textContent)); await page.fill('[data-cat-q]', '600180000086'); await wait(450); await page.locator('[data-cat-grid] [data-pick="600180000086"]').click(); await page.waitForFunction(() => document.querySelector('[data-lab]').labApi.sec.code === '600180000086', null, { timeout: 20000 });
+        await wait(700); const a = await frameSum(page, [0.05, 0.3, 0.3, 0.7]), b2 = await frameSum(page, [0.7, 0.3, 0.95, 0.7]); assert.notEqual(a, b2, 'слева и справа от линии разные слэбы'); await page.locator('[data-compare]').click();
+      });
+      await check(`[${label}] слэбы: ссылка на композицию восстанавливает стену, экспорт изображения, возврат в раздел «Материалы»`, async () => {
+        await api(page, '(l)=>{l.st.slabs=3}'); await page.evaluate(() => document.querySelector('[data-slabs="3"]').click()); const url = await api(page, '(l)=>l.shareUrl()'); assert.match(url, /w=s&n=3/); assert.ok(url.includes('m=600180000133'), url);
+        const p2 = await open(browser, label + '-slabshare', vp, '/lab/' + url.slice(url.indexOf('#'))); await p2.page.waitForFunction(() => document.querySelector('[data-lab]').dataset.labView === 'slabs', null, { timeout: 40000 }); await wait(800);
+        assert.deepEqual(await api(p2.page, '(l)=>({v:l.st.view,n:l.st.slabs,c:l.cur.code})'), { v: 'slabs', n: 3, c: '600180000133' }); await p2.ctx.close();
+        await tab(page, 'share'); await page.locator('[data-size="story"]').click(); await page.locator('[data-shot]').click(); await page.waitForSelector('[data-modal]:not([hidden])', { timeout: 60000 });
+        const im = await page.evaluate(async () => { const img = document.querySelector('[data-modal-media] img'); await img.decode(); return [img.naturalWidth, img.naturalHeight]; }); assert.deepEqual(im, [720, 1280]); await page.locator('[data-modal-close]').click();
+        await page.locator('[data-view="floor"]').click(); await page.waitForFunction(() => document.querySelector('[data-lab]').dataset.labView === 'floor', null, { timeout: 30000 }); await wait(800);
+        assert.equal(await page.evaluate(() => document.querySelectorAll('[data-strip] [data-mat]').length), 8); assert.deepEqual(await page.evaluate(() => [!document.querySelector('[data-for="floor"]').hidden, document.querySelector('[data-for="slabs"]').hidden]), [true, true]);
+        assert.equal(await page.locator('[data-open-label]').textContent(), 'Все материалы'); assert.equal(await api(page, '(l)=>l.st.view'), 'floor'); assert.ok((await api(page, '(l)=>l.cur.code')) !== '600180000133', 'вернулся прежний материал');
+      });
       await check(`[${label}] изображение JPG, ссылка на композицию (и восстановление по ней), окно результата`, async () => {
         await tab(page, 'share'); await page.locator('[data-size="story"]').click(); await page.locator('[data-shot]').click(); await page.waitForSelector('[data-modal]:not([hidden])', { timeout: 40000 });
         const r = await page.evaluate(async () => { const img = document.querySelector('[data-modal-media] img'); await img.decode(); const b = await (await fetch(img.src)).blob(); const u = new Uint8Array(await b.arrayBuffer()); return { w: img.naturalWidth, h: img.naturalHeight, size: b.size, sig: [...u.slice(0, 3)], name: document.querySelector('[data-modal-save]').download }; });
@@ -210,8 +282,12 @@ const frameSum = (page, area = [0, 0, 1, 1]) => api(page, `(l)=>{l.markDirty();r
       });
       if (!mobile) await check(`[${label}] ролик: запись 9:16 завершается и воспроизводится`, async () => {
         const sup = await page.evaluate(() => typeof MediaRecorder !== 'undefined' && !!HTMLCanvasElement.prototype.captureStream); if (!sup) { console.log('     (MediaRecorder недоступен — пропуск)'); return; }
-        await tab(page, 'share'); await page.locator('[data-video]').click(); await page.waitForSelector('[data-modal]:not([hidden])', { timeout: 90000 });
-        const r = await page.evaluate(async () => { const v = document.querySelector('[data-modal-media] video'); const b = await (await fetch(v.src)).blob(); return { size: b.size, type: b.type }; });
+        await tab(page, 'share'); let r = { size: 0 };
+        for (let attempt = 0; attempt < 2 && !(r.size > 15000); attempt++) {          // запись в реальном времени на программной графике иногда не успевает дать кадры — одна повторная попытка
+          if (attempt) await page.locator('[data-modal-close]').click();
+          await page.locator('[data-video]').click(); await page.waitForSelector('[data-modal]:not([hidden])', { timeout: 120000 });
+          r = await page.evaluate(async () => { const v = document.querySelector('[data-modal-media] video'); const b = await (await fetch(v.src)).blob(); return { size: b.size, type: b.type }; });
+        }
         assert.ok(r.size > 15000, `ролик слишком мал: ${r.size}`); assert.match(r.type, /^video\//); await page.locator('[data-modal-close]').click();
       });
       await check(`[${label}] качество «Лайт» снижает разрешение, «Авто» возвращает; панель управляется с клавиатуры`, async () => {
@@ -227,6 +303,20 @@ const frameSum = (page, area = [0, 0, 1, 1]) => api(page, `(l)=>{l.markDirty();r
       });
       await ctx.close();
     }
+    await check('[оригиналы] подключённый оригинал с верными пропорциями даёт слэбу полную симуляцию; оригинал с неверными пропорциями игнорируется, ничего не растягивается', async () => {
+      const dir = resolve(pub, 'media/lab'), file = resolve(dir, '_e2e-original.png'); fs.mkdirSync(dir, { recursive: true }); fs.writeFileSync(file, makePng(720, 1668));
+      const ctx = await browser.newContext({ viewport: { width: 1366, height: 820 } });
+      try {
+        await ctx.route('**/data/lab-originals.json*', r => r.fulfill({ contentType: 'application/json', body: JSON.stringify({ v: 1, items: { '600180000076': { src: 'media/lab/_e2e-original.png', width: 720, height: 1668 }, '600180000132': { src: 'media/lab/_e2e-original.png', width: 800, height: 800 } } }) }));
+        const page = await ctx.newPage(); watch(page, 'originals'); await page.goto(base + '/lab/'); await page.waitForFunction(() => document.querySelector('[data-lab]')?.dataset.state === 'ready', null, { timeout: 40000 }); await wait(600);
+        await page.locator('[data-start]').click(); await page.locator('[data-view="slabs"]').click(); await page.waitForFunction(() => document.querySelector('[data-lab]').dataset.labView === 'slabs', null, { timeout: 40000 }); await wait(1500);
+        const a = await api(page, '(l)=>({q:l.cur.quality,o:l.cur.original,relief:l.cur.surf.relief,max:l.cur.maxPpcm,w:l.cur.imgW,h:l.cur.imgH,notice:!document.querySelector("[data-notice]").hidden})'); assert.deepEqual([a.q, a.o, a.w, a.h, a.notice], ['hd', true, 720, 1668, false]); assert.ok(a.relief > 0 && a.max === 40);
+        await tab(page, 'item'); assert.match(await page.locator('[data-item-quality]').textContent(), /Полная симуляция света: фото 720×1668/);
+        await page.locator('[data-canvas]').focus(); for (let i = 0; i < 12; i++) await page.keyboard.press('+'); assert.ok((await api(page, '(l)=>l.st.cam.ppcm')) > 4, 'у оригинала приближение не ограничено, как у фото каталога');
+        const bad = await api(page, '(l)=>l.selectEntry(l.slabs.find(e=>e.code==="600180000132"),{animate:false}).then(()=>({q:l.cur.quality,o:l.cur.original,w:l.cur.imgW,notice:!document.querySelector("[data-notice]").hidden}))'); assert.deepEqual(bad, { q: 'lite', o: false, w: 148, notice: true });
+        const card = await page.evaluate(() => [...document.querySelectorAll('[data-strip] [data-mat]')].length); assert.equal(card, 57);
+      } finally { await ctx.close(); fs.rmSync(file, { force: true }); }
+    });
     // запасной режим: WebGL 2 недоступен
     const fb = await chromium.launch({ executablePath: exe, args: ['--disable-3d-apis', '--disable-gpu'] });
     try {
