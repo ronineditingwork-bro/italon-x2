@@ -14,6 +14,10 @@ worker/assets.generated.json
 private-data/
 backups/
 *.zip
+# исходники текстур (TIFF ARCHITALON и инструкции PDF) в репозиторий не кладём — только проверенные WebP в public/media/lab/
+*.tif
+*.tiff
+*.pdf
 # сборка сайта (scripts/build-site.mjs) — генерируется в public/
 /public/.site-manifest.json
 /public/sitemap.xml

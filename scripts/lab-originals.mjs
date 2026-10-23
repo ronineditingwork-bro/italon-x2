@@ -6,6 +6,8 @@
 //   node scripts/lab-originals.mjs add 600180000076 путь/к/original.jpg --source-url=https://… --evidence="по какому признаку файл относится к этому артикулу"
 //   node scripts/lab-originals.mjs check
 //
+// --mobile=путь/к/файлу — уменьшенная копия того же снимка для телефонов (те же требования к пропорциям и размеру); лаборатория на телефоне грузит её.
+//
 // Что проверяется: код есть в каталоге; пропорции файла совпадают с форматом изделия (допуск 3 %); меньшая сторона не меньше 700 px; файл читается.
 // Ничего не растягивается и не дорисовывается: файл либо подходит как есть, либо отклоняется. Чужую плитку вместо нужной подставить нельзя —
 // без указанного источника (--source-url) и подтверждения соответствия (--evidence) запись не добавляется.
@@ -32,12 +34,16 @@ export async function buildOriginals({ products, manifestPath = MANIFEST, dir = 
     const reject = reason => { out.rejected.push({ code, reason }); log(`оригинал ${code} пропущен: ${reason}`); };
     const p = byCode.get(code); if (!p) { reject('нет такого артикула в каталоге'); continue; }
     if (!o.sourceUrl || !o.evidence) { reject('не указаны источник и подтверждение соответствия артикулу'); continue; }
-    const file = resolve(dir, basename(o.file || ''));
-    if (!o.file || !existsSync(file)) { reject(`нет файла ${o.file}`); continue; }
-    const buf = readFileSync(file); if (o.sha256 && sha(buf) !== o.sha256) { reject('контрольная сумма файла не совпадает'); continue; }
-    const size = imageSize(buf); if (!size) { reject('не удалось прочитать размер файла (поддерживаются JPEG, PNG, WebP)'); continue; }
-    const why = checkOriginal(p, { src: o.file, ...size }); if (why) { reject(why); continue; }
-    out.items[code] = { src: `media/lab/${basename(o.file)}`, width: size.width, height: size.height, sourceUrl: o.sourceUrl, evidence: o.evidence };
+    const load = f => {                                          // файл → { src, width, height } или строка с причиной отказа
+      const file = resolve(dir, basename(f?.file || ''));
+      if (!f?.file || !existsSync(file)) return `нет файла ${f?.file}`;
+      const buf = readFileSync(file); if (f.sha256 && sha(buf) !== f.sha256) return 'контрольная сумма файла не совпадает';
+      const size = imageSize(buf); if (!size) return 'не удалось прочитать размер файла (поддерживаются JPEG, PNG, WebP)';
+      return checkOriginal(p, { src: f.file, ...size }) || { src: `media/lab/${basename(f.file)}`, width: size.width, height: size.height };
+    };
+    const main = load(o); if (typeof main === 'string') { reject(main); continue; }
+    const mob = o.mobile ? load(o.mobile) : null; if (typeof mob === 'string') { reject(`мобильная версия: ${mob}`); continue; }
+    out.items[code] = { ...main, ...(mob ? { mobile: mob } : {}), sourceUrl: o.sourceUrl, evidence: o.evidence };
   }
   return out;
 }
@@ -52,14 +58,18 @@ async function cli() {
     const [code, src] = pos; if (!code || !src) throw new Error('использование: add <артикул> <файл> --source-url=… --evidence="…"');
     if (!opt['source-url'] || !opt.evidence || opt.evidence === true) throw new Error('нужны --source-url и --evidence: откуда файл и почему он относится именно к этому артикулу');
     const p = products.find(x => x.code === code); if (!p) throw new Error(`артикул ${code} не найден в каталоге`);
-    const buf = await readFile(resolve(src)), size = imageSize(buf); if (!size) throw new Error('не удалось прочитать файл (JPEG, PNG или WebP)');
-    const why = checkOriginal(p, { src, ...size }); if (why) throw new Error(`файл не подходит: ${why}`);
-    const hash = sha(buf), name = `${code}-${hash.slice(0, 8)}${extname(src).toLowerCase()}`;
-    await mkdir(DIR, { recursive: true }); await copyFile(resolve(src), resolve(DIR, name));
+    const take = async (f, tag) => {                             // проверка и копирование одного файла; tag — суффикс имени («-m» у мобильной версии)
+      const buf = await readFile(resolve(f)), size = imageSize(buf); if (!size) throw new Error(`не удалось прочитать файл ${f} (JPEG, PNG или WebP)`);
+      const why = checkOriginal(p, { src: f, ...size }); if (why) throw new Error(`файл ${f} не подходит: ${why}`);
+      const hash = sha(buf), name = `${code}${tag}-${hash.slice(0, 8)}${extname(f).toLowerCase()}`;
+      await mkdir(DIR, { recursive: true }); await copyFile(resolve(f), resolve(DIR, name)); return { file: name, sha256: hash, size };
+    };
+    const main = await take(src, ''), mob = typeof opt.mobile === 'string' ? await take(opt.mobile, '-m') : null;
     const man = existsSync(MANIFEST) ? JSON.parse(await readFile(MANIFEST, 'utf8')) : { v: 1, items: {} };
-    man.items[code] = { file: name, sha256: hash, sourceUrl: opt['source-url'], evidence: opt.evidence, addedOn: new Date().toISOString().slice(0, 10) };
-    await writeFile(MANIFEST, JSON.stringify(man, null, 2) + '\n'); console.log(`добавлено: ${code} ← ${name} (${size.width}×${size.height}). Пересоберите сайт: npm run build:site`); return;
+    man.items[code] = { file: main.file, sha256: main.sha256, ...(mob ? { mobile: { file: mob.file, sha256: mob.sha256 } } : {}), sourceUrl: opt['source-url'], evidence: opt.evidence, addedOn: new Date().toISOString().slice(0, 10) };
+    await writeFile(MANIFEST, JSON.stringify(man, null, 2) + '\n');
+    console.log(`добавлено: ${code} ← ${main.file} (${main.size.width}×${main.size.height})${mob ? `, мобильная ${mob.file} (${mob.size.width}×${mob.size.height})` : ''}. Пересоберите сайт: npm run build:site`); return;
   }
-  console.log('команды: add <артикул> <файл> --source-url=… --evidence="…" | check');
+  console.log('команды: add <артикул> <файл> [--mobile=<файл поменьше для телефонов>] --source-url=… --evidence="…" | check');
 }
 if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.meta.url) cli().catch(e => { console.error('Ошибка:', e.message); process.exit(1); });

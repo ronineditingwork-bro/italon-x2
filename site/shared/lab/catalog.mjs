@@ -167,8 +167,12 @@ export function checkOriginal(product, o) {
   if (Math.abs(got / want - 1) > ORIGINAL_ASPECT_TOLERANCE) return `пропорции ${got.toFixed(3)} не совпадают с форматом ${product.format} (${want.toFixed(3)})`;
   return '';
 }
-/** Позиции каталога с подставленными проверенными оригиналами. manifest = public/data/lab-originals.json: { v, items: { код: { src, width, height } } }. */
-export function applyOriginals(products, manifest) {
+/** Позиции каталога с подставленными проверенными оригиналами. manifest = public/data/lab-originals.json: { v, items: { код: { src, width, height, mobile?: { src, width, height } } } }.
+ *  mobile — телефон: берётся уменьшенная копия, если она есть и прошла проверку. */
+export function applyOriginals(products, manifest, { mobile = false } = {}) {
   const items = manifest?.items || {}; if (!Object.keys(items).length) return products;
-  return products.map(p => { const o = items[p.code]; return o && !checkOriginal(p, o) ? { ...p, image: { ...p.image, src: o.src.replace(/^\//, ''), width: o.width, height: o.height, original: true } } : p; });
+  return products.map(p => {
+    const it = items[p.code], o = it && mobile && it.mobile && !checkOriginal(p, it.mobile) ? it.mobile : it;
+    return o && !checkOriginal(p, o) ? { ...p, image: { ...p.image, src: o.src.replace(/^\//, ''), width: o.width, height: o.height, original: true } } : p;
+  });
 }

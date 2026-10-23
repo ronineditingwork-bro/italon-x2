@@ -92,7 +92,8 @@ export async function startLab(root, cfg) {
   const zl = () => [st.view === 'slabs' ? 0.5 : 1.2, Math.max(2, cur.maxPpcm || 40)];
   const fitZoom = () => { const [w] = cssSize(); st.cam.ppcm = Math.min(zl()[1], Math.max(1.2, w / (mobile ? 130 : 230))); };
   const fallbackless = () => tier !== 'fallback';
-  const resetView = () => { camAnim = null; if (st.view === 'slabs') { Object.assign(st.cam, wallCam({ tilt: fallbackless() ? 0.04 : 0 })); syncSliders(); dirty = true; return; } st.cam.center = [0, 0]; st.cam.rot = 0; st.cam.tilt = fallbackless() ? 0.62 : 0; fitZoom(); if (st.mode === 'time') flyCam(ROOM_CAM); syncSliders(); dirty = true; };
+  let refitTimer = 0;     // отложенная подгонка стены после раскрытия панели на телефоне; сброс вида её отменяет — он сам ставит стену по итоговому положению панели
+  const resetView = () => { camAnim = null; clearTimeout(refitTimer); if (st.view === 'slabs') { Object.assign(st.cam, wallCam({ tilt: fallbackless() ? 0.04 : 0 })); syncSliders(); dirty = true; return; } st.cam.center = [0, 0]; st.cam.rot = 0; st.cam.tilt = fallbackless() ? 0.62 : 0; fitZoom(); if (st.mode === 'time') flyCam(ROOM_CAM); syncSliders(); dirty = true; };
   function flyCam(to, ms = 1100) { camAnim = { from: { center: [...st.cam.center], rot: st.cam.rot, tilt: st.cam.tilt, ppcm: st.cam.ppcm }, to: { center: [...(to.center || st.cam.center)], rot: to.rot ?? st.cam.rot, tilt: to.tilt ?? st.cam.tilt, ppcm: to.ppcm ?? st.cam.ppcm }, t0: performance.now(), dur: reduced ? 1 : ms }; dirty = true; }
   function resize() {
     const [w, h] = cssSize(), dpr = Math.min(devicePixelRatio || 1, 2), lv = LEVELS[view.level ?? level] || LEVELS[0];
@@ -169,7 +170,7 @@ export async function startLab(root, cfg) {
   const loader = {
     async catalog() {
       let products = cfg.loadProducts ? await cfg.loadProducts() : (await fetchJson(cfg.catalogUrl)).products;
-      try { const man = cfg.loadOriginals ? await cfg.loadOriginals() : (cfg.originalsUrl ? await fetchJson(cfg.originalsUrl) : null); if (man) products = applyOriginals(products, man); } catch { /* оригиналов нет — работаем с фото каталога */ }
+      try { const man = cfg.loadOriginals ? await cfg.loadOriginals() : (cfg.originalsUrl ? await fetchJson(cfg.originalsUrl) : null); if (man) products = applyOriginals(products, man, { mobile }); } catch { /* оригиналов нет — работаем с фото каталога */ }
       const fe = new Map(featured.map(f => [f.code, f])), byCode = new Map(), prods = new Map(products.map(p => [p.code, p]));
       const entries = products.map(p => { const e = fe.get(p.code) || toEntry(p, { root: HOME_ROOT, imageUrl: cfg.imageUrl }); byCode.set(p.code, e); return e; });
       return { entries, eligible: entries.filter(e => e.eligible), index: buildIndex(products, p => byCode.get(p.code)), byCode, products: prods };
@@ -288,7 +289,7 @@ export async function startLab(root, cfg) {
   onInput('[data-hour]', v => { stopDay(); hourAnim = null; st.hour = v; updateClock(); });
   // вкладки и сворачивание панели
   const tabs = $$(root, '[data-tab]'), panel = $(root, '[data-panel]');
-  const unfold = open => { panel.classList.toggle('is-folded', !open); $(root, '[data-fold]').setAttribute('aria-expanded', String(open)); if (st.view === 'slabs' && mobile) setTimeout(refitWall, 340); };
+  const unfold = open => { panel.classList.toggle('is-folded', !open); $(root, '[data-fold]').setAttribute('aria-expanded', String(open)); if (st.view === 'slabs' && mobile) { clearTimeout(refitTimer); refitTimer = setTimeout(refitWall, 340); } };
   const openTab = (id, focus) => { tabs.forEach(tb => { const on = tb.dataset.tab === id; tb.setAttribute('aria-selected', String(on)); tb.tabIndex = on ? 0 : -1; if (on && focus) tb.focus(); }); $$(root, '[data-pane]').forEach(p => { p.hidden = p.dataset.pane !== id; }); unfold(true); };
   tabs.forEach(tb => { tb.tabIndex = tb.getAttribute('aria-selected') === 'true' ? 0 : -1; tb.addEventListener('click', () => { touch(); if (tb.getAttribute('aria-selected') === 'true' && !panel.classList.contains('is-folded')) unfold(false); else openTab(tb.dataset.tab); if (tb.dataset.tab === 'time' && st.mode !== 'time') { /* вид сутки включается кнопкой режима или пресетом */ } }); });
   $(root, '[data-panel] .lab__tabs').addEventListener('keydown', e => { if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return; const i = tabs.findIndex(x => x === document.activeElement); if (i < 0) return; const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; openTab(n.dataset.tab, true); e.preventDefault(); });

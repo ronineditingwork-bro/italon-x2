@@ -1,4 +1,60 @@
 {
   "v": 1,
-  "items": {}
+  "items": {
+    "600180000076": {
+      "file": "600180000076-9f9fad9d.webp",
+      "sha256": "9f9fad9dd838be691d7cb641690af1e7e2e464bc7396de7b06d49ec4b299377d",
+      "mobile": {
+        "file": "600180000076-m-3bdbf9db.webp",
+        "sha256": "3bdbf9db434e87dffc5e8126093ed763fc3eebcd100149c8bf46644aa746d84d"
+      },
+      "sourceUrl": "architalon:aura-calacatta-sky-120x278.zip/calacatta_sky_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив aura-calacatta-sky-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «АУРА КАЛАКАТТА СКАЙ 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
+      "addedOn": "2026-10-23"
+    },
+    "600180000072": {
+      "file": "600180000072-d98c7ce2.webp",
+      "sha256": "d98c7ce231a4ac7a19e60647d194c5ebd823bb53e67facb034a535e6ebb850fa",
+      "mobile": {
+        "file": "600180000072-m-1ee11d84.webp",
+        "sha256": "1ee11d8454a09f6df2d2a5dc96b43a4d8f084564bc983e61f1960f5fcc18450c"
+      },
+      "sourceUrl": "architalon:magma-alpi-green-120x278.zip/alpi_green_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив magma-alpi-green-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «МАГМА АЛЬПИ ГРИН 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
+      "addedOn": "2026-10-23"
+    },
+    "600180000073": {
+      "file": "600180000073-067ce799.webp",
+      "sha256": "067ce799382df020b1e1eb368c910c261ee9994c38ed2409f1f9c9fee0639d89",
+      "mobile": {
+        "file": "600180000073-m-38cb730d.webp",
+        "sha256": "38cb730de6501126e7123d720c626998aaee6cffb0f93b9f05276f71a89c678c"
+      },
+      "sourceUrl": "architalon:magma-dover-tiger-120x278.zip/dover_tiger_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив magma-dover-tiger-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «МАГМА ДОВЕР ТАЙГЕР 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
+      "addedOn": "2026-10-23"
+    },
+    "600180000087": {
+      "file": "600180000087-abdfe6a1.webp",
+      "sha256": "abdfe6a1d3ffe423aa8c6b95f3c8bf55b3fa974784c05081b0f1565f3dcc5d71",
+      "mobile": {
+        "file": "600180000087-m-b71eca31.webp",
+        "sha256": "b71eca315059494e4fe0e1e38979867ddc5af09d8ed32a8e67a19b0d32bf0201"
+      },
+      "sourceUrl": "architalon:status-copper-120x278.zip/copper_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив status-copper-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «СТАТУС КОППЕР 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
+      "addedOn": "2026-10-23"
+    },
+    "600180000086": {
+      "file": "600180000086-8c679c3a.webp",
+      "sha256": "8c679c3a0cfd84fcebf95e0ce8730094b3a9b751b52a7ae31873982ba2a2653a",
+      "mobile": {
+        "file": "600180000086-m-7804a4f7.webp",
+        "sha256": "7804a4f75a889b75e877349c483c60c2c3560e791699bbe9ddb3f4383129275a"
+      },
+      "sourceUrl": "architalon:status-corten-120x278.zip/corten_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив status-corten-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «СТАТУС КОРТЕН 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
+      "addedOn": "2026-10-23"
+    }
+  }
 }

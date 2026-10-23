@@ -227,13 +227,19 @@ test('оригинал принимается только с совпадающ
   const out = applyOriginals(products, { items: { '600180000076': ok, '600180000133': { ...ok, width: 900, height: 900 } } });
   const a = out.find(p => p.code === '600180000076'), b = out.find(p => p.code === '600180000133'); assert.equal(a.image.width, 720); assert.equal(a.image.original, true); assert.equal(b.image.width, products.find(p => p.code === '600180000133').image.width, 'неподходящий оригинал игнорируется');
   const e = toEntry(a, { root: './' }); assert.equal(e.quality, 'hd'); assert.equal(e.original, true); assert.ok(e.surf.relief > 0 && e.maxPpcm === 40); assert.equal(applyOriginals(products, null), products);
+  // телефон получает уменьшенную копию; неподходящая мобильная копия не мешает основной
+  const two = { items: { '600180000076': { ...ok, width: 1993, height: 4615, mobile: { src: 'media/lab/x-m.webp', width: 1001, height: 2320 } }, '600180000072': { ...ok, mobile: { src: 'media/lab/y-m.webp', width: 500, height: 1159 } } } };
+  const pick = (list, code) => list.find(p => p.code === code).image;
+  assert.deepEqual([pick(applyOriginals(products, two), '600180000076').width, pick(applyOriginals(products, two, { mobile: true }), '600180000076').width], [1993, 1001]);
+  assert.equal(pick(applyOriginals(products, two, { mobile: true }), '600180000076').src, 'media/lab/x-m.webp'); assert.equal(pick(applyOriginals(products, two, { mobile: true }), '600180000072').width, 720);
 });
 test('сборка оригиналов: нужен источник и подтверждение, файл с верными пропорциями и контрольной суммой; всё лишнее отклоняется с причиной', async () => {
   const dir = mkdtempSync(resolve(tmpdir(), 'lab-orig-')), media = resolve(dir, 'media'); mkdirSync(media);
   const good = png(720, 1668), bad = png(800, 800); writeFileSync(resolve(media, 'good.png'), good); writeFileSync(resolve(media, 'bad.png'), bad);
   const { createHash } = await import('node:crypto'), sha = b => createHash('sha256').update(b).digest('hex');
   const man = { v: 1, items: {
-    '600180000076': { file: 'good.png', sha256: sha(good), sourceUrl: 'https://example.test/original', evidence: 'проверено вручную по артикулу' },
+    '600180000076': { file: 'good.png', sha256: sha(good), mobile: { file: 'good.png' }, sourceUrl: 'https://example.test/original', evidence: 'проверено вручную по артикулу' },
+    '600180000072': { file: 'good.png', mobile: { file: 'bad.png' }, sourceUrl: 'https://example.test/m', evidence: 'проверено' },
     '600180000133': { file: 'bad.png', sourceUrl: 'https://example.test/x', evidence: 'проверено' },
     '600180000132': { file: 'good.png', evidence: 'нет источника' },
     '600180000086': { file: 'good.png', sha256: 'deadbeef', sourceUrl: 'https://example.test/y', evidence: 'проверено' },
@@ -242,6 +248,7 @@ test('сборка оригиналов: нужен источник и подт
   writeFileSync(resolve(dir, 'man.json'), JSON.stringify(man)); const log = [];
   const r = await buildOriginals({ products, manifestPath: resolve(dir, 'man.json'), dir: media, log: m => log.push(m) });
   assert.deepEqual(Object.keys(r.items), ['600180000076']); assert.equal(r.items['600180000076'].width, 720); assert.equal(r.items['600180000076'].src, 'media/lab/good.png');
-  assert.equal(r.rejected.length, 5); const why = Object.fromEntries(r.rejected.map(x => [x.code, x.reason])); assert.match(why['600180000133'], /пропорции/); assert.match(why['600180000132'], /источник/); assert.match(why['600180000086'], /контрольная/); assert.match(why['600180000087'], /нет файла/); assert.match(why['000000000000'], /каталоге/);
+  assert.deepEqual(r.items['600180000076'].mobile, { src: 'media/lab/good.png', width: 720, height: 1668 });
+  assert.equal(r.rejected.length, 6); const why = Object.fromEntries(r.rejected.map(x => [x.code, x.reason])); assert.match(why['600180000072'], /мобильная версия: пропорции/); assert.match(why['600180000133'], /пропорции/); assert.match(why['600180000132'], /источник/); assert.match(why['600180000086'], /контрольная/); assert.match(why['600180000087'], /нет файла/); assert.match(why['000000000000'], /каталоге/);
   assert.deepEqual((await buildOriginals({ products, manifestPath: resolve(dir, 'none.json'), dir: media })).items, {}, 'нет файла списка — нет оригиналов');
 });
