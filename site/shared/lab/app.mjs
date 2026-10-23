@@ -125,7 +125,7 @@ export async function startLab(root, cfg) {
     $$(strip, '[data-mat]').forEach(b => { const on = b.dataset.mat === cur.code; b.setAttribute('aria-checked', String(on)); if (on) { try { const l = b.offsetLeft - strip.clientWidth / 2 + b.offsetWidth / 2; strip.scrollTo({ left: Math.max(0, l), behavior: reduced || !touched ? 'auto' : 'smooth' }); } catch {} } });
   }
   const syncSecond = () => {
-    $(root, '[data-second-img]').src = sec.image; $(root, '[data-second-name]').textContent = sec.name; $(root, '[data-second-code]').textContent = `арт. ${sec.code} · ${sec.quality === 'hd' ? 'полная симуляция' : 'упрощённо'}`;
+    $(root, '[data-second-img]').src = sec.thumb || sec.image; $(root, '[data-second-name]').textContent = sec.name; $(root, '[data-second-code]').textContent = `арт. ${sec.code} · ${sec.quality === 'hd' ? 'полная симуляция' : 'упрощённо'}`;
     $$(root, '[data-second]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.second === sec.code)));
   };
   function updateNotice() {
@@ -136,7 +136,7 @@ export async function startLab(root, cfg) {
   }
   function renderQuick() {
     const list = st.view === 'slabs' ? (slabsCache || []).slice(0, 10) : featured, q = $(root, '[data-second-quick]');
-    q.innerHTML = list.map(m => `<button type="button" role="radio" aria-checked="${m.code === sec.code}" data-second="${m.code}" title="${m.name}"><img src="${m.image}" alt="${m.name}" width="44" height="44" loading="lazy" decoding="async"></button>`).join('');
+    q.innerHTML = list.map(m => `<button type="button" role="radio" aria-checked="${m.code === sec.code}" data-second="${m.code}" title="${m.name}"><img src="${m.thumb || m.image}" alt="${m.name}" width="44" height="44" loading="lazy" decoding="async"></button>`).join('');
   }
   function updateItem() {
     const m = cur; $(root, '[data-item-collection]').textContent = m.collection; $(root, '[data-item-name]').textContent = m.name;

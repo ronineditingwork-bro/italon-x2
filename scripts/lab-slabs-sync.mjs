@@ -3,6 +3,8 @@
 //   node scripts/lab-slabs-sync.mjs import      архивы и файлы из папки загрузки → проверка → WebP (десктоп + телефон) → public/media/lab + data/lab-originals.json
 //   node scripts/lab-slabs-sync.mjs report      отчёт по всем слэбам каталога (без конвертации)
 //   node scripts/lab-slabs-sync.mjs assign "<архив>|<файл внутри>" <артикул|skip>   ручное решение по файлу из карантина
+//   node scripts/lab-slabs-sync.mjs links       incoming/slabs/links.md: недостающие коллекции, ссылки «Скачать текстуры с АРХИТАЛОН», посещённые страницы
+//   node scripts/lab-slabs-sync.mjs browse      то же окно, что download, но скачивание отключено: только запись адресов открытых страниц
 //   node scripts/lab-slabs-sync.mjs download    загрузка недостающих архивов с ARCHITALON в браузере пользователя (scripts/lab-slabs-download.cjs)
 //   node scripts/lab-slabs-sync.mjs sync        download → import → report
 //
@@ -33,14 +35,17 @@ const MANIFEST = resolve(root, 'data/lab-originals.json'), MEDIA = resolve(root,
 const WORKER = resolve(root, 'scripts/lab-slabs-image.py');
 const DEFAULT_DIR = join(homedir(), 'Desktop', 'Italon-x2', '278');
 const IMAGE_EXT = new Set(['.tif', '.tiff', '.jpg', '.jpeg', '.png', '.webp']);
-// Бюджеты те же, что у первых пяти слэбов: десктоп — родное разрешение (≈16,6 px/см у ARCHITALON), не больше 4615 px по длинной стороне;
-// телефон — 2320 px. Качество — наибольшее, при котором файл укладывается в бюджет, но не ниже 70.
-const ENCODE = { maxLong: 4615, mobileLong: 2320, desktopQ: 82, mobileQ: 78, floorQ: 70, desktopBudget: 1_500_000, mobileBudget: 400_000 };
+// Десктоп — родное разрешение исходника, но не больше 4615 px по длинной стороне (≈16,6 px/см; крупнее тормозит видеокарту и построение рельефа),
+// качество 95, бюджет 7 МБ; телефон — 1400 px по ширине (≈1400×3243 у 120×278), качество 90, бюджет 1,5 МБ.
+// Не уложились — качество снижается шагом 2, но не ниже 70. (Первые пять слэбов опубликованы со старыми настройками: q82/q78, 1,5 МБ / 400 КБ, телефон 2320 px.)
+const ENCODE = { maxLong: 4615, mobileShort: 1400, mobileLong: 16000, desktopQ: 95, mobileQ: 90, floorQ: 70, desktopBudget: 7_000_000, mobileBudget: 1_500_000 };
 
 const readJson = async (f, fallback) => existsSync(f) ? JSON.parse(await readFile(f, 'utf8')) : fallback;
 const writeJson = async (f, v) => { await mkdir(resolve(f, '..'), { recursive: true }); await writeFile(f, JSON.stringify(v, null, 2) + '\n'); };
 const mb = n => (n / 1e6).toFixed(2) + ' МБ';
 const today = () => new Date().toISOString().slice(0, 10);
+// Карты рельефа и структуры поверхности из архивов ARCHITALON (structure_120x278.tif, struttura_nat_…, poverkhnost_naturalnaya_…) — не рисунок плиты
+const MAP_FILE = /(^|[^a-z])(structure|struttura|strukt\w*|poverkhnost\w*|surface|rilievo|relief|bump|normal|displace\w*|height|rough\w*)([^a-z]|$)/i;
 const faceRank = f => /^F\d+$/.test(f) ? Number(f.slice(1)) : 100;
 
 function parseArgs(argv) {
@@ -103,6 +108,7 @@ function assignSources(targets, sources, decisions) {
   const quarantine = [], ignored = [];
   for (const s of sources) {
     const archiveBase = s.archive ? basename(s.archive) : '', entryName = s.entry;
+    if (MAP_FILE.test(basename(entryName)) && !decisions[s.key]) { ignored.push({ key: s.key, reason: 'карта рельефа/структуры, не фейс плиты' }); continue; }
     const m = matchSource(targets, archiveBase, entryName.replace(/\//g, ' '));
     const manual = decisions[s.key];
     if (manual === 'skip') { ignored.push({ key: s.key, reason: 'пропущено вручную' }); continue; }
@@ -170,7 +176,8 @@ async function cmdImport(opt, log = console.log) {
       const slot = byCode.get(t.code), product = productBy.get(t.code);
       const faces = [...slot.faces.values()].sort((a, b) => faceRank(a.face) - faceRank(b.face) || a.face.localeCompare(b.face));
       if (!faces.length || (only && !only.has(t.code))) continue;
-      const main = faces[0], cur = man.items[t.code];
+      let main = faces[0];
+      const cur = man.items[t.code];
       const portalUrl = f => downloads.files?.[basename(f.archive || f.entry)]?.url || null;
       const provenance = f => ({ archive: f.archive ? basename(f.archive) : null, entry: f.entry, crc32: f.crc || null, size: f.size, acquiredOn: downloads.files?.[basename(f.archive || f.entry)]?.at?.slice(0, 10) || f.date, portalUrl: portalUrl(f), finish: t.finish, faces: faces.length });
       // Основной файл уже опубликован из этого же источника — не пересжимаем (иначе в Git появятся новые файлы без пользы).
@@ -182,7 +189,19 @@ async function cmdImport(opt, log = console.log) {
         catch (e) { errors.push({ code: t.code, face: f.face, key: f.key, reason: e.message }); }
         await writeJson(STATE, state);                      // прогресс сохраняется после каждого файла: прерванный запуск продолжится с того же места
       }
+      // Основной фейс битый или не прошёл проверку — берём следующий настоящий фейс той же плиты (не карту, не копию), с пометкой в отчёте
+      if (!sameMain && !(recs[main.face] && !recs[main.face].problems.length)) {
+        for (const f of faces.slice(1)) {
+          if (!recs[f.face]) {
+            try { recs[f.face] = await convert(product, f, state, opt, log); } catch (e) { errors.push({ code: t.code, face: f.face, key: f.key, reason: e.message }); }
+            await writeJson(STATE, state);
+          }
+          if (recs[f.face] && !recs[f.face].problems.length) { log(`${t.code}: фейс ${main.face} не годится, основным взят ${f.face}`); main = f; break; }
+        }
+      }
       if (!publish) continue;
+      // Новый слэб публикуется только с явным --allow-publish (нужно письменное разрешение Italon); без него WebP остаются в incoming/slabs/out
+      if (!cur && !opt['allow-publish']) { if (recs[main.face] && !recs[main.face].problems.length) log(`не опубликовано ${t.code}: новый слэб — нужен --allow-publish`); continue; }
       const ok = f => recs[f.face] && !recs[f.face].problems.length;
       let entry = cur;
       if (!sameMain && ok(main)) {
@@ -267,17 +286,85 @@ async function cmdAssign(pos) {
   console.log(`записано: ${key} → ${code}. Запустите import.`);
 }
 
+// Адрес коллекции на italonceramica.ru, если он отличается от идентификатора в каталоге
+const SITE_SLUG = { 'charme-deluxe': 'sharm-delyuks', 'charme-evo': 'sharm-evo' };
+
+/** incoming/slabs/links.md: по коллекциям — что ещё нужно, официальная ссылка «Скачать текстуры с АРХИТАЛОН», страницы слэбов, посещённые и скачанные адреса. */
+async function cmdLinks(log = console.log) {
+  const pub = await readJson(join(WORK, 'public-pages.json'), { collections: [] }), report = await readJson(join(WORK, 'report.json'), null);
+  const visited = (await readJson(join(WORK, 'visited.json'), { pages: {} })).pages, downloads = (await readJson(DOWNLOADS, { files: {} })).files;
+  const status = new Map((report?.rows || []).map(r => [r.code, r.status])), items = slabTargets().items;
+  const groups = [...new Set(items.map(t => t.collectionId))].map(id => ({ id, slug: SITE_SLUG[id] || id, items: items.filter(t => t.collectionId === id) }));
+  const need = g => g.items.filter(t => (status.get(t.code) || 'нет исходника') === 'нет исходника');
+  const todo = groups.filter(g => need(g).length), done = groups.filter(g => !need(g).length);
+  const L = ['# ARCHITALON — страницы текстур 120×278', '',
+    `Собрано ${new Date().toISOString().slice(0, 10)} командой \`node scripts/lab-slabs-sync.mjs links\`. Ничего не скачивалось и не нажималось.`, '',
+    '- **Текстуры** — ссылка «Скачать текстуры с АРХИТАЛОН» с публичной страницы коллекции (взята из её href). Открывается после входа на портал; содержимое страницы без входа не проверялось.',
+    '- **Посещено** — адреса, которые вы открывали в окне `browse`/`download` (после входа), с заголовком страницы.',
+    `- Нужно коллекций: **${todo.length}**, слэбов без исходника: **${todo.reduce((a, g) => a + need(g).length, 0)}** из ${items.length}${report ? '' : ' (отчёта нет — выполните import)'}.`, ''];
+  const section = (g, i) => {
+    const p = pub.collections.find(c => c.slug === g.slug), seen = Object.entries(visited).filter(([u]) => u.includes(`/${g.slug}/`));
+    const got = Object.entries(downloads).filter(([, d]) => (d.page || '').includes(`/${g.slug}/`) || (d.url || '').includes(g.slug));
+    L.push(`## ${i}. ${g.items[0].collection} (${g.slug}) — нужно ${need(g).length} из ${g.items.length}`, '');
+    L.push(`- Текстуры: ${p?.textures ? `<${p.textures}>` : 'ссылка не найдена — обновите public-pages.json'}`);
+    if (p?.page) L.push(`- Коллекция: <${p.page}>`);
+    L.push(`- Нужны: ${need(g).map(t => `${t.name.replace(/\s*120X278.*$/i, '')} (${t.code})`).join(', ') || '—'}`);
+    const slabs = (p?.slabs || []).filter(u => /\/120x278-cm\/$/.test(u));
+    if (slabs.length) L.push(`- Страницы слэбов: ${slabs.map(u => `<${u}>`).join(' · ')}`);
+    for (const [u, v] of seen) {
+      L.push(`- Посещено: <${u}> — «${v.title}» (${v.at.slice(0, 10)})`);
+      const files = (v.links || []).filter(l => /120x278/i.test(l.href + ' ' + l.text));
+      for (const l of files) L.push(`  - архив 120×278: ${l.text ? `${l.text} — ` : ''}<${l.href}>`);
+      if (v.links && !files.length) L.push(`  - ссылок с «120x278» не найдено (всего ссылок на файлы: ${v.links.length})`);
+    }
+    for (const [f, d] of got) L.push(`- Скачано: ${f} ← <${d.url}>`);
+    L.push('');
+  };
+  todo.forEach((g, i) => section(g, i + 1));
+  if (done.length) { L.push('## Уже есть все слэбы', ''); done.forEach(g => L.push(`- ${g.items[0].collection} (${g.slug}): ${g.items.length} из ${g.items.length}`)); L.push(''); }
+  await writeFile(join(WORK, 'links.md'), L.join('\n'));
+  log(`Записано ${relative(root, join(WORK, 'links.md'))}: нужно ${todo.length} коллекций, посещённых страниц ${Object.keys(visited).length}.`);
+}
+
+/** Страницы «Скачать текстуры с АРХИТАЛОН» коллекций, где не хватает исходников (из public-pages.json и отчёта). */
+async function textureUrls(only = null) {
+  if (only) return only.map(s => s.trim()).filter(Boolean).map(s => `https://www.italonceramica.ru/ru/architalon/materialy-dlya-proektirovanya/${SITE_SLUG[s] || s}/tekstury/`);
+  const pub = await readJson(join(WORK, 'public-pages.json'), { collections: [] }), report = await readJson(join(WORK, 'report.json'), null);
+  const missing = new Set((report?.rows || []).filter(r => r.status === 'нет исходника').map(r => r.code));
+  const ids = [...new Set(slabTargets().items.filter(t => !report || missing.has(t.code)).map(t => SITE_SLUG[t.collectionId] || t.collectionId))];
+  return ids.map(id => pub.collections.find(c => c.slug === id)?.textures).filter(Boolean);
+}
+
+/** download --auto: прямые ссылки на архивы 120×278 из visited.json для слэбов без исходника (по отчёту), по одной на артикул. --limit=N — только первые N. */
+async function autoQueue(opt) {
+  const report = await readJson(join(WORK, 'report.json'), null), visited = (await readJson(join(WORK, 'visited.json'), { pages: {} })).pages;
+  const missing = new Set((report?.rows || []).filter(r => r.status === 'нет исходника').map(r => r.code));
+  const targets = prepareTargets(slabTargets().items), seen = new Set(), list = [];
+  for (const p of Object.values(visited)) for (const l of p.links || []) {
+    const name = basename(new URL(l.href).pathname);
+    if (!/120x278/i.test(name) || !/\.zip$/i.test(name) || seen.has(l.href)) continue;
+    const m = matchSource(targets, name, '');
+    if (m.status !== 'match' || !missing.has(m.code) || list.some(x => x.code === m.code)) continue;
+    seen.add(l.href); list.push({ url: l.href, name, code: m.code });
+  }
+  return opt.limit ? list.slice(0, Number(opt.limit)) : list;
+}
+
 async function cli() {
   const [cmd, ...rest] = process.argv.slice(2), { opt, pos } = parseArgs(rest);
   if (cmd === 'import') return cmdImport(opt);
   if (cmd === 'report') return cmdReport(opt);
   if (cmd === 'assign') return cmdAssign(pos);
-  if (cmd === 'download' || cmd === 'sync') {
+  if (cmd === 'links') return cmdLinks();
+  if (cmd === 'download' || cmd === 'sync' || cmd === 'browse') {
     const { download } = await import(pathToFileURL(resolve(root, 'scripts/lab-slabs-download.mjs')).href);
-    await download({ ...opt, dir: resolve(typeof opt.dir === 'string' ? opt.dir : DEFAULT_DIR), work: WORK, targets: slabTargets().items, report: (await readJson(join(WORK, 'report.json'), null)) });
+    const auto = cmd === 'download' && opt.auto ? await autoQueue(opt) : [];
+    if (opt.auto && !auto.length) { console.log('очередь пуста: для недостающих слэбов нет ссылок в visited.json (сначала browse --visit)'); return; }
+    const visit = cmd === 'browse' && opt.visit ? await textureUrls(typeof opt.visit === 'string' ? opt.visit.split(',') : null) : [];
+    await download({ ...opt, browse: cmd === 'browse', visit, auto, dir: resolve(typeof opt.dir === 'string' ? opt.dir : DEFAULT_DIR), work: WORK, targets: slabTargets().items, report: (await readJson(join(WORK, 'report.json'), null)) });
     if (cmd === 'sync') return cmdImport(opt);
-    return;
+    return cmdLinks();
   }
-  console.log('команды: import | report | assign "<архив>|<файл>" <артикул|skip> | download | sync   (подробно — в начале файла)');
+  console.log('команды: import | report | links | assign "<архив>|<файл>" <артикул|skip> | browse | download | sync   (подробно — в начале файла)');
 }
 if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.meta.url) cli().catch(e => { console.error('Ошибка:', e.message); process.exit(1); });

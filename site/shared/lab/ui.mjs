@@ -22,7 +22,7 @@ const I = {
 const seg = (name, items, cur) => `<div class="lab-seg" role="radiogroup" aria-label="${esc(name)}">${items.map(([id, label]) => `<button type="button" role="radio" aria-checked="${id === cur}" data-seg="${esc(name)}" data-value="${esc(id)}">${label}</button>`).join('')}</div>`;
 const PRESET_BG = { morning: 'linear-gradient(160deg,#9fb2c4,#d8d2c3 55%,#6d6a62)', day: 'linear-gradient(160deg,#cfe0f2,#efe9dc 55%,#8e8a80)', evening: 'linear-gradient(160deg,#6a3d22,#d08a45 55%,#3a2616)', night: 'linear-gradient(160deg,#0c1426,#26324f 55%,#0a0d16)' };
 
-export const matCard = (m, i, extra = '') => `<button type="button" class="lab-mat" role="radio" aria-checked="false" data-mat="${esc(m.code)}"${extra}><img src="${esc(m.image)}" alt="" width="96" height="96" decoding="async" draggable="false"><span><b>${esc(m.name)}</b><small>арт. ${esc(m.code)}</small></span></button>`;
+export const matCard = (m, i, extra = '') => `<button type="button" class="lab-mat" role="radio" aria-checked="false" data-mat="${esc(m.code)}"${extra}><img src="${esc(m.thumb || m.image)}" alt="" width="96" height="96" loading="lazy" decoding="async" draggable="false"><span><b>${esc(m.name)}</b><small>арт. ${esc(m.code)}</small></span></button>`;
 
 /** featured: [{ code, name, image, ... }] — витрина; shop — показывать корзину сайта (в автономном показе нет); home — адрес главной. */
 export function labMarkup({ featured, shop = true, home = './' }) {
@@ -93,7 +93,7 @@ ${seg('bond', BONDS.map(b => [b.id, b.label]), 'straight')}</div>
 <p class="lab__hint">Слева — выбранный внизу, справа — второй. Тяните линию на экране. Вторым можно взять любую позицию каталога.</p>
 <p class="lab-label">Второй материал</p>
 <div class="lab-second" data-second-card><img alt="" width="64" height="64" data-second-img><span><b data-second-name>—</b><small data-second-code></small></span><button type="button" class="lab-btn" data-second-open>Выбрать другой</button></div>
-<div class="lab-quick" data-second-quick role="radiogroup" aria-label="Быстрый выбор второго материала">${featured.map(m => `<button type="button" role="radio" aria-checked="false" data-second="${esc(m.code)}" title="${esc(m.name)}"><img src="${esc(m.image)}" alt="${esc(m.name)}" width="44" height="44" loading="lazy" decoding="async"></button>`).join('')}</div>
+<div class="lab-quick" data-second-quick role="radiogroup" aria-label="Быстрый выбор второго материала">${featured.map(m => `<button type="button" role="radio" aria-checked="false" data-second="${esc(m.code)}" title="${esc(m.name)}"><img src="${esc(m.thumb || m.image)}" alt="${esc(m.name)}" width="44" height="44" loading="lazy" decoding="async"></button>`).join('')}</div>
 <div class="lab__row"><button type="button" class="lab-btn" data-transition>Переход ▸</button></div>
 </section>
 <section class="lab__pane" id="pane-time" role="tabpanel" aria-labelledby="tab-time" data-pane="time" hidden>

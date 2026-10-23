@@ -115,6 +115,8 @@ def convert(p):
         if rgb.height > long_cap:                     # только уменьшение: «HD» из маленького снимка не делаем
             rgb = rgb.resize((round(rgb.width * long_cap / rgb.height), long_cap), Image.Resampling.LANCZOS)
         mob_long = min(p['mobileLong'], rgb.height)
+        if p.get('mobileShort'):                      # телефон задан шириной: длинная сторона — по пропорциям исходника
+            mob_long = min(mob_long, round(rgb.height * p['mobileShort'] / rgb.width))
         mob = rgb.resize((round(rgb.width * mob_long / rgb.height), mob_long), Image.Resampling.LANCZOS) if mob_long < rgb.height else rgb
         for key, img, q0, cap in (('desktop', rgb, p['desktopQ'], p['desktopBudget']), ('mobile', mob, p['mobileQ'], p['mobileBudget'])):
             q, data, over = encode(img, q0, cap, p['floorQ'])

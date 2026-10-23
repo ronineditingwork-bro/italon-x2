@@ -110,6 +110,1202 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4
       }
+    },
+    "600180000060": {
+      "file": "600180000060-8e5ac2a8.webp",
+      "sha256": "8e5ac2a8608c0007a368e6abece54cf58ab0399fa766e1e807769bf90b0e7078",
+      "mobile": {
+        "file": "600180000060-m-df42630d.webp",
+        "sha256": "df42630dec29cc4e035a0f7c3012c031ee367793274cab11d1adc70af3c45a1c"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:avantgarde-black-120x278.zip/black_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив avantgarde-black-120x278.zip, файл black_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «АВА.БЛЭК 120X278». Исходник 1993×4615 RGB (ICC → sRGB) → WebP: десктоп 1993×4615, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "avantgarde-black-120x278.zip",
+        "entry": "black_120x278_F1.tif",
+        "crc32": "250e74b0",
+        "size": 110929680,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/avantgarde-black-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "886a48b818e147b6ebcca9f3263754bfbe3fc6b26d695e65bd2095141657465d"
+      }
+    },
+    "600180000062": {
+      "file": "600180000062-3280788d.webp",
+      "sha256": "3280788d52f72f8987a3a7eca1f793cbcedda02d883eba028b7f498e7d67056f",
+      "mobile": {
+        "file": "600180000062-m-23f4a1f3.webp",
+        "sha256": "23f4a1f388abbe0c8f35d785395f5dd5659176dc61360c30b1f02fb9e04ec998"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:avantgarde-calacatta-warm-120x278.zip/calacatta_warm_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив avantgarde-calacatta-warm-120x278.zip, файл calacatta_warm_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «АВА.КАЛАК.ВОРМ 120X278». Исходник 1993×4615 RGB (ICC → sRGB) → WebP: десктоп 1993×4615, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "avantgarde-calacatta-warm-120x278.zip",
+        "entry": "calacatta_warm_120x278_F1.tif",
+        "crc32": "ee5d317a",
+        "size": 54961004,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/avantgarde-calacatta-warm-120x278.zip",
+        "finish": "СИЛК И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "e2bdaab86e715b858081cbaf6f6b4afa9245aa758c92e9a77a998538d4789fa5"
+      }
+    },
+    "600180000058": {
+      "file": "600180000058-688195b0.webp",
+      "sha256": "688195b0607fe4104d8e9aa0d08b8709a8b0cbd14d3e57badd62545b1b4b3eb7",
+      "mobile": {
+        "file": "600180000058-m-97a1af4f.webp",
+        "sha256": "97a1af4fc8601ef8635ffd2820fb44815c8ca49f4b64f8f21592a58c03d91a7c"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:avantgarde-pure-120x278.zip/pure_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив avantgarde-pure-120x278.zip, файл pure_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «АВА.ПЬЮР 120X278». Исходник 1993×4615 RGB (ICC → sRGB) → WebP: десктоп 1993×4615, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "avantgarde-pure-120x278.zip",
+        "entry": "pure_120x278_F1.tif",
+        "crc32": "5bceb3fd",
+        "size": 110957212,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/avantgarde-pure-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "9cfe2807baf9d9405cbdf7af39afc22a153e3418e47cd3a5fffdf6d5e12b93b7"
+      }
+    },
+    "600180000059": {
+      "file": "600180000059-6b37bbe2.webp",
+      "sha256": "6b37bbe2948ae209fb7501c63b469ddca23a369a2f0ebbe0ab42c34d0cdccfd5",
+      "mobile": {
+        "file": "600180000059-m-6d0d5057.webp",
+        "sha256": "6d0d5057c47d276e1b495a8e171dd5c39484481e2b45ce57781fde465234b1c0"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:avantgarde-silver-120x278.zip/silver_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив avantgarde-silver-120x278.zip, файл silver_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «АВА.СИЛЬВЕР 120X278». Исходник 1993×4615 RGB (ICC → sRGB) → WebP: десктоп 1993×4615, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "avantgarde-silver-120x278.zip",
+        "entry": "silver_120x278_F1.tif",
+        "crc32": "6040266c",
+        "size": 110957440,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/avantgarde-silver-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "8cf92d786d8b337b6818d2b01db9fcab7fa3484342495703a27763aa9e70c44e"
+      }
+    },
+    "600180000061": {
+      "file": "600180000061-a653f2fe.webp",
+      "sha256": "a653f2feeebb31532df655c026e6e247104626271e3881647c6c431a840f1fc4",
+      "mobile": {
+        "file": "600180000061-m-350d05e7.webp",
+        "sha256": "350d05e71d7d008b3d0281b5fcd219dd4a3e67b864c48ca883029697f1572070"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:avantgarde-exclusive-green-120x278.zip/exclusive_green_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив avantgarde-exclusive-green-120x278.zip, файл exclusive_green_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «АВА.ЭКСКЛЮЗ.ГРИН 120X278 ЛЮКС». Исходник 1993×4615 RGB (ICC → sRGB) → WebP: десктоп 1993×4615, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "avantgarde-exclusive-green-120x278.zip",
+        "entry": "exclusive_green_120x278_F1.tif",
+        "crc32": "276eddc7",
+        "size": 56132852,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/avantgarde-exclusive-green-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "b0f6dc35ec081383b70a5b6b55bff67d35240355c88a88ca40edf88e68e6e818"
+      }
+    },
+    "600180000077": {
+      "file": "600180000077-6242399f.webp",
+      "sha256": "6242399f787c79ca3833508830ebd88564232f0f8fbfd3e0940f3126b377e453",
+      "mobile": {
+        "file": "600180000077-m-8b5022d8.webp",
+        "sha256": "8b5022d8a5173ab4ad7269ca772fcbaf6db8fb818216b6225a5ad524c6f5f8f1"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:aura-lava-galaxy-120x278.zip/lava_galaxy_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив aura-lava-galaxy-120x278.zip, файл lava_galaxy_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «АУРА ЛАВА ГЭЛАКСИ 120X278». Исходник 1993×4615 RGB (ICC → sRGB) → WebP: десктоп 1993×4615, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "aura-lava-galaxy-120x278.zip",
+        "entry": "lava_galaxy_120x278_F1.tif",
+        "crc32": "eebf3125",
+        "size": 67855836,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/aura-lava-galaxy-120x278.zip",
+        "finish": "СИЛК И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "5d186e91091fc8b7e7ddf74f7bf77e77641f1a4178cdf9e46d2d4cc0fb957780"
+      }
+    },
+    "600180000088": {
+      "file": "600180000088-999bfde4.webp",
+      "sha256": "999bfde4b73106c9ba181d95361b25a03610ebcbd358b940a43c109c4b1c848e",
+      "mobile": {
+        "file": "600180000088-m-1392b2c9.webp",
+        "sha256": "1392b2c9b57656b2177bb233168563484489e148919bbd252e165b9a18a32cb5"
+      },
+      "face": "V1",
+      "sourceUrl": "architalon:velvet-cotton-120x278.zip/Cotton_120x278.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив velvet-cotton-120x278.zip, файл Cotton_120x278.tif, фейс V1; название и формат 120×278 в имени файла совпадают с артикулом «ВЕЛЬВЕТ КОТТОН 120X278». Исходник 3402×7880 RGB → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "velvet-cotton-120x278.zip",
+        "entry": "Cotton_120x278.tif",
+        "crc32": "df9c820b",
+        "size": 232902128,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/velvet-cotton-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 1,
+        "sha256": "0b7d3f2a12045f522a81c593dea65a9ce1a53113eea6f8c4ed6b40ca0b363af3"
+      }
+    },
+    "600180000089": {
+      "file": "600180000089-183b5398.webp",
+      "sha256": "183b5398a92c97708ab483c9ccbe94eff9aca5271b791ce1d18bf7886ed1c051",
+      "mobile": {
+        "file": "600180000089-m-6cbd1bdc.webp",
+        "sha256": "6cbd1bdcb68be407d1112b7173c6bb5e75e867c773b2fc22edf0e1582abc022e"
+      },
+      "face": "V1",
+      "sourceUrl": "architalon:velvet-cashmere-120x278.zip/Cashmere_120x278.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив velvet-cashmere-120x278.zip, файл Cashmere_120x278.tif, фейс V1; название и формат 120×278 в имени файла совпадают с артикулом «ВЕЛЬВЕТ КЭШМИР 120X278». Исходник 3402×7880 RGB → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "velvet-cashmere-120x278.zip",
+        "entry": "Cashmere_120x278.tif",
+        "crc32": "3c1f92ce",
+        "size": 233364660,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/velvet-cashmere-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 1,
+        "sha256": "27362b41a30778d2b2fca3da268364238d77ee54acea9aa2990416ff48379997"
+      }
+    },
+    "600180000090": {
+      "file": "600180000090-a56b2a94.webp",
+      "sha256": "a56b2a948faab4fb0170ce5d519f4fbe50936e44ab3e8b2f445d91a37313e3f4",
+      "mobile": {
+        "file": "600180000090-m-acb672f6.webp",
+        "sha256": "acb672f66f0bff834ff88e4f11433d5164d6393570f0489ce429b3da8230d054"
+      },
+      "face": "V1",
+      "sourceUrl": "architalon:velvet-silk-120x278.zip/Silk_120x278.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив velvet-silk-120x278.zip, файл Silk_120x278.tif, фейс V1; название и формат 120×278 в имени файла совпадают с артикулом «ВЕЛЬВЕТ СИЛК 120X278». Исходник 3402×7880 RGB → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "velvet-silk-120x278.zip",
+        "entry": "Silk_120x278.tif",
+        "crc32": "044a5dfc",
+        "size": 230902568,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/velvet-silk-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 1,
+        "sha256": "8b167ff1a589f6f8f74726cfc5fb9028adbf6485fdc7b4cb1d5063c882aaeaa9"
+      }
+    },
+    "600180000035": {
+      "file": "600180000035-59fe58ca.webp",
+      "sha256": "59fe58ca8aaf54eac49098dae9fb4943d7d0c049452febbe763bb58e061655f0",
+      "mobile": {
+        "file": "600180000035-m-e7114885.webp",
+        "sha256": "e7114885bffb565b76afb7ce3dee70e945428af00a0274e93ad2ee897aedad85"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:continuum-brass-dark-120x278.zip/brass_dark_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив continuum-brass-dark-120x278.zip, файл brass_dark_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «КОНТИНУУМ БРАСС ДАРК 120X278». Исходник 1992×4615 RGB (ICC → sRGB) → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "continuum-brass-dark-120x278.zip",
+        "entry": "brass_dark_120x278_F1.tif",
+        "crc32": "45c54dc2",
+        "size": 163332660,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/continuum-brass-dark-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "e996ab2a26eb9863d628a6183dd52bab8f27227a7224b3076446bce1f4eba37a"
+      }
+    },
+    "600180000032": {
+      "file": "600180000032-ec006ff6.webp",
+      "sha256": "ec006ff6ccdafe4c8d3cdee21c988df907fb96e7eac4f35cab5b38e377eee8f9",
+      "mobile": {
+        "file": "600180000032-m-28cb6b71.webp",
+        "sha256": "28cb6b716b51ef92b4e976aca38667d3379e68effe2ddeae3c950a541efa7422"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:continuum-petrol-120x278.zip/continuum_petrol_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив continuum-petrol-120x278.zip, файл continuum_petrol_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «КОНТИНУУМ ПЕТРОЛ 120X278». Исходник 1992×4614 RGB (ICC → sRGB) → WebP: десктоп 1992×4614, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "continuum-petrol-120x278.zip",
+        "entry": "continuum_petrol_120x278_F1.tif",
+        "crc32": "1c500f19",
+        "size": 82393964,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/continuum-petrol-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "10a93c338482eb62f75ebab7f5896317adc57bcb729412c33f2cdf83d19c1c73"
+      }
+    },
+    "600180000031": {
+      "file": "600180000031-dda09c32.webp",
+      "sha256": "dda09c322d763c154f5d229ef78f4c26ecdb2f052352a1aaedc5d5ca50e42004",
+      "mobile": {
+        "file": "600180000031-m-38c30017.webp",
+        "sha256": "38c300171eaaf5e9b70345ecf6ca274f3ae3731ced45c687c7447e3315244394"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:continuum-polar-120x278.zip/continuum_polar_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив continuum-polar-120x278.zip, файл continuum_polar_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «КОНТИНУУМ ПОЛАР 120X278». Исходник 1992×4615 RGB (ICC → sRGB) → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "continuum-polar-120x278.zip",
+        "entry": "continuum_polar_120x278_F1.tif",
+        "crc32": "4af4a00b",
+        "size": 81233040,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/continuum-polar-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "e526891dff17bd0a915581c8730921caa2fa8891f8576a576c61a6b402feb090"
+      }
+    },
+    "600180000033": {
+      "file": "600180000033-2c144e16.webp",
+      "sha256": "2c144e16c7bf3fd773f25d2f0d127b1d5a308a01b22ceb36cd110753bbfa2e6f",
+      "mobile": {
+        "file": "600180000033-m-241d5355.webp",
+        "sha256": "241d53558e340ea478015d3571bef488c658970b24ac013111a77668e4ee3cf9"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:continuum-stone-beige-120x278.zip/continuum_stone beige_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив continuum-stone-beige-120x278.zip, файл continuum_stone beige_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «КОНТИНУУМ СТОУН БЕЖ 120X278». Исходник 1992×4615 RGB (ICC → sRGB) → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "continuum-stone-beige-120x278.zip",
+        "entry": "continuum_stone beige_120x278_F1.tif",
+        "crc32": "422198ac",
+        "size": 27604408,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/continuum-stone-beige-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "1a492986db1509eb76d46f27268ba2db9891262dcbcf9a5028c4b25d9528647a"
+      }
+    },
+    "600180000034": {
+      "file": "600180000034-100f571d.webp",
+      "sha256": "100f571d466c6d68c67d35cde9f19c637afe369155a72d3223e4944b99c0e134",
+      "mobile": {
+        "file": "600180000034-m-59b99a0b.webp",
+        "sha256": "59b99a0b2e92ca4145413ca8566fc87078069fad37a9903f2335572affba2a5f"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:continuum-stone-grey-120x278.zip/continuum_stone grey_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив continuum-stone-grey-120x278.zip, файл continuum_stone grey_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «КОНТИНУУМ СТОУН ГРЭЙ 120X278». Исходник 1992×4616 RGB (ICC → sRGB) → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "continuum-stone-grey-120x278.zip",
+        "entry": "continuum_stone grey_120x278_F1.tif",
+        "crc32": "1dd2809b",
+        "size": 55354188,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/continuum-stone-grey-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "480cd216059e936d17a5d1c63d11f6db6bbc5af6a3ddcbd2bbd1ce51033f33dd"
+      }
+    },
+    "600180000075": {
+      "file": "600180000075-e9b7b20d.webp",
+      "sha256": "e9b7b20de92536441ca4714ad29430d1965d269dfdada1bd5b97bd43afe729c8",
+      "mobile": {
+        "file": "600180000075-m-a4e2d41c.webp",
+        "sha256": "a4e2d41cbc5941b20e34941ac92520562e03649cb01019c3a297d7e04f8964de"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:magma-oak-120x278.zip/oak_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив magma-oak-120x278.zip, файл oak_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «МАГМА ОАК 120X278». Исходник 1993×4615 RGB (ICC → sRGB) → WebP: десктоп 1993×4615, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "magma-oak-120x278.zip",
+        "entry": "oak_120x278_F1.tif",
+        "crc32": "2c4a6e3d",
+        "size": 110996320,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/magma-oak-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "423015f9625f4e34724fe436c99fdb240acf045944cf1205bae0528f941d4b16"
+      }
+    },
+    "600180000074": {
+      "file": "600180000074-4d342847.webp",
+      "sha256": "4d342847d7c4c36bbd0775fb3ca32d8fb12281ab8ef03da36ee4b4ee4f9846dd",
+      "mobile": {
+        "file": "600180000074-m-a8a478de.webp",
+        "sha256": "a8a478de31e5daa168e962e73e2cc88d0ddff1fbf9b5325cc89b056a2cbd260b"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:magma-pepper-120x278.zip/pepper_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив magma-pepper-120x278.zip, файл pepper_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «МАГМА ПЭППЕР 120X278». Исходник 1993×4615 RGB (ICC → sRGB) → WebP: десктоп 1993×4615, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "magma-pepper-120x278.zip",
+        "entry": "pepper_120x278_F1.tif",
+        "crc32": "7cfcdd65",
+        "size": 110993276,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/magma-pepper-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "df85eb4d3ddce33a80af836f2409f73452d9872f71198856118aa47eb44bffa1"
+      }
+    },
+    "600180000021": {
+      "file": "600180000021-db1950ca.webp",
+      "sha256": "db1950ca06b89cc361ff6633a2180e4ddd5db703353e5a7c67c49258a96744fa",
+      "mobile": {
+        "file": "600180000021-m-d0fc12e3.webp",
+        "sha256": "d0fc12e3fef2b6e7ff6af869fefdc4e939a129697d04eafb0d5d78f5f05dacb1"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:metropolis-arcadia-brown-120x278.zip/arcadia_brown_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив metropolis-arcadia-brown-120x278.zip, файл arcadia_brown_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «МЕТ.АРК.БРАУН 120X278». Исходник 1801×4171 RGB (ICC → sRGB) → WebP: десктоп 1801×4171, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "metropolis-arcadia-brown-120x278.zip",
+        "entry": "arcadia_brown_120x278_F1.tif",
+        "crc32": "fae64448",
+        "size": 22562756,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/metropolis-arcadia-brown-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "d35ef4b5205e4babba3500960bda2a7da55f406bc75bb504f9de85957c29ebfe"
+      }
+    },
+    "600180000022": {
+      "file": "600180000022-6bcdd5b8.webp",
+      "sha256": "6bcdd5b8d4f333e415cab6a4ae5237bbb675b7957e22fb9c90357a64c4451060",
+      "mobile": {
+        "file": "600180000022-m-7db9f29a.webp",
+        "sha256": "7db9f29af32bb5afebb200e307c6d5d4c355e4b25999bea8e12b552052fa584c"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:metropolis-imperial-black-120x278.zip/imperial_black_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив metropolis-imperial-black-120x278.zip, файл imperial_black_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «МЕТ.ИМП.БЛЭК 120X278». Исходник 1801×4171 RGB (ICC → sRGB) → WebP: десктоп 1801×4171, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "metropolis-imperial-black-120x278.zip",
+        "entry": "imperial_black_120x278_F1.tif",
+        "crc32": "2a5052e4",
+        "size": 22977276,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/metropolis-imperial-black-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "0612f5f57c763548755af37579f94007a3ae1c02afc74ec1b24e36ad0b77fd60"
+      }
+    },
+    "600180000019": {
+      "file": "600180000019-5a618bf0.webp",
+      "sha256": "5a618bf017a592c046a6e1a637218e998549586f649eca5e707cc801107a81ad",
+      "mobile": {
+        "file": "600180000019-m-1461bc7a.webp",
+        "sha256": "1461bc7aebfd271bd18144250924c1dcb49880fa19e46af1822fa6480d3c9ffa"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:metropolis-calacatta-gold-120x278.zip/calacatta_gold_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив metropolis-calacatta-gold-120x278.zip, файл calacatta_gold_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «МЕТ.КАЛ.ГОЛД 120X278». Исходник 1801×4171 RGB (ICC → sRGB) → WebP: десктоп 1801×4171, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "metropolis-calacatta-gold-120x278.zip",
+        "entry": "calacatta_gold_120x278_F1.tif",
+        "crc32": "7fa12407",
+        "size": 22980312,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/metropolis-calacatta-gold-120x278.zip",
+        "finish": "СИЛК И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "ec59f1694ce0a07a26e8a652bb36d48f95c8cd440fe5ee595a145eebde415b19"
+      }
+    },
+    "600180000020": {
+      "file": "600180000020-ab87cfc4.webp",
+      "sha256": "ab87cfc4cbece04a6eb12b1d0e0ef46ed583bb9e2b346e01f6ac04efe53cc003",
+      "mobile": {
+        "file": "600180000020-m-32c41a21.webp",
+        "sha256": "32c41a21b127f33bc0cb104315f16159a048f8807943a4513e903461c88d3da5"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:metropolis-royal-ivory-120x278.zip/royal_ivory_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив metropolis-royal-ivory-120x278.zip, файл royal_ivory_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «МЕТ.РОЯЛ АЙВОРИ 120X278». Исходник 1801×4171 RGB (ICC → sRGB) → WebP: десктоп 1801×4171, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "metropolis-royal-ivory-120x278.zip",
+        "entry": "royal_ivory_120x278_F1.tif",
+        "crc32": "e36fed97",
+        "size": 22976852,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/metropolis-royal-ivory-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "51d20067cedbdf4ccd4112fec4305541de1addcb9bbe2d64f012936756d853c2"
+      }
+    },
+    "600180000011": {
+      "file": "600180000011-6c59c78a.webp",
+      "sha256": "6c59c78a298d2e1f49adaabe103e59a53a96657a371ea8b54b76f2fa7a4bca98",
+      "mobile": {
+        "file": "600180000011-m-df1c121c.webp",
+        "sha256": "df1c121c233e63327e490ee0949fb088481ed6e3309b1411f24c7578bdbbe2ae"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:millennium-black-120x278.zip/black_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив millennium-black-120x278.zip, файл black_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «МИЛЛЕНИУМ БЛЭК 120X278 РЕТ». Исходник 1952×4522 RGB (ICC → sRGB) → WebP: десктоп 1952×4522, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "millennium-black-120x278.zip",
+        "entry": "black_120x278_F1.tif",
+        "crc32": "6da79db5",
+        "size": 79894340,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/millennium-black-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 3,
+        "sha256": "2fff3c0b1da96b2c92eaba579eb6ad7dd759bb6cef85dedeef8f40a5f7e7990c"
+      }
+    },
+    "600180000009": {
+      "file": "600180000009-f3a62c45.webp",
+      "sha256": "f3a62c45f0024d888ca4858b223a0b157ce03c46461add2ed5a3fd4b3bd8cb8d",
+      "mobile": {
+        "file": "600180000009-m-a4d86061.webp",
+        "sha256": "a4d860613de7045e33a4bb936bd960eb0a0407be186f0c27c8495bcabde6febb"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:millennium-pure-120x278.zip/pure_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив millennium-pure-120x278.zip, файл pure_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «МИЛЛЕНИУМ ПЬЮР 120X278 РЕТ». Исходник 1952×4522 RGB (ICC → sRGB) → WebP: десктоп 1952×4522, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "millennium-pure-120x278.zip",
+        "entry": "pure_120x278_F1.tif",
+        "crc32": "d8037e89",
+        "size": 79894280,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/millennium-pure-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 3,
+        "sha256": "e8a90cae71da4f0fb8edfbc32a7e5b8401808b18f53b480300299f39b2372420"
+      }
+    },
+    "600180000010": {
+      "file": "600180000010-8880a92c.webp",
+      "sha256": "8880a92c72508c9f9f2ee0413aacfae126ddda0fb5d7621a2934590d0a0afd70",
+      "mobile": {
+        "file": "600180000010-m-fded5c59.webp",
+        "sha256": "fded5c59f79a866012ef7fd047f67a4cd4d4a2dcfe9b9b4e13ab8e101d484bc4"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:millennium-silver-120x278.zip/silver_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив millennium-silver-120x278.zip, файл silver_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «МИЛЛЕНИУМ СИЛЬВЕР 120X278 РЕТ». Исходник 1952×4522 RGB (ICC → sRGB) → WebP: десктоп 1952×4522, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "millennium-silver-120x278.zip",
+        "entry": "silver_120x278_F1.tif",
+        "crc32": "6d89f901",
+        "size": 79894384,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/millennium-silver-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 3,
+        "sha256": "05f557985b29b66702074c8cb9ad71a2c99f0fef945feb3cfb7653decc2f7a3d"
+      }
+    },
+    "600180000133": {
+      "file": "600180000133-68387df0.webp",
+      "sha256": "68387df0bd81b24821b9966d96f333bb109f391271b19e0220dd7e58556573b5",
+      "mobile": {
+        "file": "600180000133-m-3d41cae9.webp",
+        "sha256": "3d41cae930c61996a6adec9044a3b7a0aa5c11b4e63d56a88ece4e9f3f5d110a"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:prima-volcano-green-120x278.zip/volcano_green_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив prima-volcano-green-120x278.zip, файл volcano_green_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ПРИ.ВОЛКАНО ГРИН 120X278 ЛЮКС». Исходник 1993×4615 RGB (ICC → sRGB) → WebP: десктоп 1993×4615, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "prima-volcano-green-120x278.zip",
+        "entry": "volcano_green_120x278_F1.tif",
+        "crc32": "232c7d56",
+        "size": 55391340,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/prima-volcano-green-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "b033a5d951b66713caaa27f43638c85acc8fe7ffcc34787891c628c70e21f96b"
+      }
+    },
+    "600180000132": {
+      "file": "600180000132-203f5079.webp",
+      "sha256": "203f50794274448ce7298f0727beb5840876163d964a47760321141409f7dcd1",
+      "mobile": {
+        "file": "600180000132-m-b8ac110e.webp",
+        "sha256": "b8ac110ef48e90862b0b54266203e679c3d215d88539178bd3f8de2635039edc"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:prima-denim-red-120x278.zip/denim_red_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив prima-denim-red-120x278.zip, файл denim_red_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ПРИ.ДЕНИМ РЭД 120X278 ЛЮКС». Исходник 1993×4615 RGB (ICC → sRGB) → WebP: десктоп 1993×4615, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "prima-denim-red-120x278.zip",
+        "entry": "denim_red_120x278_F1.tif",
+        "crc32": "db781b29",
+        "size": 27619936,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/prima-denim-red-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "ab2b8ef88388782123f6bd59e1cfd40299f602060a32acd56e5ce10854059402"
+      }
+    },
+    "600180000049": {
+      "file": "600180000049-7aef5be5.webp",
+      "sha256": "7aef5be55fcbf7a5bfd53bfcc992e212ef9a4730c39ded495eb797e78b7c835d",
+      "mobile": {
+        "file": "600180000049-m-f7ffda06.webp",
+        "sha256": "f7ffda06954883c09b5997f7632f1f8b0ffbb496ee1429690bc6d16d058b4f2e"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:stellaris-absolut-black-120x278.zip/absolut_black_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив stellaris-absolut-black-120x278.zip, файл absolut_black_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «СТЕ.АБСОЛЮТ БЛЭК 120X278 ЛЮКС». Исходник 1992×4614 RGB (ICC → sRGB) → WebP: десктоп 1992×4614, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "stellaris-absolut-black-120x278.zip",
+        "entry": "absolut_black_120x278_F1.tif",
+        "crc32": "596b3732",
+        "size": 27849020,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/stellaris-absolut-black-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "3f5e5a196b50f2bf2b4064615d6c09825389f78cef72f1e663c61dd4b0717dc2"
+      }
+    },
+    "600180000050": {
+      "file": "600180000050-eae4e62f.webp",
+      "sha256": "eae4e62feab88ba1d98b6edb8af2560e18ea8ab5a016bcdc0a14319883167c46",
+      "mobile": {
+        "file": "600180000050-m-3eaa2e58.webp",
+        "sha256": "3eaa2e58706fcc46d2e23b959fb512b04b61e14bf268a93b022e193acb000492"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:stellaris-dover-light-120x278.zip/dover_light_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив stellaris-dover-light-120x278.zip, файл dover_light_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «СТЕ.ДОВЕР ЛАЙТ 120X278 ЛЮКС». Исходник 1992×4614 RGB (ICC → sRGB) → WebP: десктоп 1992×4614, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "stellaris-dover-light-120x278.zip",
+        "entry": "dover_light_120x278_F1.tif",
+        "crc32": "8ca4bd8c",
+        "size": 27846744,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/stellaris-dover-light-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "1ba8c82c496ee661d8ccd7a7b692a48f4ec81b023e3022e8807b73a4ef75717f"
+      }
+    },
+    "600180000044": {
+      "file": "600180000044-c3bf5c16.webp",
+      "sha256": "c3bf5c161063418513f1c710d414b11c6a42a1a1643a807dd659215be0d57314",
+      "mobile": {
+        "file": "600180000044-m-d01bebe0.webp",
+        "sha256": "d01bebe0a50700041778e5de916c0dd03910006b1378c2233d98a19efcf97f01"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:stellaris-calacatta-gold-120x278.zip/calacatta_gold_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив stellaris-calacatta-gold-120x278.zip, файл calacatta_gold_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «СТЕ.КАЛАКАТТА ГОЛД 120X278». Исходник 1992×4614 RGB (ICC → sRGB) → WebP: десктоп 1992×4614, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "stellaris-calacatta-gold-120x278.zip",
+        "entry": "calacatta_gold_120x278_F1.tif",
+        "crc32": "674f907b",
+        "size": 27756144,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/stellaris-calacatta-gold-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "cbfe30621faedc8bb070bacafdd9500dcefca75c4601e0d1f8852b3610b840aa"
+      }
+    },
+    "600180000047": {
+      "file": "600180000047-b5fd5f3a.webp",
+      "sha256": "b5fd5f3a9a2c5b4e9112e51cba2046059721ff0b713327a5d2505f966d3e8fa2",
+      "mobile": {
+        "file": "600180000047-m-ca8a555b.webp",
+        "sha256": "ca8a555bd0a6d90d88374bc8fda6d1746f174ade5732fab490187fa721fad99d"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:stellaris-carrara-ivory-120x278.zip/carrara_ivory_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив stellaris-carrara-ivory-120x278.zip, файл carrara_ivory_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «СТЕ.КАРРАРА АЙВОРИ 120X278 ЛЮКС». Исходник 1992×4614 RGB (ICC → sRGB) → WebP: десктоп 1992×4614, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "stellaris-carrara-ivory-120x278.zip",
+        "entry": "carrara_ivory_120x278_F1.tif",
+        "crc32": "3a315f45",
+        "size": 27755244,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/stellaris-carrara-ivory-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "a0ac6fbcea2223b0552f3feb9373d5ae9cf645005fc80a5f0f4939a1d43ce33b"
+      }
+    },
+    "600180000048": {
+      "file": "600180000048-6b6318a7.webp",
+      "sha256": "6b6318a7d2fd2048ea3c5c94266d8e52e26967089ccde4194dfd43f9378366e1",
+      "mobile": {
+        "file": "600180000048-m-6ceb0a3e.webp",
+        "sha256": "6ceb0a3ecc849ad3d9fa8f9fd7b097cd62d56a3e2f1139eeaf5a441c0d60865e"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:stellaris-crystal-pure-120x278.zip/crystal_pure_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив stellaris-crystal-pure-120x278.zip, файл crystal_pure_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «СТЕ.КРИСТАЛ ПЬЮР 120X278 ЛЮКС». Исходник 1992×4614 RGB (ICC → sRGB) → WebP: десктоп 1992×4614, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "stellaris-crystal-pure-120x278.zip",
+        "entry": "crystal_pure_120x278_F1.tif",
+        "crc32": "abb9a3a6",
+        "size": 27847980,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/stellaris-crystal-pure-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "ecaa7a53fd2b0b761666378d5d32e217315391624b0e6dbfbb36046a4615b100"
+      }
+    },
+    "600180000051": {
+      "file": "600180000051-64a41a41.webp",
+      "sha256": "64a41a411094f049a781121ae8b7925682f95b9c9fbe926374b0892adef66882",
+      "mobile": {
+        "file": "600180000051-m-03b79996.webp",
+        "sha256": "03b79996b5b9c9cd550663c17e03e2539a58e93590d35c0e454a9e33e8f9bb49"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:stellaris-madagascar-dark-120x278.zip/madagascar_dark_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив stellaris-madagascar-dark-120x278.zip, файл madagascar_dark_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «СТЕ.МАДАГАСКАР ДАРК 120X278 ЛЮКС». Исходник 1992×4614 RGB (ICC → sRGB) → WebP: десктоп 1992×4614, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "stellaris-madagascar-dark-120x278.zip",
+        "entry": "madagascar_dark_120x278_F1.tif",
+        "crc32": "d651a8ff",
+        "size": 27847596,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/stellaris-madagascar-dark-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "123eee7236326501c799c5f66038784deec35d97f5411089ded1bcecbbc17571"
+      }
+    },
+    "600180000043": {
+      "file": "600180000043-d68742dc.webp",
+      "sha256": "d68742dc69defa527b16903e07b571e73305f7facebc401019054b46f09b5d97",
+      "mobile": {
+        "file": "600180000043-m-ca5c3c8c.webp",
+        "sha256": "ca5c3c8c10760e519365f71ed6c687ab0f5f2de96d179f2898d1a95d99d3138b"
+      },
+      "face": "F5",
+      "sourceUrl": "architalon:stellaris-statuario-white-120x278.zip/statuario_white_120x278_F5.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив stellaris-statuario-white-120x278.zip, файл statuario_white_120x278_F5.tif, фейс F5; название и формат 120×278 в имени файла совпадают с артикулом «СТЕ.СТАТУАРИО УАЙТ 120X278». Исходник 1991×4614 RGB (ICC → sRGB) → WebP: десктоп 1991×4614, мобильная 1400×3244; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "stellaris-statuario-white-120x278.zip",
+        "entry": "statuario_white_120x278_F5.tif",
+        "crc32": "c984c8d9",
+        "size": 27741660,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/stellaris-statuario-white-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "bc0a3be8059f5e03c9753c94d0960a7ee68b4be85f73bfdaeadc8e95be20ae91"
+      }
+    },
+    "600180000046": {
+      "file": "600180000046-1f0bd5f5.webp",
+      "sha256": "1f0bd5f56852c7bf93d427ab84e0b47ec7b779d3754fa7c7e24762aa044d7d0e",
+      "mobile": {
+        "file": "600180000046-m-a48de0bb.webp",
+        "sha256": "a48de0bba78dbe16bb913b28726beab61f49b786b0390b588068dfddc4ab5c9a"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:stellaris-tuscania-grey-120x278.zip/tuscania_grey_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив stellaris-tuscania-grey-120x278.zip, файл tuscania_grey_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «СТЕ.ТУСКАНИА ГРЭЙ 120X278». Исходник 1992×4614 RGB (ICC → sRGB) → WebP: десктоп 1992×4614, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "stellaris-tuscania-grey-120x278.zip",
+        "entry": "tuscania_grey_120x278_F1.tif",
+        "crc32": "91e408bd",
+        "size": 27844944,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/stellaris-tuscania-grey-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "904814e8ff5769c9986fdeaf682030fc592550d33d7c27b8da954ba019bb13f9"
+      }
+    },
+    "600180000045": {
+      "file": "600180000045-3a7a166b.webp",
+      "sha256": "3a7a166ba742efa7ae91043816fa1e03c94467caf535a86e8fbb951fe9a73c98",
+      "mobile": {
+        "file": "600180000045-m-a258cc9d.webp",
+        "sha256": "a258cc9d7eda6192803a8b91f791625eeeb85d41b6858c86261d56e99bf06133"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:stellaris-elegant-silver-120x278.zip/elegant_silver_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив stellaris-elegant-silver-120x278.zip, файл elegant_silver_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «СТЕ.ЭЛЕГАНТ СИЛЬВЕР 120X278». Исходник 1992×4614 RGB (ICC → sRGB) → WebP: десктоп 1992×4614, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "stellaris-elegant-silver-120x278.zip",
+        "entry": "elegant_silver_120x278_F1.tif",
+        "crc32": "bcd88bd6",
+        "size": 27844784,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/stellaris-elegant-silver-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "28743f8f0cd2f374f4988fd93eb42a46997f115528d3929794173eed64e447d0"
+      }
+    },
+    "600180000080": {
+      "file": "600180000080-3f02c3b4.webp",
+      "sha256": "3f02c3b4170a15ecc2ee0ee982c157ffbac71b7ca999d1696322505007bcc9a6",
+      "mobile": {
+        "file": "600180000080-m-b6a9274c.webp",
+        "sha256": "b6a9274c65bf3175579ef2f92a416fa5829afe08aa11c27949b13b5a839c9cfb"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:forum-slim-desert-120x278.zip/Slim_Desert_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив forum-slim-desert-120x278.zip, файл Slim_Desert_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ФОРУМ СЛИМ ДЕЗЕРТ 120X278». Исходник 3000×6916 RGB (ICC → sRGB) → WebP: десктоп 2002×4615, мобильная 1400×3227; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "forum-slim-desert-120x278.zip",
+        "entry": "Slim_Desert_120x278_F1.tif",
+        "crc32": "bd720c35",
+        "size": 25205196,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/forum-slim-desert-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 2,
+        "sha256": "61967e6216c02ff55de34b5348407c4626440f125187fe60a4c5568c51604cac"
+      }
+    },
+    "600180000078": {
+      "file": "600180000078-b6a7111f.webp",
+      "sha256": "b6a7111f978d6179e1650ba3420e3347bd25664b4d7564e5c91465df958afc70",
+      "mobile": {
+        "file": "600180000078-m-461275e2.webp",
+        "sha256": "461275e2a515579f7836e133db2568cf113e870ef30a7e8f990fe7fcbfb26b7a"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:forum-slim-polar-120x278.zip/Slim_Polar_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив forum-slim-polar-120x278.zip, файл Slim_Polar_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ФОРУМ СЛИМ ПОЛАР 120X278». Исходник 3000×6916 RGB (ICC → sRGB) → WebP: десктоп 2002×4615, мобильная 1400×3227; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "forum-slim-polar-120x278.zip",
+        "entry": "Slim_Polar_120x278_F1.tif",
+        "crc32": "8581ac9e",
+        "size": 26971316,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/forum-slim-polar-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 2,
+        "sha256": "741a892849f1f122ced15c160a59de13a6a466a65ad4637cd40613b931e0e239"
+      }
+    },
+    "600180000079": {
+      "file": "600180000079-b9a21362.webp",
+      "sha256": "b9a2136264c42fc0308116971bbcd5481e817496e7ba684c6e5401acc9ffaf9a",
+      "mobile": {
+        "file": "600180000079-m-96a06aac.webp",
+        "sha256": "96a06aac89c09f73d28fd0961492a085b5b946713a82fe6ed2c119ce227237f2"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:forum-slim-pure-120x278.zip/Slim_Pure_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив forum-slim-pure-120x278.zip, файл Slim_Pure_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ФОРУМ СЛИМ ПЬЮР 120X278». Исходник 3000×6916 RGB (ICC → sRGB) → WebP: десктоп 2002×4615, мобильная 1400×3227; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "forum-slim-pure-120x278.zip",
+        "entry": "Slim_Pure_120x278_F1.tif",
+        "crc32": "2cb1789e",
+        "size": 30104172,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/forum-slim-pure-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 2,
+        "sha256": "e9c0e02f3e4291087f4106c67c4743ec08641ef9704f89bb19e94b34cfd5cfef"
+      }
+    },
+    "600180000083": {
+      "file": "600180000083-0c2f74f4.webp",
+      "sha256": "0c2f74f4e7d55ef8f13c4cbb1c26b0849876ce6556af841b4c051d6d266b8dca",
+      "mobile": {
+        "file": "600180000083-m-0a02b3fa.webp",
+        "sha256": "0a02b3fa341fabdf2e12478388d18b10859c6fa195e79701ad70ad882fc092cf"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:forum-stone-iron-120x278.zip/Stone_Iron_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив forum-stone-iron-120x278.zip, файл Stone_Iron_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ФОРУМ СТОУН АЙРОН 120X278». Исходник 3000×6916 RGB (ICC → sRGB) → WebP: десктоп 2002×4615, мобильная 1400×3227; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "forum-stone-iron-120x278.zip",
+        "entry": "Stone_Iron_120x278_F1.tif",
+        "crc32": "995567b1",
+        "size": 114879708,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/forum-stone-iron-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 3,
+        "sha256": "8c2c14aa457a09ea2f15ba58cd9f149e014bcb2cf31a1ff0e378e96c3a145c0a"
+      }
+    },
+    "600180000081": {
+      "file": "600180000081-02365d5a.webp",
+      "sha256": "02365d5af5b8c7173e2f998d3260723518c847bc2d1bdd6b223efefed433cc0a",
+      "mobile": {
+        "file": "600180000081-m-db6f2037.webp",
+        "sha256": "db6f2037b08ad9f81e3b53b608be372bd12188811bbbc11574f44aa5de9d71e6"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:forum-stone-polar-120x278.zip/Stone_Polar_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив forum-stone-polar-120x278.zip, файл Stone_Polar_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ФОРУМ СТОУН ПОЛАР 120X278». Исходник 3000×6916 RGB (ICC → sRGB) → WebP: десктоп 2002×4615, мобильная 1400×3227; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "forum-stone-polar-120x278.zip",
+        "entry": "Stone_Polar_120x278_F1.tif",
+        "crc32": "46589f09",
+        "size": 112235700,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/forum-stone-polar-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 3,
+        "sha256": "70d49de9e5dd8db95e56431dd765c4cc95485130a9d9bfe0862b45ed4779c6f3"
+      }
+    },
+    "600180000082": {
+      "file": "600180000082-8439a394.webp",
+      "sha256": "8439a3949911be666ed8d3e4279f6ec87c798821bfde45e29f8aa7fba51d4456",
+      "mobile": {
+        "file": "600180000082-m-1c80a25f.webp",
+        "sha256": "1c80a25f5d017b402c9cb1975ec3c4dc3fbcd0f512189cbac687350099d10bc7"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:forum-stone-silver-120x278.zip/Stone_Silver_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив forum-stone-silver-120x278.zip, файл Stone_Silver_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ФОРУМ СТОУН СИЛЬВЕР 120X278». Исходник 3000×6916 RGB (ICC → sRGB) → WebP: десктоп 2002×4615, мобильная 1400×3227; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "forum-stone-silver-120x278.zip",
+        "entry": "Stone_Silver_120x278_F1.tif",
+        "crc32": "79467a8e",
+        "size": 116573716,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/forum-stone-silver-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 3,
+        "sha256": "2767931a22b0c456d194cda3dfcb121eb850726059c3766bea5721b5b4a45b85"
+      }
+    },
+    "600180000005": {
+      "file": "600180000005-2558726b.webp",
+      "sha256": "2558726bb7de0318cb00b460324292491e22247021190289f7c8342d771473cf",
+      "mobile": {
+        "file": "600180000005-m-1ab1b968.webp",
+        "sha256": "1ab1b968f281125a9c7b9f894a5f2e40f296a6168a4793a4ca3149758d09e1f8"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:charme-deluxe-arabescato-white-120x278.zip/arabescato_white_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив charme-deluxe-arabescato-white-120x278.zip, файл arabescato_white_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ШАР.ДЕЛ.АРАБ.УАЙТ 120X278 ЛЮКС». Исходник 1800×4170 RGB (ICC → sRGB) → WebP: десктоп 1800×4170, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "charme-deluxe-arabescato-white-120x278.zip",
+        "entry": "arabescato_white_120x278_F1.tif",
+        "crc32": "e6559444",
+        "size": 22716740,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/charme-deluxe-arabescato-white-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "033face0c26ce6dfb8db672c9ba8013e483fdb486ed1bc0f91662ab65dcff709"
+      }
+    },
+    "600180000004": {
+      "file": "600180000004-1495e279.webp",
+      "sha256": "1495e27946d5cf6ac7ef175bb8670ea20740aa11ec79f167e902f3a11a4696b9",
+      "mobile": {
+        "file": "600180000004-m-d9f6c1cc.webp",
+        "sha256": "d9f6c1cc0b999ebe7ba29f31fef6c83e565c9a6e69c3259fab5d6b0d69ddedaf"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:charme-deluxe-bianco-michelangelo-120x278.zip/bianco_michelangelo_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив charme-deluxe-bianco-michelangelo-120x278.zip, файл bianco_michelangelo_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ШАР.ДЕЛ.Б.МИКЕЛ.120X278 ЛЮКС». Исходник 1800×4170 RGB (ICC → sRGB) → WebP: десктоп 1800×4170, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "charme-deluxe-bianco-michelangelo-120x278.zip",
+        "entry": "bianco_michelangelo_120x278_F1.tif",
+        "crc32": "b568b00a",
+        "size": 22715104,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/charme-deluxe-bianco-michelangelo-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "5d176b6a04da692ee18d2daa0bbcaa63c8a4313c07d7654a753f9c2b63244c45"
+      }
+    },
+    "600180000006": {
+      "file": "600180000006-f6463fa6.webp",
+      "sha256": "f6463fa6df4896e9e4e8bdff15ebcd64137f15c788b701fbb3a1afa8429e8211",
+      "mobile": {
+        "file": "600180000006-m-885e6a56.webp",
+        "sha256": "885e6a564800b52b964074ddf9b3d331d842541a712705124d2b87a65f43c045"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:charme-deluxe-invisible-white-120x278.zip/invisible_white_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив charme-deluxe-invisible-white-120x278.zip, файл invisible_white_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ШАР.ДЕЛ.ИНВИЗ.УАЙТ 120X278 ЛЮКС». Исходник 1800×4170 RGB (ICC → sRGB) → WebP: десктоп 1800×4170, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "charme-deluxe-invisible-white-120x278.zip",
+        "entry": "invisible_white_120x278_F1.tif",
+        "crc32": "82f253e4",
+        "size": 22717300,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/charme-deluxe-invisible-white-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "f0a6c247d8b4341147acce9b3bc8c7902c048a995aded1362705d6e947d6bba4"
+      }
+    },
+    "600180000008": {
+      "file": "600180000008-a01ee47a.webp",
+      "sha256": "a01ee47a0124146ece4a3019664fde2fb74a6abd4a887fb733f68c29bc44ad83",
+      "mobile": {
+        "file": "600180000008-m-55b776dd.webp",
+        "sha256": "55b776ddd89d28eb49a54cb2ec4a7f826ac9f87fef1cad7ef621892f97ae76a6"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:charme-deluxe-sahara-noir-120x278.zip/sahara_noir_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив charme-deluxe-sahara-noir-120x278.zip, файл sahara_noir_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ШАР.ДЕЛ.САХ.НУАР 120X278 ЛЮКС». Исходник 1800×4170 RGB (ICC → sRGB) → WebP: десктоп 1800×4170, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "charme-deluxe-sahara-noir-120x278.zip",
+        "entry": "sahara_noir_120x278_F1.tif",
+        "crc32": "3ba20e72",
+        "size": 22715792,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/charme-deluxe-sahara-noir-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "f0a4d0d347e316753665eb2139d5eef43df43da56fe2aa5722f1be558a17accc"
+      }
+    },
+    "600180000007": {
+      "file": "600180000007-421e9e2f.webp",
+      "sha256": "421e9e2f6b1819f748133af5d20a8b8300cc624675610423551dd81514e66451",
+      "mobile": {
+        "file": "600180000007-m-79dfa190.webp",
+        "sha256": "79dfa1900039332f7235068ed865e7381b8e1811f493e0d8a5b5a2e0179e5259"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:charme-deluxe-statuario-fantastico-120x278.zip/statuario_fantastico_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив charme-deluxe-statuario-fantastico-120x278.zip, файл statuario_fantastico_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ШАР.ДЕЛ.СТАТ.ФАНТ.120X278 ЛЮКС». Исходник 1800×4170 RGB (ICC → sRGB) → WebP: десктоп 1800×4170, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "charme-deluxe-statuario-fantastico-120x278.zip",
+        "entry": "statuario_fantastico_120x278_F1.tif",
+        "crc32": "f4dc68d5",
+        "size": 22717636,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/charme-deluxe-statuario-fantastico-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "b088449ea05252be7bbeb125c39764e470e6ee4073e0f3e85474b0200e37e73c"
+      }
+    },
+    "600180000002": {
+      "file": "600180000002-f28c9e06.webp",
+      "sha256": "f28c9e06f09bcc1fd078fbc7e4fc4d64dda0a98ba5d57316f0f154354b7c752b",
+      "mobile": {
+        "file": "600180000002-m-5bf9f86b.webp",
+        "sha256": "5bf9f86bfc9398c45ababfb3c50c767d89aa266c9b38fa2fc74dc983f46e2986"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:charme-evo-imperiale-120x278.zip/imperiale_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив charme-evo-imperiale-120x278.zip, файл imperiale_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ШАР.ЭВО ИМПЕРИАЛЕ 120X278 ЛЮКС». Исходник 1992×4614 RGB (ICC → sRGB) → WebP: десктоп 1992×4614, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "charme-evo-imperiale-120x278.zip",
+        "entry": "imperiale_120x278_F1.tif",
+        "crc32": "e2af04de",
+        "size": 83720116,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/charme-evo-imperiale-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "4cd406026774ce26a9249c04140e3a5cbe2c1e7c68326ba801a744d8fd4c94aa"
+      }
+    },
+    "600180000001": {
+      "file": "600180000001-1ccc8afd.webp",
+      "sha256": "1ccc8afdc8f01638ee7717ec20f2ccac0cb4fdae33572fec517c7f3ad7b3d2eb",
+      "mobile": {
+        "file": "600180000001-m-fdaa79d1.webp",
+        "sha256": "fdaa79d189c864c2aeaeb30a8d5333ba38391b5eac307416dfb28b5011fc72e7"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:charme-evo-calacatta-120x278.zip/calacatta_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив charme-evo-calacatta-120x278.zip, файл calacatta_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ШАР.ЭВО КАЛАКАТТА 120X278 ЛЮКС». Исходник 1992×4614 RGB (ICC → sRGB) → WebP: десктоп 1992×4614, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "charme-evo-calacatta-120x278.zip",
+        "entry": "calacatta_120x278_F1.tif",
+        "crc32": "3440db66",
+        "size": 67246244,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/charme-evo-calacatta-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "e4b13e4afe5e5e50967a96871912d76e683cb913aaa65ed580920d49ca3a401d"
+      }
+    },
+    "600180000012": {
+      "file": "600180000012-e5da1af8.webp",
+      "sha256": "e5da1af859899ada45fd13fddb15e6efff239d18d32638e2ec92e8089913be18",
+      "mobile": {
+        "file": "600180000012-m-670bf555.webp",
+        "sha256": "670bf5555494043f67e8b44fd39a4cb14915ce621b9919677dac0b7feccca648"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:charme-evo-statuario-120x278.zip/statuario_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив charme-evo-statuario-120x278.zip, файл statuario_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ШАР.ЭВО СТАТУАРИО 120X278 ЛЮКС». Исходник 1992×4614 RGB (ICC → sRGB) → WebP: десктоп 1992×4614, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "charme-evo-statuario-120x278.zip",
+        "entry": "statuario_120x278_F1.tif",
+        "crc32": "53e2831d",
+        "size": 63206500,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/charme-evo-statuario-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "b9ae7b9bf8a2eedf8802533b45087ef9e97d7cd09c8678b640f163c30f5166af"
+      }
+    },
+    "600180000018": {
+      "file": "600180000018-63a86b17.webp",
+      "sha256": "63a86b17915af76d63f57473a7b76e1c48dbc05ba0a795a42dab4a0bbdea46c7",
+      "mobile": {
+        "file": "600180000018-m-02d3d306.webp",
+        "sha256": "02d3d30695e9cfb61035086f42d826e281d25a88fbd6a9f81afa8b08f4761059"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:charme-advance-platinum-white-120x278.zip/platinum_white_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив charme-advance-platinum-white-120x278.zip, файл platinum_white_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ШАР.ЭДВ.ПЛАТИНУМ УАЙТ 120X278 ЛЮКС». Исходник 1992×4615 RGB (ICC → sRGB) → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "charme-advance-platinum-white-120x278.zip",
+        "entry": "platinum_white_120x278_F1.tif",
+        "crc32": "c3034bca",
+        "size": 81384364,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/charme-advance-platinum-white-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "a920403d90a78d9f429c9758ee8114a9d69cd967a2368958c58d19ddf53d4dfe"
+      }
+    },
+    "600180000003": {
+      "file": "600180000003-e13591ca.webp",
+      "sha256": "e13591ca203ebba175e34d12308fdac6a1be16e31f59d65d3c88c41662573bc2",
+      "mobile": {
+        "file": "600180000003-m-4c6cfa04.webp",
+        "sha256": "4c6cfa04ec19fc9606da53934c11c5b2362d85cbe9fcb27a175ceb47c266e43c"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:charme-extra-lasa-120x278.zip/lasa_120x278 F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив charme-extra-lasa-120x278.zip, файл lasa_120x278 F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ШАР.ЭКСТРА ЛАЗА 120X278 ЛЮКС». Исходник 3093×7166 RGB (ICC → sRGB) → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "charme-extra-lasa-120x278.zip",
+        "entry": "lasa_120x278 F1.tif",
+        "crc32": "02fc0848",
+        "size": 157024256,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/charme-extra-lasa-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 2,
+        "sha256": "5ef8477e87656e6ee3201cb377b135872d4ba04bda4fdfd755dcdf2e66a2d480"
+      }
+    },
+    "600180000041": {
+      "file": "600180000041-85562986.webp",
+      "sha256": "85562986538b484e9f1ea6b68619f7d8aa3b5341a6ec418c44176221e5e97314",
+      "mobile": {
+        "file": "600180000041-m-fec0a872.webp",
+        "sha256": "fec0a872b839d89eb0a5190c64e569d1dc1393ae693fb0369494c51eb6f68a55"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:eternum-volcano-120x278.zip/volcano_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив eternum-volcano-120x278.zip, файл volcano_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ЭТЕРНУМ ВОЛКАНО 120X278 ЛЮКС». Исходник 1992×4615 RGB (ICC → sRGB) → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "eternum-volcano-120x278.zip",
+        "entry": "volcano_120x278_F1.tif",
+        "crc32": "f40a022a",
+        "size": 27684660,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/eternum-volcano-120x278.zip",
+        "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 5,
+        "sha256": "9f774491bcccd11ab6cab3ce4f9d20399b823935d38fb862e7a8e9f021825374"
+      }
+    },
+    "600180000042": {
+      "file": "600180000042-4fb97359.webp",
+      "sha256": "4fb973590357d4c3909557123b2d0f93e5abb9eb92257f5fd8bec607c55520f7",
+      "mobile": {
+        "file": "600180000042-m-dcd943d9.webp",
+        "sha256": "dcd943d942a93995465e3e9a12fa84beb3f4a71dae5d80930a6fb83b6d2513e0"
+      },
+      "face": "F1",
+      "sourceUrl": "architalon:eternum-carrara-120x278.zip/carrara_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив eternum-carrara-120x278.zip, файл carrara_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «ЭТЕРНУМ КАРРАРА 120X278». Исходник 1992×4615 RGB (ICC → sRGB) → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-10-23",
+      "provenance": {
+        "archive": "eternum-carrara-120x278.zip",
+        "entry": "carrara_120x278_F1.tif",
+        "crc32": "495a26aa",
+        "size": 27715860,
+        "acquiredOn": "2026-10-23",
+        "portalUrl": "https://www.italonceramica.ru/assets/architalon/minimali/formati/eternum-carrara-120x278.zip",
+        "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
+        "faces": 4,
+        "sha256": "af9111261b893e967b7f6c7ccd79968d0d59a122e78dc2da02fe87b1c8a27d7a"
+      }
     }
   }
 }

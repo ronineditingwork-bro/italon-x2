@@ -59,10 +59,11 @@ export function surfaceFor(p, quality = 'hd') {
 export function toEntry(p, { root = './', imageUrl } = {}) {
   const a = labAsset(p);
   const url = imageUrl ? imageUrl(p) : (p.image?.src ? media(root, p.image.src) : null);
+  const thumb = !imageUrl && p.image?.thumb?.src ? media(root, p.image.thumb.src) : url;   // карточки — фото каталога; оригинал грузит только рендер
   return {
     code: p.code, name: cleanName(p.name, p.collection), rawName: p.name, latin: p.latin || '', collection: titleRu(p.collection), collectionId: p.collectionId || '', format: fmt(p.format), formatKey: String(p.format || ''),
     finish: String(p.finish || '').toLowerCase(), priceText: p.priceKopecks > 0 ? `${money(p.priceKopecks)} за ${p.unit || 'м²'}` : '', canOrder: p.canOrder !== false,
-    path: `/product/${p.code}/`, href: `${root}product/${p.code}/`, image: url, imgW: p.image?.width || 0, imgH: p.image?.height || 0,
+    path: `/product/${p.code}/`, href: `${root}product/${p.code}/`, image: url, thumb, imgW: p.image?.width || 0, imgH: p.image?.height || 0,
     original: !!p.image?.original, eligible: a.eligible && !!url, quality: a.quality || null, photo: a.photo || null, maxPpcm: a.maxPpcm || 40, reason: a.eligible && !url ? 'фото доступно только на сайте' : a.reason || '',
     surf: surfaceFor(p, a.quality),
   };
@@ -173,6 +174,7 @@ export function applyOriginals(products, manifest, { mobile = false } = {}) {
   const items = manifest?.items || {}; if (!Object.keys(items).length) return products;
   return products.map(p => {
     const it = items[p.code], o = it && mobile && it.mobile && !checkOriginal(p, it.mobile) ? it.mobile : it;
-    return o && !checkOriginal(p, o) ? { ...p, image: { ...p.image, src: o.src.replace(/^\//, ''), width: o.width, height: o.height, original: true } } : p;
+    // thumb — прежнее фото каталога: им показываются карточки и галерея, чтобы не грузить оригиналы всех позиций сразу
+    return o && !checkOriginal(p, o) ? { ...p, image: { ...p.image, src: o.src.replace(/^\//, ''), width: o.width, height: o.height, original: true, ...(p.image?.src ? { thumb: { src: p.image.src, width: p.image.width, height: p.image.height } } : {}) } } : p;
   });
 }

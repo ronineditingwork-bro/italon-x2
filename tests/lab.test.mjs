@@ -288,3 +288,10 @@ test('оригиналы: дополнительные фейсы публику
   assert.equal(log.length, 2); assert.match(log[0], /F3: пропорции/); assert.match(log[1], /F4: нет файла/);
   assert.equal(applyOriginals(products, r).find(p => p.code === '600180000076').image.src, 'media/lab/f1.png', 'лаборатория по-прежнему берёт основной файл');
 });
+test('оригинал идёт только в рендер: карточки и галерея показывают фото каталога (иначе страница грузит оригиналы всех слэбов сразу)', () => {
+  const p = products.find(x => x.code === '600180000076'), cat = p.image.src;
+  const [a] = applyOriginals([p], { items: { '600180000076': { src: 'media/lab/x.webp', width: 1993, height: 4615 } } });
+  assert.equal(a.image.src, 'media/lab/x.webp'); assert.deepEqual(a.image.thumb, { src: cat, width: p.image.width, height: p.image.height });
+  const e = toEntry(a, { root: './' }); assert.match(e.image, /media\/lab\/x\.webp$/); assert.ok(e.thumb.endsWith(cat.replace(/^\//, '')) && e.thumb !== e.image, e.thumb);
+  const plain = toEntry(p, { root: './' }); assert.equal(plain.thumb, plain.image, 'без оригинала карточка и рендер берут одно фото');
+});
