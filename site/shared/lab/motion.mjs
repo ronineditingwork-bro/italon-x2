@@ -1,4 +1,5 @@
 // Движение и анимации лаборатории: функции времени без обращения к DOM — поэтому проверяются в Node.
+import { skyAt, hourAt } from './timeofday.mjs';
 export const clamp01 = x => Math.min(1, Math.max(0, x));
 export const lerp = (a, b, t) => a + (b - a) * t;
 export const easeInOut = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -33,13 +34,15 @@ export function choreograph(base, t, { duration = 7, aspect = 9 / 16, from = bas
   const s = JSON.parse(JSON.stringify(base));
   const preset = LIGHT_PRESETS[base.mode] || LIGHT_PRESETS.day;
   const ang = preset.phase + k * Math.PI * 1.35;
-  s.light = { ...lightAt(base.mode, ang), };
+  s.light = base.mode === 'time' ? { ...base.light } : { ...lightAt(base.mode, ang) };
+  if (base.mode === 'time') { const hr = hourAt(t, duration, 7, 22.5); s.hour = hr; s.sky = skyAt(hr); }
   s.cam.ppcm = base.cam.ppcm * lerp(0.92, 1.18, e);
   s.cam.rot = base.cam.rot + lerp(-0.05, 0.12, e);
   s.cam.tilt = Math.min(1.08, Math.max(0, base.cam.tilt + lerp(-0.04, 0.1, Math.sin(k * Math.PI))));
   s.cam.center = [base.cam.center[0] + lerp(-4, 6, e), base.cam.center[1] + lerp(0, 10, e)];
   s.a = from; s.b = to;
   const p = clamp01((k - 0.38) / 0.34);
+  if (base.mode === 'time') { s.a = s.b = from; s.sweep = { on: false }; s.compare = false; return s; }
   if (from !== to) { s.sweep = sweepFor(p, aspect); if (p >= 1) { s.a = to; s.b = to; s.sweep = { on: false }; } if (p <= 0) { s.b = from; s.sweep = { on: false }; } }
   else s.sweep = { on: false };
   s.compare = false;

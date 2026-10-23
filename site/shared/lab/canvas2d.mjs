@@ -4,10 +4,13 @@ import { basis } from './camera.mjs';
 import { BONDS, JOINT_COLORS, rowShift } from './layout.mjs';
 import { hash2, HASH_OFFSET } from './layout.mjs';
 
+const eff0 = st => (st.mode === 'time' ? (st.sky?.key === 'sun' && st.sky.hour > 7 && st.sky.hour < 17.5 ? 'day' : 'evening') : st.mode);
 const TINT = { day: 'rgba(255,244,225,', evening: 'rgba(255,150,70,', side: 'rgba(235,242,255,' };
 export class Canvas2DView {
   constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d', { alpha: false }); this.sources = []; this.level = 4; this.info = { renderer: 'Canvas 2D', maxTexture: 0 }; this.fallback = true; }
-  setMaterials(materials) { this.sources = materials; }
+  setMaterials(materials) { this.sources = [materials[0], materials[1] || materials[0]]; }
+  setSlots(materials) { this.setMaterials(materials); }
+  prepare() {}
   setLevel() {}
   finish() {}
   dispose() {}
@@ -53,10 +56,10 @@ export class Canvas2DView {
     } else this.#tiles(g, A, state, W, H, ppcm, null);
     g.setTransform(1, 0, 0, 1, 0, 0);
     // условный свет: пятно вокруг положения источника и затемнение остального
-    const lx = W / 2 + (state.light.x) * ppcm * 0.9, ly = H / 2 - (state.light.y) * ppcm * 0.9, R = Math.hypot(W, H) * (state.mode === 'evening' ? 0.5 : 0.8);
-    const tint = TINT[state.mode] || TINT.day;
+    const lx = W / 2 + (state.light.x) * ppcm * 0.9, ly = H / 2 - (state.light.y) * ppcm * 0.9, R = Math.hypot(W, H) * (eff0(state) === 'evening' ? 0.5 : 0.8);
+    const eff = state.mode === 'time' ? (state.sky?.key === 'sun' && state.sky.hour > 7 && state.sky.hour < 17.5 ? 'day' : 'evening') : state.mode, tint = TINT[eff] || TINT.day;
     g.globalCompositeOperation = 'multiply'; let grad = g.createRadialGradient(lx, ly, R * 0.05, lx, ly, R);
-    grad.addColorStop(0, 'rgba(255,255,255,1)'); grad.addColorStop(1, state.mode === 'day' ? 'rgba(150,150,160,1)' : 'rgba(35,35,45,1)'); g.fillStyle = grad; g.fillRect(0, 0, W, H);
+    grad.addColorStop(0, 'rgba(255,255,255,1)'); grad.addColorStop(1, eff0(state) === 'day' ? 'rgba(150,150,160,1)' : 'rgba(35,35,45,1)'); g.fillStyle = grad; g.fillRect(0, 0, W, H);
     g.globalCompositeOperation = 'screen'; grad = g.createRadialGradient(lx, ly, 0, lx, ly, R * 0.55); grad.addColorStop(0, tint + '0.45)'); grad.addColorStop(1, tint + '0)'); g.fillStyle = grad; g.fillRect(0, 0, W, H);
     g.globalCompositeOperation = 'source-over';
   }

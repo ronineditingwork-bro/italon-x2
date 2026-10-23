@@ -1,4 +1,4 @@
-// Экспорт: снимок (PNG) и короткий ролик (MediaRecorder) для соцсетей. Рисуем отдельным холстом нужного размера и вторым контекстом WebGL,
+// Экспорт: снимок (JPG) и короткий ролик (MediaRecorder) для соцсетей. Рисуем отдельным холстом нужного размера и вторым контекстом WebGL,
 // поэтому основной вид не мигает. На кадре — название коллекции, изделие, артикул и адрес карточки товара.
 import { LabGL } from './gl.mjs';
 import { Canvas2DView } from './canvas2d.mjs';
@@ -16,9 +16,9 @@ export function videoSupport() {
 function makeView(materials, size, forceFallback, level) {
   const cv = document.createElement('canvas'); cv.width = size[0]; cv.height = size[1];
   const view = !forceFallback && LabGL.supported() ? new LabGL(cv, { level }) : new Canvas2DView(cv);
-  view.setMaterials(materials); return { cv, view };
+  view.setSlots(materials); return { cv, view };
 }
-/** Подпись на кадре. info = { collection, title, code, url } */
+/** Подпись на кадре. info = { collection, title, code, url, note } */
 export function drawLabel(g, W, H, info, alpha = 1) {
   const u = W / 720, pad = 38 * u;
   g.save(); g.globalAlpha = alpha;
@@ -27,20 +27,21 @@ export function drawLabel(g, W, H, info, alpha = 1) {
   if (g.letterSpacing !== undefined) g.letterSpacing = `${3 * u}px`;
   g.fillText('ITALON X2 — MATERIAL LAB', pad, pad + 14 * u);
   if (g.letterSpacing !== undefined) g.letterSpacing = '0px';
-  g.fillStyle = '#fff'; g.font = `300 ${44 * u}px Inter, Arial, sans-serif`; g.fillText(info.title, pad, H - pad - 62 * u);
+  g.fillStyle = '#fff'; g.font = `400 ${44 * u}px "Noto Serif", Georgia, serif`; g.fillText(info.title, pad, H - pad - 62 * u);
   g.fillStyle = 'rgba(255,255,255,.72)'; g.font = `400 ${19 * u}px Inter, Arial, sans-serif`; g.fillText(`${info.collection} · арт. ${info.code}`, pad, H - pad - 28 * u);
-  g.fillStyle = 'rgba(255,214,160,.95)'; g.fillText(info.url, pad, H - pad + 2 * u);
+  g.fillStyle = 'rgba(217,185,138,.98)'; g.fillText(info.url, pad, H - pad + 2 * u);
   g.restore();
 }
-const toBlob = (cv, type = 'image/png', q) => new Promise((res, rej) => cv.toBlob(b => (b ? res(b) : rej(new Error('Не удалось сохранить изображение'))), type, q));
+const toBlob = (cv, type, q) => new Promise((res, rej) => cv.toBlob(b => (b ? res(b) : rej(new Error('Не удалось сохранить изображение'))), type, q));
 
-export async function exportStill({ materials, state, size, info, forceFallback = false, level = 0 }) {
+/** materials — две записи [основа, вторая сторона]; state.a/b — номера этих ячеек. */
+export async function exportStill({ materials, state, size, info, forceFallback = false, level = 0, type = 'image/jpeg', quality = 0.92 }) {
   const { cv, view } = makeView(materials, size, forceFallback, level);
   const st = JSON.parse(JSON.stringify(state)); st.q = view.fallback ? 2 : 0;
   view.render(st, { cssWidth: size[0] * 0.8, time: 0 });
   const out = document.createElement('canvas'); out.width = size[0]; out.height = size[1];
-  const g = out.getContext('2d'); g.drawImage(cv, 0, 0); drawLabel(g, size[0], size[1], info);
-  const blob = await toBlob(out); view.dispose?.(); return { blob, width: size[0], height: size[1] };
+  const g = out.getContext('2d'); g.fillStyle = '#08080a'; g.fillRect(0, 0, size[0], size[1]); g.drawImage(cv, 0, 0); drawLabel(g, size[0], size[1], info);
+  const blob = await toBlob(out, type, quality); view.dispose?.(); return { blob, width: size[0], height: size[1] };
 }
 
 /** Видео: duration секунд реального времени. onProgress(0..1). signal — AbortSignal. Возвращает { blob, mime, ext }. */
@@ -59,7 +60,7 @@ export async function exportVideo({ materials, state, size, info, duration = 7, 
       if (signal?.aborted) { aborted = true; return resolve(); }
       const t = (performance.now() - t0) / 1000;
       if (t >= duration) return resolve();
-      const st = choreograph(state, t, { duration, aspect, from: state.a, to: state.compare ? state.b : (state.b !== state.a ? state.b : (state.a + 1) % materials.length) });
+      const st = choreograph(state, t, { duration, aspect, from: state.a, to: state.b });
       st.q = view.fallback ? 2 : (level >= 3 ? 2 : level >= 2 ? 1 : 0);
       view.render(st, { cssWidth: size[0] * 0.8, time: t }); g.drawImage(cv, 0, 0);
       const fade = Math.min(1, t / 0.6) * Math.min(1, (duration - t) / 0.4 + 0.2); drawLabel(g, size[0], size[1], info, fade);

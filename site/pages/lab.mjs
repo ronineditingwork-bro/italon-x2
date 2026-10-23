@@ -1,15 +1,12 @@
-// /lab/ — ITALON X2 · MATERIAL LAB: экспериментальная лаборатория керамогранита (свет, укладка, сравнение, съёмка).
-// Страница пока без индексации (noindex) и без ссылки в меню — это прототип. Рендер — site/shared/lab/*, поведение — site/js/pages/lab.mjs.
-import { esc, money, fmt, titleRu, media } from '../shared/format.mjs';
+// /lab/ — ITALON X2 · MATERIAL LAB: интерактивная лаборатория керамогранита для всего каталога (свет, сутки, укладка, сравнение, съёмка).
+// Страница пока без индексации (noindex) и без ссылки в меню. Витрина из 8 материалов берётся из каталога сайта на этапе сборки; весь каталог лаборатория читает
+// в браузере из data/catalog.json и data/picker.json — второго списка товаров нет. Поведение — site/shared/lab/*, точка входа — site/js/pages/lab.mjs.
 import { products } from '../data.mjs';
-import { LAB_MATERIALS, resolveMaterials } from '../shared/lab/materials.mjs';
+import { toEntry } from '../shared/lab/catalog.mjs';
+import { featuredEntries } from '../shared/lab/materials.mjs';
 import { labMarkup } from '../shared/lab/ui.mjs';
 
-export const labData = (root = './') => resolveMaterials(products).map(m => {
-  const p = m.product;
-  return { id: m.id, code: p.code, name: p.name.replace(/\s*\d+\s*РЕТ$/u, '').toLocaleLowerCase('ru-RU').replace(/(^|\s)\S/gu, c => c.toLocaleUpperCase('ru-RU')), collection: titleRu(p.collection), format: fmt(p.format), finish: String(p.finish || '').toLowerCase(),
-    priceText: `${money(p.priceKopecks)} за м²`, canOrder: p.canOrder, image: media(root, p.image.src), path: `/product/${p.code}/`, href: `${root}product/${p.code}/`, tagline: m.tagline, surf: m.surf, photo: m.photo };
-});
+export const labData = (root = './') => featuredEntries(products, p => toEntry(p, { root }));
 
 export default {
   path: '/lab/',
@@ -17,12 +14,12 @@ export default {
   noindex: true,
   bodyClass: 'lab-body',
   title: 'ITALON X2 — Material Lab',
-  description: 'Экспериментальная лаборатория керамогранита Italon X2: управляемый свет, укладка, сравнение материалов и ролик для соцсетей.',
+  description: 'Интерактивная лаборатория керамогранита Italon X2: управляемый свет, сутки в комнате с окном, укладка, сравнение любых материалов каталога, снимок и ролик.',
   styles: ['lab'],
   scripts: ['lab'],
   render: ctx => {
-    const data = labData(ctx.root || './');
-    return `${labMarkup({ materials: data, shop: true, home: ctx.url('/') })}
-<script type="application/json" id="lab-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+    const featured = labData(ctx.root || './');
+    return `${labMarkup({ featured, shop: true, home: ctx.url('/') })}
+<script type="application/json" id="lab-data">${JSON.stringify({ featured, root: ctx.root || './' }).replace(/</g, '\\u003c')}</script>`;
   },
 };
