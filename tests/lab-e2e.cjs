@@ -30,10 +30,10 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   try {
     for (const [label, vp, mobile] of [['desktop', { viewport: { width: 1366, height: 820 } }, false], ['mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 }, true]]) {
       const { ctx, page } = await open(browser, label, vp);
-      await check(`[${label}] лаборатория запускается на WebGL 2, три реальных товара с артикулами, без горизонтальной прокрутки`, async () => {
+      await check(`[${label}] лаборатория запускается на WebGL 2, пять реальных товаров с артикулами, без горизонтальной прокрутки`, async () => {
         const r = await page.evaluate(() => { const l = document.querySelector('[data-lab]'); return { tier: l.dataset.tier, mats: [...l.querySelectorAll('[data-mat]')].map(b => b.textContent.replace(/\s+/g, ' ').trim()), sw: document.documentElement.scrollWidth, iw: innerWidth, fb: !!l.labApi.view.fallback }; });
-        assert.notEqual(r.tier, 'fallback'); assert.equal(r.fb, false); assert.equal(r.mats.length, 3);
-        for (const [i, code] of ['610010003167', '610010002765', '610010002799'].entries()) assert.ok(r.mats[i].includes(code), r.mats[i]);
+        assert.notEqual(r.tier, 'fallback'); assert.equal(r.fb, false); assert.equal(r.mats.length, 5);
+        for (const [i, code] of ['610010003167', '610010002765', '610010002799', '610010002696', '610010001319'].entries()) assert.ok(r.mats[i].includes(code), r.mats[i]);
         assert.ok(r.sw <= r.iw, `scrollWidth ${r.sw} > ${r.iw}`);
       });
       await check(`[${label}] раскладка в шейдере совпадает с JS-эталоном (id плитки, шов) во всех схемах укладки`, async () => {

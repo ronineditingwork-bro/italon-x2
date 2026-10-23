@@ -10,9 +10,9 @@ import { choreograph, sweepFor, lightAt, easeInOut } from '../site/shared/lab/mo
 import { LAB_MATERIALS, resolveMaterials } from '../site/shared/lab/materials.mjs';
 import lab, { labData } from '../site/pages/lab.mjs';
 
-test('три материала — реальные позиции каталога с фото, названием и артикулом', () => {
+test('пять материалов — реальные позиции каталога с фото, названием и артикулом', () => {
   const res = resolveMaterials(products);
-  assert.equal(res.length, 3);
+  assert.equal(res.length, 5);
   for (const m of res) { assert.ok(m.product.image?.src && m.product.image.width >= 700, `${m.code}: нужно крупное фото`); assert.ok(m.product.name); assert.equal(m.product.code, m.code); assert.ok(m.product.priceKopecks > 0); }
   assert.throws(() => resolveMaterials(products, [{ code: '000' }]), /нет позиции/);
 });
@@ -24,7 +24,7 @@ test('материалы заметно различаются по цвету (
 });
 test('данные страницы: названия без суффикса формата, путь к карточке и цена', () => {
   const d = labData('../');
-  assert.deepEqual(d.map(x => x.name), ['Ривьера Уайт', 'Вояджер Блэк', 'Крета Клэй']);
+  assert.deepEqual(d.map(x => x.name), ['Ривьера Уайт', 'Вояджер Блэк', 'Крета Клэй', 'Фьямма Бронз', 'Эверстоун Лава']);
   for (const x of d) { assert.match(x.href, /^\.\.\/product\/\d{12}\/$/); assert.match(x.path, /^\/product\/\d{12}\/$/); assert.match(x.priceText, /₽/); assert.ok(x.image.startsWith('../media/')); }
   assert.equal(lab.noindex, true); assert.equal(lab.path, '/lab/');
 });

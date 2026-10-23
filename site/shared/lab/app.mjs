@@ -88,7 +88,7 @@ export async function startLab(root, cfg) {
     if (i === st.a && !trans) return;
     const from = st.a; st.a = i; if (st.compare && st.second === i) { st.second = from; syncSecond(); }
     if (animate && !st.compare && !reduced && !exporting) trans = { from, to: i, t0: performance.now(), dur: 1500 };
-    $$(root, '[data-mat]').forEach(b => b.setAttribute('aria-checked', String(+b.dataset.mat === i)));
+    $$(root, '[data-mat]').forEach(b => { const on = +b.dataset.mat === i; b.setAttribute('aria-checked', String(on)); if (on) try { b.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: reduced ? 'auto' : 'smooth' }); } catch {} });
     updateItem(); dirty = true; touch();
   }
   const syncSecond = () => $$(root, '[data-second]').forEach(b => b.setAttribute('aria-checked', String(+b.dataset.second === st.second)));

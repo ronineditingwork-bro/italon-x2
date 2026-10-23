@@ -6,6 +6,8 @@ export const LAB_MATERIALS = [
   { id: 'riviera', code: '610010003167', tagline: 'Светлый мрамор с прожилками', mood: 'Свет скользит по глубине камня', photo: [60, 60], surf: { rough: 0.36, relief: 0.03, micro: 0.10, f0: 0.05 } },
   { id: 'voyager', code: '610010002765', tagline: 'Тёмный рельефный камень', mood: 'Боковой свет раскрывает фактуру', photo: [60, 60], surf: { rough: 0.56, relief: 0.06, micro: 0.12, f0: 0.04 } },
   { id: 'creta', code: '610010002799', tagline: 'Тёплая глина, матовая', mood: 'Вечерний свет делает её живой', photo: [60, 60], surf: { rough: 0.72, relief: 0.05, micro: 0.20, f0: 0.035 } },
+  { id: 'fiamma', code: '610010002696', tagline: 'Бронзовый мрамор с жилами', mood: 'Свет вытягивает жилы из глубины', photo: [60, 60], surf: { rough: 0.30, relief: 0.03, micro: 0.10, f0: 0.05 } },
+  { id: 'everstone', code: '610010001319', tagline: 'Холодный сланцево-синий камень', mood: 'Сталь и пыль под боковым лучом', photo: [60, 60], surf: { rough: 0.62, relief: 0.07, micro: 0.18, f0: 0.04 } },
 ];
 /** Сводит записи лаборатории с каталогом: возвращает [{...материал, product}] или бросает ошибку, если позиции нет. */
 export function resolveMaterials(products, list = LAB_MATERIALS) {
