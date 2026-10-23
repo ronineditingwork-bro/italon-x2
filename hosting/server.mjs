@@ -1,6 +1,6 @@
 import { createServer } from 'node:http';
 import { createReadStream } from 'node:fs';
-import { stat } from 'node:fs/promises';
+import { stat, mkdir, readFile, writeFile, unlink, rename } from 'node:fs/promises';
 import { resolve, sep, extname } from 'node:path';
 import { pipeline } from 'node:stream/promises';
 import { openDatabase } from './database.mjs';
@@ -15,7 +15,16 @@ if (!['http:', 'https:'].includes(origin.protocol) || origin.username || origin.
 if (process.env.NODE_ENV === 'production' && origin.protocol !== 'https:') throw new Error('Production APP_ORIGIN requires HTTPS');
 const port = Number(process.env.PORT || 3000);
 if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('Invalid PORT');
-const storage = openDatabase(resolve(process.env.DB_PATH || resolve(root, 'data/cart.sqlite')));
+const dbPath = resolve(process.env.DB_PATH || resolve(root, 'data/cart.sqlite'));
+const storage = openDatabase(dbPath);
+// Закрытое хранилище файлов проектов Outdoor Lab: рядом с базой (том /data), вне public/, доступ только через API. Имена файлов проверяются, наружу не отдаются.
+const projectsDir = resolve(process.env.PROJECTS_DIR || resolve(dbPath, '..', 'projects'));
+const FILE = /^OUT-[A-Z2-9]{8}\.(photo|result)\.jpg$/;
+const projectFiles = {
+  async put(name, bytes) { if (!FILE.test(name)) throw new Error('bad name'); await mkdir(projectsDir, { recursive: true, mode: 0o700 }); const tmp = resolve(projectsDir, name + '.tmp'); await writeFile(tmp, bytes, { mode: 0o600 }); await rename(tmp, resolve(projectsDir, name)); },
+  async get(name) { if (!FILE.test(name)) return null; try { return new Uint8Array(await readFile(resolve(projectsDir, name))); } catch (e) { if (e.code === 'ENOENT') return null; throw e; } },
+  async delete(name) { if (!FILE.test(name)) return; try { await unlink(resolve(projectsDir, name)); } catch (e) { if (e.code !== 'ENOENT') throw e; } },
+};
 const types = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.svg': 'image/svg+xml', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
@@ -41,7 +50,7 @@ const server = createServer({ maxHeaderSize: 16384 }, async (req, res) => {
     if (url.pathname.startsWith('/api/')) {
       const chunks = [];
       let size = 0;
-      const limit = url.pathname === '/api/quote' ? 3_000_000 : 20000;
+      const limit = url.pathname === '/api/quote' ? 3_000_000 : /^\/api\/projects\/OUT-[A-Z2-9]{8}\/(photo|result)$/.test(url.pathname) ? 3_700_000 : url.pathname === '/api/projects' ? 170_000 : 20000;
       for await (const chunk of req.iterator({ destroyOnReturn: false })) {
         size += chunk.length;
         if (size > limit) { sendJson(res, 413, { error: 'Слишком большая корзина.' }); req.resume(); return; }
@@ -53,7 +62,9 @@ const server = createServer({ maxHeaderSize: 16384 }, async (req, res) => {
       }
       const request = new Request(url, { method: req.method, headers,
         ...(!['GET', 'HEAD'].includes(req.method) ? { body: Buffer.concat(chunks) } : {}) });
-      const response = await handleApi(request, { DB: storage.DB, TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID, TELEGRAM_API_BASE: process.env.TELEGRAM_API_BASE });
+      const response = await handleApi(request, { DB: storage.DB, TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID, TELEGRAM_API_BASE: process.env.TELEGRAM_API_BASE,
+        APP_ORIGIN: origin.origin, PROJECT_FILES: projectFiles, PROJECTS_SECRET: process.env.PROJECTS_SECRET, MANAGER_TOKEN: process.env.MANAGER_TOKEN, DADATA_API_KEY: process.env.DADATA_API_KEY, DADATA_API_BASE: process.env.DADATA_API_BASE,
+        SMS_PROVIDER: process.env.SMS_PROVIDER, SMS_API_KEY: process.env.SMS_API_KEY, SMS_LOGIN: process.env.SMS_LOGIN, SMS_PASSWORD: process.env.SMS_PASSWORD, SMS_SENDER: process.env.SMS_SENDER, SMS_API_BASE: process.env.SMS_API_BASE });
       res.writeHead(response.status, Object.fromEntries(response.headers));
       res.end(Buffer.from(await response.arrayBuffer()));
       return;

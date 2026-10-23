@@ -72,6 +72,7 @@ export const priceNote = 'Цены по прайсу от 01.07.2026, склад
 export const nav = [
   { path: '/collections/', label: 'Коллекции' },
   { path: '/x2/', label: 'X2 · улица' },
+  { path: '/outdoor/', label: 'Outdoor Lab' },
   { path: '/catalog/', label: 'Каталог' },
   { path: '/picker/', label: 'Подбор' },
   { path: '/lab/', label: 'MATERIAL LAB' },

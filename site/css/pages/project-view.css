@@ -1,0 +1,17 @@
+/* /p/ — просмотр проекта по ссылке: быстрая, без форм, телефон прежде всего. */
+.pv { padding: var(--s-6) 0 var(--section); background: var(--bg-2); min-height: 70vh; }
+.pv__wrap { max-width: 56rem; display: grid; gap: var(--s-4); }
+.pv__title { margin: 0; font-size: var(--fs-h2); line-height: 1.1; }
+.pv__sub { margin: 0; color: var(--text-2); }
+.pv__fig { margin: 0; display: grid; gap: .4rem; }
+.pv__fig img { width: 100%; height: auto; display: block; border: 1px solid var(--line); background: var(--bg); }
+.pv__fig figcaption { font-size: var(--fs-xs); color: var(--text-2); }
+.pv__items { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; background: var(--bg); border: 1px solid var(--line); }
+.pv__items:empty { display: none; }
+.pv__items li { display: grid; gap: .15rem; padding: .8rem 1rem; border-top: 1px solid var(--line); }
+.pv__items li:first-child { border-top: 0; }
+.pv__items small { color: var(--text-2); }
+.pv__cta { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.pv__cta .btn { flex: 1 1 14rem; }
+.pv__fine { color: var(--text-2); max-width: 40rem; }
+.pv[data-state="error"] .pv__title { color: var(--error); }

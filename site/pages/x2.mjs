@@ -93,6 +93,16 @@ ${p ? `<p class="t-small">Фото: каталог Italon X2, с.&nbsp;${p.print
 </section>`;
 }
 
+function outdoor(ctx) {
+  return `<section class="x2-game-teaser x2-outdoor-teaser" aria-labelledby="outdoor-teaser-title">
+<div class="wrap x2-game-teaser__inner" data-reveal>
+<div><p class="eyebrow">Визуализатор</p><h2 class="t-h2" id="outdoor-teaser-title">X2 Outdoor Lab</h2>
+<p class="t-body">Посмотрите, как плитка X2 ляжет у вашего дома, бассейна и дорожки: выберите сцену, материал, раскладку и шов или загрузите фото своего участка.</p></div>
+<a class="btn" href="${ctx.url('/outdoor/')}">Примерить X2</a>
+</div>
+</section>`;
+}
+
 function game(ctx) {
   return `<section class="x2-game-teaser" aria-labelledby="game-teaser-title">
 <div class="wrap x2-game-teaser__inner" data-reveal>
@@ -131,6 +141,7 @@ export default {
     aside: `<a class="link-arrow" href="${ctx.url('/catalog/')}?section=x2">Все позиции X2 ${ARROW}</a>` })}
 ${intro()}
 ${scenes(ctx)}
+${outdoor(ctx)}
 ${laying(ctx)}
 ${game(ctx)}
 ${list(ctx)}`,

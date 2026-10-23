@@ -103,3 +103,9 @@
 .x2-game-teaser__inner .t-body { color: #e4ddcf; }
 .x2-game-teaser__inner .btn { background: #f6a21a; border-color: #f6a21a; color: #11141a; }
 .x2-game-teaser__inner .btn:hover { background: #ffb53d; border-color: #ffb53d; }
+
+.x2-outdoor-teaser .x2-game-teaser__inner { background: var(--bg-2); color: var(--text); }
+.x2-outdoor-teaser .x2-game-teaser__inner .eyebrow { color: var(--text-2); }
+.x2-outdoor-teaser .x2-game-teaser__inner .t-body { color: var(--text-2); }
+.x2-outdoor-teaser .x2-game-teaser__inner .btn { background: var(--btn); border-color: var(--btn); color: var(--btn-text); }
+.x2-outdoor-teaser .x2-game-teaser__inner .btn:hover { background: var(--btn-hover); border-color: var(--btn-hover); }

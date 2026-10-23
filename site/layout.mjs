@@ -82,7 +82,7 @@ function footer(ctx) {
 <nav class="footer-col" aria-labelledby="f-clients"><h2 id="f-clients">Клиентам</h2>
 <a href="${u('/calculator/')}">Калькулятор упаковок</a><a href="${u('/catalog/')}" data-cart-open>Корзина и КП в PDF</a><a href="${u('/inspiration/')}">Вдохновение</a><a href="${u('/x2/game/')}">Игра X2 / ГОРОД</a></nav>
 <nav class="footer-col" aria-labelledby="f-brand"><h2 id="f-brand">О бренде</h2>
-<a href="${u('/salon/')}">Салон Italon Experience</a><a href="${u('/collections/')}">Коллекции Italon</a><a href="${u('/x2/')}">X2 — 20 мм</a></nav>
+<a href="${u('/salon/')}">Салон Italon Experience</a><a href="${u('/collections/')}">Коллекции Italon</a><a href="${u('/x2/')}">X2 — 20 мм</a><a href="${u('/privacy/')}">Политика обработки данных</a></nav>
 <div class="footer-col"><h2>Контакты</h2>
 <address>${esc(salon.address).replace(/, (\d+)$/, ',&nbsp;$1')}</address>${salon.hours.map(([d, t]) => `<span>${esc(d)}: ${esc(t)}</span>`).join('')}
 <a href="${salon.phoneHref}">${esc(salon.phone)}</a><a href="mailto:${salon.email}">${esc(salon.email)}</a></div>
