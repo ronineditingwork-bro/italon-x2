@@ -52,6 +52,9 @@ export function surfaceFor(p, quality = 'hd') {
   else if (/СТРУКТУР|РЕЛЬЕФ/.test(f)) { rough = 0.7; relief = 0.08; micro = 0.2; f0 = 0.035; }
   else if (/МАТОВ/.test(f)) { rough = 0.66; relief = 0.04; micro = 0.12; }
   if (quality !== 'hd') return { rough, relief: 0, micro: 0, f0 };    // упрощённый режим: рельеф и зерно не придумываем
+  // Слэб 120×278 — ровная поверхность с напечатанным рисунком: рельеф «по светлоте снимка» превращает прожилки в канавки с тенями (эффект 3D).
+  // Рельеф и зерно не добавляем, блеск по отделке оставляем.
+  if (String(p?.format || '').replace(/\s+/g, '').toUpperCase().replace(/[ХX×]/g, 'X') === SLAB_FORMAT) return { rough, relief: 0, micro: 0, f0 };
   return { rough, relief, micro, f0 };
 }
 

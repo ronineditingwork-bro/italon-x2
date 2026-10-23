@@ -226,7 +226,9 @@ test('оригинал принимается только с совпадающ
   assert.match(checkOriginal(slab, { ...ok, width: 300, height: 695 }), /меньше/); assert.match(checkOriginal(slab, { src: 'x' }), /размер/); assert.match(checkOriginal({ format: 'МОЗАИКА 30X30' }, ok), /формат/);
   const out = applyOriginals(products, { items: { '600180000076': ok, '600180000133': { ...ok, width: 900, height: 900 } } });
   const a = out.find(p => p.code === '600180000076'), b = out.find(p => p.code === '600180000133'); assert.equal(a.image.width, 720); assert.equal(a.image.original, true); assert.equal(b.image.width, products.find(p => p.code === '600180000133').image.width, 'неподходящий оригинал игнорируется');
-  const e = toEntry(a, { root: './' }); assert.equal(e.quality, 'hd'); assert.equal(e.original, true); assert.ok(e.surf.relief > 0 && e.maxPpcm === 40); assert.equal(applyOriginals(products, null), products);
+  const e = toEntry(a, { root: './' }); assert.equal(e.quality, 'hd'); assert.equal(e.original, true); assert.ok(e.surf.relief === 0 && e.surf.micro === 0 && e.maxPpcm === 40, 'слэб — ровная поверхность: рельеф по фото не строится (иначе прожилки выглядят объёмными)');
+  const tile = products.find(p => p.image?.width >= 700 && p.image?.height >= 700 && /^\d+X\d+$/.test(p.format) && p.format !== '120X278' && !/ЛЮКС|ПОЛИР/.test(p.finish || ''));
+  assert.ok(tile && toEntry(tile, { root: './' }).surf.relief > 0, 'у обычной плитки рельеф по фото остаётся'); assert.equal(applyOriginals(products, null), products);
   // телефон получает уменьшенную копию; неподходящая мобильная копия не мешает основной
   const two = { items: { '600180000076': { ...ok, width: 1993, height: 4615, mobile: { src: 'media/lab/x-m.webp', width: 1001, height: 2320 } }, '600180000072': { ...ok, mobile: { src: 'media/lab/y-m.webp', width: 500, height: 1159 } } } };
   const pick = (list, code) => list.find(p => p.code === code).image;
