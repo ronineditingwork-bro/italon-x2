@@ -13,22 +13,25 @@ export async function handleOutdoorSend(request, env, url, json) {
   if (form.get('consent') !== '1') return json({ error: 'Нужно согласие на передачу данных менеджеру.' }, 400);
   const raw = clean(form.get('contact'), 60), phone = normalizePhone(raw), tg = /^@?[A-Za-z][A-Za-z0-9_]{4,31}$/.test(raw) ? '@' + raw.replace(/^@/, '') : '';
   if (!phone && !tg) return json({ error: 'Укажите телефон или имя в Telegram (например, @name), чтобы менеджер мог ответить.' }, 400);
+  // Validate the snapshot before charging the rate limiter. Otherwise one bad upload
+  // blocks a corrected retry, and the Telegram lead can arrive without the promised image.
+  const file = form.get('image');
+  if (!file || typeof file !== 'object' || !file.size)
+    return json({ error: 'Не удалось получить изображение проекта. Сделайте снимок ещё раз.' }, 400);
+  if (file.size > MAX_IMAGE) return json({ error: 'Изображение слишком большое.' }, 400);
+  const image = new Uint8Array(await file.arrayBuffer());
+  if (image[0] !== 0xff || image[1] !== 0xd8 || image[2] !== 0xff)
+    return json({ error: 'Изображение должно быть в формате JPEG.' }, 400);
   const contact = phone || tg, now = Date.now();
   if (now - hourStart > 3600_000) { hourStart = now; hourCount = 0; }
   if (now - (recent.get(contact) || 0) < 20_000 || hourCount >= 60) return json({ error: 'Подождите немного и повторите.' }, 429);
   recent.set(contact, now); hourCount++;
   if (recent.size > 2000) for (const [k, t] of recent) if (now - t > 60_000) recent.delete(k);
-  let image = null; const file = form.get('image');
-  if (file && typeof file === 'object' && file.size) {
-    if (file.size > MAX_IMAGE) return json({ error: 'Изображение слишком большое.' }, 400);
-    image = new Uint8Array(await file.arrayBuffer());
-    if (image[0] !== 0xff || image[1] !== 0xd8 || image[2] !== 0xff) return json({ error: 'Изображение должно быть в формате JPEG.' }, 400);
-  }
   const name = clean(form.get('name'), 80), note = clean(form.get('note'), 500), kind = form.get('kind') === 'plot' ? 'Мой участок (фото клиента)' : 'готовая сцена';
   const spec = String(form.get('spec') ?? '').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, '').replace(/\r/g, '').slice(0, 2800);
   const text = ['🏡 <b>Проект из X2 Outdoor Lab</b>', `Время: ${new Date(now).toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })} (МСК)`,
     `Контакт: <code>${esc(contact)}</code>`, name ? `Имя: ${esc(name)}` : false, `Источник: ${esc(kind)}`, note ? `Комментарий: ${esc(note)}` : false,
-    '', '<b>Спецификация (данные посетителя, площади не проверены):</b>', `<pre>${esc(spec)}</pre>`, image ? 'Картинка результата — следующим сообщением.' : 'Картинка не приложена.'].filter(x => x !== false).join('\n').slice(0, 4000);
+    '', '<b>Спецификация (данные посетителя, площади не проверены):</b>', `<pre>${esc(spec)}</pre>`, 'Картинка результата — следующим сообщением.'].filter(x => x !== false).join('\n').slice(0, 4000);
   try {
     const sent = await sendTelegram(env, text, image, 'italon-x2-outdoor.jpg', env.fetch || fetch, { method: 'sendPhoto', field: 'photo', type: 'image/jpeg' });
     if (!sent) return json({ error: 'Отправка временно недоступна. Позвоните в салон или запросите расчёт через корзину.' }, 503);

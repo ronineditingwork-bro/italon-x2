@@ -26,9 +26,11 @@ ${V.error ? `<p class="ol-perr" role="alert">${esc(V.error)}</p>` : ''}
     if (!F.consent) { V.error = 'Нужно согласие на передачу данных менеджеру.'; render(); return; }
     V.busy = true; V.error = ''; render();
     try {
-      const image = await jpeg(), form = new FormData();
+      const image = await jpeg();
+      if (!image) throw new Error('Не удалось подготовить изображение проекта. Повторите попытку.');
+      const form = new FormData();
       form.set('contact', F.contact.trim()); form.set('name', F.name.trim()); form.set('note', F.note.trim()); form.set('consent', '1'); form.set('kind', plot() ? 'plot' : 'scene'); form.set('spec', app.specText());
-      if (image) form.set('image', image, 'italon-x2-outdoor.jpg');
+      form.set('image', image, 'italon-x2-outdoor.jpg');
       const r = await fetch(new URL('api/outdoor/send', base).href, { method: 'POST', body: form, credentials: 'same-origin' }), j = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(j.error || 'Не удалось отправить. Повторите позже.');
       V.done = true; F.note = '';
