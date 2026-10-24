@@ -51,7 +51,7 @@ export function leadText(lead, cart) {
   ].filter(x => x !== false && x !== undefined && x !== 0).join('\n').slice(0, 4000);
 }
 
-export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch) {
+export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch, media = { method: 'sendDocument', field: 'document', type: 'application/pdf' }) {
   const token = env.TELEGRAM_BOT_TOKEN;
   const chats = String(env.TELEGRAM_CHAT_ID || '').split(',').map(x => x.trim()).filter(Boolean);
   if (!token || !chats.length) return false;
@@ -67,9 +67,9 @@ export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch) 
     if (pdf) {
       const form = new FormData();
       form.set('chat_id', chat);
-      form.set('document', new Blob([pdf], { type: 'application/pdf' }), filename);
-      response = await fetchImpl(api('sendDocument'), { method: 'POST', body: form, signal: signal() });
-      if (!response.ok) throw new Error(`telegram sendDocument ${response.status} (pdf ${pdf.length} bytes) ` + (await response.text().catch(() => '')).slice(0, 200));
+      form.set(media.field, new Blob([pdf], { type: media.type }), filename);
+      response = await fetchImpl(api(media.method), { method: 'POST', body: form, signal: signal() });
+      if (!response.ok) throw new Error(`telegram ${media.method} ${response.status} (pdf ${pdf.length} bytes) ` + (await response.text().catch(() => '')).slice(0, 200));
     }
   }));
   const failed = results.filter(r => r.status === 'rejected');

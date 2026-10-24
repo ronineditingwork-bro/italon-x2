@@ -1,7 +1,7 @@
 import { products, priceInfo, sections, calculateCart } from '../src/catalog.mjs';
 import { cartStore } from './cart-store.mjs';
 import { normalizePhone, leadText, sendTelegram, clean } from './quote-lead.mjs';
-import { handleProjects } from './projects.mjs';
+import { handleOutdoorSend } from './outdoor-send.mjs';
 const json = (body, status = 200, headers = {}) => new Response(JSON.stringify(body), {
   status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex', ...headers },
 });
@@ -10,7 +10,7 @@ export async function handleApi(request, env) {
   const url = new URL(request.url);
   if (url.pathname === '/api/catalog' && request.method === 'GET') return json({ products, priceInfo, sections });
   if (url.pathname === '/api/quote') return handleQuote(request, env, url);
-  const projects = await handleProjects(request, env, url); if (projects) return projects;
+  if (url.pathname === '/api/outdoor/send') return handleOutdoorSend(request, env, url, json);
   if (url.pathname !== '/api/cart') return json({ error: 'Адрес не найден.' }, 404);
   if (!['GET', 'PUT'].includes(request.method)) return json({ error: 'Метод не поддерживается.' }, 405, { Allow: 'GET, PUT' });
   if (request.headers.get('Sec-Fetch-Site') === 'cross-site') return json({ error: 'Запрос отклонён.' }, 403);

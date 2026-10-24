@@ -244,4 +244,3 @@ textarea.ol-in { min-height: 5.5rem; resize: vertical; }
 .ol-plist { list-style: none; margin: var(--s-3) 0 0; padding: 0; display: grid; gap: var(--s-3); }
 .ol-plist li { display: grid; gap: .4rem; padding-top: var(--s-3); border-top: 1px solid var(--line); }
 .ol-plist small { display: block; color: var(--text-2); font-size: var(--fs-xs); }
-.ol-btn--project { flex: 1 1 100%; }

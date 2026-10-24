@@ -10,19 +10,16 @@ const { resolve, extname, join } = require('node:path');
 const root = resolve(__dirname, '..'), pub = resolve(root, 'public'), exe = process.env.CHROMIUM || (existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : undefined);
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.png': 'image/png', '.ttf': 'font/ttf' };
 const requests = [];
-const apiState = { sms: [], telegram: [], files: new Map(), ready: null };
-const CITY = { value: 'г Краснодар', data: { fias_id: '7dfa745e-aa19-4688-b121-b655c3e04a6a', fias_level: '4', city: 'Краснодар', city_fias_id: '7dfa745e-aa19-4688-b121-b655c3e04a6a' } };
-const HOUSE = { value: 'г Краснодар, ул Красная, д 1', data: { fias_id: '11111111-1111-1111-1111-111111111111', fias_level: '8', region_with_type: 'Краснодарский край', city: 'Краснодар', city_fias_id: CITY.data.fias_id, street: 'Красная', house: '1', geo_lat: '45.0355', geo_lon: '38.9753' } };
+const apiState = { telegram: [], photos: [], ready: null };
 async function apiEnv(origin) {
   if (apiState.ready) return apiState.ready;
   const { localDatabase } = await import('../scripts/sqlite-adapter.mjs'), { DB } = localDatabase();
-  return apiState.ready = { DB, PROJECTS_SECRET: 'e'.repeat(48), MANAGER_TOKEN: 'm'.repeat(32), SMS_PROVIDER: 'mock', ALLOW_MOCK_SMS: '1', sentSms: apiState.sms, DADATA_API_KEY: 'k', APP_ORIGIN: origin, TELEGRAM_BOT_TOKEN: 'T', TELEGRAM_CHAT_ID: '1',
-    PROJECT_FILES: { async put(n, b) { apiState.files.set(n, b); }, async get(n) { return apiState.files.get(n) || null; }, async delete(n) { apiState.files.delete(n); } },
-    fetch: async (url, init) => { if (/dadata|suggestions/.test(String(url))) { const b = JSON.parse(init.body); const q = b.query.toLowerCase(); const list = b.from_bound ? [CITY] : [HOUSE]; return new Response(JSON.stringify({ suggestions: q.includes('qwerty') ? [] : list })); } apiState.telegram.push(JSON.parse(init.body)); return new Response('{"ok":true}'); } };
+  return apiState.ready = { DB, APP_ORIGIN: origin, TELEGRAM_BOT_TOKEN: 'T', TELEGRAM_CHAT_ID: '1',
+    fetch: async (url, init) => { if (/sendPhoto/.test(String(url))) apiState.photos.push(init.body.get('photo').size); else apiState.telegram.push(JSON.parse(init.body)); return new Response('{"ok":true}'); } };
 }
 const server = http.createServer(async (req, res) => {
   requests.push({ method: req.method, url: req.url });
-  if (/^\/api\/(projects|p\/|manager\/)/.test(req.url)) {                      // настоящий серверный код проектов, заглушки только для внешних сервисов
+  if (/^\/api\/outdoor\//.test(req.url)) {                      // настоящий серверный код API, заглушка только для Telegram
     const chunks = []; for await (const c of req) chunks.push(c); const origin = `http://${req.headers.host}`, { handleApi } = await import('../worker/api.mjs');
     const headers = new Headers(); for (const [k, v] of Object.entries(req.headers)) headers.set(k, Array.isArray(v) ? v.join(', ') : v);
     const r = await handleApi(new Request(origin + req.url, { method: req.method, headers, ...(req.method === 'GET' || req.method === 'HEAD' ? {} : { body: Buffer.concat(chunks) }) }), await apiEnv(origin));
@@ -261,49 +258,24 @@ const dist3 = (a, b) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs
       await ctx.close();
     }
 
-    // ------------------------------------------------------------------ проекты: адрес из справочника, SMS, ссылка, карточка менеджера
-    for (const [label, vp, mobile] of process.env.E2E_SKIP_PROJECTS ? [] : VIEWS.slice(0, 2)) {
-      const { ctx, page } = await open(browser, `projects-${label}`, vp);
-      let shareUrl = '', projectId = ''; const PHONE = mobile ? '+7 918 765-43-21' : '+7 918 123-45-67', DIGITS = PHONE.replace(/\D/g, '').replace(/^7/, ''); apiState.sms.length = 0; apiState.telegram.length = 0;
-      await check(`[${label}] «Сохранить проект»: кнопка появляется только когда сервер готов; форма требует выбор адреса из справочника`, async () => {
-        await page.waitForSelector('[data-project-save]', { timeout: 8000 }); await page.locator('[data-project-save]').click(); await page.waitForSelector('.ol-project[open]');
-        await page.fill('#pr-title', 'Дача на Красной'); await page.fill('#pr-city', 'крас'); await page.waitForSelector('[data-sug-pick="city"]'); await page.locator('[data-sug-pick="city"]').first().click();
-        assert.match(await page.locator('.ol-project').textContent(), /выбран из справочника/);
-        await page.fill('#pr-addr', 'qwerty'); await wait(700); assert.equal(await page.locator('[data-sug-pick="address"]').count(), 0, 'на qwerty подсказок нет');
-        await page.fill('#pr-phone', PHONE); await page.locator('[data-f="consent"]').check({ force: true });
-        await page.locator('.ol-pform button[type="submit"]').click(); await wait(200); assert.match(await page.locator('.ol-perr').textContent(), /Выберите улицу и дом из списка/);
-        assert.equal(apiState.sms.length, 0, 'без выбранного адреса SMS не уходит');
-        await page.fill('#pr-addr', 'красн'); await page.waitForSelector('[data-sug-pick="address"]'); await page.locator('[data-sug-pick="address"]').first().click();
-        await page.fill('#pr-city', 'крас'); await wait(300); assert.equal(await page.locator('#pr-addr').isDisabled(), true, 'правка города сбрасывает выбранный адрес');
-        await page.waitForSelector('[data-sug-pick="city"]'); await page.locator('[data-sug-pick="city"]').first().click(); await page.fill('#pr-addr', 'красн'); await page.waitForSelector('[data-sug-pick="address"]'); await page.locator('[data-sug-pick="address"]').first().click();
+    // ------------------------------------------------------------------ отправка менеджеру в Telegram: без адреса и SMS
+    for (const [label, vp] of process.env.E2E_SKIP_PROJECTS ? [] : VIEWS.slice(0, 2)) {
+      const { ctx, page } = await open(browser, `send-${label}`, vp); apiState.telegram.length = 0; apiState.photos.length = 0;
+      await check(`[${label}] «Отправить менеджеру в Telegram»: без контакта и согласия не отправляется; с ними уходит текст и картинка, без адреса и SMS`, async () => {
+        assert.equal(await page.locator('[data-project-save], [data-project-list]').count(), 0, 'старой регистрации нет');
+        await page.locator('[data-send]').click(); await page.waitForSelector('.ol-project[open]');
+        assert.equal(await page.locator('#sd-addr, #pr-addr, #pr-code').count(), 0, 'полей адреса и кода нет');
+        await page.locator('.ol-pform button[type="submit"]').click(); assert.match(await page.locator('.ol-perr').textContent(), /телефон или имя в Telegram/); assert.equal(apiState.telegram.length, 0);
+        await page.fill('#sd-contact', `@client_${label}`); await page.locator('.ol-pform button[type="submit"]').click(); assert.match(await page.locator('.ol-perr').textContent(), /согласие/); assert.equal(apiState.telegram.length, 0);
+        await page.fill('#sd-name', 'Анна'); await page.fill('#sd-note', 'Хочу такую террасу'); await page.locator('[data-f="consent"]').check({ force: true });
+        await page.locator('.ol-pform button[type="submit"]').click(); await page.waitForSelector('.ol-pdone', { timeout: 30000 });
+        assert.equal(apiState.telegram.length, 1, 'одно сообщение менеджеру'); const msg = apiState.telegram[0].text;
+        assert.ok(msg.includes(`@client_${label}`) && msg.includes('Анна') && msg.includes('Хочу такую террасу') && /Спецификация/.test(msg) && /Площадь|Материал|X2|Italon/i.test(msg));
+        assert.equal(apiState.photos.length, 1, 'картинка ушла как фото'); assert.ok(apiState.photos[0] > 5000, 'картинка не пустая');
       });
-      await check(`[${label}] подтверждение телефона: неверный код отклоняется, верный сохраняет проект, личная ссылка работает`, async () => {
-        await page.locator('.ol-pform button[type="submit"]').click(); await page.waitForSelector('#pr-code'); assert.equal(apiState.sms.length, 1); assert.match(apiState.sms[0].text, /код подтверждения \d{6}/);
-        await page.fill('#pr-code', '000000'); await page.locator('.ol-pform button[type="submit"]').click(); await page.waitForSelector('.ol-perr'); assert.match(await page.locator('.ol-perr').textContent(), /Неверный код|устарел/);
-        await page.fill('#pr-code', apiState.sms[0].text.match(/\d{6}/)[0]); await page.locator('.ol-pform button[type="submit"]').click(); await page.waitForSelector('.ol-pdone', { timeout: 30000 });
-        projectId = (await page.locator('.ol-pdone code').textContent()).trim(); assert.match(projectId, /^OUT-[A-Z2-9]{8}$/);
-        shareUrl = await page.locator('[data-select]').inputValue(); assert.match(shareUrl, /\/p\/#[A-Za-z0-9_-]{43}$/);
-        assert.equal(apiState.telegram.length >= 1, true, 'менеджеру ушла заявка'); const msg = apiState.telegram.at(-1).text; assert.ok(msg.includes(projectId) && !new RegExp(`${DIGITS}|Красная|Краснодар`).test(msg), 'в заявке нет телефона и адреса');
-        assert.ok(apiState.files.has(`${projectId}.result.jpg`), 'картинка результата сохранена'); assert.ok(![...apiState.files.keys()].some(k => k.endsWith('.photo.jpg')), 'фото сцены не сохраняется');
-        await page.keyboard.press('Escape');
-      });
-      await check(`[${label}] просмотр по ссылке без входа: картинка, город и материалы; телефона и улицы нет`, async () => {
-        const v = await ctx.newPage(); watch(v, `view-${label}`); await v.goto(shareUrl, { waitUntil: 'load' }); await v.waitForFunction(() => document.querySelector('[data-pv]').dataset.state !== 'loading', null, { timeout: 15000 });
-        assert.equal(await v.locator('[data-pv]').getAttribute('data-state'), 'ready'); const text = await v.locator('body').innerText();
-        assert.match(text, /Дача на Красной/); assert.match(text, /Краснодар/); assert.match(text, /610010004089/); for (const s of [DIGITS, '918 123', '918 765', 'Красная, д', 'ул Красная', '45.03']) assert.ok(!text.includes(s), `утечка на странице просмотра: ${s}`);
-        await v.waitForFunction(() => document.querySelector('[data-pv-img]')?.naturalWidth > 100, null, { timeout: 10000 }); assert.equal(await v.evaluate(() => document.querySelector('meta[name=robots]')?.content), 'noindex, nofollow');
-        const calls = requests.filter(r => r.url.startsWith('/api/p/')); assert.ok(calls.every(r => r.method === 'POST'), 'токен не передаётся в адресе запроса'); assert.ok(!requests.some(r => r.url.includes(shareUrl.split('#')[1])), 'токен не попал в адреса запросов');
-        const bad = await ctx.newPage(); await bad.goto(shareUrl.replace(/.$/, c => (c === 'a' ? 'b' : 'a')), { waitUntil: 'load' }); await bad.waitForFunction(() => document.querySelector('[data-pv]').dataset.state === 'error', null, { timeout: 10000 }); assert.match(await bad.locator('[data-pv-sub]').textContent(), /недействительна/);
-        await v.close(); await bad.close();
-      });
-      await check(`[${label}] закрытая карточка менеджера: нужен токен, видны телефон и подтверждённый адрес; «Мои проекты»: ссылка отзывается, проект удаляется`, async () => {
-        const m = await ctx.newPage(); watch(m, `mgr-${label}`); await m.goto(`${base}/manager/#${projectId}`, { waitUntil: 'load' });
-        await m.fill('[data-mg-token]', 'wrong'); await m.locator('[data-mg-login] button').click(); await m.waitForFunction(() => /Неверный токен/.test(document.querySelector('[data-mg-msg]').textContent), null, { timeout: 8000 });
-        await m.fill('[data-mg-token]', 'm'.repeat(32)); await m.locator('[data-mg-login] button').click(); await m.waitForSelector('.mg__dl'); const card = await m.locator('[data-mg-card]').innerText(); assert.ok(card.includes('+7' + DIGITS)); assert.match(card, /справочника ГАР\/ФИАС/); assert.match(card, /Красная/); await m.close();
-        await page.locator('[data-project-list]').click(); await page.waitForSelector('.ol-plist'); assert.match(await page.locator('.ol-plist').textContent(), /Дача на Красной/);
-        await page.locator('[data-revoke-project]').first().click(); await wait(500);
-        const v = await ctx.newPage(); await v.goto(shareUrl, { waitUntil: 'load' }); await v.waitForFunction(() => document.querySelector('[data-pv]').dataset.state === 'error', null, { timeout: 10000 }); await v.close();
-        page.once('dialog', d => d.accept()); await page.locator('[data-delete-project]').first().click(); await wait(700); assert.match(await page.locator('.ol-project').textContent(), /пока нет/); assert.equal(apiState.files.size >= 0, true);
+      await check(`[${label}] повторная отправка того же контакта сразу не проходит`, async () => {
+        await page.locator('.ol-project .ol-btn--line[data-dialog-close]').click(); await page.locator('[data-send]').click(); await page.fill('#sd-contact', `@client_${label}`); await page.locator('[data-f="consent"]').check({ force: true });
+        await page.locator('.ol-pform button[type="submit"]').click(); await page.waitForSelector('.ol-perr'); assert.match(await page.locator('.ol-perr').textContent(), /Подождите/); assert.equal(apiState.telegram.length, 1);
       });
       await ctx.close();
     }

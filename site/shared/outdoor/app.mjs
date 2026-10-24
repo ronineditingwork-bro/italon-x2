@@ -10,7 +10,7 @@ import { encode, decode } from './state.mjs';
 import { esc, money, number, fmt, normalize } from '../format.mjs';
 import { ICONS } from './ui.mjs';
 import { initPlot } from './plot.mjs';
-import { initProjects } from './projects.mjs';
+import { initSend } from './send.mjs';
 
 const DEFAULT_CODE = '610010004089';           // Магма Сильвер 60×120
 const FEATURED_NAMES = ['Магма Сильвер', 'Магма Графит', 'Фоссил Дезерт', 'Материя Магнезио', 'Миллениум Блэк', 'Авангард Сильвер', 'Нордика Роуп', 'Клаймб Рок', 'Нл-Вуд Нлв. Олив', 'Аура Кл. Оак'];
@@ -222,7 +222,7 @@ export async function startOutdoor(root, cfg) {
 <button type="button" class="ol-btn ol-btn--line" data-save>${ICONS.download}<span>Сохранить JPG</span></button>
 <button type="button" class="ol-btn ol-btn--line" data-spec><span>Спецификация</span></button>
 ${plot ? '' : `<button type="button" class="ol-btn ol-btn--line" data-share>${ICONS.share}<span>Поделиться</span></button>`}
-${S.projects ? '<button type="button" class="ol-btn ol-btn--solid ol-btn--project" data-project-save>Сохранить проект</button><button type="button" class="ol-btn ol-btn--line" data-project-list>Мои проекты</button>' : ''}
+<button type="button" class="ol-btn ol-btn--solid" data-send><span>Отправить менеджеру в Telegram</span></button>
 </div></div>`;
     S.lines = byCode;
   }
@@ -409,7 +409,7 @@ ${S.projects ? '<button type="button" class="ol-btn ol-btn--solid ol-btn--projec
   await loadScene(first, { zones: Object.keys(fromUrl.zones).length ? fromUrl.zones : null, zone: fromUrl.zone || null });
   root.addEventListener('outdoor:updated', () => $$('[data-scenes] [data-scene]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.scene === S.sceneId))));
   api.plot = initPlot(api, root);
-  api.projects = initProjects(api, root, cfg);
+  api.send = initSend(api, root, cfg);
   root.dispatchEvent(new CustomEvent('outdoor:updated'));
   return api;
 }
