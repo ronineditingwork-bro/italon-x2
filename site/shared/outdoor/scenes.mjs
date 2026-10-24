@@ -36,7 +36,7 @@ export const SCENES = [
     id: 'red-brick', title: 'Кирпичный дом с забором «расчёска»', short: 'Кирпичный дом', city: 'Красный кирпич, окна RAL 7024, терраса и дорожка',
     image: 'media/outdoor/red-brick.webp', thumb: 'media/outdoor/red-brick-thumb.webp',
     width: 1536, height: 1024, focus: [0.58, 0.65],
-    camera: { fov: 76, horizon: 470, yaw: -12, height: 1.5 },
+    camera: { fov: 76, horizon: 335, yaw: -12, height: 1.5 },
     zones: [
       { id: 'terrace', label: 'Терраса', type: 'terrace', rings: [[[188,526],[480,487],[861,490],[1030,540],[815,624],[515,594],[188,555]]] },
       { id: 'path', label: 'Дорожка к дому', type: 'path', rings: [[[1108,549],[1428,590],[1390,642],[1125,771],[820,1023],[475,1023],[630,890],[920,636]]] },
@@ -46,7 +46,7 @@ export const SCENES = [
     id: 'white-country', title: 'Белый дом в стиле американский кантри', short: 'Американский кантри', city: 'Белый фасад, тёмная крыша, веранда и сад',
     image: 'media/outdoor/white-country.webp', thumb: 'media/outdoor/white-country-thumb.webp',
     width: 1536, height: 1024, focus: [0.54, 0.65],
-    camera: { fov: 77, horizon: 485, yaw: 5, height: 1.5 },
+    camera: { fov: 77, horizon: 345, yaw: 5, height: 1.5 },
     zones: [
       { id: 'terrace', label: 'Терраса', type: 'terrace', rings: [[[40,598],[385,539],[1000,553],[1230,612],[1085,685],[817,701],[450,649],[40,622]]] },
       { id: 'path', label: 'Дорожка к веранде', type: 'path', rings: [[[1150,613],[1450,680],[1260,1023],[521,1023],[829,769]]] },
