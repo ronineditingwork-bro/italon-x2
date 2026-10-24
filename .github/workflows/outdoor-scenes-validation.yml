@@ -1,0 +1,31 @@
+name: Outdoor scene changes — build and asset gate
+on:
+  push:
+    branches:
+      - gpt6/outdoor-new-houses-20261024
+  pull_request:
+    branches:
+      - ccr-943f3ebb-rcco8n
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run check
+      - run: npm test
+      - run: npm run test:hosting
+      - run: npm run build
+  assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node --check scripts/outdoor/import-scene-pack.mjs
+      - run: node scripts/outdoor/verify-scene-assets.mjs
