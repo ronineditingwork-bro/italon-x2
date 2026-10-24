@@ -32,3 +32,12 @@ test('повтор того же контакта подряд ограниче�
 test('без Telegram в окружении честная ошибка, не «успех»', async () => {
   const r = await send({ fetch: async () => new Response('{}') }, { contact: '+7 918 000-11-27' }); assert.equal(r.status, 503);
 });
+
+test('без изображения проект не отправляется, а ошибочная попытка не блокирует исправленную', async () => {
+  const e = env(), contact = '+7 918 000-11-28';
+  assert.equal((await send(e, { contact }, { image: null })).status, 400);
+  assert.equal(e.calls.length, 0, 'в Telegram нет сообщения без картинки');
+  assert.equal((await send(e, { contact }, { image: new Uint8Array([1, 2, 3]) })).status, 400);
+  assert.equal((await send(e, { contact })).status, 200, 'исправленную заявку можно отправить сразу');
+  assert.equal(e.calls.filter(c => /sendPhoto/.test(c.url)).length, 2);
+});
