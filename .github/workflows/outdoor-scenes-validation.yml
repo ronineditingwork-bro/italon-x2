@@ -27,4 +27,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+      - run: node --check scripts/outdoor/import-scene-pack.mjs
       - run: node scripts/outdoor/verify-scene-assets.mjs
