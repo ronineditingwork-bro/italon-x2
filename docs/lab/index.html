@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ru" data-build="4dd64ceecc" class="no-js" data-root="../" data-page="lab">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ITALON X2 — Material Lab — Italon Experience</title>
+<meta name="description" content="Интерактивная лаборатория керамогранита Italon X2: управляемый свет, сутки в комнате с окном, укладка, сравнение любых материалов каталога, снимок и ролик.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<script>(function(d,w){var h=d.documentElement;h.classList.remove('no-js');h.classList.add('js');
+if(w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('reduced');return;}
+h.classList.add('reveal');if(!('onpagereveal' in w))h.classList.add('page-fade');
+setTimeout(function(){if(!h.classList.contains('motion-ready'))h.classList.remove('reveal');},3000);
+})(document,window);</script>
+<link rel="stylesheet" href="../assets/site.css?v=aed72a76e7"><link rel="stylesheet" href="../assets/pages/lab.css?v=05021fa2d1">
+<script type="module" src="../assets/main.js?v=bd6836e5d8"></script><script type="module" src="../assets/pages/lab.js?v=69a25fa40d"></script>
+</head>
+<body class="page-lab lab-body">
+<a class="skip-link" href="#main">К содержанию</a>
+<noscript><p class="noscript-note">JavaScript выключен: страницы и каталог доступны для чтения, а поиск, корзина, расчёт и PDF работают при включённом JavaScript.</p></noscript>
+<header class="site-header">
+<div class="wrap site-header__inner">
+<a class="logo" href="../" aria-label="Italon Experience — на главную"><span>ITALON</span><span class="logo__rule" aria-hidden="true"></span><span class="logo__x">X<sup>2</sup></span></a>
+<nav class="site-nav" aria-label="Основная навигация"><a href="../collections/">Коллекции</a><a href="../x2/">X2 · улица</a><a href="../outdoor/">Outdoor Lab</a><a href="../catalog/">Каталог</a><a href="../picker/">Подбор</a><a href="../lab/" aria-current="page">MATERIAL LAB</a><a href="../calculator/">Калькулятор</a><a href="../inspiration/">Вдохновение</a><a href="../salon/">Салон</a></nav>
+<div class="header-actions">
+<a class="icon-btn" href="../catalog/" data-search-open aria-label="Поиск по каталогу"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></a>
+<a class="header-link header-link--salon" href="../salon/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.3"/></svg><span class="label-text">Салон</span></a>
+<button type="button" class="icon-btn" data-cart-open aria-haspopup="dialog" aria-label="Корзина"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5h2.2l2 10.2h10.6l1.9-7.4H7"/><circle cx="9.5" cy="19" r="1.1"/><circle cx="17" cy="19" r="1.1"/></svg><span class="cart-count" data-cart-count aria-hidden="true">0</span></button>
+<button type="button" class="icon-btn menu-btn" data-menu-open aria-haspopup="dialog" aria-controls="site-menu" aria-label="Открыть меню"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7h17M3.5 12h17M3.5 17h17"/></svg></button>
+</div>
+</div>
+</header>
+<main id="main" tabindex="-1">
+<div class="lab" data-lab data-state="loading">
+<canvas class="lab__canvas" data-canvas tabindex="0" role="img" aria-label="Поверхность из плитки. Перетаскивайте, чтобы сдвинуть; колесо или щипок — масштаб; два пальца — поворот. Стрелки — сдвиг, плюс и минус — масштаб."></canvas>
+<button type="button" class="lab__orb" data-orb aria-label="Источник света. Перетащите или двигайте стрелками"><span></span></button>
+<div class="lab__split" data-split hidden><button type="button" class="lab__split-handle" data-split-handle aria-label="Граница сравнения. Перетащите или двигайте стрелками"><i></i></button></div>
+<div class="lab__vig" aria-hidden="true"></div>
+<p class="lab__clock" data-clock hidden aria-live="off"></p>
+
+<header class="lab__top">
+<a class="lab__back" href="../" aria-label="На сайт Italon X2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>На сайт</span></a>
+<p class="lab__brand"><b>ITALON X2</b><span>MATERIAL LAB</span></p>
+<button type="button" class="lab__cart" data-cart-open aria-haspopup="dialog" aria-label="Корзина"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2.5l2 11h10l2-8H7"/><circle cx="9" cy="19" r="1.3"/><circle cx="17" cy="19" r="1.3"/></svg><span class="cart-count" data-cart-count aria-hidden="true">0</span></button>
+</header>
+
+<div class="lab-views" role="radiogroup" aria-label="Раздел лаборатории"><button type="button" role="radio" aria-checked="true" data-view="floor">Материалы</button><button type="button" role="radio" aria-checked="false" data-view="slabs">Слэбы 120×278</button></div>
+<section class="lab__hero" data-hero aria-labelledby="lab-title">
+<h1 id="lab-title">MATERIAL LAB</h1>
+<p class="lab__sub">Свет. Фактура. Архитектура.</p>
+<p class="lab__lead">Интерактивная лаборатория керамогранита. Управляйте светом, исследуйте фактуру, сравнивайте материалы и создавайте свои интерьерные решения.</p>
+<button type="button" class="lab-cta" data-start>Начать исследование <svg viewBox="0 0 26 10" aria-hidden="true"><path d="M0 5h24.5M20 .8 24.6 5 20 9.2"/></svg></button>
+</section>
+
+<section class="lab__gallery" data-gallery aria-label="Материалы">
+<div class="lab__notice" data-notice hidden><span data-notice-text></span><a data-notice-link href="#">Открыть карточку</a></div>
+<div class="lab__gallery-head"><div><h2 data-gallery-title>Выберите материал</h2><p data-gallery-sub>8 популярных материалов для быстрого старта</p></div><button type="button" class="lab-btn lab-btn--ghost" data-open-catalog><span data-open-label>Все материалы</span> <svg viewBox="0 0 26 10" aria-hidden="true"><path d="M0 5h24.5M20 .8 24.6 5 20 9.2"/></svg></button></div>
+<div class="lab__strip" data-strip role="radiogroup" aria-label="Материал"><button type="button" class="lab-mat" role="radio" aria-checked="false" data-mat="610010003167"><img src="../media/products/56789104738e0bffda85.webp" alt="" width="96" height="96" loading="lazy" decoding="async" draggable="false"><span><b>Ривьера Уайт</b><small>арт. 610010003167</small></span></button><button type="button" class="lab-mat" role="radio" aria-checked="false" data-mat="610010002765"><img src="../media/products/d730fc732012a9d26c4c.webp" alt="" width="96" height="96" loading="lazy" decoding="async" draggable="false"><span><b>Вояджер Блэк</b><small>арт. 610010002765</small></span></button><button type="button" class="lab-mat" role="radio" aria-checked="false" data-mat="610010002799"><img src="../media/products/d3f5ac5486cdce4cfb78.webp" alt="" width="96" height="96" loading="lazy" decoding="async" draggable="false"><span><b>Крета Клэй</b><small>арт. 610010002799</small></span></button><button type="button" class="lab-mat" role="radio" aria-checked="false" data-mat="610010002696"><img src="../media/products/99f11fa75d497c7ef451.webp" alt="" width="96" height="96" loading="lazy" decoding="async" draggable="false"><span><b>Фьямма Бронз</b><small>арт. 610010002696</small></span></button><button type="button" class="lab-mat" role="radio" aria-checked="false" data-mat="610010001319"><img src="../media/products/2f36bd7650899fd86c1d.webp" alt="" width="96" height="96" loading="lazy" decoding="async" draggable="false"><span><b>Эверстоун Лава</b><small>арт. 610010001319</small></span></button><button type="button" class="lab-mat" role="radio" aria-checked="false" data-mat="610010002735"><img src="../media/products/a515adc8872d6a535f79.webp" alt="" width="96" height="96" loading="lazy" decoding="async" draggable="false"><span><b>Дискавер Дезерт</b><small>арт. 610010002735</small></span></button><button type="button" class="lab-mat" role="radio" aria-checked="false" data-mat="610010002664"><img src="../media/products/c2971e57beaf4391c22a.webp" alt="" width="96" height="96" loading="lazy" decoding="async" draggable="false"><span><b>Да Винчи Браун</b><small>арт. 610010002664</small></span></button><button type="button" class="lab-mat" role="radio" aria-checked="false" data-mat="610010002667"><img src="../media/products/57cea85c54062d2def53.webp" alt="" width="96" height="96" loading="lazy" decoding="async" draggable="false"><span><b>Экспо Дарк</b><small>арт. 610010002667</small></span></button></div>
+</section>
+
+<p class="lab__status" data-status role="status" aria-live="polite"></p>
+
+<aside class="lab__panel is-folded" data-panel aria-label="Управление">
+<div class="lab__tabs" role="tablist">
+<button type="button" role="tab" id="tab-light" aria-controls="pane-light" aria-selected="true" data-tab="light">Свет</button><button type="button" role="tab" id="tab-layout" aria-controls="pane-layout" aria-selected="false" data-tab="layout">Укладка</button><button type="button" role="tab" id="tab-compare" aria-controls="pane-compare" aria-selected="false" data-tab="compare">Сравнить</button><button type="button" role="tab" id="tab-time" aria-controls="pane-time" aria-selected="false" data-tab="time">Сутки</button><button type="button" role="tab" id="tab-share" aria-controls="pane-share" aria-selected="false" data-tab="share">Снимок</button><button type="button" role="tab" id="tab-item" aria-controls="pane-item" aria-selected="false" data-tab="item">Товар</button>
+<button type="button" class="lab__fold" data-fold aria-label="Свернуть панель" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+</div>
+<div class="lab__panes">
+<section class="lab__pane" id="pane-light" role="tabpanel" aria-labelledby="tab-light" data-pane="light">
+<div class="lab-seg lab-seg--modes" role="radiogroup" aria-label="Режим света">
+<button type="button" role="radio" aria-checked="true" data-mode="day"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></svg><span>Дневной</span></button>
+<button type="button" role="radio" aria-checked="false" data-mode="evening"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg><span>Вечерний</span></button>
+<button type="button" role="radio" aria-checked="false" data-mode="side"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4l16 16M4 10l10 10M10 4l10 10"/></svg><span>Боковой</span></button>
+<button type="button" role="radio" aria-checked="false" data-mode="time"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/></svg><span>Сутки</span></button></div>
+<p class="lab__hint" data-mode-hint></p>
+<label class="lab-field"><span>Высота света</span><input type="range" min="0.25" max="2.2" step="0.01" value="1" data-height aria-label="Высота света"></label>
+<div class="lab__row"><button type="button" class="lab-btn" data-auto aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><span>Свет движется</span></button><button type="button" class="lab-btn" data-reset>Сбросить вид</button></div>
+<div class="lab-seg lab-seg--two" role="radiogroup" aria-label="Что делает палец"><button type="button" role="radio" aria-checked="true" data-drag="move">Двигать</button><button type="button" role="radio" aria-checked="false" data-drag="rotate">Вращать</button></div>
+<label class="lab-field"><span>Наклон вида</span><input type="range" min="0" max="1.08" step="0.01" value="0.62" data-tilt aria-label="Наклон вида"></label>
+<label class="lab-field"><span>Поворот</span><input type="range" min="-3.14" max="3.14" step="0.01" value="0" data-rot aria-label="Поворот поверхности"></label>
+</section>
+<section class="lab__pane" id="pane-layout" role="tabpanel" aria-labelledby="tab-layout" data-pane="layout" hidden>
+<div data-for="slabs" hidden><p class="lab-label">Плит в стене</p>
+<div class="lab-chips" role="radiogroup" aria-label="Число плит"><button type="button" role="radio" aria-checked="false" data-slabs="1">1</button><button type="button" role="radio" aria-checked="true" data-slabs="2">2</button><button type="button" role="radio" aria-checked="false" data-slabs="3">3</button><button type="button" role="radio" aria-checked="false" data-slabs="4">4</button></div>
+<p class="lab__hint">Каждая плита — 120 × 278 см, швы вертикальные. При повороте плиты ложатся горизонтально (до двух в высоту).</p>
+<p class="lab__hint lab__hint--note">Показан один рисунок лицевой стороны, повторённый на всех плитах. Книжное зеркалирование (bookmatch) не имитируется: у реальных плит рисунок может отличаться.</p></div>
+<div data-for="floor"><p class="lab-label">Формат плитки, см</p>
+<div class="lab-chips" role="radiogroup" aria-label="Формат плитки"><button type="button" role="radio" aria-checked="false" data-format="30x30">30 × 30</button><button type="button" role="radio" aria-checked="false" data-format="30x60">30 × 60</button><button type="button" role="radio" aria-checked="true" data-format="60x60">60 × 60</button><button type="button" role="radio" aria-checked="false" data-format="60x120">60 × 120</button><button type="button" role="radio" aria-checked="false" data-format="80x80">80 × 80</button><button type="button" role="radio" aria-checked="false" data-format="20x120">20 × 120 (доска)</button><button type="button" role="radio" aria-checked="false" data-format="120x120">120 × 120</button></div></div>
+<div class="lab__row"><button type="button" class="lab-btn" data-turn aria-pressed="false"><span data-turn-label>Повернуть на 90°</span></button></div>
+<label class="lab-field"><span>Шов, мм <output data-joint-out>2</output></span><input type="range" min="0" max="10" step="0.5" value="2" data-joint aria-label="Ширина шва, миллиметров"></label>
+<p class="lab-label">Цвет шва</p>
+<div class="lab-swatches" role="radiogroup" aria-label="Цвет шва"><button type="button" role="radio" aria-checked="false" data-jc="tone" title="В тон плитки" aria-label="В тон плитки"><i style="background:linear-gradient(135deg,#8d8a82 50%,#4b4944 50%)"></i></button><button type="button" role="radio" aria-checked="true" data-jc="white" title="Белый" aria-label="Белый"><i style="background:#e9e6df"></i></button><button type="button" role="radio" aria-checked="false" data-jc="grey" title="Серый" aria-label="Серый"><i style="background:#a7a49d"></i></button><button type="button" role="radio" aria-checked="false" data-jc="graphite" title="Графит" aria-label="Графит"><i style="background:#37383a"></i></button><button type="button" role="radio" aria-checked="false" data-jc="black" title="Чёрный" aria-label="Чёрный"><i style="background:#0e0f10"></i></button></div>
+<div data-for="floor"><p class="lab-label">Раскладка</p>
+<div class="lab-seg" role="radiogroup" aria-label="bond"><button type="button" role="radio" aria-checked="true" data-seg="bond" data-value="straight">Прямая</button><button type="button" role="radio" aria-checked="false" data-seg="bond" data-value="half">Со сдвигом ½</button><button type="button" role="radio" aria-checked="false" data-seg="bond" data-value="third">Со сдвигом ⅓</button></div></div>
+</section>
+<section class="lab__pane" id="pane-compare" role="tabpanel" aria-labelledby="tab-compare" data-pane="compare" hidden>
+<div class="lab__row"><button type="button" class="lab-btn lab-btn--wide" data-compare aria-pressed="false">Сравнить два материала</button></div>
+<p class="lab__hint">Слева — выбранный внизу, справа — второй. Тяните линию на экране. Вторым можно взять любую позицию каталога.</p>
+<p class="lab-label">Второй материал</p>
+<div class="lab-second" data-second-card><img alt="" width="64" height="64" data-second-img><span><b data-second-name>—</b><small data-second-code></small></span><button type="button" class="lab-btn" data-second-open>Выбрать другой</button></div>
+<div class="lab-quick" data-second-quick role="radiogroup" aria-label="Быстрый выбор второго материала"><button type="button" role="radio" aria-checked="false" data-second="610010003167" title="Ривьера Уайт"><img src="../media/products/56789104738e0bffda85.webp" alt="Ривьера Уайт" width="44" height="44" loading="lazy" decoding="async"></button><button type="button" role="radio" aria-checked="false" data-second="610010002765" title="Вояджер Блэк"><img src="../media/products/d730fc732012a9d26c4c.webp" alt="Вояджер Блэк" width="44" height="44" loading="lazy" decoding="async"></button><button type="button" role="radio" aria-checked="false" data-second="610010002799" title="Крета Клэй"><img src="../media/products/d3f5ac5486cdce4cfb78.webp" alt="Крета Клэй" width="44" height="44" loading="lazy" decoding="async"></button><button type="button" role="radio" aria-checked="false" data-second="610010002696" title="Фьямма Бронз"><img src="../media/products/99f11fa75d497c7ef451.webp" alt="Фьямма Бронз" width="44" height="44" loading="lazy" decoding="async"></button><button type="button" role="radio" aria-checked="false" data-second="610010001319" title="Эверстоун Лава"><img src="../media/products/2f36bd7650899fd86c1d.webp" alt="Эверстоун Лава" width="44" height="44" loading="lazy" decoding="async"></button><button type="button" role="radio" aria-checked="false" data-second="610010002735" title="Дискавер Дезерт"><img src="../media/products/a515adc8872d6a535f79.webp" alt="Дискавер Дезерт" width="44" height="44" loading="lazy" decoding="async"></button><button type="button" role="radio" aria-checked="false" data-second="610010002664" title="Да Винчи Браун"><img src="../media/products/c2971e57beaf4391c22a.webp" alt="Да Винчи Браун" width="44" height="44" loading="lazy" decoding="async"></button><button type="button" role="radio" aria-checked="false" data-second="610010002667" title="Экспо Дарк"><img src="../media/products/57cea85c54062d2def53.webp" alt="Экспо Дарк" width="44" height="44" loading="lazy" decoding="async"></button></div>
+<div class="lab__row"><button type="button" class="lab-btn" data-transition>Переход ▸</button></div>
+</section>
+<section class="lab__pane" id="pane-time" role="tabpanel" aria-labelledby="tab-time" data-pane="time" hidden>
+<p class="lab__hint">Одно помещение с окном: свет и цвет меняются в течение суток. Лампа в комнате — шар света, его можно переносить.</p>
+<div class="lab-presets" role="radiogroup" aria-label="Время суток"><button type="button" role="radio" aria-checked="false" data-tpreset="morning" data-at="8"><i style="background:linear-gradient(160deg,#9fb2c4,#d8d2c3 55%,#6d6a62)"></i><b>Утро</b><small>Мягкий дневной свет</small></button><button type="button" role="radio" aria-checked="false" data-tpreset="day" data-at="13"><i style="background:linear-gradient(160deg,#cfe0f2,#efe9dc 55%,#8e8a80)"></i><b>День</b><small>Яркий нейтральный свет</small></button><button type="button" role="radio" aria-checked="false" data-tpreset="evening" data-at="19.5"><i style="background:linear-gradient(160deg,#6a3d22,#d08a45 55%,#3a2616)"></i><b>Вечер</b><small>Тёплый искусственный свет</small></button><button type="button" role="radio" aria-checked="false" data-tpreset="night" data-at="23"><i style="background:linear-gradient(160deg,#0c1426,#26324f 55%,#0a0d16)"></i><b>Ночь</b><small>Направленный боковой свет</small></button></div>
+<label class="lab-field"><span>Время <output data-hour-out>13:00</output></span><input type="range" min="0" max="24" step="0.05" value="13" data-hour aria-label="Время суток"></label>
+<div class="lab__row"><button type="button" class="lab-btn" data-day-play aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg><span>Сутки за 14 секунд</span></button></div>
+</section>
+<section class="lab__pane" id="pane-share" role="tabpanel" aria-labelledby="tab-share" data-pane="share" hidden>
+<p class="lab-label">Кадр для публикации</p>
+<div class="lab-chips" role="radiogroup" aria-label="Размер кадра"><button type="button" role="radio" aria-checked="true" data-size="story">9:16 · Reels</button><button type="button" role="radio" aria-checked="false" data-size="portrait">4:5</button><button type="button" role="radio" aria-checked="false" data-size="square">1:1</button></div>
+<div class="lab-actions">
+<button type="button" class="lab-action" data-shot><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19h14"/></svg><span><b>Скачать изображение</b><small>JPG, высокое качество</small></span></button>
+<button type="button" class="lab-action" data-video><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M10 9.5v5l4.5-2.5z"/></svg><span><b>Скачать видео</b><small data-video-hint>около 7 секунд</small></span></button>
+<button type="button" class="lab-action" data-share-link><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="12" r="2"/><circle cx="17" cy="6.5" r="2"/><circle cx="17" cy="17.5" r="2"/><path d="m8.2 11 7-3.4M8.2 13l7 3.4"/></svg><span><b>Поделиться</b><small data-share-hint>Ссылка на композицию</small></span></button>
+</div>
+<progress class="lab__progress" data-progress max="1" value="0" hidden></progress>
+<p class="lab-label">Качество графики</p>
+<div class="lab-seg" role="radiogroup" aria-label="Качество графики"><button type="button" role="radio" aria-checked="true" data-q="auto">Авто</button><button type="button" role="radio" aria-checked="false" data-q="quality">Качество</button><button type="button" role="radio" aria-checked="false" data-q="lite">Лайт</button></div>
+<p class="lab__hint" data-perf></p>
+</section>
+<section class="lab__pane" id="pane-item" role="tabpanel" aria-labelledby="tab-item" data-pane="item" hidden>
+<p class="lab-label" data-item-collection></p><h2 class="lab__item-name" data-item-name></h2>
+<p class="lab__hint" data-item-meta></p><p class="lab__price" data-item-price></p>
+<p class="lab__quality" data-item-quality></p>
+<div class="lab__row"><a class="lab-btn lab-btn--solid" data-item-link href="#">Карточка товара</a><button type="button" class="btn lab-btn lab-btn--add" data-add="" data-item-add>В корзину</button></div>
+</section>
+</div>
+<details class="lab__honest"><summary>Как устроен свет — честно</summary><p>Это <b>художественная модель освещения</b>, а не физически точный замер материала. Цвет и рисунок взяты с фотографии каталога (на ней уже есть свет студии), объёмный рельеф <b>оценён по светлоте снимка</b> и только у фото высокого разрешения, блеск задан по типу отделки, мелкое зерно добавлено программно. У фото низкого разрешения рельеф и зерно не дорисовываются: это упрощённый режим. Реальный оттенок, блеск и рельеф зависят от партии и вашего освещения: окончательный выбор — по образцу в салоне.</p></details>
+</aside>
+
+<div class="lab-cat" data-cat hidden role="dialog" aria-modal="true" aria-labelledby="cat-title">
+<div class="lab-cat__box">
+<header class="lab-cat__head"><div><h2 id="cat-title" data-cat-title>Каталог материалов</h2><p data-cat-sub>Фильтры и поиск по всему каталогу Italon-X2</p></div><button type="button" class="lab-cat__close" data-cat-close aria-label="Закрыть каталог"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 1l14 14M15 1 1 15"/></svg></button></header>
+<label class="lab-cat__search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><input type="search" id="cat-q" data-cat-q placeholder="Поиск по названию или артикулу…" autocomplete="off" enterkeyhint="search" aria-label="Поиск по названию или артикулу"></label>
+<div class="lab-cat__filters">
+<label><span>Коллекция</span><select data-f="collection"><option value="">Все</option></select></label>
+<label><span>Цвет</span><select data-f="color"><option value="">Все</option></select></label>
+<label><span>Фактура</span><select data-f="look"><option value="">Все</option></select></label>
+<label><span>Формат</span><select data-f="format"><option value="">Все</option></select></label>
+</div>
+<div class="lab-cat__bar"><p data-cat-count role="status" aria-live="polite">Загружаю каталог…</p><label>Сортировка <select data-sort><option value="popular">Популярные</option><option value="name">По названию</option><option value="code">По артикулу</option></select></label><button type="button" class="lab-btn lab-btn--ghost" data-f-reset hidden>Сбросить</button></div>
+<div class="lab-cat__grid" data-cat-grid></div>
+<div class="lab-cat__more" data-cat-more hidden><button type="button" class="lab-btn">Показать ещё</button></div>
+</div>
+</div>
+
+<div class="lab__modal" data-modal hidden role="dialog" aria-modal="true" aria-labelledby="lab-modal-title"><div class="lab__modal-box"><h2 id="lab-modal-title" data-modal-title>Готово</h2><div data-modal-media></div><p class="lab__hint" data-modal-note></p><div class="lab__row"><a class="lab-btn lab-btn--solid" data-modal-save download href="#">Скачать</a><button type="button" class="lab-btn" data-modal-share hidden>Поделиться</button><button type="button" class="lab-btn" data-modal-close>Закрыть</button></div></div></div>
+<noscript><p class="lab__nojs">Лаборатория работает при включённом JavaScript. Каталог — <a href="../catalog/">здесь</a>.</p></noscript>
+</div>
+<script type="application/json" id="lab-data">{"featured":[{"code":"610010003167","name":"Ривьера Уайт","rawName":"РИВЬЕРА УАЙТ 60 РЕТ","latin":"RIVIERA WHITE 60 RET","collection":"Riviera","collectionId":"coliseum-riviera","format":"60 × 60","formatKey":"60X60","finish":"натуральный и реттифицированная","priceText":"2 543,00 ₽ за м²","canOrder":true,"path":"/product/610010003167/","href":"../product/610010003167/","image":"../media/products/56789104738e0bffda85.webp","thumb":"../media/products/56789104738e0bffda85.webp","imgW":900,"imgH":900,"original":false,"eligible":true,"quality":"hd","photo":[60,60],"maxPpcm":40,"reason":"","surf":{"rough":0.36,"relief":0.03,"micro":0.1,"f0":0.05},"tagline":"Светлый мрамор с прожилками","featured":true},{"code":"610010002765","name":"Вояджер Блэк","rawName":"ВОЯДЖЕР БЛЭК 60 РЕТ","latin":"VOYAGER BLACK 60 RET","collection":"Вояджер","collectionId":"contract-voyager","format":"60 × 60","formatKey":"60X60","finish":"натуральный и реттифицированная","priceText":"2 566,00 ₽ за м²","canOrder":true,"path":"/product/610010002765/","href":"../product/610010002765/","image":"../media/products/d730fc732012a9d26c4c.webp","thumb":"../media/products/d730fc732012a9d26c4c.webp","imgW":800,"imgH":800,"original":false,"eligible":true,"quality":"hd","photo":[60,60],"maxPpcm":40,"reason":"","surf":{"rough":0.56,"relief":0.06,"micro":0.12,"f0":0.04},"tagline":"Тёмный рельефный камень","featured":true},{"code":"610010002799","name":"Крета Клэй","rawName":"КРЕТА КЛЭЙ 60 РЕТ","latin":"CRETA CLAY 60 RET","collection":"Creta","collectionId":"coliseum-creta","format":"60 × 60","formatKey":"60X60","finish":"натуральный и реттифицированная","priceText":"2 515,00 ₽ за м²","canOrder":true,"path":"/product/610010002799/","href":"../product/610010002799/","image":"../media/products/d3f5ac5486cdce4cfb78.webp","thumb":"../media/products/d3f5ac5486cdce4cfb78.webp","imgW":900,"imgH":900,"original":false,"eligible":true,"quality":"hd","photo":[60,60],"maxPpcm":40,"reason":"","surf":{"rough":0.72,"relief":0.05,"micro":0.2,"f0":0.035},"tagline":"Тёплая глина, матовая","featured":true},{"code":"610010002696","name":"Фьямма Бронз","rawName":"ФЬЯММА БРОНЗ 60 РЕТ","latin":"FIAMMA BRONZE 60 RET","collection":"Fiamma","collectionId":"coliseum-fiamma","format":"60 × 60","formatKey":"60X60","finish":"натуральный и реттифицированная","priceText":"2 515,00 ₽ за м²","canOrder":true,"path":"/product/610010002696/","href":"../product/610010002696/","image":"../media/products/99f11fa75d497c7ef451.webp","thumb":"../media/products/99f11fa75d497c7ef451.webp","imgW":900,"imgH":900,"original":false,"eligible":true,"quality":"hd","photo":[60,60],"maxPpcm":40,"reason":"","surf":{"rough":0.3,"relief":0.03,"micro":0.1,"f0":0.05},"tagline":"Бронзовый мрамор с жилами","featured":true},{"code":"610010001319","name":"Эверстоун Лава","rawName":"ЭВЕРСТОУН ЛАВА 60 РЕТ","latin":"EVERSTONE LAVA 60 RET","collection":"Эверстоун","collectionId":"contract-everstone","format":"60 × 60","formatKey":"60X60","finish":"натуральный и реттифицированная","priceText":"2 576,00 ₽ за м²","canOrder":true,"path":"/product/610010001319/","href":"../product/610010001319/","image":"../media/products/2f36bd7650899fd86c1d.webp","thumb":"../media/products/2f36bd7650899fd86c1d.webp","imgW":800,"imgH":800,"original":false,"eligible":true,"quality":"hd","photo":[60,60],"maxPpcm":40,"reason":"","surf":{"rough":0.62,"relief":0.07,"micro":0.18,"f0":0.04},"tagline":"Холодный сланцево-синий камень","featured":true},{"code":"610010002735","name":"Дискавер Дезерт","rawName":"ДИСКАВЕР ДЕЗЕРТ 60 РЕТ","latin":"DISCOVER DESERT 60 RET","collection":"Дискавер","collectionId":"contract-discover","format":"60 × 60","formatKey":"60X60","finish":"натуральный и реттифицированная","priceText":"2 381,00 ₽ за м²","canOrder":true,"path":"/product/610010002735/","href":"../product/610010002735/","image":"../media/products/a515adc8872d6a535f79.webp","thumb":"../media/products/a515adc8872d6a535f79.webp","imgW":800,"imgH":800,"original":false,"eligible":true,"quality":"hd","photo":[60,60],"maxPpcm":40,"reason":"","surf":{"rough":0.6,"relief":0.05,"micro":0.14,"f0":0.04},"tagline":"Тёплый камень мелкой фактуры","featured":true},{"code":"610010002664","name":"Да Винчи Браун","rawName":"ДА ВИНЧИ БРАУН 60 РЕТ","latin":"DA VINCI BROWN 60 RET","collection":"Da vinci","collectionId":"coliseum-da-vinci","format":"60 × 60","formatKey":"60X60","finish":"натуральный и реттифицированная","priceText":"2 539,00 ₽ за м²","canOrder":true,"path":"/product/610010002664/","href":"../product/610010002664/","image":"../media/products/c2971e57beaf4391c22a.webp","thumb":"../media/products/c2971e57beaf4391c22a.webp","imgW":900,"imgH":900,"original":false,"eligible":true,"quality":"hd","photo":[60,60],"maxPpcm":40,"reason":"","surf":{"rough":0.36,"relief":0.03,"micro":0.1,"f0":0.05},"tagline":"Коричневый мрамор","featured":true},{"code":"610010002667","name":"Экспо Дарк","rawName":"ЭКСПО ДАРК 60 РЕТ","latin":"EXPO DARK 60 RET","collection":"Expo","collectionId":"coliseum-expo","format":"60 × 60","formatKey":"60X60","finish":"натуральный и реттифицированная","priceText":"2 529,00 ₽ за м²","canOrder":true,"path":"/product/610010002667/","href":"../product/610010002667/","image":"../media/products/57cea85c54062d2def53.webp","thumb":"../media/products/57cea85c54062d2def53.webp","imgW":900,"imgH":900,"original":false,"eligible":true,"quality":"hd","photo":[60,60],"maxPpcm":40,"reason":"","surf":{"rough":0.62,"relief":0.05,"micro":0.14,"f0":0.04},"tagline":"Тёмный бетонный камень","featured":true}],"root":"../"}</script>
+</main>
+<footer class="site-footer on-dark">
+<div class="wrap">
+<div class="footer-grid">
+<div class="footer-brand"><a class="logo" href="../" aria-label="Italon Experience — на главную"><span>ITALON</span><span class="logo__rule" aria-hidden="true"></span><span class="logo__x">X<sup>2</sup></span></a>
+<p>Салон Italon Experience в Краснодаре. Керамогранит и плитка Italon, X2 20&nbsp;мм для открытых пространств.</p></div>
+<nav class="footer-col" aria-labelledby="f-catalog"><h2 id="f-catalog">Каталог</h2>
+<a href="../collections/">Коллекции</a><a href="../x2/">X2 · улица</a><a href="../catalog/">Все позиции</a><a href="../picker/">Подбор по описанию и фото</a><a href="../catalog/?category=mosaic">Мозаика</a></nav>
+<nav class="footer-col" aria-labelledby="f-clients"><h2 id="f-clients">Клиентам</h2>
+<a href="../calculator/">Калькулятор упаковок</a><a href="../catalog/" data-cart-open>Корзина и КП в PDF</a><a href="../inspiration/">Вдохновение</a><a href="../x2/game/">Игра X2 / ГОРОД</a></nav>
+<nav class="footer-col" aria-labelledby="f-brand"><h2 id="f-brand">О бренде</h2>
+<a href="../salon/">Салон Italon Experience</a><a href="../collections/">Коллекции Italon</a><a href="../x2/">X2 — 20 мм</a><a href="../privacy/">Политика обработки данных</a></nav>
+<div class="footer-col"><h2>Контакты</h2>
+<address>Краснодар, ул. Бабушкина,&nbsp;248</address><span>Пн — Пт: 10:00 — 19:00</span><span>Сб — Вс: 10:00 — 18:00</span>
+<a href="tel:+79182489248">+7 918 24 89 248</a><a href="mailto:italon@amanagroup.org">italon@amanagroup.org</a></div>
+</div>
+<div class="footer-bottom"><span>© Italon Experience, Краснодар</span><span>Цены по прайсу от 01.07.2026, склад Краснодар, с НДС. Сайт не принимает оплату.</span></div>
+</div>
+</footer>
+<dialog class="menu" id="site-menu" aria-label="Меню">
+<div class="menu__inner">
+<div class="menu__top"><a class="logo" href="../" aria-label="На главную"><span>ITALON</span><span class="logo__rule" aria-hidden="true"></span><span class="logo__x">X<sup>2</sup></span></a>
+<button type="button" class="icon-btn" data-dialog-close aria-label="Закрыть меню"><svg viewBox="0 0 16 16" aria-hidden="true" style="width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.4"><path d="M1 1l14 14M15 1 1 15"/></svg></button></div>
+<ul class="menu__list" role="list"><li><a href="../">Главная</a></li><li><a href="../collections/">Коллекции</a></li><li><a href="../x2/">X2 · улица</a></li><li><a href="../outdoor/">Outdoor Lab</a></li><li><a href="../catalog/">Каталог</a></li><li><a href="../picker/">Подбор</a></li><li><a href="../lab/" aria-current="page">MATERIAL LAB</a></li><li><a href="../calculator/">Калькулятор</a></li><li><a href="../inspiration/">Вдохновение</a></li><li><a href="../salon/">Салон</a></li>
+<li><a href="../catalog/" data-search-open>Поиск по каталогу <span><svg style="width:1.25rem;height:1.25rem;fill:none;stroke:currentColor;stroke-width:1.4" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></span></a></li></ul>
+<div class="menu__contacts"><address>Краснодар, ул. Бабушкина,&nbsp;248</address><span>Пн — Пт: 10:00 — 19:00 · Сб — Вс: 10:00 — 18:00</span><a href="tel:+79182489248">+7 918 24 89 248</a></div>
+</div>
+</dialog>
+<dialog class="search-dialog" id="search-dialog" aria-label="Поиск по каталогу">
+<div class="wrap search-dialog__inner">
+<form class="search-dialog__bar" action="../catalog/" method="get" role="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+<label class="sr-only" for="search-input">Название, цвет или артикул</label>
+<input class="search-dialog__input" id="search-input" name="q" type="search" placeholder="Название, цвет или артикул" autocomplete="off" enterkeyhint="search">
+<button type="button" class="icon-btn" data-dialog-close aria-label="Закрыть поиск"><svg viewBox="0 0 16 16" aria-hidden="true" style="width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.4"><path d="M1 1l14 14M15 1 1 15"/></svg></button>
+</form>
+<p class="sr-only" id="search-status" role="status" aria-live="polite"></p>
+<ul class="search-results" id="search-results" role="list"></ul>
+<div class="search-dialog__foot"><span>Поиск по 1202 позициям прайса</span><a class="link-arrow" id="search-all" href="../catalog/">Все результаты в каталоге</a></div>
+</div>
+</dialog>
+<dialog class="dialog" id="product-dialog" aria-labelledby="product-dialog-title"><button type="button" class="dialog__close" data-dialog-close aria-label="Закрыть карточку"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 1l14 14M15 1 1 15"/></svg></button><div class="dialog__scroll" id="product-dialog-body"></div></dialog>
+<dialog class="dialog dialog--photo" id="photo-dialog" aria-labelledby="photo-dialog-title"><button type="button" class="dialog__close" data-dialog-close aria-label="Закрыть фото"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 1l14 14M15 1 1 15"/></svg></button><div class="dialog__scroll" id="photo-dialog-body"></div></dialog>
+<dialog class="dialog dialog--side" id="cart-dialog" aria-labelledby="cart-dialog-title"><button type="button" class="dialog__close" data-dialog-close aria-label="Закрыть корзину"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 1l14 14M15 1 1 15"/></svg></button>
+<div class="dialog__scroll">
+<div class="dialog__head"><p class="eyebrow">Ваш проект</p><h2 class="dialog__title" id="cart-dialog-title">Корзина</h2></div>
+<p class="cart-status" id="cart-status" role="status"></p>
+<div class="cart-error" id="cart-error" role="alert" hidden><span></span><button type="button" class="btn btn--small btn--outline" id="cart-retry">Повторить</button></div>
+<div class="cart-list" id="cart-list"></div>
+<div class="cart-tools"><button type="button" class="remove-link cart-clear" id="cart-clear" hidden>Очистить корзину</button></div>
+<div class="cart-summary">
+<div class="cart-total"><span class="t-muted">Итого с НДС</span><strong id="cart-total">0 ₽</strong></div>
+<form class="quote-form" id="quote-form" novalidate>
+<h3 class="t-h4">Коммерческое предложение в PDF</h3>
+<label class="field"><span class="field__label">Телефон для связи <small>обязательно</small></span><input class="input" id="quote-phone" type="tel" inputmode="tel" maxlength="30" placeholder="+7 900 000-00-00" autocomplete="tel" required></label>
+<label class="field"><span class="field__label">ФИО <small>для скидки и защиты заказа</small></span><input class="input" id="quote-customer" maxlength="100" placeholder="Фамилия Имя Отчество" autocomplete="off"></label>
+<label class="field"><span class="field__label">Адрес объекта <small>для скидки и защиты заказа</small></span><input class="input" id="quote-address" maxlength="200" placeholder="Город, улица, дом" autocomplete="street-address"></label>
+<label class="field"><span class="field__label">Объект <small>необязательно</small></span><input class="input" id="quote-project" maxlength="150" placeholder="Название проекта" autocomplete="off"></label>
+<label class="field"><span class="field__label">Комментарий <small>необязательно</small></span><textarea class="textarea" id="quote-note" maxlength="500" rows="3" placeholder="Примечание для предложения"></textarea></label>
+<p class="t-small" id="quote-discount" aria-live="polite"></p>
+<button type="submit" class="btn btn--block" id="quote-download" disabled>Скачать КП в PDF</button>
+</form>
+<p class="t-small">В PDF войдут товары, количество, цены и итог. Доставка рассчитывается отдельно. Скачивание предложения не оформляет заказ; менеджер салона свяжется с вами по указанному телефону. Нажимая «Скачать», вы соглашаетесь на обработку контактных данных для подготовки предложения. Цены по прайсу от 01.07.2026, склад Краснодар, с НДС.</p>
+</div>
+</div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

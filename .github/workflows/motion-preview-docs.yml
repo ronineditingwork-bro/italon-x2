@@ -1,0 +1,45 @@
+name: Export self-contained motion preview to docs
+
+on:
+  push:
+    branches:
+      - feature/gsap-lenis-ui-20261026
+
+permissions:
+  contents: write
+
+concurrency:
+  group: italon-motion-preview-docs
+  cancel-in-progress: true
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout motion branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install
+        run: npm ci --no-audit --no-fund
+      - name: Build static preview, noindex
+        env:
+          SITE_NOINDEX: '1'
+        run: npm run build:site
+      - name: Copy static preview for review in browser
+        run: |
+          mkdir -p docs
+          rsync -a --exclude='README.md' --exclude='INTERACTION_ENGINE.md' public/ docs/
+          touch docs/.nojekyll
+          git add docs
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m "build: refresh motion preview static pages [skip ci]"
+            git push origin HEAD:feature/gsap-lenis-ui-20261026
+          fi

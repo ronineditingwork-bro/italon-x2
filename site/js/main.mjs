@@ -67,5 +67,12 @@ initShop();
 if (window.Italon) window.Italon.reveal = initReveal;
 initReveal();
 html.classList.add('motion-ready');
+// Optional enhancement: no React runtime, and never run on Material/Outdoor Labs,
+// configurators or touch/reduced-motion devices.
+if (['home', 'collections', 'x2', 'inspiration'].includes(html.dataset.page) &&
+    !reducedMotion() && window.matchMedia?.('(min-width: 960px) and (hover: hover) and (pointer: fine)').matches) {
+  import('./motion.mjs').then(({ initMotion }) => initMotion())
+    .catch(error => console.warn('Optional editorial animation disabled:', error));
+}
 // восстановление из bfcache: закрыть открытые диалоги-оверлеи
 window.addEventListener('pageshow', event => { if (event.persisted) for (const d of $$('dialog[open]')) d.close(); });

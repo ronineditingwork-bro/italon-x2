@@ -10,13 +10,13 @@ const listRu = items => items.length > 1 ? `${items.slice(0, -1).join(', ')} и 
 
 function hero(ctx) {
   return `<section class="hero" aria-labelledby="hero-title">
-<div class="hero__media"><img src="${ctx.media('/media/terrace.webp')}" alt="Терраса с крупноформатным керамогранитом — архитектурная визуализация" width="1536" height="1024" fetchpriority="high" decoding="async"></div>
+<div class="hero__media"><img data-motion-parallax src="${ctx.media('/media/terrace.webp')}" alt="Терраса с крупноформатным керамогранитом — архитектурная визуализация" width="1536" height="1024" fetchpriority="high" decoding="async"></div>
 <div class="wrap hero__inner">
 <div class="hero__content">
 <p class="eyebrow hero__eyebrow" data-reveal>Плитка для каждого дня</p>
 <h1 class="t-hero" id="hero-title" data-reveal data-reveal-delay="60">Пространство, в котором хочется быть</h1>
 <p class="hero__text" data-reveal data-reveal-delay="120">Керамогранит Italon для интерьера и X2 толщиной 20&nbsp;мм для террас и дорожек. Форматы до&nbsp;${esc(fmt(stats.largestFormat))}&nbsp;см; поверхности натуральные, «люкс», «силк», патинированные и структурированные.</p>
-<div class="btn-row" data-reveal data-reveal-delay="180"><a class="btn" href="${ctx.url('/collections/')}">Смотреть коллекции</a><a class="btn btn--outline-light" href="${ctx.url('/catalog/')}">Открыть каталог</a></div>
+<div class="btn-row" data-reveal data-reveal-delay="180"><a class="btn" data-motion-magnet href="${ctx.url('/collections/')}">Смотреть коллекции</a><a class="btn btn--outline-light" href="${ctx.url('/catalog/')}">Открыть каталог</a></div>
 </div>
 </div>
 <p class="hero__caption">Архитектурная визуализация</p>
@@ -37,7 +37,7 @@ function solutions(ctx) {
 <div class="section-head"><div class="section-head__text"><h2 class="t-h2" id="solutions-title" data-reveal>Найдите своё решение</h2></div>
 <a class="link-arrow" href="${ctx.url('/catalog/')}" data-reveal>Весь каталог ${ARROW}</a></div>
 <div class="tiles" style="--cols:4" data-reveal-group>
-${cards.map(card => `<a class="tile" href="${card.href}" data-reveal><figure class="media tile__media" style="--ratio:3/4">${img(ctx, card.c.image, card.alt)}</figure>
+${cards.map(card => `<a class="tile" href="${card.href}" data-reveal data-motion-spotlight><figure class="media tile__media" style="--ratio:3/4">${img(ctx, card.c.image, card.alt)}</figure>
 <span class="tile__title">${esc(card.title)} ${ARROW}</span><span class="tile__text">${esc(card.text)}</span></a>`).join('\n')}
 </div>
 </div>
@@ -110,7 +110,7 @@ function ideas(ctx) {
 <p class="t-body" data-reveal>Интерьерные кадры коллекций: что на стенах и на полу, и где посмотреть все позиции.</p></div>
 <a class="link-arrow" href="${ctx.url('/inspiration/')}" data-reveal>Вдохновение ${ARROW}</a></div>
 <div class="ideas__grid" data-reveal-group>
-${items.map((item, i) => `<a class="tile ideas__item ideas__item--${i + 1}" href="${collectionUrl(ctx.root, item.c.id)}" data-reveal>
+${items.map((item, i) => `<a class="tile ideas__item ideas__item--${i + 1}" href="${collectionUrl(ctx.root, item.c.id)}" data-reveal data-motion-spotlight>
 <figure class="media tile__media">${img(ctx, item.c.image, item.alt)}</figure>
 <span class="tile__title">${esc(item.title)} ${ARROW}</span>
 <span class="tile__text">${esc(item.c.image.caption || `Коллекция ${item.c.label}: ${positions(item.c.count)}`)}</span></a>`).join('\n')}
@@ -133,7 +133,7 @@ ${salon.hours.map(([d, t]) => `<div><dt>${esc(d)}</dt><dd>${esc(t)}</dd></div>`)
 <div><dt>Телефон</dt><dd><a class="link" href="${salon.phoneHref}">${esc(salon.phone)}</a></dd></div>
 <div><dt>Парковка</dt><dd>Есть</dd></div>
 </dl>
-<div class="btn-row" data-reveal><a class="btn" href="${salon.maps.yandex}" target="_blank" rel="noopener noreferrer">Построить маршрут</a><a class="btn btn--outline" href="${salon.phoneHref}">Записаться в салон</a></div>
+<div class="btn-row" data-reveal><a class="btn" data-motion-magnet href="${salon.maps.yandex}" target="_blank" rel="noopener noreferrer">Построить маршрут</a><a class="btn btn--outline" href="${salon.phoneHref}">Записаться в салон</a></div>
 <p class="t-small" data-reveal>Запись — по телефону или по почте <a class="link" href="mailto:${salon.email}">${esc(salon.email)}</a>.</p>
 </div>
 <figure class="showroom__figure" data-reveal>
