@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Italon-X2 — сравнение анимаций на телефоне</title>
+<style>
+:root{--ink:#202621;--muted:#656e65;--bg:#f6f5f1;--line:#d8d9d4;--ease:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Arial,sans-serif}
+button{font:inherit;cursor:pointer}a{color:inherit}a:focus-visible,button:focus-visible{outline:3px solid #d7a65b;outline-offset:3px}
+.preview-toolbar{position:sticky;top:0;z-index:30;background:rgba(248,248,244,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:12px clamp(15px,4vw,36px);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px}
+.preview-kicker{font-size:10px;letter-spacing:.1em;color:var(--muted);font-weight:600}.preview-toolbar strong{font-size:15px}.switches{display:flex;align-items:center;gap:6px}
+.switches button{border:1px solid #bfc3bc;border-radius:5px;background:transparent;color:var(--ink);padding:9px 13px;font-size:13px;font-weight:600}
+.switches button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.intro{padding:18px clamp(15px,4vw,36px);max-width:1040px;margin:auto;color:var(--muted);font-size:13px}
+.site-head{background:white;padding:21px clamp(19px,6vw,72px);display:flex;align-items:center;justify-content:space-between;letter-spacing:.23em;font-size:19px;font-weight:600}
+.site-head small{font-size:11px;letter-spacing:.02em;color:var(--muted);font-weight:400}
+.site-head i{font-style:normal;opacity:.35;margin:0 10px}
+.hero{min-height:600px;min-height:72svh;position:relative;display:flex;align-items:flex-end;background:#6f776b;overflow:hidden;color:white}
+.hero__image{position:absolute;inset:-8%;background:linear-gradient(0deg,rgba(12,15,12,.76),rgba(12,15,12,.05) 72%),url('media/terrace.webp') center/cover,linear-gradient(130deg,#bac5b7,#5b6a5b);transform:scale(1.01);will-change:transform}
+.hero__inner{position:relative;padding:clamp(30px,6vw,85px) clamp(18px,7vw,100px);width:min(100%,920px)}
+.eyebrow{letter-spacing:.17em;font-size:11px;text-transform:uppercase;font-weight:600}
+.hero h1{font-size:clamp(38px,7vw,74px);font-weight:400;letter-spacing:-.055em;line-height:1.06;max-width:13ch;margin:12px 0 24px}
+.hero p{max-width:38rem;font-size:clamp(14px,2vw,17px);color:rgba(255,255,255,.91)}
+.btn{border:0;display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:14px 22px;background:white;color:var(--ink);text-decoration:none;font-weight:600;margin-top:16px;position:relative;overflow:hidden}
+.btn:after{content:"";position:absolute;inset:0;background:rgba(66,93,75,.18);transform:translateX(-105%)}
+main{overflow:hidden}.section{max-width:1240px;margin:auto;padding:clamp(48px,7vw,96px) clamp(18px,6vw,60px)}
+.section h2{font-weight:400;font-size:clamp(30px,5vw,54px);letter-spacing:-.05em;line-height:1.13;margin:0 0 14px}
+.section .lead{color:var(--muted);max-width:55ch;margin:0 0 34px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:white;position:relative;overflow:hidden;isolation:isolate;text-decoration:none;display:block;box-shadow:0 1px 0 #ddd}
+.card__media{height:clamp(160px,23vw,290px);background:#bdc3b6;overflow:hidden}
+.card__media img{display:block;width:100%;height:100%;object-fit:cover}
+.card__text{padding:18px}.card__text h3{font-weight:500;font-size:18px;margin:0 0 3px}.card__text p{margin:0;color:var(--muted);font-size:13px}
+.card:after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;background:radial-gradient(190px circle at var(--mouse-x,50%) var(--mouse-y,48%),rgba(255,255,255,.52),transparent 80%);transition:opacity .25s}
+.story{background:#e8eae3}.story__grid{display:grid;grid-template-columns:1.2fr 1fr;align-items:center;gap:clamp(24px,6vw,100px)}
+.story__picture{min-height:300px;aspect-ratio:4/3;background:url('media/italon-prima.jpg') center/cover,#a1b0ab}
+.story__copy p{color:var(--muted);max-width:35ch}.story__copy a{display:inline-flex;padding:13px 24px;border:1px solid var(--ink);text-decoration:none;margin-top:10px}
+.notes{background:#1e2922;color:#e8eeeb;padding:30px clamp(18px,6vw,60px);font-size:13px}
+.notes strong{display:block;font-size:16px;margin-bottom:9px}.notes p{max-width:720px;color:#bac4be}
+body.effects-on .hero__image{animation:hero-pan 7s ease-in-out infinite alternate;transform-origin:center}
+@keyframes hero-pan{from{transform:translate3d(0,1%,0) scale(1.08)}to{transform:translate3d(0,-1%,0) scale(1.14)}}
+body.effects-on .hero__inner .eyebrow,body.effects-on .hero__inner h1,body.effects-on .hero__inner p,body.effects-on .hero__inner .btn{animation:rise-in .85s var(--ease) both}
+body.effects-on .hero__inner h1{animation-delay:.16s}body.effects-on .hero__inner p{animation-delay:.28s}body.effects-on .hero__inner .btn{animation-delay:.4s}
+@keyframes rise-in{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+body.effects-on .btn:active{transform:scale(.94)}body.effects-on .btn.pulsing{animation:magnet-pulse .55s var(--ease)}body.effects-on .btn.pulsing:after{animation:btn-glide .65s ease-out}
+@keyframes btn-glide{to{transform:translateX(110%)}}@keyframes magnet-pulse{30%{transform:translateY(-7px) scale(1.045)}to{transform:translateY(0) scale(1)}}
+body.effects-on .card:active:after,body.effects-on .card.glowing:after,body.effects-on .card:hover:after{opacity:1}
+body.effects-on .card__media img{transition:transform 800ms var(--ease)}body.effects-on .card:hover img,body.effects-on .card.glowing img{transform:scale(1.055)}
+body.effects-on .story__picture{animation:story-pan 5s ease-in-out infinite alternate}@keyframes story-pan{to{background-position:54% 46%}}
+@media(max-width:700px){.cards{grid-template-columns:1fr 1fr}.cards>.card:last-child{display:none}.story__grid{grid-template-columns:1fr}.preview-toolbar strong{font-size:13px}.hero{min-height:65svh}.hero h1{font-size:clamp(39px,9vw,57px)}}
+@media(max-width:390px){.cards{grid-template-columns:1fr}.cards>.card:nth-child(2){display:none}.site-head small{display:none}.switches button{padding:9px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body.effects-on .hero__image,body.effects-on .hero__inner *,body.effects-on .story__picture{animation:none}body.effects-on .card__media img{transition:none}}
+</style>
+</head>
+<body class="effects-on">
+<div class="preview-toolbar" role="group" aria-label="Сравнение двух версий">
+<div><div class="preview-kicker">ТЕСТ АНИМАЦИЙ · НЕ РАБОЧИЙ САЙТ</div><strong>Italon-X2 / до и после</strong></div>
+<div class="switches"><button type="button" id="off" aria-pressed="false">Как сейчас</button><button type="button" id="on" aria-pressed="true">С эффектами</button></div>
+</div>
+<p class="intro">Нажми «Как сейчас» и «С эффектами», чтобы увидеть разницу. Здесь эффекты специально усилены и доступны по нажатию на телефоне; на реальном сайте они значительно тоньше и обычно работают только с мышью.</p>
+<div class="site-head">ITALON <i>│</i> X² <small>Демонстрация главной страницы</small></div>
+<main>
+<section class="hero" aria-labelledby="hero-title">
+<div class="hero__image" aria-hidden="true"></div>
+<div class="hero__inner">
+<span class="eyebrow">Плитка для каждого дня</span>
+<h1 id="hero-title">Пространство, в котором хочется быть</h1>
+<p>Керамогранит Italon для интерьера и X2 толщиной 20 мм для террас и дорожек. Материалы для архитектуры и жизни.</p>
+<button type="button" class="btn" id="hero-cta">Смотреть коллекции</button>
+</div></section>
+<section class="section" id="collections"><span class="eyebrow">01 / Каталог</span><h2>Найдите своё решение</h2>
+<p class="lead">Поведи пальцем по карточке или нажми на неё, чтобы увидеть подсветку и мягкое увеличение изображения.</p>
+<div class="cards">
+<a href="#collections" class="card" aria-label="Коллекция Prima"><div class="card__media"><img src="media/italon-prima.jpg" alt="Коллекция Prima"></div><div class="card__text"><h3>Italon · интерьер</h3><p>Для дома</p></div></a>
+<a href="#collections" class="card" aria-label="Коллекция Magma"><div class="card__media"><img src="media/x2-magma.jpg" alt="Коллекция Magma X2"></div><div class="card__text"><h3>X2 · улица</h3><p>Для террас и сада</p></div></a>
+<a href="#collections" class="card" aria-label="Архитектурная терраса"><div class="card__media"><img src="media/terrace.webp" alt="Терраса"></div><div class="card__text"><h3>Вдохновение</h3><p>Идеи и проекты</p></div></a>
+</div></section>
+<div class="story"><section class="section story__grid"><div class="story__picture" role="img" aria-label="Коллекция Prima"></div><div class="story__copy"><span class="eyebrow">02 / Коллекции</span><h2>Характер — в деталях</h2><p>Анимации должны подчёркивать настоящие текстуры и архитектурные фотографии, а не мешать выбору плитки.</p><a href="#collections">Смотреть материалы</a></div></section></div>
+</main>
+<footer class="notes"><strong>Что именно сравниваем?</strong><p>Фотография с мягким параллаксом, появление текста, отклик кнопки при нажатии, подсветка и увеличение карточки. Плавную прокрутку Lenis на телефоне не включаем: она предназначена для десктопа. Этот стенд показывает характер эффектов и не является полной рабочей версией сайта; магазин, каталог и корзина здесь не подключены.</p></footer>
+<script>
+(()=>{const off=document.getElementById('off'),on=document.getElementById('on'),body=document.body;
+function mode(active){body.classList.toggle('effects-on',active);off.setAttribute('aria-pressed',String(!active));on.setAttribute('aria-pressed',String(active));}
+off.addEventListener('click',()=>mode(false));on.addEventListener('click',()=>{mode(false);void body.offsetHeight;mode(true);});
+document.getElementById('hero-cta').addEventListener('click',e=>{const btn=e.currentTarget;btn.classList.remove('pulsing');void btn.offsetHeight;if(body.classList.contains('effects-on'))btn.classList.add('pulsing');document.getElementById('collections').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
+for(const card of document.querySelectorAll('.card')){card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect();card.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');card.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});card.addEventListener('click',e=>{e.preventDefault();if(!body.classList.contains('effects-on'))return;card.classList.add('glowing');setTimeout(()=>card.classList.remove('glowing'),950);});}
+})();
+</script>
+</body>
+</html>
