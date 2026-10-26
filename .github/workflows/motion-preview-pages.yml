@@ -1,0 +1,53 @@
+name: Motion preview on GitHub Pages
+
+on:
+  push:
+    branches:
+      - feature/gsap-lenis-ui-20261026
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: italon-motion-preview-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tested motion branch
+        uses: actions/checkout@v4
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install exact dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build standalone static site with noindex
+        env:
+          SITE_NOINDEX: '1'
+        run: |
+          npm run build:site
+          touch public/.nojekyll
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish test site (not production)
+        id: deployment
+        uses: actions/deploy-pages@v4
