@@ -1,0 +1,25 @@
+/* Opt-in editorial details based on React Bits / 21st.dev patterns.
+   No React runtime; accessibility and baseline interactions stay native. */
+@media (min-width: 960px) and (hover: hover) and (pointer: fine) {
+  .motion-enhanced [data-motion-spotlight] {
+    position: relative;
+    isolation: isolate;
+  }
+  .motion-enhanced [data-motion-spotlight]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(270px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgba(255, 255, 255, .22), rgba(255, 255, 255, 0) 80%);
+    transition: opacity 240ms ease;
+  }
+  .motion-enhanced [data-motion-spotlight]:hover::after { opacity: 1; }
+  .motion-enhanced [data-motion-magnet] { will-change: transform; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-motion-spotlight]::after { display: none !important; }
+  [data-motion-magnet] { transform: none !important; }
+}
