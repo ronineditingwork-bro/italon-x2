@@ -38,35 +38,52 @@ if (hours && today) {
   } catch { /* без Intl — просто таблица часов */ }
 }
 
-// Форма записи: проверка и письмо через почтовую программу
+// Запись в салон: настоящая AJAX-заявка → API → Telegram.
+// После успеха показываем подтверждение; не вызываем mailto:.
 const form = document.getElementById('salon-form');
 if (form) {
   const error = document.getElementById('sf-error');
-  form.addEventListener('submit', event => {
+  const success = document.getElementById('sf-success');
+  const submit = document.getElementById('sf-submit');
+  const fields = {
+    name: document.getElementById('sf-name'),
+    phone: document.getElementById('sf-phone'),
+    date: document.getElementById('sf-date'),
+    comment: document.getElementById('sf-comment'),
+    consent: document.getElementById('sf-consent'),
+  };
+  let busy = false;
+  const fail = (message, input) => {
+    error.textContent = message; error.hidden = false; success.hidden = true;
+    if (input) { input.setAttribute('aria-invalid', 'true'); input.focus(); }
+  };
+  form.addEventListener('submit', async event => {
     event.preventDefault();
-    const name = form.elements.name.value.trim();
-    const phone = form.elements.phone.value.trim();
-    const bad = !name ? form.elements.name : phone.replace(/\D/g, '').length < 6 ? form.elements.phone : null;
-    for (const f of [form.elements.name, form.elements.phone]) f.removeAttribute('aria-invalid');
-    if (bad) {
-      bad.setAttribute('aria-invalid', 'true');
-      error.textContent = bad === form.elements.name ? 'Укажите имя.' : 'Укажите телефон для связи.';
-      error.hidden = false;
-      bad.focus();
-      return;
-    }
-    error.hidden = true;
-    const date = form.elements.date.value ? new Date(`${form.elements.date.value}T12:00`).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', weekday: 'long' }) : '';
-    const body = [
-      'Здравствуйте! Хочу записаться в салон Italon Experience.',
-      '',
-      `Имя: ${name}`,
-      `Телефон: ${phone}`,
-      date ? `Когда удобно прийти: ${date}` : null,
-      form.elements.comment.value.trim() ? `Что хочу посмотреть: ${form.elements.comment.value.trim()}` : null,
-    ].filter(line => line !== null).join('\n');
-    const [address, query] = form.getAttribute('action').split('?');
-    location.href = `${address}?${query}&body=${encodeURIComponent(body)}`;
-    window.Italon?.toast?.('Открываем почтовую программу с готовым письмом');
+    if (busy) return;
+    error.hidden = true; success.hidden = true;
+    for (const input of Object.values(fields)) input.removeAttribute('aria-invalid');
+    const name = fields.name.value.trim(), phone = fields.phone.value.trim();
+    if (name.length < 2) return fail('Укажите имя (не менее двух символов).', fields.name);
+    if (phone.replace(/\D/g, '').length < 10) return fail('Укажите действующий номер телефона.', fields.phone);
+    if (!fields.consent.checked) return fail('Нужно согласие на передачу контактных данных для записи.', fields.consent);
+    const body = {
+      name, phone, date: fields.date.value, comment: fields.comment.value.trim(),
+      consent: true, website: form.elements.namedItem('website')?.value || '',
+    };
+    busy = true; submit.disabled = true; submit.textContent = 'Отправляем…';
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST', credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) throw new Error(result.error || 'Сервис записи временно недоступен. Позвоните в салон.');
+      form.reset();
+      success.textContent = 'Заявка отправлена! Менеджер свяжется с вами и подтвердит время визита.';
+      success.hidden = false;
+      window.Italon?.toast?.('Заявка в салон отправлена');
+    } catch (e) { fail(e.message || 'Не удалось отправить заявку. Попробуйте позже.'); }
+    finally { busy = false; submit.disabled = false; submit.textContent = 'Отправить заявку'; }
   });
 }

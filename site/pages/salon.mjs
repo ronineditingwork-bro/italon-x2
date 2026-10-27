@@ -1,6 +1,6 @@
 // /salon/ — салон: адрес, часы, парковка, телефон, почта; карта Яндекс по нажатию (запасная карточка —
 // чтобы пустой или заблокированный iframe не выглядел сломанным); маршруты в Яндекс Картах, 2ГИС, Google Maps;
-// запись — телефон, почта или демонстрационная форма (ничего не отправляет на сервер, только готовит письмо).
+// запись — по телефону, почте или реальная заявка через API /api/salon/book и Telegram.
 // Фото салона нет: типографика, линии, блоки #F5F3EF и один кадр коллекции с честной подписью.
 import { esc, fmt, ARROW } from '../shared/format.mjs';
 import { pageHead } from '../shared/blocks.mjs';
@@ -61,17 +61,20 @@ function booking(ctx) {
 <li><a class="salon-way" href="mailto:${salon.email}?subject=${subject}"><span class="salon-way__n t-num">02</span><span><strong>Написать</strong><span>${esc(salon.email)}</span></span>${ARROW}</a></li>
 </ul>
 </div>
-<form class="salon-form" id="salon-form" action="mailto:${salon.email}?subject=${subject}" method="post" enctype="text/plain" novalidate data-reveal>
-<p class="salon-form__title t-h4"><span class="salon-way__n t-num">03</span> Письмо в салон</p>
+<form class="salon-form" id="salon-form" action="${ctx.url('/api/salon/book')}" method="post" novalidate data-reveal>
+<p class="salon-form__title t-h4"><span class="salon-way__n t-num">03</span> Заявка на посещение салона</p>
 <div class="field-row">
 <label class="field"><span class="field__label">Имя</span><input class="input" name="name" id="sf-name" autocomplete="name" maxlength="80" required></label>
 <label class="field"><span class="field__label">Телефон</span><input class="input" name="phone" id="sf-phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" required></label>
 </div>
 <label class="field"><span class="field__label">Когда удобно прийти <small>необязательно</small></span><input class="input" name="date" id="sf-date" type="date"></label>
 <label class="field"><span class="field__label">Что хотите посмотреть <small>необязательно</small></span><textarea class="textarea" name="comment" id="sf-comment" maxlength="600" rows="3" placeholder="Например: Шарм делюкс, формат 80 × 160"></textarea></label>
+<label class="salon-form__consent"><input type="checkbox" name="consent" id="sf-consent" required><span>Согласен(на) на передачу имени, телефона и комментария менеджеру для организации визита. <a href="${ctx.url('/privacy/')}">Обработка персональных данных</a>.</span></label>
+<div class="salon-form__trap" aria-hidden="true"><label>Сайт <input name="website" tabindex="-1" autocomplete="off"></label></div>
 <p class="form-error" id="sf-error" role="alert" hidden></p>
-<button type="submit" class="btn">Подготовить письмо</button>
-<p class="demo-note">Демонстрационная форма: сайт не отправляет и не хранит данные. По кнопке откроется ваша почтовая программа с готовым письмом на ${esc(salon.email)} — отправляете его вы.</p>
+<p class="salon-form__success" id="sf-success" role="status" hidden></p>
+<button type="submit" class="btn" id="sf-submit">Отправить заявку</button>
+<p class="demo-note">После отправки менеджер получит вашу заявку и свяжется для подтверждения времени визита. Если форма недоступна, позвоните по номеру <a href="${salon.phoneHref}">${esc(salon.phone)}</a>.</p>
 </form>
 </div>
 </section>`;
