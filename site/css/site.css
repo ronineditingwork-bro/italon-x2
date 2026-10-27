@@ -3,3 +3,5 @@
 @import "./tokens.css";
 @import "./base.css";
 @import "./components.css";
+@import "lenis/dist/lenis.css";
+@import "./motion.css";

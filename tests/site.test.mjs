@@ -67,3 +67,26 @@ test('индексация: страницы открыты, 404 закрыта'
   assert.doesNotMatch(await readFile(fileFor('/product/610010004077/'), 'utf8'), noindex);
   assert.match(await readFile(fileFor('/404.html'), 'utf8'), noindex);
 });
+
+test('редакционные эффекты подключены с прогрессивным улучшением, без React', async () => {
+  const home = await readFile(fileFor('/'), 'utf8');
+  assert.match(home, /data-motion-parallax/);
+  assert.match(home, /data-motion-magnet/);
+  assert.match(home, /data-motion-spotlight/);
+  const css = await readFile(resolve(pub, 'assets/site.css'), 'utf8');
+  assert.match(css, /motion-enhanced/);
+  assert.match(css, /lenis/);
+  const pkg = JSON.parse(await readFile(resolve(import.meta.dirname, '../package.json'), 'utf8'));
+  assert.equal(pkg.dependencies.gsap, '3.15.0');
+  assert.equal(pkg.dependencies.lenis, '1.3.27');
+  assert.ok(!pkg.dependencies.react, 'React runtime must not be added to this site');
+});
+
+test('слой движения: хуки на четырёх страницах, панель сравнения только в тестовой сборке', async () => {
+  for (const [path, attr] of [['/x2/', 'data-motion-spotlight'], ['/x2/', 'data-motion-magnet'], ['/inspiration/', 'data-motion-spotlight'], ['/inspiration/', 'data-motion-magnet'], ['/collections/', 'data-motion-spotlight']]) {
+    assert.match(await readFile(fileFor(path), 'utf8'), new RegExp(attr), `${path}: ${attr}`);
+  }
+  const home = await readFile(fileFor('/'), 'utf8');
+  if (process.env.SITE_PREVIEW !== '1') assert.doesNotMatch(home, /data-preview/, 'панель сравнения не должна попадать в рабочую сборку');
+  for (const path of ['/catalog/', '/lab/', '/outdoor/', '/product/610010004077/']) assert.doesNotMatch(await readFile(fileFor(path), 'utf8'), /data-motion-/, `${path} не должна получать эффекты`);
+});

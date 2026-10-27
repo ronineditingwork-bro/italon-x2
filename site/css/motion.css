@@ -1,0 +1,56 @@
+/* Редакционный слой движения: React Bits (магнит) и 21st.dev (подсветка) без React; Lenis и GSAP подключает site/js/motion.mjs.
+   Всё включается классом html.motion-on, который ставит скрипт: без JS, при ошибке и при prefers-reduced-motion страница остаётся прежней. */
+
+/* ---- появление блоков: тот же data-reveal, чуть выразительнее; вторую систему не добавляем ---- */
+.motion-on.reveal [data-reveal]:not(.is-in) { transform: translateY(var(--m-shift, 32px)); }
+.motion-on.reveal [data-reveal].is-in { transition-duration: 760ms; }
+.motion-on.reveal figure[data-reveal] > img, .motion-on.reveal .media[data-reveal] > img,
+.motion-on.reveal [data-reveal] > .media > img { transition: transform 1100ms var(--ease-out); }
+.motion-on.reveal [data-reveal]:not(.is-in) > img, .motion-on.reveal [data-reveal]:not(.is-in) > .media > img { transform: scale(1.07); }
+
+/* ---- сдвиг фото: чистый transform; переходы CSS отключены, чтобы не спорить со scrub ---- */
+.motion-on [data-motion-parallax] { transition: none !important; will-change: transform; }
+
+/* ---- подсветка: свет лежит на фото карточки, текст под фото остаётся чистым ---- */
+.motion-on [data-motion-spotlight].media, .motion-on [data-motion-spotlight] .media { position: relative; isolation: isolate; }
+.motion-on [data-motion-spotlight].media::after, .motion-on [data-motion-spotlight] .media::after {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0;
+  background: radial-gradient(260px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,.26), rgba(255,255,255,0) 72%);
+  transition: opacity 240ms ease;
+}
+.motion-amp [data-motion-spotlight].media::after, .motion-amp [data-motion-spotlight] .media::after { background: radial-gradient(320px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,.42), rgba(255,255,255,0) 72%); }
+@media (hover: hover) and (pointer: fine) {
+  .motion-desktop [data-motion-spotlight]:hover.media::after, .motion-desktop [data-motion-spotlight]:hover .media::after { opacity: 1; }
+}
+.motion-enhanced [data-motion-magnet] { will-change: transform; }
+
+/* ---- телефон: отклик на нажатие (только анимации, ничего не меняет в раскладке) ---- */
+@keyframes m-spot { 0% { opacity: 0; } 18% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes m-press { 0% { transform: scale(1); } 35% { transform: scale(.955); } 100% { transform: scale(1); } }
+@keyframes m-press-soft { 0% { transform: scale(1); } 35% { transform: scale(.985); } 100% { transform: scale(1); } }
+.motion-lite .media.m-spot::after { animation: m-spot 700ms ease-out; }
+.motion-lite .m-press { animation: m-press 360ms var(--ease-out); }
+.motion-lite .m-press-soft { animation: m-press-soft 360ms var(--ease-out); }
+.motion-lite [data-motion-magnet], .motion-lite [data-motion-spotlight] { -webkit-tap-highlight-color: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-motion-spotlight]::after, [data-motion-spotlight] .media::after { display: none !important; }
+  [data-motion-magnet] { transform: none !important; }
+}
+
+/* ---- панель сравнения (только в тестовой сборке) ---- */
+.motion-panel { position: fixed; z-index: 60; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + .75rem); transform: translateX(-50%); width: min(26rem, calc(100vw - 1.5rem)); box-sizing: border-box;
+  padding: .75rem .85rem; background: rgba(21,21,21,.94); color: #fff; border-radius: 10px; box-shadow: 0 8px 28px rgba(0,0,0,.28); font-size: .8125rem; line-height: 1.4; display: grid; gap: .55rem; }
+.motion-panel.is-closed { width: auto; padding: 0; background: none; box-shadow: none; }
+.motion-panel__head { display: flex; align-items: baseline; gap: .5rem; }
+.motion-panel__head span { opacity: .7; flex: 1; }
+.motion-panel__x { min-width: 2.25rem; min-height: 2.25rem; margin: -.4rem -.5rem -.4rem 0; background: none; border: 0; color: inherit; font-size: 1.25rem; cursor: pointer; }
+.motion-panel__seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 3px; background: rgba(255,255,255,.12); border-radius: 8px; }
+.motion-panel__seg button { min-height: 2.5rem; border: 0; border-radius: 6px; background: transparent; color: #fff; font: inherit; font-weight: 500; cursor: pointer; }
+.motion-panel__seg button[aria-pressed="true"] { background: #fff; color: #151515; }
+.motion-panel__amp { display: flex; align-items: center; gap: .5rem; min-height: 2rem; cursor: pointer; }
+.motion-panel__amp input { width: 1.1rem; height: 1.1rem; accent-color: #fff; }
+.motion-panel__note { margin: 0; opacity: .82; font-size: .75rem; }
+.motion-panel__open { min-height: 2.5rem; padding: 0 1rem; border: 0; border-radius: 999px; background: rgba(21,21,21,.94); color: #fff; font: inherit; font-size: .8125rem; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+.motion-panel__info { justify-self: start; min-height: 2rem; padding: 0; background: none; border: 0; color: #fff; font: inherit; font-size: .75rem; text-decoration: underline; cursor: pointer; opacity: .85; }
+@media (max-width: 600px) { .motion-panel { padding: .6rem .7rem; gap: .4rem; } }

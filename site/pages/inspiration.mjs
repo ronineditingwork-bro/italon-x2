@@ -32,7 +32,7 @@ function item(ctx, c, layout, n) {
   const feature = layout.cls.includes('m-feature');
   const formats = c.plateFormats.length ? `${c.plateFormats.slice(0, 3).map(fmt).join(' · ')} см` : '';
   return `<figure class="insp ${layout.cls}" data-reveal data-line="${c.section}" data-w="${c.image.width}" data-h="${c.image.height}"${c.image.caption ? ' data-feature' : ''} style="--ratio:${layout.ratio};--nw:${c.image.width}px">
-<a class="insp__media media" href="${href}" data-insp="${esc(c.id)}" aria-label="Открыть фото: коллекция ${esc(c.label)}"><img src="${ctx.media(c.image.src)}" alt="${esc(alt(c))}" width="${c.image.width}" height="${c.image.height}" ${n < 3 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"></a>
+<a class="insp__media media" data-motion-spotlight href="${href}" data-insp="${esc(c.id)}" aria-label="Открыть фото: коллекция ${esc(c.label)}"><img src="${ctx.media(c.image.src)}" alt="${esc(alt(c))}" width="${c.image.width}" height="${c.image.height}" ${n < 3 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"></a>
 <figcaption class="insp__cap">
 <span class="insp__top"><span class="insp__num t-num">${String(n + 1).padStart(2, '0')}</span><span>${esc(lineLabel(c))}</span></span>
 <a class="insp__name" href="${href}">${esc(c.label)}</a>
@@ -78,7 +78,7 @@ ${layout.map(({ i, ...l }, n) => item(ctx, list[i], l, n)).join('\n')}
 <div class="wrap insp-end__inner">
 <div><p class="eyebrow">Дальше</p><h2 class="t-h2" id="insp-end-title">Понравился кадр — посмотрите позиции</h2>
 <p class="t-body">${stats.total} позиций прайса: форматы до ${fmt(stats.largestFormat)}&nbsp;см, мозаика и декор. Материалы можно сравнить вживую в салоне.</p></div>
-<div class="btn-row"><a class="btn" href="${ctx.url('/catalog/')}">Открыть каталог</a><a class="btn btn--outline" href="${ctx.url('/salon/')}">Салон в Краснодаре</a></div>
+<div class="btn-row"><a class="btn" data-motion-magnet href="${ctx.url('/catalog/')}">Открыть каталог</a><a class="btn btn--outline" href="${ctx.url('/salon/')}">Салон в Краснодаре</a></div>
 </div>
 </section>`;
   },

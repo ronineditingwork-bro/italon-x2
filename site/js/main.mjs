@@ -67,5 +67,11 @@ initShop();
 if (window.Italon) window.Italon.reveal = initReveal;
 initReveal();
 html.classList.add('motion-ready');
+// Слой движения (GSAP, на компьютере и Lenis): только редакционные страницы, динамически, с отказом без последствий.
+// Телефон получает облегчённый уровень, Lab, конфигураторы, товары, корзина и калькуляторы слой не загружают.
+if (['home', 'collections', 'x2', 'inspiration'].includes(html.dataset.page)) {
+  import('./motion.mjs').then(({ init }) => init({ preview: html.dataset.preview === 'motion' }))
+    .catch(error => console.warn('Optional editorial animation disabled:', error));
+}
 // восстановление из bfcache: закрыть открытые диалоги-оверлеи
 window.addEventListener('pageshow', event => { if (event.persisted) for (const d of $$('dialog[open]')) d.close(); });
