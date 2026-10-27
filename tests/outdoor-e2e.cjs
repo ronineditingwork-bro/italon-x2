@@ -54,9 +54,9 @@ const dist3 = (a, b) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs
     for (const [label, vp, mobile] of process.env.E2E_SKIP_SCENES ? [] : VIEWS) {
       const { ctx, page } = await open(browser, label, vp);
 
-      await check(`[${label}] запуск: три сцены, зоны, WebGL 2, карточка материала из каталога, нет горизонтальной прокрутки`, async () => {
+      await check(`[${label}] запуск: шесть сцен, зоны, WebGL 2, карточка материала из каталога, нет горизонтальной прокрутки`, async () => {
         const r = await page.evaluate(() => { const o = document.querySelector('[data-ol]'); return { h1: o.querySelector('h1').textContent, scenes: o.querySelectorAll('[data-scenes] [data-scene]').length, zones: o.querySelectorAll('[data-zones] [data-zone]').length, mat: o.querySelector('[data-material-card] b').textContent, sw: document.documentElement.scrollWidth, iw: innerWidth, nav: [...document.querySelectorAll('.site-nav a')].map(a => a.textContent), mats: o.querySelectorAll('[data-material-strip] [data-material]').length }; });
-        assert.match(r.h1, /Italon X2/); assert.equal(r.scenes, 3); assert.equal(r.zones, 3); assert.equal(r.mat, 'Магма Сильвер'); assert.ok(r.sw <= r.iw, `scrollWidth ${r.sw} > ${r.iw}`); assert.ok(r.mats >= 8);
+        assert.match(r.h1, /Italon X2/); assert.equal(r.scenes, 6); assert.equal(r.zones, 3); assert.equal(r.mat, 'Магма Сильвер'); assert.ok(r.sw <= r.iw, `scrollWidth ${r.sw} > ${r.iw}`); assert.ok(r.mats >= 8);
         if (!mobile) assert.ok(r.nav.includes('Outdoor Lab'));
       });
       await check(`[${label}] плитка легла только на зоны: в зоне цвет изменился, небо и вода — нет; материал и формат берутся из каталога`, async () => {
@@ -117,8 +117,8 @@ const dist3 = (a, b) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs
         assert.equal(await A(p2, `(o)=>o.state.zones.pool.code`), '610010004091'); assert.equal(await A(p2, `(o)=>o.state.zoneId`), 'pool'); await p2.close();
         await page.locator('[data-sync]').check({ force: true }); await A(page, `(o)=>o.change({code:'610010004089'})`); await settle(page);
       });
-      await check(`[${label}] сцены: «Сруб» и «Фахверк» грузятся со своими зонами, настройки сохраняются при возвращении`, async () => {
-        for (const [id, zones] of [['log-house', ['entry', 'path']], ['fachwerk-fire', ['terrace', 'fire']], ['modern-pool', ['terrace', 'path', 'pool']]]) {
+      await check(`[${label}] сцены: шесть домов грузятся со своими зонами, настройки сохраняются при возвращении`, async () => {
+        for (const [id, zones] of [['log-house', ['entry', 'path']], ['fachwerk-fire', ['terrace', 'fire']], ['modern-pool', ['terrace', 'path', 'pool']], ['red-brick', ['terrace', 'path']], ['white-country', ['terrace', 'path']]]) {
           await page.locator(`[data-scenes] [data-scene="${id}"]`).click(); await page.waitForFunction(i => document.querySelector('[data-ol]').outdoor.state.sceneId === i && document.querySelector('[data-ol]').dataset.state === 'ready', id, { timeout: 30000 }); await wait(400);
           assert.deepEqual(await A(page, `(o)=>o.state.source.zones.map(z=>z.id)`), zones);
           const [x, y] = await A(page, `(o)=>{const z=o.state.source.zones[0],r=z.rings[0];const cx=r.reduce((a,p)=>a+p[0],0)/r.length,cy=r.reduce((a,p)=>a+p[1],0)/r.length;return [cx,cy];}`); void x; void y;
@@ -258,6 +258,28 @@ const dist3 = (a, b) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs
       await ctx.close();
     }
 
+    // ------------------------------------------------------------------ шесть сцен подряд, в чистой вкладке
+    for (const [label, vp, mobile] of process.env.E2E_SKIP_SIX ? [] : VIEWS) {
+      const { ctx, page } = await open(browser, `six-${label}`, vp);
+      await check(`[${label}] все шесть сцен: каждая зона принимает материал X2, вне зон картинка не меняется, экспорт даёт JPEG`, async () => {
+        const DARK = await A(page, `(o)=>o.M.find(m=>m.name==='Фоссил Блэк').variants['60X120'].code`);
+        for (const id of ['modern-pool', 'log-house', 'fachwerk-fire', 'red-brick', 'white-country', 'industrial']) {
+          await A(page, `(o)=>o.loadScene('${id}')`); await settle(page); await A(page, `(o)=>{ o.state.sync = false; }`);
+          const zones = await A(page, `(o)=>o.state.source.zones.map(z=>z.id)`); assert.ok(zones.length >= 2, `${id}: мало зон`); let tested = 0;
+          for (const zid of zones) {
+            await A(page, `(o)=>o.selectZone('${zid}')`); await settle(page);
+            const inZone = await anchor(page, zid), outside = await anchor(page, null); if (!inZone && mobile) continue; assert.ok(inZone && outside, `${id}/${zid}: нет видимой точки`); tested++;
+            const [a0, o0] = [await px(page, inZone.px, inZone.py), await px(page, outside.px, outside.py)];
+            await A(page, `(o)=>o.change({code:'${DARK}'})`); await settle(page);
+            const [a1, o1] = [await px(page, inZone.px, inZone.py), await px(page, outside.px, outside.py)];
+            assert.ok(dist3(a0, a1) > 20, `${id}/${zid}: зона не изменилась ${a0} → ${a1}`); assert.ok(dist3(o0, o1) < 6, `${id}/${zid}: изменилось вне зон`);
+          }
+          const head = await page.evaluate(async () => { const o = document.querySelector('[data-ol]').outdoor, b = await o.snapshotBlob({ maxSide: 1200, quality: 0.85 }), u = new Uint8Array(await b.arrayBuffer()); return { size: b.size, type: b.type, magic: [...u.slice(0, 3)] }; });
+          assert.ok(tested >= (mobile ? 1 : 2), `${id}: проверено зон ${tested}`); assert.equal(head.type, 'image/jpeg'); assert.deepEqual(head.magic, [255, 216, 255]); assert.ok(head.size > 20000, `${id}: JPEG слишком мал`);
+        }
+      });
+      await ctx.close();
+    }
     // ------------------------------------------------------------------ отправка менеджеру в Telegram: без адреса и SMS
     for (const [label, vp] of process.env.E2E_SKIP_PROJECTS ? [] : VIEWS.slice(0, 2)) {
       const { ctx, page } = await open(browser, `send-${label}`, vp); apiState.telegram.length = 0; apiState.photos.length = 0;

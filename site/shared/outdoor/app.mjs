@@ -85,6 +85,8 @@ export async function startOutdoor(root, cfg) {
   }
 
   // ------------------------------------------------------------------ плитки (текстуры) и отрисовка
+  /** Параметры шейдера; rotate — поворот рисунка зоны в плоскости земли (°), чтобы раскладка шла вдоль диагональной дорожки. */
+  const zoneParams = (zone, norm) => { const p = shaderParams(norm); return zone.rotate ? { ...p, angle: p.angle + zone.rotate * Math.PI / 180 } : p; };
   function tileFor(variant) {
     const t = textureOf(variant);
     if (!S.tiles.has(t.src)) S.tiles.set(t.src, loadImage(t.src).catch(() => loadImage(variant.image)).then(img => engine.createTile(img)));
@@ -118,7 +120,7 @@ export async function startOutdoor(root, cfg) {
         const norm = normalizeSettings(settings, { zoneType: zone.type, material: f.material }).settings;
         const tile = await tileFor(f.variant);
         if (token !== syncToken) return;
-        engine.setZone(variant, i, { H: zone.H, sign: zone.sign, tile, params: shaderParams(norm), ref: zone.ref, seed: hashCode(f.variant.code), exposure: zone.exposure ?? 1, mode: zone.gridMode ? 1 : 0 });
+        engine.setZone(variant, i, { H: zone.H, sign: zone.sign, tile, params: zoneParams(zone, norm), ref: zone.ref, seed: hashCode(f.variant.code), exposure: zone.exposure ?? 1, mode: zone.gridMode ? 1 : 0 });
       };
       jobs.push(mk(cur.code, 0));
       if (S.compare.mode === 'ab' && S.compare.code2) {
@@ -158,7 +160,7 @@ export async function startOutdoor(root, cfg) {
     const k = photo.width / sc.width;                                   // картинка могла быть уменьшена — контуры и горизонт масштабируются
     const sH = sceneHomography({ width: photo.width, height: photo.height, camera: { ...sc.camera, horizon: sc.camera.horizon * k } });
     const src = { kind: 'scene', id: sc.id, title: sc.title, w: photo.width, h: photo.height, photo, focus: sc.focus,
-      zones: sc.zones.map(z => ({ id: z.id, label: z.label, type: z.type, rings: z.rings.map(r => r.map(([x, y]) => [x * k, y * k])), H: sH, sign: 1, area: null })) };
+      zones: sc.zones.map(z => ({ id: z.id, label: z.label, type: z.type, rings: z.rings.map(r => r.map(([x, y]) => [x * k, y * k])), H: sH, sign: 1, area: null, rotate: z.rotate || 0 })) };
     await useSource(src);
     if (preset) { for (const [zid, v] of Object.entries(preset)) if (src.zones.some(z => z.id === zid)) { S.zones[zid] = { ...S.zones[zid], ...Object.fromEntries(Object.entries(v).filter(([, x]) => x)) }; } if (zone) S.zoneId = zone; await sync(); }
     root.dataset.sceneId = sc.id; say('');
