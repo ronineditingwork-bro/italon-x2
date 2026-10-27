@@ -67,11 +67,10 @@ initShop();
 if (window.Italon) window.Italon.reveal = initReveal;
 initReveal();
 html.classList.add('motion-ready');
-// Optional enhancement: no React runtime, and never run on Material/Outdoor Labs,
-// configurators or touch/reduced-motion devices.
-if (['home', 'collections', 'x2', 'inspiration'].includes(html.dataset.page) &&
-    !reducedMotion() && window.matchMedia?.('(min-width: 960px) and (hover: hover) and (pointer: fine)').matches) {
-  import('./motion.mjs').then(({ initMotion }) => initMotion())
+// Слой движения (GSAP, на компьютере и Lenis): только редакционные страницы, динамически, с отказом без последствий.
+// Телефон получает облегчённый уровень, Lab, конфигураторы, товары, корзина и калькуляторы слой не загружают.
+if (['home', 'collections', 'x2', 'inspiration'].includes(html.dataset.page)) {
+  import('./motion.mjs').then(({ init }) => init({ preview: html.dataset.preview === 'motion' }))
     .catch(error => console.warn('Optional editorial animation disabled:', error));
 }
 // восстановление из bfcache: закрыть открытые диалоги-оверлеи

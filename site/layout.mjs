@@ -133,7 +133,7 @@ export function layout(page, ctx, body) {
   const styles = (page.styles || []).map(name => `<link rel="stylesheet" href="${ctx.asset(`pages/${name}.css`)}">`).join('');
   const scripts = (page.scripts || []).map(name => `<script type="module" src="${ctx.asset(`pages/${name}.js`)}"></script>`).join('');
   return `<!doctype html>
-<html lang="ru" class="no-js" data-root="${ctx.root || './'}" data-page="${esc(page.name || 'page')}">
+<html lang="ru" class="no-js" data-root="${ctx.root || './'}" data-page="${esc(page.name || 'page')}"${ctx.preview ? ' data-preview="motion"' : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">

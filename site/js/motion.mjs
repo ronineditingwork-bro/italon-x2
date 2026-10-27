@@ -1,85 +1,96 @@
-// GSAP + Lenis for a small number of editorial pages.
-// React Bits Magnet / 21st.dev spotlight are adapted as native DOM effects:
-// no React runtime, no changes to the product configurator or Material Lab.
+// Редакционный слой движения: GSAP + ScrollTrigger (+ Lenis на компьютере). Подключается динамически, только на редакционных страницах.
+// React Bits (магнитная кнопка) и 21st.dev (подсветка карточки) переписаны на обычном DOM: React не нужен.
+// Два уровня:
+//   desktop — мышь, ширина от 960 px: плавная прокрутка Lenis, сдвиг фото, магнитные кнопки, подсветка под курсором;
+//   lite    — телефон и планшет: родная прокрутка без Lenis, мягкий сдвиг фото, отклик на нажатие (вспышка света на карточке, «пружина» кнопки).
+// Весь слой выключается целиком: stop() возвращает страницу к исходному виду без перезагрузки (на этом построено сравнение «как сейчас / с эффектами»).
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from 'lenis';
 import { reducedMotion } from './ui.mjs';
 
-const fineDesktop = () => window.matchMedia?.('(min-width: 960px) and (hover: hover) and (pointer: fine)').matches;
+const mq = q => !!window.matchMedia?.(q).matches;
+const fineDesktop = () => mq('(min-width: 960px) and (hover: hover) and (pointer: fine)');
+const html = document.documentElement;
+const SPOT = '[data-motion-spotlight]', MAGNET = '[data-motion-magnet]';
+gsap.registerPlugin(ScrollTrigger);
 
-export function initMotion() {
-  // Native scrolling and static presentation are always preserved for touch,
-  // accessibility settings, printers, and unsupported browsers.
-  if (reducedMotion() || !fineDesktop()) return;
-  if (document.documentElement.classList.contains('motion-enhanced')) return;
+let live = null;                                   // { ac, ctx, lenis, tick, tier, amp, token }
+export const motionState = () => ({ on: !!live, tier: live?.tier || '', amp: !!live?.amp, reduced: reducedMotion() });
 
-  gsap.registerPlugin(ScrollTrigger);
-  const html = document.documentElement;
-  let lenis;
-  try {
-    lenis = new Lenis({
-      duration: 1.05,
-      wheelMultiplier: 0.9,
-      smoothWheel: true,
-      anchors: true,
-      prevent: node => Boolean(node?.closest?.('dialog, [data-lenis-prevent]')),
-    });
-  } catch (error) {
-    console.warn('Lenis unavailable; keeping native scroll.', error);
+/** Размер света и сдвигов: amp — усиленный показ для сравнения (в рабочей версии выключен). */
+const K = amp => amp ? { parallax: 6, magnet: 0.3, shift: 56 } : { parallax: 2.5, magnet: 0.12, shift: 32 };
+
+const mediaOf = el => el.matches('.media') ? el : el.querySelector('.media') || el;   // свет рисуется на фото карточки, а не на тексте под ним
+
+export function start({ amp = false } = {}) {
+  if (live || reducedMotion()) return false;
+  const tier = fineDesktop() ? 'desktop' : 'lite', k = K(amp), ac = new AbortController(), { signal } = ac, token = Symbol('motion');
+  live = { ac, tier, amp, token, lenis: null, tick: null, ctx: null, obs: null };
+  html.classList.add('motion-on', `motion-${tier}`);
+  if (tier === 'desktop') html.classList.add('motion-enhanced');
+  html.classList.toggle('motion-amp', amp); html.style.setProperty('--m-shift', `${k.shift}px`);
+
+  live.ctx = gsap.context(() => {
+    // сдвиг фото при прокрутке: только transform, без смены пропорций; запас масштабом, чтобы по краям не было пустоты
+    const A = tier === 'desktop' ? k.parallax : Math.min(k.parallax, amp ? 4 : 1.8), scale = 1 + 2 * A / 100 + 0.03;
+    for (const image of document.querySelectorAll('[data-motion-parallax]')) {
+      gsap.fromTo(image, { yPercent: -A, scale }, { yPercent: A, scale, ease: 'none',
+        scrollTrigger: { trigger: image.parentElement || image, start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true } });
+    }
+    if (tier === 'desktop') {
+      // магнитная кнопка: небольшой сдвиг к курсору, возврат при уходе
+      for (const button of document.querySelectorAll(MAGNET)) {
+        const qx = gsap.quickTo(button, 'x', { duration: 0.35, ease: 'power3.out' }), qy = gsap.quickTo(button, 'y', { duration: 0.35, ease: 'power3.out' });
+        button.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; const r = button.getBoundingClientRect(); qx((e.clientX - r.left - r.width / 2) * k.magnet); qy((e.clientY - r.top - r.height / 2) * k.magnet); }, { signal });
+        button.addEventListener('pointerleave', () => { qx(0); qy(0); }, { signal });
+      }
+      // подсветка под курсором: свет рисует CSS, JS только передаёт координаты
+      for (const card of document.querySelectorAll(SPOT)) {
+        const host = mediaOf(card);
+        card.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; const r = host.getBoundingClientRect(); host.style.setProperty('--spot-x', `${e.clientX - r.left}px`); host.style.setProperty('--spot-y', `${e.clientY - r.top}px`); }, { passive: true, signal });
+      }
+    }
+  });
+
+  if (tier === 'lite') {
+    // сенсорный экран: нажатие даёт заметный, но короткий отклик; наведения мышью на телефоне нет, поэтому его не имитируем
+    const press = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); el.addEventListener('animationend', () => el.classList.remove(cls), { once: true }); };
+    document.addEventListener('pointerdown', e => {
+      const spot = e.target.closest?.(SPOT), magnet = e.target.closest?.(MAGNET);
+      if (spot) { const host = mediaOf(spot), r = host.getBoundingClientRect(); host.style.setProperty('--spot-x', `${e.clientX - r.left}px`); host.style.setProperty('--spot-y', `${e.clientY - r.top}px`); press(host, 'm-spot'); }
+      if (magnet) press(magnet, 'm-press'); else if (spot) press(spot, 'm-press-soft');
+    }, { passive: true, signal });
   }
 
-  if (lenis) {
-    lenis.on('scroll', ScrollTrigger.update);
-    const tick = time => lenis.raf(time * 1000);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
-    const syncModal = () => html.classList.contains('has-dialog') ? lenis.stop() : lenis.start();
-    const dialogObserver = new MutationObserver(syncModal);
-    dialogObserver.observe(html, { attributes: true, attributeFilter: ['class'] });
-    syncModal();
-    // Clean up listeners if the page leaves the browser's page cache.
-    window.addEventListener('pagehide', event => {
-      if (event.persisted) return;
-      dialogObserver.disconnect();
-      gsap.ticker.remove(tick);
-      lenis.destroy();
-    }, { once: true });
-  }
+  // высота страницы меняется, когда догружаются фото и шрифты: пересчитываем точки ScrollTrigger
+  let t = 0; const refresh = () => { clearTimeout(t); t = setTimeout(() => ScrollTrigger.refresh(), 120); };
+  document.addEventListener('load', e => { if (e.target?.tagName === 'IMG') refresh(); }, { capture: true, signal });
+  window.addEventListener('load', refresh, { signal }); document.fonts?.ready.then(refresh);
 
-  for (const image of document.querySelectorAll('[data-motion-parallax]')) {
-    const section = image.closest('section') || image;
-    gsap.fromTo(image,
-      { yPercent: -2.5, scale: 1.08 },
-      { yPercent: 2.5, scale: 1.08, ease: 'none',
-        scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: true } });
-  }
+  if (tier === 'desktop') startLenis(live);
+  window.addEventListener('pagehide', e => { if (!e.persisted) stop(); }, { signal });
+  return true;
+}
 
-  // React Bits-style magnetic microinteraction, reimplemented in vanilla JS.
-  for (const button of document.querySelectorAll('[data-motion-magnet]')) {
-    button.addEventListener('pointermove', event => {
-      if (event.pointerType !== 'mouse') return;
-      const r = button.getBoundingClientRect();
-      gsap.to(button, {
-        x: (event.clientX - r.left - r.width / 2) * 0.12,
-        y: (event.clientY - r.top - r.height / 2) * 0.12,
-        duration: 0.25, ease: 'power2.out', overwrite: true,
-      });
-    });
-    button.addEventListener('pointerleave', () =>
-      gsap.to(button, { x: 0, y: 0, duration: 0.35, ease: 'power2.out', overwrite: true }));
-  }
+function startLenis(state) {
+  import('./motion-scroll.mjs').then(({ createScroll }) => {
+    if (live !== state) return;                                      // эффекты уже выключили, пока модуль грузился
+    state.lenis = createScroll(gsap, ScrollTrigger);
+  }).catch(error => console.warn('Smooth scroll unavailable; native scroll kept.', error));
+}
 
-  // 21st.dev-inspired cursor spotlight, CSS renders the effect.
-  for (const card of document.querySelectorAll('[data-motion-spotlight]')) {
-    card.addEventListener('pointermove', event => {
-      if (event.pointerType !== 'mouse') return;
-      const r = card.getBoundingClientRect();
-      card.style.setProperty('--spot-x', `${event.clientX - r.left}px`);
-      card.style.setProperty('--spot-y', `${event.clientY - r.top}px`);
-    }, { passive: true });
-  }
+export function stop() {
+  if (!live) return false;
+  const { ac, ctx, lenis } = live; live = null;
+  ac.abort(); lenis?.destroy(); ctx.revert();
+  for (const el of document.querySelectorAll(`${SPOT}, ${SPOT} .media, ${MAGNET}`)) { el.style.removeProperty('--spot-x'); el.style.removeProperty('--spot-y'); gsap.set(el, { clearProps: 'x,y' }); }
+  html.classList.remove('motion-on', 'motion-desktop', 'motion-lite', 'motion-enhanced', 'motion-amp'); html.style.removeProperty('--m-shift');
+  return true;
+}
 
-  html.classList.add('motion-enhanced');
-  window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+/** Вызывается с каждой редакционной страницы. В тестовой сборке запуск делает панель сравнения, в рабочей — сразу. */
+export function init({ preview = false } = {}) {
+  window.ItalonMotion = { start, stop, state: motionState };
+  if (preview) return import('./motion-preview.mjs').then(m => m.mountPanel({ start, stop, state: motionState }));
+  start();
 }
