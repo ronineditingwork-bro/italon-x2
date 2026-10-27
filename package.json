@@ -8,14 +8,15 @@
     "check": "node scripts/check.mjs",
     "build": "node scripts/build-hosting.mjs",
     "build:site": "node scripts/build-site.mjs",
-    "test": "node --test tests/core.test.mjs tests/site.test.mjs tests/quote-lead.test.mjs tests/picker.test.mjs tests/lab.test.mjs tests/outdoor.test.mjs tests/outdoor-send.test.mjs",
+    "test": "node --test tests/core.test.mjs tests/site.test.mjs tests/quote-lead.test.mjs tests/picker.test.mjs tests/lab.test.mjs tests/outdoor.test.mjs tests/outdoor-send.test.mjs tests/salon-book.test.mjs",
     "build:hosting": "node scripts/build-hosting.mjs",
     "test:hosting": "node --test tests/hosting.test.mjs",
     "test:picker": "node tests/picker-e2e.cjs",
     "test:lab": "node tests/lab-e2e.cjs",
     "picker:features": "node scripts/build-site.mjs --quiet && node scripts/build-picker-features.cjs",
     "test:outdoor": "node tests/outdoor-e2e.cjs",
-    "test:motion": "node tests/motion-e2e.cjs"
+    "test:motion": "node tests/motion-e2e.cjs",
+    "test:salon": "node --test tests/salon-book.test.mjs"
   },
   "engines": {
     "node": "24.x"
