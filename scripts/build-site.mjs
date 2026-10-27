@@ -20,6 +20,8 @@ const started = Date.now();
 // Боевой адрес сайта для sitemap.xml. Предпросмотр (GitHub Pages) собирается с SITE_NOINDEX=1: страницы закрыты от индексации.
 const ORIGIN = (process.env.SITE_ORIGIN || 'https://italon-x2.ru').replace(/\/+$/, '');
 const NOINDEX = process.env.SITE_NOINDEX === '1';
+// SITE_PREVIEW=1 — тестовая сборка: на редакционных страницах появляется панель «Как сейчас / С новыми эффектами». В рабочей сборке её нет.
+const PREVIEW = process.env.SITE_PREVIEW === '1';
 
 // ---------- 0. Очистка прошлой сборки ----------
 if (existsSync(manifestPath)) {
@@ -112,6 +114,7 @@ for (const page of pages) {
     root: pageRoot,
     path: page.path,
     noindex: NOINDEX,
+    preview: PREVIEW,
     data,
     buildId,
     /** Ссылка на путь сайта («/x2/») относительно текущей страницы */

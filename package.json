@@ -14,7 +14,8 @@
     "test:picker": "node tests/picker-e2e.cjs",
     "test:lab": "node tests/lab-e2e.cjs",
     "picker:features": "node scripts/build-site.mjs --quiet && node scripts/build-picker-features.cjs",
-    "test:outdoor": "node tests/outdoor-e2e.cjs"
+    "test:outdoor": "node tests/outdoor-e2e.cjs",
+    "test:motion": "node tests/motion-e2e.cjs"
   },
   "engines": {
     "node": "24.x"

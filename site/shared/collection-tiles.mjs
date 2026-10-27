@@ -89,7 +89,7 @@ export function collectionTile(ctx, c, { slot = 'T', n = 0, eager = false } = {}
   const img = shown
     ? `<img src="${ctx.media(shown.src)}" alt="${esc(alt)}" width="${shown.width}" height="${shown.height}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`
     : '<span class="media-missing">Фото уточняется</span>';
-  return `<a class="ctile ctile--${slot}" href="${collectionUrl(ctx.root, c.id)}" data-reveal data-line="${c.section}">
+  return `<a class="ctile ctile--${slot}" href="${collectionUrl(ctx.root, c.id)}" data-reveal data-motion-spotlight data-line="${c.section}">
 <span class="media ctile__media">${img}</span>
 <span class="ctile__body">
 <span class="ctile__top"><span class="ctile__num t-num">${String(n).padStart(2, '0')}</span><span class="ctile__line">${esc(finishLine(c, slot === 'L') || lineLabel(c))}</span></span>

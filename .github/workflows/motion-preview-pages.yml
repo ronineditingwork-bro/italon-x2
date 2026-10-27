@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/gsap-lenis-ui-20261026
+      - feature/motion-compare-20261027
   workflow_dispatch:
 
 permissions:
@@ -31,6 +32,7 @@ jobs:
       - name: Build standalone static site with noindex
         env:
           SITE_NOINDEX: '1'
+          SITE_PREVIEW: '1'
         run: |
           npm run build:site
           touch public/.nojekyll

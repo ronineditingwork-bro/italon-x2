@@ -38,7 +38,7 @@ function scenes(ctx) {
 ${outdoorSpaces.map((s, i) => {
     const c = col(s.collectionId);
     return `<article class="x2-scene${i % 2 ? ' x2-scene--flip' : ''}" aria-labelledby="scene-${s.id}">
-<a class="x2-scene__media media" href="${collectionUrl(ctx.root, c.id)}" tabindex="-1" aria-hidden="true" style="--nw:${c.image.width}px" data-reveal>${img(ctx, c.image, `${s.label}: коллекция ${c.label}`)}</a>
+<a class="x2-scene__media media" data-motion-spotlight href="${collectionUrl(ctx.root, c.id)}" tabindex="-1" aria-hidden="true" style="--nw:${c.image.width}px" data-reveal>${img(ctx, c.image, `${s.label}: коллекция ${c.label}`)}</a>
 <div class="x2-scene__text" data-reveal>
 <p class="x2-scene__num t-num">${String(i + 1).padStart(2, '0')}</p>
 <h3 class="t-h2 x2-scene__title" id="scene-${s.id}">${esc(s.label)}</h3>
@@ -49,7 +49,7 @@ ${outdoorSpaces.map((s, i) => {
 <div><dt>Форматы, см</dt><dd>${c.plateFormats.map(fmt).join(', ')}</dd></div>
 <div><dt>Поверхность</dt><dd>${esc(c.finishes.join(', '))}</dd></div>
 </dl>
-<div class="x2-scene__links"><a class="btn" href="${collectionUrl(ctx.root, c.id)}">Коллекция ${esc(c.label)}</a><a class="link-arrow" href="${ctx.url('/catalog/')}?collection=${esc(c.id)}">Позиции в каталоге ${ARROW}</a></div>
+<div class="x2-scene__links"><a class="btn" data-motion-magnet href="${collectionUrl(ctx.root, c.id)}">Коллекция ${esc(c.label)}</a><a class="link-arrow" href="${ctx.url('/catalog/')}?collection=${esc(c.id)}">Позиции в каталоге ${ARROW}</a></div>
 </div>
 </article>`;
   }).join('\n')}
@@ -125,7 +125,7 @@ ${collectionRows(ctx, x2Collections)}
 <div class="wrap x2-cta__inner">
 <div><p class="eyebrow">Каталог</p><h2 class="t-h2" id="cta-title">${positions(stats.x2)} X2 в&nbsp;прайсе</h2>
 <p class="t-body">Фильтры по коллекции, формату и поверхности; расчёт упаковок по площади — в калькуляторе.</p></div>
-<div class="btn-row"><a class="btn" href="${ctx.url('/catalog/')}?section=x2">Открыть каталог X2</a><a class="btn btn--outline" href="${ctx.url('/calculator/')}">Рассчитать упаковки</a></div>
+<div class="btn-row"><a class="btn" data-motion-magnet href="${ctx.url('/catalog/')}?section=x2">Открыть каталог X2</a><a class="btn btn--outline" href="${ctx.url('/calculator/')}">Рассчитать упаковки</a></div>
 </div>
 </section>`;
 }
