@@ -80,3 +80,13 @@
 .salon-card, .salon-book__text, .salon-before__text, .salon-form { grid-template-columns: minmax(0, 1fr); }
 .salon-card > *, .salon-book__text > *, .salon-before__text > * { max-width: 100%; }
 .salon-card__hours > div { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+
+/* Реальная запись в салон */
+.salon-form__consent { display: flex; align-items: flex-start; gap: .7rem; font-size: var(--fs-s); line-height: 1.5; }
+.salon-form__consent input { margin-top: .25rem; flex: 0 0 auto; width: 1rem; height: 1rem; accent-color: var(--text); }
+.salon-form__consent a { text-decoration: underline; text-underline-offset: .18em; }
+.salon-form__success { padding: .85rem 1rem; border-left: 3px solid #246a43; background: #eaf4ee; color: #1d5135; font-size: var(--fs-s); line-height: 1.5; }
+.salon-form__trap { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.salon-form [aria-invalid="true"] { outline: 2px solid #a32229; outline-offset: 2px; }
+.salon-form .btn:disabled { opacity: .6; cursor: wait; }
+.salon-form [hidden] { display: none !important; }
