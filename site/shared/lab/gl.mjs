@@ -22,7 +22,7 @@ uniform int uMode; uniform vec3 uLight; uniform vec2 uCenter; uniform float uExp
 uniform vec3 uSunDir, uSunCol, uSkyAmb, uLampCol, uGlow;
 uniform int uWall; uniform vec4 uWallRect; uniform int uTurn;
 uniform int uQ; uniform int uDebug; uniform float uTone; uniform float uAspect;
-uniform sampler2D uAlbedo0, uAlbedo1, uNormal0, uNormal1;
+uniform sampler2D uAlbedo0, uAlbedo1, uNormal0, uNormal1; uniform float uFaces[2];
 out vec4 outColor;
 
 const float PI = 3.14159265;
@@ -145,8 +145,10 @@ vec3 shadeMat(int m, vec3 P, vec3 V) {
     vec2 puv = off + tuv * sw;
     vec2 q2 = vec2(mirror1(puv.x), mirror1(puv.y)); vec2 uvp = uTurn == 1 ? vec2(q2.y, 1.0 - q2.x) : q2;     // поворот плиты на 90°: рисунок поворачивается, а не растягивается
     uv = vec2(uvp.x, 1.0 - uvp.y);
+    float nf = uFaces[s]; if (nf > 1.5) uv.x = (mod(float(c + r), nf) + uv.x) / nf;     // у плиты несколько настоящих фейсов: фейсы лежат в атласе подряд, плиты берут их по очереди
     float dxu = (fx ? -1.0 : 1.0) * sw.x / uTile.x, dyv = (fy ? -1.0 : 1.0) * sw.y / uTile.y;
     jac = uTurn == 1 ? vec4(0.0, dyv, dxu, 0.0) : vec4(dxu, 0.0, 0.0, -dyv);
+    if (nf > 1.5) jac.xy /= nf;
     albedo = texA(s, uv).rgb;
     if (vary) albedo *= 1.0 + (a - 0.5) * uTone;
     vec4 nmh = texN(s, uv); vec2 nxy = nmh.xy * 2.0 - 1.0; if (uTurn == 1) nxy = vec2(-nxy.y, nxy.x); if (fx) nxy.x = -nxy.x; if (fy) nxy.y = -nxy.y;
@@ -313,11 +315,13 @@ export class LabGL {
     const hit = this.cache.get(m.key); if (hit && hit.cap === this.texCap && hit.hd === (m.quality === 'hd')) { hit.used = performance.now(); return hit; }
     if (hit) this.#drop(hit);
     const gl = this.gl, t0 = performance.now(), src = m.source; let e_nbytes = 0;
-    const sw = src.naturalWidth || src.width, sh = src.naturalHeight || src.height, k = Math.min(1, this.texCap / Math.max(sw, sh));
-    const w = Math.max(1, Math.round(sw * k)), h = Math.max(1, Math.round(sh * k));
+    const faces = m.faces && m.faces.length > 1 ? m.faces : [src], nf = faces.length;                // несколько настоящих фейсов плиты складываются в один атлас подряд по ширине
+    const sw = src.naturalWidth || src.width, sh = src.naturalHeight || src.height, k = Math.min(1, this.texCap / Math.max(sw * nf, sh));
+    const fw = Math.max(1, Math.round(sw * k)), h = Math.max(1, Math.round(sh * k)), w = fw * nf;
     const cv = document.createElement('canvas'); cv.width = w; cv.height = h; const g = cv.getContext('2d', { willReadFrequently: true });
     const ins = m.quality === 'hd' ? Math.round(Math.min(sw, sh) * 0.012 * k) : 0;                      // у полноценных фото срезаем краешек кадра (тени, сжатие)
-    g.imageSmoothingQuality = 'high'; g.drawImage(src, ins * (sw / w) | 0, ins * (sh / h) | 0, sw - 2 * ins / k, sh - 2 * ins / k, 0, 0, w, h);
+    g.imageSmoothingQuality = 'high';
+    faces.forEach((f, i) => { const fsw = f.naturalWidth || f.width, fsh = f.naturalHeight || f.height; g.drawImage(f, ins * (fsw / fw) | 0, ins * (fsh / h) | 0, fsw - 2 * ins / k, fsh - 2 * ins / k, i * fw, 0, fw, h); });
     const px = g.getImageData(0, 0, w, h);
     const levels = Math.floor(Math.log2(Math.max(w, h))) + 1;
     const mk = (internal, data, filterMag) => {
@@ -338,7 +342,7 @@ export class LabGL {
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
       normal = tex; ownNormal = true; e_nbytes = nw * nh * 4 * 1.33;
     }
-    const avg = averageColor(px.data, w, h).map(srgbToLin), e = { key: m.key, albedo, normal, ownNormal, nbytes: e_nbytes, w, h, avg, cap: this.texCap, hd: m.quality === 'hd', used: performance.now() };
+    const avg = averageColor(px.data, w, h).map(srgbToLin), e = { key: m.key, albedo, normal, ownNormal, nbytes: e_nbytes, w, h, faces: nf, avg, cap: this.texCap, hd: m.quality === 'hd', used: performance.now() };
     this.cache.set(m.key, e); this.uploads.push({ key: m.key, ms: performance.now() - t0, w, h, hd: e.hd }); if (this.uploads.length > 20) this.uploads.shift();
     this.#evict(); return e;
   }
@@ -369,6 +373,7 @@ export class LabGL {
     gl.uniform2fv(u['uPhoto[0]'], new Float32Array(ms.flatMap(m => m.photo)));
     gl.uniform4fv(u['uSurf[0]'], new Float32Array(ms.flatMap(m => [m.surf.rough, m.surf.relief, m.surf.micro, m.surf.f0])));
     gl.uniform3fv(u['uAvg[0]'], new Float32Array(es.flatMap(e => e.avg)));
+    gl.uniform1fv(u['uFaces[0]'], new Float32Array(es.map(e => e.faces || 1)));
     const sw = state.sweep || { on: false };
     gl.uniform1i(u.uSweepOn, sw.on ? 1 : 0); gl.uniform1f(u.uSweepPos, sw.pos ?? 0); gl.uniform2f(u.uSweepDir, ...(sw.dir || [1, 0])); gl.uniform1f(u.uSweepSoft, sw.soft ?? 0.01);
     gl.uniform1f(u.uSweepLine, sw.line ? 1 : 0); gl.uniform1f(u.uSweepGlow, sw.glow ?? 0); gl.uniform1f(u.uAspect, W / H);

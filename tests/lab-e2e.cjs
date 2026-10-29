@@ -29,6 +29,13 @@ function makePng(w, h) {   // простой градиентный PNG для �
   for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const o = y * (w * 3 + 1) + 1 + x * 3; raw[o] = 120 + ((x * 90 / w) | 0); raw[o + 1] = 90 + ((y * 100 / h) | 0); raw[o + 2] = 70 + (((x + y) % 40) | 0); }
   return Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), chunk('IHDR', ih), chunk('IDAT', zlib.deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]);
 }
+function makeSolid(w, h, [r, g, b]) {   // однотонный PNG: у каждого «фейса» в тесте свой цвет
+  const T = new Uint32Array(256).map((_, n) => { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; return c >>> 0; }), crc = b => { let c = 0xffffffff; for (const x of b) c = T[(c ^ x) & 255] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; };
+  const chunk = (t, d) => { const l = Buffer.alloc(4); l.writeUInt32BE(d.length); const td = Buffer.concat([Buffer.from(t), d]), c = Buffer.alloc(4); c.writeUInt32BE(crc(td)); return Buffer.concat([l, td, c]); };
+  const ih = Buffer.alloc(13); ih.writeUInt32BE(w, 0); ih.writeUInt32BE(h, 4); ih[8] = 8; ih[9] = 2; const raw = Buffer.alloc((w * 3 + 1) * h);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const o = y * (w * 3 + 1) + 1 + x * 3; raw[o] = r; raw[o + 1] = g; raw[o + 2] = b; }
+  return Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), chunk('IHDR', ih), chunk('IDAT', zlib.deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]);
+}
 const FEATURED = ['610010003167', '610010002765', '610010002799', '610010002696', '610010001319', '610010002735', '610010002664', '610010002667'];
 const frameSum = (page, area = [0, 0, 1, 1]) => api(page, `(l)=>{l.markDirty();return new Promise(r=>requestAnimationFrame(()=>{const c=document.createElement('canvas');c.width=48;c.height=48;const g=c.getContext('2d');const W=l.canvas.width,H=l.canvas.height,a=${JSON.stringify(area)};g.drawImage(l.canvas,a[0]*W,a[1]*H,(a[2]-a[0])*W,(a[3]-a[1])*H,0,0,48,48);const d=g.getImageData(0,0,48,48).data;let s=0;for(let i=0;i<d.length;i+=4)s+=d[i]+d[i+1]*2+d[i+2];r(s)}))}`);
 
@@ -317,6 +324,22 @@ const frameSum = (page, area = [0, 0, 1, 1]) => api(page, `(l)=>{l.markDirty();r
         const bad = await api(page, '(l)=>l.selectEntry(l.slabs.find(e=>e.code==="600180000132"),{animate:false}).then(()=>({q:l.cur.quality,o:l.cur.original,w:l.cur.imgW,notice:!document.querySelector("[data-notice]").hidden}))'); assert.deepEqual(bad, { q: 'lite', o: false, w: 148, notice: true });
         const card = await page.evaluate(() => [...document.querySelectorAll('[data-strip] [data-mat]')].length); assert.equal(card, 57);
       } finally { await ctx.close(); fs.rmSync(file, { force: true }); }
+    });
+    await check('[фейсы] у слэба с четырьмя настоящими фейсами каждая плита в стене берёт свой фейс; без фейсов все плиты одинаковы', async () => {
+      const dir = resolve(pub, 'media/lab'), COL = [[200, 40, 40], [40, 200, 40], [40, 40, 200], [220, 200, 40]], names = COL.map((_, i) => `_e2e-face${i}.png`);
+      fs.mkdirSync(dir, { recursive: true }); COL.forEach((c, i) => fs.writeFileSync(resolve(dir, names[i]), makeSolid(720, 1668, c)));
+      const ctx = await browser.newContext({ viewport: { width: 1366, height: 820 } });
+      try {
+        const item = faces => ({ src: 'media/lab/' + names[0], width: 720, height: 1668, ...(faces ? { faces: names.slice(1).map(n => ({ face: 'F', src: 'media/lab/' + n, width: 720, height: 1668 })) } : {}) });
+        let withFaces = true;
+        await ctx.route('**/data/lab-originals.json*', r => r.fulfill({ contentType: 'application/json', body: JSON.stringify({ v: 1, items: { '600180000076': item(withFaces) } }) }));
+        const page = await ctx.newPage(); watch(page, 'faces'); await page.goto(base + '/lab/'); await page.waitForFunction(() => document.querySelector('[data-lab]')?.dataset.state === 'ready', null, { timeout: 40000 }); await wait(600);
+        await page.locator('[data-start]').click(); await page.locator('[data-view="slabs"]').click(); await page.waitForFunction(() => document.querySelector('[data-lab]').dataset.labView === 'slabs', null, { timeout: 40000 }); await wait(1500);
+        assert.equal(await api(page, '(l)=>l.cur.faces?.length'), 3, 'каталог принял три дополнительных фейса');
+        await page.evaluate(() => document.querySelector('[data-slabs="4"]').click()); await wait(1500); await api(page, '(l)=>{l.setMode("day",{fly:false});l.setAuto(false);l.st.joint=0}'); await wait(900);
+        const cols = await api(page, `(l)=>{l.markDirty();return new Promise(r=>requestAnimationFrame(()=>{const c=document.querySelector('[data-canvas]'),o=document.createElement('canvas');o.width=c.width;o.height=c.height;const g=o.getContext('2d');g.drawImage(c,0,0);const out=[];for(let i=0;i<4;i++){const x=Math.round(c.width*(0.5+(i-1.5)*0.1)),y=Math.round(c.height*0.5);out.push([...g.getImageData(x,y,1,1).data].slice(0,3));}r(out);}))}`);
+        const dom = c => c.indexOf(Math.max(...c)), idx = cols.map(dom); assert.equal(new Set(idx).size >= 3, true, `плиты должны различаться по цвету: ${JSON.stringify(cols)}`);
+      } finally { await ctx.close(); names.forEach(n => fs.rmSync(resolve(dir, n), { force: true })); }
     });
     // запасной режим: WebGL 2 недоступен
     const fb = await chromium.launch({ executablePath: exe, args: ['--disable-3d-apis', '--disable-gpu'] });

@@ -44,7 +44,7 @@ export async function startLab(root, cfg) {
   // ---- материалы: запись каталога → загруженное фото -----------------------------------------------------------------------------
   const matCache = new Map();
   function loadMaterial(entry) {
-    if (!matCache.has(entry.code)) matCache.set(entry.code, loadImage(entry.image).then(img => ({ key: entry.code, source: img, photo: entry.photo, surf: entry.surf, quality: entry.quality, avgHex: avgHex(img), entry })).catch(e => { matCache.delete(entry.code); throw e; }));
+    if (!matCache.has(entry.code)) matCache.set(entry.code, Promise.all([loadImage(entry.image), ...(entry.faces || []).map(f => loadImage(f).catch(() => null))]).then(([img, ...more]) => ({ key: entry.code, source: img, faces: [img, ...more.filter(Boolean)], photo: entry.photo, surf: entry.surf, quality: entry.quality, avgHex: avgHex(img), entry })).catch(e => { matCache.delete(entry.code); throw e; }));
     return matCache.get(entry.code);
   }
   let cur = featured[2] || featured[0], sec = featured.find(f => f.code !== cur.code) || featured[0];

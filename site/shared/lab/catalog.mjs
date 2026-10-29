@@ -67,7 +67,7 @@ export function toEntry(p, { root = './', imageUrl } = {}) {
     code: p.code, name: cleanName(p.name, p.collection), rawName: p.name, latin: p.latin || '', collection: titleRu(p.collection), collectionId: p.collectionId || '', format: fmt(p.format), formatKey: String(p.format || ''),
     finish: String(p.finish || '').toLowerCase(), priceText: p.priceKopecks > 0 ? `${money(p.priceKopecks)} за ${p.unit || 'м²'}` : '', canOrder: p.canOrder !== false,
     path: `/product/${p.code}/`, href: `${root}product/${p.code}/`, image: url, thumb, imgW: p.image?.width || 0, imgH: p.image?.height || 0,
-    original: !!p.image?.original, eligible: a.eligible && !!url, quality: a.quality || null, photo: a.photo || null, maxPpcm: a.maxPpcm || 40, reason: a.eligible && !url ? 'фото доступно только на сайте' : a.reason || '',
+    original: !!p.image?.original, faces: imageUrl ? [] : (p.image?.faces || []).map(f => media(root, f.src)), eligible: a.eligible && !!url, quality: a.quality || null, photo: a.photo || null, maxPpcm: a.maxPpcm || 40, reason: a.eligible && !url ? 'фото доступно только на сайте' : a.reason || '',
     surf: surfaceFor(p, a.quality),
   };
 }
@@ -178,6 +178,8 @@ export function applyOriginals(products, manifest, { mobile = false } = {}) {
   return products.map(p => {
     const it = items[p.code], o = it && mobile && it.mobile && !checkOriginal(p, it.mobile) ? it.mobile : it;
     // thumb — прежнее фото каталога: им показываются карточки и галерея, чтобы не грузить оригиналы всех позиций сразу
-    return o && !checkOriginal(p, o) ? { ...p, image: { ...p.image, src: o.src.replace(/^\//, ''), width: o.width, height: o.height, original: true, ...(p.image?.src ? { thumb: { src: p.image.src, width: p.image.width, height: p.image.height } } : {}) } } : p;
+    // faces — другие настоящие фейсы той же плиты (F2…F4). Берутся только прошедшие ту же проверку; зеркальных копий не делаем.
+    const faces = o ? (it.faces || []).map(f => (mobile && f.mobile && !checkOriginal(p, f.mobile) ? f.mobile : f)).filter(f => !checkOriginal(p, f)).map(f => ({ src: f.src.replace(/^\//, ''), width: f.width, height: f.height })) : [];
+    return o && !checkOriginal(p, o) ? { ...p, image: { ...p.image, src: o.src.replace(/^\//, ''), width: o.width, height: o.height, original: true, ...(faces.length ? { faces } : {}), ...(p.image?.src ? { thumb: { src: p.image.src, width: p.image.width, height: p.image.height } } : {}) } } : p;
   });
 }
