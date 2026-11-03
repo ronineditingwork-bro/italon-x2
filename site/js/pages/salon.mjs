@@ -87,3 +87,19 @@ if (form) {
     finally { busy = false; submit.disabled = false; submit.textContent = 'Отправить заявку'; }
   });
 }
+
+// 3D-модель салона: Three.js и сама сцена грузятся только после нажатия.
+const sh = document.querySelector('[data-sh-root]');
+sh?.querySelector('[data-sh-start]')?.addEventListener('click', async event => {
+  const button = event.currentTarget, poster = sh.querySelector('[data-sh-poster]');
+  button.disabled = true; button.textContent = 'Загружаем модель…';
+  try {
+    const { startShowroom } = await import('../../shared/showroom3d.mjs');
+    sh.querySelector('[data-sh="stage"]').hidden = false; sh.querySelector('[data-sh-ui]').hidden = false;
+    const started = startShowroom(sh);
+    if (started) poster.hidden = true; else { sh.querySelector('[data-sh="stage"]').hidden = true; sh.querySelector('[data-sh-ui]').hidden = true; poster.hidden = true; }
+  } catch (error) {
+    console.warn('3D-модель салона не загрузилась:', error);
+    button.disabled = false; button.textContent = 'Не удалось загрузить. Повторить';
+  }
+});

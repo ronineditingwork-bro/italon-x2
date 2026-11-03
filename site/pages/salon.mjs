@@ -48,6 +48,32 @@ ${salon.hours.map(([d, t], i) => `<div data-days="${days[i]?.[1] || ''}"><dt>${e
 </section>`;
 }
 
+function showroom3d() {
+  return `<section class="section salon-3d" aria-labelledby="sh3d-title">
+<div class="wrap">
+<div class="section-head"><div class="section-head__text"><p class="eyebrow" data-reveal>Салон в 3D</p><h2 class="t-h2" id="sh3d-title" data-reveal>Посмотрите, как устроен салон</h2>
+<p class="t-body" data-reveal>Схематичная модель по планировке салона: зоны, экспозиция, рабочие места. Это упрощённая иллюстрация, а не точная копия интерьера; сотрудники и покупатели в ней показаны условно.</p></div></div>
+<dl class="salon-3d__facts" data-reveal-group>
+<div data-reveal><dt>С 2018 года</dt><dd>работаем с плиткой и сантехникой</dd></div>
+<div data-reveal><dt>более 200 000 м²</dt><dd>проданной плитки</dd></div>
+<div data-reveal><dt>более 3 500</dt><dd>довольных клиентов</dd></div>
+</dl>
+<p class="t-small salon-3d__partner" data-reveal>Официальный партнёр и шоурум премиального керамогранита Italon.</p>
+<div class="sh3d" data-sh-root data-reveal>
+<div class="sh3d__box">
+<canvas data-sh="stage" tabindex="0" hidden aria-label="Интерактивная 3D-модель салона по планировке: камера облетает салон, внутри работают сотрудники и ходят покупатели. Тяните, чтобы вращать, колесо мыши приближает."></canvas>
+<p class="sh3d__err" data-sh="err" role="alert" hidden>Браузер не поддерживает WebGL, поэтому 3D-модель не запустилась. Салон можно посмотреть на фото и на карте выше.</p>
+<div class="sh3d__poster" data-sh-poster><button type="button" class="btn" data-sh-start>Запустить 3D-модель</button><small>Загрузится только по нажатию</small></div>
+<div class="sh3d__ui" data-sh-ui hidden>
+<div class="sh3d__event" aria-live="polite"><small data-sh="clock">Сейчас в салоне</small><p data-sh="evt">Покупатель заходит через стеклянные двери</p><div class="sh3d__track"><div data-sh="bar"></div></div></div>
+<div class="sh3d__ctrl"><span class="sh3d__hint">Тяните — вращать · колесо — приблизить</span><button type="button" data-sh="labels" aria-pressed="true">Подписи зон</button><button type="button" data-sh="play">Пауза</button></div>
+</div>
+</div>
+</div>
+</div>
+</section>`;
+}
+
 function booking(ctx) {
   const subject = encodeURIComponent('Запись в салон Italon Experience');
   return `<section class="section section--alt salon-book" id="book" aria-labelledby="book-title">
@@ -114,6 +140,7 @@ export default {
   render: ctx => `${pageHead(ctx, { crumbs: [['Салон']], eyebrow: 'Салон Italon Experience', title: 'Салон в Краснодаре',
     lead: 'Увидеть, прикоснуться, выбрать. Монобрендовый салон Italon: коллекции показаны готовыми интерьерными решениями. Приходите сравнить поверхности и отделки вживую.' })}
 ${visit(ctx)}
+${showroom3d()}
 ${booking(ctx)}
 ${before(ctx)}`,
 };
