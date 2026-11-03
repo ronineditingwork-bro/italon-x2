@@ -51,7 +51,7 @@ test('sitemap.xml: только публичные индексируемые с
   assert.equal(new Set(urls).size, urls.length, 'повторы адресов');
   const expected = pages.filter(p => !p.is404 && !p.noindex).map(p => 'https://italon-x2.ru' + p.path).sort();
   assert.deepEqual(urls, expected);
-  assert.equal(urls.length, 1288);       // + /outdoor/ и /privacy/ 
+  assert.equal(urls.length, 1289);       // + /outdoor/, /privacy/ и /consent/ 
   for (const url of urls) {
     assert.match(url, /^https:\/\/italon-x2\.ru\/([a-z0-9-]+\/)*$/, url);
     assert.doesNotMatch(url, /\/404\.html|\/api\/|\?|yandex_|\.json/, url);
@@ -89,4 +89,17 @@ test('слой движения: хуки на четырёх страницах
   const home = await readFile(fileFor('/'), 'utf8');
   if (process.env.SITE_PREVIEW !== '1') assert.doesNotMatch(home, /data-preview/, 'панель сравнения не должна попадать в рабочую сборку');
   for (const path of ['/catalog/', '/lab/', '/outdoor/', '/product/610010004077/']) assert.doesNotMatch(await readFile(fileFor(path), 'utf8'), /data-motion-/, `${path} не должна получать эффекты`);
+});
+
+test('персональные данные: политика, отдельные согласия, отметки в формах, пояснение о предварительных ценах', async () => {
+  const privacy = await readFile(fileFor('/privacy/'), 'utf8'), consent = await readFile(fileFor('/consent/'), 'utf8');
+  assert.match(privacy, /АМАНА ГРУПП/); assert.match(privacy, /2308297407/); assert.match(privacy, /Telegram/);
+  for (const id of ['quote', 'salon', 'outdoor']) assert.match(consent, new RegExp(`id="${id}"`), `согласие ${id}`);
+  const salon = await readFile(fileFor('/salon/'), 'utf8');
+  assert.match(salon, /id="sf-consent"[^>]*required/); assert.match(salon, /consent\/#salon/);
+  const home = await readFile(fileFor('/'), 'utf8');
+  assert.match(home, /id="quote-consent"[^>]*required/); assert.match(home, /consent\/#quote/); assert.match(home, /Цены и КП — предварительный расчёт/);
+  assert.match(await readFile(fileFor('/product/610010004077/'), 'utf8'), /носят справочный характер/);
+  const { CONSENT_VERSION, PRICE_NOTICE } = await import('../src/legal.mjs');
+  assert.match(consent, new RegExp(CONSENT_VERSION)); assert.match(PRICE_NOTICE.pdf, /не является подтверждением заказа/);
 });

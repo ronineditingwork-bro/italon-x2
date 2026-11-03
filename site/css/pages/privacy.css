@@ -2,3 +2,9 @@
 .pp__sec h2 { margin: 0 0 .5rem; font-size: var(--fs-h4); }
 .pp__sec p, .pp__sec li { color: var(--text); line-height: 1.6; }
 .pp__sec ul { margin: .4rem 0 0; padding-left: 1.2rem; display: grid; gap: .45rem; }
+.pp__h3 { margin: 1rem 0 .3rem; font-size: var(--fs-m); font-weight: 500; }
+.pp__doc { padding-top: var(--s-5); border-top: 1px solid var(--line); scroll-margin-top: calc(var(--header-h) + 1rem); }
+.pp__dl { display: grid; gap: .35rem; margin: .8rem 0; }
+.pp__dl dt { font-weight: 500; margin-top: .6rem; }
+.pp__dl dd { margin: 0; color: var(--text); line-height: 1.6; }
+.pp__dl ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .3rem; }

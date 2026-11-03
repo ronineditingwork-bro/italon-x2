@@ -1,6 +1,7 @@
 import { PDFDocument, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import { quoteDiscount } from './discount.mjs';
+import { PRICE_NOTICE } from './legal.mjs';
 
 const W=595.28,H=841.89,M=36,R=W-M;
 // Реквизиты салона (те же, что на странице «Салон»).
@@ -81,7 +82,7 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   if(details.customer?.trim()){paragraph(`ФИО: ${details.customer.trim().slice(0,100)}`,10);y-=5;}
   if(details.address?.trim()){paragraph(`Адрес объекта: ${details.address.trim().slice(0,200)}`,10);y-=5;}
   if(details.project?.trim()){paragraph(`Объект: ${details.project.trim().slice(0,150)}`,10);y-=5;}
-  paragraph('Цены с НДС. Прайс от 01.07.2026, склад Краснодар.',9,colors.muted,13);y-=19;
+  paragraph('Предварительный расчёт. Цены с НДС. Прайс от 01.07.2026, склад Краснодар.',9,colors.muted,13);y-=19;
   tableHeader();
   for(let index=0;index<cart.lines.length;index++){
     const l=cart.lines[index],p=l.product;
@@ -116,7 +117,7 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   right(totalText,R-14,y-49,totalSize);y-=92;
   if(disc.percent){paragraph(`Скидка: ${disc.parts.map(r=>`${r.label} ${r.percent}%`).join(', ')}.`,9,colors.muted,13);y-=6;}
   paragraph('Условия предложения',10,colors.ink,17);
-  paragraph('Количество рассчитано с учётом целых упаковок и минимального заказа (одна коробка). Наличие, тон, калибр и сроки поставки уточняются при подтверждении заказа. Доставка рассчитывается отдельно.',8.7,colors.muted,13);
+  paragraph(PRICE_NOTICE.pdf,8.7,colors.muted,13);
   y-=15;paragraph('Салон',10,colors.ink,17);
   paragraph(`${SALON.name}, ${SALON.city}, ${SALON.address}`,9,colors.ink,14);
   paragraph(`${SALON.hours}`,9,colors.muted,14);

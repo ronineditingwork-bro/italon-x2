@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { handleApi } from '../worker/api.mjs';
+import { CONSENT_VERSION } from '../src/legal.mjs';
 
 const ORIGIN = 'https://italon-x2.ru', JPEG = new Uint8Array([0xff, 0xd8, 0xff, 0xe0, 1, 2, 3, 4]);
 const env = () => { const calls = []; return { calls, TELEGRAM_BOT_TOKEN: 'T', TELEGRAM_CHAT_ID: '1,2', fetch: async (url, init) => { calls.push({ url: String(url), body: init.body }); return new Response('{"ok":true}'); } }; };
 const send = (e, fields = {}, { image = JPEG, origin = ORIGIN } = {}) => {
-  const f = new FormData(); for (const [k, v] of Object.entries({ contact: '+7 918 000-11-22', consent: '1', spec: 'Терраса: 20 м²', ...fields })) if (v !== undefined) f.set(k, v);
+  const f = new FormData(); for (const [k, v] of Object.entries({ contact: '+7 918 000-11-22', consent: '1', consentVersion: CONSENT_VERSION, spec: 'Терраса: 20 м²', ...fields })) if (v !== undefined) f.set(k, v);
   if (image) f.set('image', new Blob([image], { type: 'image/jpeg' }), 'x.jpg');
   return handleApi(new Request(ORIGIN + '/api/outdoor/send', { method: 'POST', headers: origin ? { Origin: origin } : {}, body: f }), e);
 };
@@ -22,6 +23,7 @@ test('контакт: телефон или @telegram; мусор и пусто�
 });
 test('нужны согласие, свой Origin и настоящий JPEG', async () => {
   assert.equal((await send(env(), { consent: undefined, contact: '+7 918 000-11-23' })).status, 400);
+  assert.equal((await send(env(), { consentVersion: 'старая', contact: '+7 918 000-11-29' })).status, 400, 'устаревшая версия текста согласия');
   assert.equal((await send(env(), { contact: '+7 918 000-11-24' }, { origin: 'https://evil.example' })).status, 403);
   assert.equal((await send(env(), { contact: '+7 918 000-11-25' }, { image: new Uint8Array([1, 2, 3, 4]) })).status, 400);
 });

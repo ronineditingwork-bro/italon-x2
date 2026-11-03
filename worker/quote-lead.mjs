@@ -1,5 +1,6 @@
 import { calculateCart } from '../src/catalog.mjs';
 import { quoteDiscount } from '../src/discount.mjs';
+import { consentLine } from './consent.mjs';
 
 const rub = kopecks => (kopecks / 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' ₽';
 const clean = (value, max) => String(value ?? '').replace(/[\u0000-\u001f\u007f]+/g, ' ').trim().slice(0, max);
@@ -22,6 +23,7 @@ const qty = n => n.toLocaleString('ru-RU', { maximumFractionDigits: 3 }).replace
  * Позиции и суммы берутся из корзины на сервере, а не от браузера.
  */
 export function leadText(lead, cart) {
+  const consent = lead.consentAt ? consentLine(lead.consentAt) : null;
   const discount = quoteDiscount(lead, cart.totalKopecks);
   const missing = [];
   if (!lead.customer) missing.push('ФИО / название объекта');
@@ -47,6 +49,7 @@ export function leadText(lead, cart) {
     '<b>Артикулы (количество):</b>', ...lines,
     '',
     `Для контроля: сумма с НДС ${esc(rub(cart.totalKopecks))}, к оплате со скидкой ${esc(rub(discount.payableKopecks))}.`,
+    consent && esc(consent),
     'PDF коммерческого предложения — следующим сообщением.',
   ].filter(x => x !== false && x !== undefined && x !== 0).join('\n').slice(0, 4000);
 }

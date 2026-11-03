@@ -4,6 +4,7 @@
 // цена и минимальный заказ, «В корзину», расчёт количества, консультация, характеристики, связанные позиции.
 import { esc, priceHtml, productCard, titleRu, collectionUrl, ARROW, lineOf } from '../shared/format.mjs';
 import { breadcrumbs } from '../shared/blocks.mjs';
+import { PRICE_NOTICE } from '../../src/legal.mjs';
 import { productSpecs, specsHtml, surfaceLabel, minimumNote, consultSubject, consultBody, formatLabel, variantsCount } from '../shared/product-view.mjs';
 import { products, collections, salon, finishVariantsOf as variantsOf, finishVariantKey as variantKey, categoryOf, categories, priceNote } from '../data.mjs';
 
@@ -112,9 +113,10 @@ ${variantsBlock}
 <div class="pdp__buy" data-pdp-buy>
 <p class="pdp__price" data-v="price">${d.price}</p>
 <p class="pdp__fine">${esc(priceNote)}</p>
+<p class="pdp__fine">${esc(PRICE_NOTICE.site)}</p>
 <ul class="pdp__facts" role="list">
 <li data-v="minimum">${esc(d.minimum)}</li>
-<li>Наличие и сроки уточняются</li>
+<li>Наличие, тон и сроки подтверждаются в салоне</li>
 </ul>
 <div class="pdp__actions">${buyButton('pdp__add')}</div>
 </div>
@@ -133,7 +135,7 @@ ${variantsBlock}
 <section class="section pdp-specs" aria-labelledby="specs-title">
 <div class="wrap grid">
 <div class="pdp-specs__head" data-reveal><h2 class="t-h2" id="specs-title">Характеристики и&nbsp;размеры</h2>
-<p class="t-small">По прайсу от 01.07.2026. Тон и калибр партии уточняются при заказе.</p></div>
+<p class="t-small">По прайсу от 01.07.2026. Тон и калибр партии, наличие и итоговая стоимость подтверждаются в салоне.</p></div>
 <div class="pdp-specs__col" data-reveal><h3 class="pdp-specs__title">${c ? 'Плитка' : 'Позиция'}</h3><dl class="specs" data-v="tile">${d.tile}</dl></div>
 <div class="pdp-specs__col" data-reveal data-reveal-delay="70"><h3 class="pdp-specs__title">Упаковка и заказ</h3><dl class="specs" data-v="pack">${d.pack}</dl></div>
 </div>

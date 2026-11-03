@@ -1,5 +1,6 @@
 // Салон: карта Яндекса по нажатию (до этого — запасная карточка), «сегодня» в часах работы
 // (время Краснодара, Europe/Moscow), демонстрационная форма записи → готовое письмо (mailto:), без отправки на сервер.
+import { CONSENT_VERSION } from '../../../src/legal.mjs';
 const map = document.querySelector('[data-map]');
 const load = map?.querySelector('[data-map-load]');
 if (map && load) {
@@ -68,7 +69,7 @@ if (form) {
     if (!fields.consent.checked) return fail('Нужно согласие на передачу контактных данных для записи.', fields.consent);
     const body = {
       name, phone, date: fields.date.value, comment: fields.comment.value.trim(),
-      consent: true, website: form.elements.namedItem('website')?.value || '',
+      consent: true, consentVersion: CONSENT_VERSION, website: form.elements.namedItem('website')?.value || '',
     };
     busy = true; submit.disabled = true; submit.textContent = 'Отправляем…';
     try {

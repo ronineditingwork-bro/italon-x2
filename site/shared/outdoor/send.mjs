@@ -1,5 +1,6 @@
 // X2 Outdoor Lab: «Отправить менеджеру в Telegram». Без регистрации: контакт, согласие, картинка и спецификация уходят одним запросом в бот салона (POST api/outdoor/send).
 import { esc } from '../format.mjs';
+import { CONSENT_VERSION, PURPOSES } from '../../../src/legal.mjs';
 
 export function initSend(app, root, cfg) {
   const S = app.state, base = new URL(cfg.root || './', location.href);
@@ -14,7 +15,7 @@ export function initSend(app, root, cfg) {
 <label class="ol-field" for="sd-name"><span>Как к вам обращаться (необязательно)</span><input class="ol-in" id="sd-name" data-f="name" maxlength="80" autocomplete="name" value="${esc(F.name)}"></label>
 <label class="ol-field" for="sd-contact"><span>Телефон или Telegram</span><input class="ol-in" id="sd-contact" data-f="contact" maxlength="60" autocomplete="tel" placeholder="+7 900 000-00-00 или @name" value="${esc(F.contact)}"></label>
 <label class="ol-field" for="sd-note"><span>Комментарий (необязательно)</span><textarea class="ol-in" id="sd-note" data-f="note" rows="3" maxlength="500">${esc(F.note)}</textarea></label>
-<label class="ol-check"><input type="checkbox" data-f="consent" ${F.consent ? 'checked' : ''}><span>Согласен(на) передать контакт, картинку и спецификацию менеджеру Italon X2 для связи по расчёту. <a href="${esc(new URL('privacy/', base).href)}" target="_blank" rel="noopener">Как мы обращаемся с данными</a></span></label>
+<label class="ol-check"><input type="checkbox" data-f="consent" ${F.consent ? 'checked' : ''}><span>${esc(PURPOSES.outdoor.short)} <a href="${esc(new URL('consent/', base).href)}#outdoor" target="_blank" rel="noopener">Текст согласия</a> · <a href="${esc(new URL('privacy/', base).href)}" target="_blank" rel="noopener">Политика обработки данных</a></span></label>
 ${V.error ? `<p class="ol-perr" role="alert">${esc(V.error)}</p>` : ''}
 <div class="ol-row"><button type="submit" class="ol-btn ol-btn--solid" ${V.busy ? 'disabled' : ''}>${V.busy ? 'Отправляем…' : 'Отправить в Telegram'}</button><button type="button" class="ol-btn ol-btn--line" data-dialog-close>Отмена</button></div></form>`;
     dlg.innerHTML = `<div class="ol-dialog__head"><h2 id="ol-sd-title">Отправить проект менеджеру</h2><button type="button" class="ol-tool ol-tool--icon" data-dialog-close aria-label="Закрыть">×</button></div>${body}`;
@@ -29,7 +30,7 @@ ${V.error ? `<p class="ol-perr" role="alert">${esc(V.error)}</p>` : ''}
       const image = await jpeg();
       if (!image) throw new Error('Не удалось подготовить изображение проекта. Повторите попытку.');
       const form = new FormData();
-      form.set('contact', F.contact.trim()); form.set('name', F.name.trim()); form.set('note', F.note.trim()); form.set('consent', '1'); form.set('kind', plot() ? 'plot' : 'scene'); form.set('spec', app.specText());
+      form.set('contact', F.contact.trim()); form.set('name', F.name.trim()); form.set('note', F.note.trim()); form.set('consent', '1'); form.set('consentVersion', CONSENT_VERSION); form.set('kind', plot() ? 'plot' : 'scene'); form.set('spec', app.specText());
       form.set('image', image, 'italon-x2-outdoor.jpg');
       const r = await fetch(new URL('api/outdoor/send', base).href, { method: 'POST', body: form, credentials: 'same-origin' }), j = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(j.error || 'Не удалось отправить. Повторите позже.');

@@ -16,6 +16,7 @@
     "picker:features": "node scripts/build-site.mjs --quiet && node scripts/build-picker-features.cjs",
     "test:outdoor": "node tests/outdoor-e2e.cjs",
     "test:motion": "node tests/motion-e2e.cjs",
+    "test:legal": "node tests/legal-e2e.cjs",
     "test:salon": "node --test tests/salon-book.test.mjs"
   },
   "engines": {

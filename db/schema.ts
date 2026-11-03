@@ -19,6 +19,16 @@ export const quotes = sqliteTable('quotes', {
   telegramOk: integer('telegram_ok').notNull().default(0),
 });
 
+// Подтверждения согласия на обработку ПДн (drizzle/0003_consents.sql, worker/consent.mjs)
+export const consents = sqliteTable('consents', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  createdAt: integer('created_at').notNull(),
+  purpose: text('purpose').notNull(),
+  consentVersion: text('consent_version').notNull(),
+  policyVersion: text('policy_version').notNull(),
+  contactHash: text('contact_hash').notNull(),
+});
+
 // X2 Outdoor Lab: проекты посетителей (см. drizzle/0002_projects.sql и worker/projects.mjs)
 export const outdoorProjects = sqliteTable('outdoor_projects', {
   id: text('id').primaryKey(),

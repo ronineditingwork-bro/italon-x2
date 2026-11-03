@@ -2,6 +2,7 @@ import { products, priceInfo, sections, calculateCart } from '../src/catalog.mjs
 import { cartStore } from './cart-store.mjs';
 import { normalizePhone, leadText, sendTelegram, clean } from './quote-lead.mjs';
 import { handleOutdoorSend } from './outdoor-send.mjs';
+import { hasConsent, recordConsent, CONSENT_ERROR } from './consent.mjs';
 import { handleSalonBook } from './salon-book.mjs';
 const json = (body, status = 200, headers = {}) => new Response(JSON.stringify(body), {
   status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex', ...headers },
@@ -70,6 +71,7 @@ async function handleQuote(request, env, url) {
   try { form = await request.formData(); } catch { return json({ error: 'Некорректный запрос.' }, 400); }
   const phone = normalizePhone(form.get('phone'));
   if (!phone) return json({ error: 'Укажите телефон для связи.' }, 400);
+  if (!hasConsent(form.get('consent'), form.get('consentVersion'))) return json({ error: CONSENT_ERROR }, 400);
   if (now - (rateLimit.get(id) || 0) < 5000) return json({ error: 'Подождите несколько секунд и повторите.' }, 429);
   rateLimit.set(id, now);
   if (rateLimit.size > 5000) for (const [k, t] of rateLimit) if (now - t > 60000) rateLimit.delete(k);
@@ -84,7 +86,8 @@ async function handleQuote(request, env, url) {
     const cart = calculateCart(JSON.parse(row?.items || '[]'));
     if (!cart.lines.length) return json({ error: 'Корзина пуста.' }, 400);
     console.log('quote_received', 'pdf_bytes=' + (pdf ? pdf.length : 0));
-    const lead = { createdAt: now, phone, customer: clean(form.get('customer'), 100), project: clean(form.get('project'), 150), address: clean(form.get('address'), 200), note: clean(form.get('note'), 500) };
+    await recordConsent(env, 'quote', phone, now);                 // без подтверждения согласия заявка дальше не идёт
+    const lead = { createdAt: now, consentAt: now, phone, customer: clean(form.get('customer'), 100), project: clean(form.get('project'), 150), address: clean(form.get('address'), 200), note: clean(form.get('note'), 500) };
     const items = JSON.stringify(cart.lines.map(({ code, packs, totalKopecks }) => ({ code, packs, totalKopecks })));
     const saved = await env.DB.prepare('INSERT INTO quotes (created_at, customer, phone, project, note, items, total_kopecks) VALUES (?, ?, ?, ?, ?, ?, ?)')
       .bind(now, lead.customer, phone, lead.project, lead.note, items, cart.totalKopecks).run();

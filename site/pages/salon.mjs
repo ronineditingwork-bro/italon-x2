@@ -5,6 +5,7 @@
 import { esc, fmt, ARROW } from '../shared/format.mjs';
 import { pageHead } from '../shared/blocks.mjs';
 import { salon, stats, collections } from '../data.mjs';
+import { PURPOSES } from '../../src/legal.mjs';
 
 const ext = 'target="_blank" rel="noopener noreferrer"';
 const PIN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-6.1-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.8" r="2.3"/></svg>';
@@ -69,7 +70,7 @@ function booking(ctx) {
 </div>
 <label class="field"><span class="field__label">Когда удобно прийти <small>необязательно</small></span><input class="input" name="date" id="sf-date" type="date"></label>
 <label class="field"><span class="field__label">Что хотите посмотреть <small>необязательно</small></span><textarea class="textarea" name="comment" id="sf-comment" maxlength="600" rows="3" placeholder="Например: Шарм делюкс, формат 80 × 160"></textarea></label>
-<label class="salon-form__consent"><input type="checkbox" name="consent" id="sf-consent" required><span>Согласен(на) на передачу имени, телефона и комментария менеджеру для организации визита. <a href="${ctx.url('/privacy/')}">Обработка персональных данных</a>.</span></label>
+<label class="salon-form__consent"><input type="checkbox" name="consent" id="sf-consent" required><span>${esc(PURPOSES.salon.short)} <a href="${ctx.url('/consent/')}#salon" target="_blank" rel="noopener">Текст согласия</a> · <a href="${ctx.url('/privacy/')}" target="_blank" rel="noopener">Политика обработки данных</a></span></label>
 <div class="salon-form__trap" aria-hidden="true"><label>Сайт <input name="website" tabindex="-1" autocomplete="off"></label></div>
 <p class="form-error" id="sf-error" role="alert" hidden></p>
 <p class="salon-form__success" id="sf-success" role="status" hidden></p>

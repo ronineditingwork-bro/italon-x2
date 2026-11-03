@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { handleApi } from '../worker/api.mjs';
+import { CONSENT_VERSION } from '../src/legal.mjs';
 
 const URL = 'https://italon-x2.ru/api/salon/book';
 const makeEnv = () => {
@@ -19,7 +20,7 @@ const submit = (env, changes = {}, origin = 'https://italon-x2.ru') =>
     method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       name: 'Александр', phone: '+7 918 000-09-91',
-      date: '2030-04-17', comment: 'Плитка для террасы', consent: true, ...changes,
+      date: '2030-04-17', comment: 'Плитка для террасы', consent: true, consentVersion: CONSENT_VERSION, ...changes,
     }),
   }), env);
 
@@ -40,6 +41,7 @@ test('валидируется телефон, имя, согласие, дат�
   assert.equal((await submit(env, { phone: '123' })).status, 400);
   assert.equal((await submit(env, { name: ' ' })).status, 400);
   assert.equal((await submit(env, { consent: false })).status, 400);
+  assert.equal((await submit(env, { consentVersion: 'old' })).status, 400);
   assert.equal((await submit(env, { date: '2030-02-30' })).status, 400);
   assert.equal((await submit(env, {}, 'https://evil.example')).status, 403);
   assert.equal((await submit(env, { website: 'https://spam.invalid' })).status, 400);

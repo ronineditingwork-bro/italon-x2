@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { localDatabase } from '../scripts/sqlite-adapter.mjs';
 import { handleApi } from '../worker/api.mjs';
 import { normalizePhone } from '../worker/quote-lead.mjs';
+import { CONSENT_VERSION } from '../src/legal.mjs';
 
 test('normalizePhone', () => {
   assert.equal(normalizePhone('8 (918) 24-89-248'), '+79182489248');
@@ -20,20 +21,25 @@ test('/api/quote saves the lead and sends it to Telegram', async () => {
   const env = { DB, TELEGRAM_BOT_TOKEN: 'T', TELEGRAM_CHAT_ID: '42, -100500', TELEGRAM_API_BASE: 'https://relay.example/', fetch: async (url, init) => { calls.push({ url, init }); return new Response('{}', { status: 200 }); } };
   const post = fields => {
     const form = new FormData();
-    for (const [k, v] of Object.entries(fields)) form.set(k, v);
+    for (const [k, v] of Object.entries({ consent: '1', consentVersion: CONSENT_VERSION, ...fields })) if (v !== undefined) form.set(k, v);
     return handleApi(new Request('http://localhost/api/quote', { method: 'POST', body: form,
       headers: { Origin: 'http://localhost', Cookie: 'italon_cart_preview=' + token } }), env);
   };
   try {
     assert.equal((await post({ phone: '123' })).status, 400);
+    for (const bad of [{ consent: undefined }, { consentVersion: 'old' }, { consent: '0' }]) assert.equal((await post({ phone: '8 918 248 92 48', ...bad })).status, 400, 'без текущего согласия КП не принимается: ' + JSON.stringify(bad));
+    assert.equal((await DB.prepare('SELECT COUNT(*) AS n FROM quotes').first()).n, 0, 'без согласия ничего не сохраняется');
     const pdf = new Blob(['%PDF-1.7 test'], { type: 'application/pdf' });
     const ok = await post({ phone: '8 918 248 92 48', customer: 'Иванов Иван Иванович', address: 'Краснодар, ул. Красная, 1', pdf });
     assert.equal(ok.status, 200);
     assert.deepEqual(await ok.json(), { ok: true, sent: true, saved: true });
+    const rec = await DB.prepare('SELECT * FROM consents').first();
+    assert.equal(rec.purpose, 'quote'); assert.equal(rec.consent_version, CONSENT_VERSION); assert.match(rec.contact_hash, /^[0-9a-f]{64}$/); assert.ok(!JSON.stringify(rec).includes('9182489248'), 'телефон в записи согласия не хранится');
     assert.match(calls[0].url, /^https:\/\/relay\.example\/botT\/sendMessage/);
     const message = JSON.parse(calls[0].init.body);
     assert.equal(message.parse_mode, 'HTML');
     assert.match(message.text, /Для DAS/);
+    assert.match(message.text, /Согласие на обработку ПДн: получено/);
     assert.match(message.text, /Скидка для конечного покупателя: <b>2%<\/b>/);
     assert.match(message.text, /<code>Иванов Иван Иванович<\/code>/);
     assert.match(message.text, /<code>620110000263<\/code> — /);

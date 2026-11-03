@@ -1,6 +1,7 @@
 // Реальная заявка на визит в салон через Telegram. Без почтового клиента и без регистрации.
 // Время посещения согласовывается менеджером; API НЕ бронирует конкретный слот.
 import { normalizePhone, sendTelegram, clean } from './quote-lead.mjs';
+import { hasConsent, recordConsent, consentLine, CONSENT_ERROR } from './consent.mjs';
 
 const recent = new Map();
 const reply = (body, status = 200) => new Response(JSON.stringify(body), {
@@ -21,13 +22,14 @@ export async function handleSalonBook(request, env, url = new URL(request.url)) 
   const name = clean(body.name, 80), phone = normalizePhone(body.phone), comment = clean(body.comment, 600);
   const date = typeof body.date === 'string' ? body.date.trim() : '';
   if (name.length < 2 || !phone) return reply({ error: 'Укажите имя и корректный номер телефона.' }, 400);
-  if (body.consent !== true) return reply({ error: 'Нужно согласие на обработку данных для записи в салон.' }, 400);
+  if (!hasConsent(body.consent, body.consentVersion)) return reply({ error: CONSENT_ERROR }, 400);
   if (date && (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isFinite(Date.parse(date + 'T00:00:00Z')) || new Date(date + 'T00:00:00Z').toISOString().slice(0, 10) !== date))
     return reply({ error: 'Проверьте дату визита.' }, 400);
   const now = Date.now(), key = phone;
   if (now - (recent.get(key) || 0) < 60_000) return reply({ error: 'Заявка уже отправлялась. Подождите минуту.' }, 429);
   if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return reply({ error: 'Запись сейчас недоступна. Позвоните в салон: +7 918 24 89 248.' }, 503);
   recent.set(key, now);
+  try { await recordConsent(env, 'salon', phone, now); } catch (error) { recent.delete(key); console.error('consent_record_error', error.message); return reply({ error: 'Не удалось сохранить заявку. Позвоните в салон: +7 918 24 89 248.' }, 503); }
   if (recent.size > 1000) for (const [k, t] of recent) if (now - t > 120_000) recent.delete(k);
   const lines = [
     '📍 <b>Заявка на визит в салон Italon Experience</b>',
@@ -37,6 +39,7 @@ export async function handleSalonBook(request, env, url = new URL(request.url)) 
     'Что хочет посмотреть: ' + (comment ? escapeHtml(comment) : 'не указано'),
     'Салон: Краснодар, ул. Бабушкина, 248',
     'Важно: дата и время ещё НЕ подтверждены. Связаться с клиентом.',
+    escapeHtml(consentLine(now)),
   ];
   try {
     const sent = await sendTelegram(env, lines.join('\n'), null, '', env.fetch);

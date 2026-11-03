@@ -12,6 +12,7 @@
 import { esc, money, number, fmt, titleRu, lower, packLabel, minimumLabel, lineOf, productImage, productUrl, collectionUrl, priceHtml, normalize } from '../shared/format.mjs';
 import { createPricing, MAX_PACKS } from '../../src/pricing.mjs';
 import { quoteDiscount, nextTier } from '../../src/discount.mjs';
+import { CONSENT_VERSION } from '../../src/legal.mjs';
 import { $, $$, ROOT, rootRel, openDialog, closeDialog, toast } from './ui.mjs';
 
 const html = document.documentElement;
@@ -306,6 +307,7 @@ function renderDiscount() {
 
 async function sendLead(quote, phone) {
   const form = new FormData();
+  form.set('consent', '1'); form.set('consentVersion', CONSENT_VERSION);
   form.set('phone', phone); form.set('customer', $('#quote-customer').value); form.set('project', $('#quote-project').value);
   form.set('address', $('#quote-address').value);
   form.set('note', $('#quote-note').value); form.set('filename', quote.filename);
@@ -320,6 +322,7 @@ async function exportQuote(event) {
   const button = $('#quote-download');
   const phoneInput = $('#quote-phone');
   if (phoneInput.value.replace(/\D/g, '').length < 10) { phoneInput.focus(); showError('Укажите телефон для связи: не меньше 10 цифр.'); return; }
+  if (mode !== 'local' && !$('#quote-consent')?.checked) { $('#quote-consent')?.focus(); showError('Отметьте согласие на обработку персональных данных: без него предложение не формируется и не передаётся менеджеру.'); return; }
   hideError();
   exporting = true; setExportState(); button.textContent = 'Готовим PDF…';
   try {
