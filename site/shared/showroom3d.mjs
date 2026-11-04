@@ -607,10 +607,11 @@ const ro=new ResizeObserver(fit);ro.observe(canvas.parentElement);fit();
 const fmt=n=>Math.round(n).toLocaleString('ru-RU').replace(/\s/g,' ');
 const evtEl=$('evt'),bar=$('bar'),clockEl=$('clock');
 let curEvt=0;function setEvent(i){if(i===curEvt)return;curEvt=i;evtEl.classList.add('fade');setTimeout(()=>{evtEl.textContent=ev[i][1];evtEl.classList.remove('fade');},300);}
-const reduce0=window.matchMedia('(prefers-reduced-motion: reduce)').matches;let playing=!reduce0;const playBtn=$('play');if(reduce0)playBtn.textContent='Продолжить';
-playBtn.addEventListener('click',()=>{playing=!playing;playBtn.textContent=playing?'Пауза':'Продолжить';});
-const lblBtn=$('labels');
-lblBtn.addEventListener('click',()=>{const on=lblBtn.getAttribute('aria-pressed')!=='true';lblBtn.setAttribute('aria-pressed',on);labels.forEach(l=>l.visible=on);});
+const ac=new AbortController(),signal=ac.signal;let disposed=false;
+const reduce0=window.matchMedia('(prefers-reduced-motion: reduce)').matches;let playing=!reduce0;const playBtn=$('play');playBtn.textContent=playing?'Пауза':'Продолжить';
+playBtn.addEventListener('click',()=>{playing=!playing;playBtn.textContent=playing?'Пауза':'Продолжить';},{signal});
+const lblBtn=$('labels');lblBtn.setAttribute('aria-pressed','true');
+lblBtn.addEventListener('click',()=>{const on=lblBtn.getAttribute('aria-pressed')!=='true';lblBtn.setAttribute('aria-pressed',on);labels.forEach(l=>l.visible=on);},{signal});
 
 /* ---------- loop ---------- */
 const clock=new THREE.Clock();let sim=0,g=0;
@@ -625,6 +626,7 @@ const showPanel=expoPanels[5];showPanel.userData.bx=showPanel.position.x;
 
 let raf=0,visible=true;
 function frame(){
+  if(disposed)return;
   const rdt=Math.min(clock.getDelta(),0.05),dt=playing?rdt:0;sim+=dt;g+=dt;const t=sim%T;
   if(playing&&!interacting&&performance.now()-lastInput>3000){tmpV.copy(camera.position).sub(controls.target).applyAxisAngle(yAxis,orbitSpeed*rdt);camera.position.copy(controls.target).add(tmpV);}
   controls.update();
@@ -666,8 +668,8 @@ function frame(){
   renderer.render(scene,camera);raf=visible?requestAnimationFrame(frame):0;
 }
 evtEl.textContent=ev[0][1];
-const io=new IntersectionObserver(es=>{visible=es[0].isIntersecting&&!document.hidden;if(visible&&!raf){clock.getDelta();raf=requestAnimationFrame(frame);}},{threshold:0.05});io.observe(canvas.parentElement);
-document.addEventListener('visibilitychange',()=>{if(document.hidden)visible=false;else if(!raf){visible=true;clock.getDelta();raf=requestAnimationFrame(frame);}});
+const io=new IntersectionObserver(es=>{visible=es[0].isIntersecting&&!document.hidden;if(visible&&!raf&&!disposed){clock.getDelta();raf=requestAnimationFrame(frame);}},{threshold:0.05});io.observe(canvas.parentElement);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)visible=false;else if(!raf&&!disposed){visible=true;clock.getDelta();raf=requestAnimationFrame(frame);}},{signal});
 frame();
-return{dispose(){visible=false;io.disconnect();ro.disconnect();controls.dispose();renderer.dispose();}};
+return{dispose(){if(disposed)return;disposed=true;visible=false;if(raf)cancelAnimationFrame(raf);raf=0;ac.abort();io.disconnect();ro.disconnect();controls.dispose();renderer.dispose();renderer.forceContextLoss&&renderer.forceContextLoss();}};
 }

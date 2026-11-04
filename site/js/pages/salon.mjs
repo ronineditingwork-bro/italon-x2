@@ -88,18 +88,39 @@ if (form) {
   });
 }
 
-// 3D-модель салона: Three.js и сама сцена грузятся только после нажатия.
-const sh = document.querySelector('[data-sh-root]');
-sh?.querySelector('[data-sh-start]')?.addEventListener('click', async event => {
-  const button = event.currentTarget, poster = sh.querySelector('[data-sh-poster]');
-  button.disabled = true; button.textContent = 'Загружаем модель…';
-  try {
-    const { startShowroom } = await import('../../shared/showroom3d.mjs');
-    sh.querySelector('[data-sh="stage"]').hidden = false; sh.querySelector('[data-sh-ui]').hidden = false;
-    const started = startShowroom(sh);
-    if (started) poster.hidden = true; else { sh.querySelector('[data-sh="stage"]').hidden = true; sh.querySelector('[data-sh-ui]').hidden = true; poster.hidden = true; }
-  } catch (error) {
-    console.warn('3D-модель салона не загрузилась:', error);
-    button.disabled = false; button.textContent = 'Не удалось загрузить. Повторить';
+// 3D-модель салона: по нажатию открывается на весь экран; Three.js и сама сцена грузятся только тогда, при выходе сцена освобождается.
+const sh = document.querySelector('[data-sh-root]'), enter = document.querySelector('[data-sh-start]');
+if (sh && enter) {
+  const box = sh.querySelector('[data-sh-box]'), loading = sh.querySelector('[data-sh="loading"]'), err = sh.querySelector('[data-sh="err"]');
+  const fs = sh.querySelector('[data-sh-fs]'), root = document.documentElement;
+  let scene = null, token = 0;
+  if (fs && root.requestFullscreen) {
+    fs.hidden = false;
+    fs.addEventListener('click', () => { (document.fullscreenElement ? document.exitFullscreen() : root.requestFullscreen()).catch(() => {}); });
+    document.addEventListener('fullscreenchange', () => { fs.textContent = document.fullscreenElement ? 'Свернуть' : 'Во весь экран'; });
   }
-});
+  enter.addEventListener('click', async () => {
+    const mine = ++token;
+    loading.hidden = false; err.hidden = true;
+    sh.showModal();
+    try {
+      const { startShowroom } = await import('../../shared/showroom3d.mjs');
+      if (mine !== token || !sh.open) return;                                 // успели выйти, пока грузилась сцена
+      const canvas = document.createElement('canvas'); canvas.setAttribute('data-sh', 'stage'); canvas.tabIndex = 0;
+      canvas.setAttribute('aria-label', 'Интерактивная 3D-модель салона по планировке: камера облетает салон, внутри работают сотрудники и ходят покупатели. Тяните, чтобы вращать, колесо мыши приближает.');
+      box.prepend(canvas);
+      scene = startShowroom(sh);
+      loading.hidden = true;
+      if (!scene) canvas.remove();                                            // WebGL недоступен: сообщение уже показано, выйти можно кнопкой
+    } catch (error) {
+      console.warn('3D-модель салона не загрузилась:', error);
+      loading.hidden = true; err.textContent = 'Не удалось загрузить 3D-модель. Проверьте соединение и попробуйте ещё раз.'; err.hidden = false;
+    }
+  });
+  sh.addEventListener('close', () => {
+    token++; scene?.dispose(); scene = null; box.querySelector('canvas')?.remove();
+    loading.hidden = false; err.hidden = true;
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    enter.focus({ preventScroll: true });
+  });
+}

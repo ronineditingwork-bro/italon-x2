@@ -48,7 +48,7 @@ ${salon.hours.map(([d, t], i) => `<div data-days="${days[i]?.[1] || ''}"><dt>${e
 </section>`;
 }
 
-function showroom3d() {
+function showroom3d(ctx) {
   return `<section class="section salon-3d" aria-labelledby="sh3d-title">
 <div class="wrap">
 <div class="section-head"><div class="section-head__text"><p class="eyebrow" data-reveal>Салон в 3D</p><h2 class="t-h2" id="sh3d-title" data-reveal>Посмотрите, как устроен салон</h2>
@@ -59,17 +59,21 @@ function showroom3d() {
 <div data-reveal><dt>более 3 500</dt><dd>довольных клиентов</dd></div>
 </dl>
 <p class="t-small salon-3d__partner" data-reveal>Официальный партнёр и шоурум премиального керамогранита Italon.</p>
-<div class="sh3d" data-sh-root data-reveal>
-<div class="sh3d__box">
-<canvas data-sh="stage" tabindex="0" hidden aria-label="Интерактивная 3D-модель салона по планировке: камера облетает салон, внутри работают сотрудники и ходят покупатели. Тяните, чтобы вращать, колесо мыши приближает."></canvas>
-<p class="sh3d__err" data-sh="err" role="alert" hidden>Браузер не поддерживает WebGL, поэтому 3D-модель не запустилась. Салон можно посмотреть на фото и на карте выше.</p>
-<div class="sh3d__poster" data-sh-poster><button type="button" class="btn" data-sh-start>Запустить 3D-модель</button><small>Загрузится только по нажатию</small></div>
-<div class="sh3d__ui" data-sh-ui hidden>
+<figure class="sh3d" data-reveal>
+<img class="sh3d__poster" src="${ctx.media('/media/salon-3d-poster.webp')}" alt="Схематичная 3D-модель салона: вид на планировку сверху" width="1600" height="1000" loading="lazy" decoding="async">
+<button type="button" class="sh3d__enter" data-sh-start aria-haspopup="dialog"><span class="sh3d__enter-btn">Войти в 3D-салон</span></button>
+</figure>
+<dialog class="sh3d-full" data-sh-root aria-label="3D-модель салона">
+<button type="button" class="sh3d-full__exit" data-dialog-close>Выйти из 3D</button>
+<div class="sh3d-full__box" data-sh-box>
+<p class="sh3d-full__msg" data-sh="loading">Загружаем модель…</p>
+<p class="sh3d-full__msg" data-sh="err" role="alert" hidden>Браузер не поддерживает WebGL, поэтому 3D-модель не запустилась. Нажмите «Выйти из 3D»: салон можно посмотреть на фото и на карте.</p>
+</div>
+<div class="sh3d-full__ui">
 <div class="sh3d__event" aria-live="polite"><small data-sh="clock">Сейчас в салоне</small><p data-sh="evt">Покупатель заходит через стеклянные двери</p><div class="sh3d__track"><div data-sh="bar"></div></div></div>
-<div class="sh3d__ctrl"><span class="sh3d__hint">Тяните — вращать · колесо — приблизить</span><button type="button" data-sh="labels" aria-pressed="true">Подписи зон</button><button type="button" data-sh="play">Пауза</button></div>
+<div class="sh3d__ctrl"><span class="sh3d__hint">Тяните — вращать · колесо или щипок — приблизить</span><button type="button" data-sh="labels" aria-pressed="true">Подписи зон</button><button type="button" data-sh="play">Пауза</button><button type="button" data-sh-fs hidden>Во весь экран</button></div>
 </div>
-</div>
-</div>
+</dialog>
 </div>
 </section>`;
 }
@@ -140,7 +144,7 @@ export default {
   render: ctx => `${pageHead(ctx, { crumbs: [['Салон']], eyebrow: 'Салон Italon Experience', title: 'Салон в Краснодаре',
     lead: 'Увидеть, прикоснуться, выбрать. Монобрендовый салон Italon: коллекции показаны готовыми интерьерными решениями. Приходите сравнить поверхности и отделки вживую.' })}
 ${visit(ctx)}
-${showroom3d()}
+${showroom3d(ctx)}
 ${booking(ctx)}
 ${before(ctx)}`,
 };
