@@ -144,6 +144,7 @@ export async function startLab(root, cfg) {
     $(root, '[data-item-quality]').textContent = m.quality === 'hd' ? `Полная симуляция света: фото ${m.imgW}×${m.imgH} px.` : `Упрощённый режим: фото ${m.imgW}×${m.imgH} px. Рельеф и зерно не дорисовываются, приближение ограничено.`;
     const link = $(root, '[data-item-link]'); link.href = m.href; const add = $(root, '[data-item-add]');
     if (add) { add.dataset.add = m.code; add.disabled = m.canOrder === false; add.textContent = 'В корзину'; delete add.dataset.label; document.dispatchEvent(new CustomEvent('italon:cart-refresh')); }
+    const fn = $(root, '[data-faces-note]'); if (fn) fn.textContent = m.faces?.length ? `Плиты в стене чередуют ${m.faces.length + 1} настоящих рисунка лицевой стороны (фейсы F1–F${m.faces.length + 1}). Книжное зеркалирование (bookmatch) не имитируется.` : 'Показан один рисунок лицевой стороны, повторённый на всех плитах. Книжное зеркалирование (bookmatch) не имитируется: у реальных плит рисунок может отличаться.';
     root.dataset.material = m.code; root.dataset.quality = m.quality; updateNotice();
   }
   function touch() { if (!touched) { touched = true; root.classList.add('is-touched'); } }

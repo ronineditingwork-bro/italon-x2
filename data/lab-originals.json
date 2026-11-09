@@ -2,70 +2,159 @@
   "v": 1,
   "items": {
     "600180000076": {
-      "file": "600180000076-9f9fad9d.webp",
-      "sha256": "9f9fad9dd838be691d7cb641690af1e7e2e464bc7396de7b06d49ec4b299377d",
+      "file": "600180000076-6e75c12e.webp",
+      "sha256": "6e75c12e5145b80ed0aeae2fd8809230d475056508c976e126b5c1a33b3323ac",
       "mobile": {
-        "file": "600180000076-m-3bdbf9db.webp",
-        "sha256": "3bdbf9db434e87dffc5e8126093ed763fc3eebcd100149c8bf46644aa746d84d"
+        "file": "600180000076-m-1294a61e.webp",
+        "sha256": "1294a61e9f0c7059344bb0e5cf27ba56d035bf6bf9ee1299dcf221abb3d0b319"
       },
-      "sourceUrl": "architalon:aura-calacatta-sky-120x278.zip/calacatta_sky_120x278_F1.tif",
-      "evidence": "Текстура ARCHITALON (Italon), архив aura-calacatta-sky-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «АУРА КАЛАКАТТА СКАЙ 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
-      "addedOn": "2026-10-23",
       "face": "F1",
+      "sourceUrl": "architalon:aura-calacatta-sky-120x278.zip/calacatta_sky_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив aura-calacatta-sky-120x278.zip, файл calacatta_sky_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «АУРА КАЛАКАТТА СКАЙ 120X278». Исходник 1993×4615 RGB (ICC → sRGB) → WebP: десктоп 1993×4615, мобильная 1400×3242; без обрезки.",
+      "addedOn": "2026-11-09",
       "provenance": {
         "archive": "aura-calacatta-sky-120x278.zip",
         "entry": "calacatta_sky_120x278_F1.tif",
         "crc32": "de656473",
         "size": 67853884,
-        "acquiredOn": "2026-10-23",
+        "acquiredOn": "2026-11-09",
         "portalUrl": null,
         "finish": "СИЛК И РЕТТИФИЦИРОВАННАЯ",
-        "faces": 4
-      }
+        "faces": 4,
+        "sha256": "0cf628924df889765befa5a6e7a6836aedd06d811a0983aad6ef9e3410c597f8"
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000076-f2-fc32110c.webp",
+          "sha256": "fc32110c84c81ba8c71053f45fdb382bed2e832bf82a1df4d764bb6a4f03049e",
+          "mobile": {
+            "file": "600180000076-f2-m-795f255f.webp",
+            "sha256": "795f255fb20d3b20a6281fe12831be16a62c7fb8e38f88cbf13ab169f0f2bdb8"
+          },
+          "sourceUrl": "architalon:aura-calacatta-sky-120x278.zip/calacatta_sky_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000076-f3-f2c4c6da.webp",
+          "sha256": "f2c4c6da0dde8ae503a071c17bac310d800ee3b877df28e780254bc82cbc5988",
+          "mobile": {
+            "file": "600180000076-f3-m-b77012ee.webp",
+            "sha256": "b77012ee522822910a711b60fd7f6e010989d7401feffc480e6b4c8f3251dcea"
+          },
+          "sourceUrl": "architalon:aura-calacatta-sky-120x278.zip/calacatta_sky_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000076-f4-6fc39062.webp",
+          "sha256": "6fc39062933f74ef74bc3d89d63a343a2a78a61dbace7fe5a0344ff182f1f7fd",
+          "mobile": {
+            "file": "600180000076-f4-m-b432900d.webp",
+            "sha256": "b432900dc8a249856eb12a27b4cf73056e6f76f94845ee4d4a1b31a826376766"
+          },
+          "sourceUrl": "architalon:aura-calacatta-sky-120x278.zip/calacatta_sky_120x278_F4.tif"
+        }
+      ]
     },
     "600180000072": {
-      "file": "600180000072-d98c7ce2.webp",
-      "sha256": "d98c7ce231a4ac7a19e60647d194c5ebd823bb53e67facb034a535e6ebb850fa",
+      "file": "600180000072-4dfbc789.webp",
+      "sha256": "4dfbc7890cac67da6e882fbeb78a8534c2be9854b397e40101449a30d289c917",
       "mobile": {
-        "file": "600180000072-m-1ee11d84.webp",
-        "sha256": "1ee11d8454a09f6df2d2a5dc96b43a4d8f084564bc983e61f1960f5fcc18450c"
+        "file": "600180000072-m-06bddd90.webp",
+        "sha256": "06bddd9094f9cc89da5c774074ee56a9be6ba663118d38c1527bba9c44514cd8"
       },
-      "sourceUrl": "architalon:magma-alpi-green-120x278.zip/alpi_green_120x278_F1.tif",
-      "evidence": "Текстура ARCHITALON (Italon), архив magma-alpi-green-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «МАГМА АЛЬПИ ГРИН 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
-      "addedOn": "2026-10-23",
       "face": "F1",
+      "sourceUrl": "architalon:magma-alpi-green-120x278.zip/alpi_green_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив magma-alpi-green-120x278.zip, файл alpi_green_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «МАГМА АЛЬПИ ГРИН 120X278». Исходник 1992×4615 RGB (ICC → sRGB) → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-11-09",
       "provenance": {
         "archive": "magma-alpi-green-120x278.zip",
         "entry": "alpi_green_120x278_F1.tif",
         "crc32": "0ee1f4ff",
         "size": 83074396,
-        "acquiredOn": "2026-10-23",
+        "acquiredOn": "2026-11-09",
         "portalUrl": null,
         "finish": "СИЛК И РЕТТИФИЦИРОВАННАЯ",
-        "faces": 3
-      }
+        "faces": 3,
+        "sha256": "fd2dad098c60c94702c6b6a1227271b3b65db05506f37e02d7e71928ee0041f8"
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000072-f2-af71e696.webp",
+          "sha256": "af71e696c62e064d35b4a8815d35bce6a4a5fc91498da3307f52e55705d5f96b",
+          "mobile": {
+            "file": "600180000072-f2-m-4d4129c8.webp",
+            "sha256": "4d4129c8d8f281fb072a7ab7fbbf0ec300eebc147dc89da5b7c12566d704e231"
+          },
+          "sourceUrl": "architalon:magma-alpi-green-120x278.zip/alpi_green_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000072-f3-b6550f7a.webp",
+          "sha256": "b6550f7abd23bec144923fc5b47f9d8f61ca539d6f600ed70701e7fc890181a4",
+          "mobile": {
+            "file": "600180000072-f3-m-77c8c037.webp",
+            "sha256": "77c8c03749cfca6913cedb2f74b7a7f9f3f5e832d7b3b3086a2d7d04dc38e2dd"
+          },
+          "sourceUrl": "architalon:magma-alpi-green-120x278.zip/alpi_green_120x278_F3.tif"
+        }
+      ]
     },
     "600180000073": {
-      "file": "600180000073-067ce799.webp",
-      "sha256": "067ce799382df020b1e1eb368c910c261ee9994c38ed2409f1f9c9fee0639d89",
+      "file": "600180000073-21ee15d3.webp",
+      "sha256": "21ee15d3a4dda2ca3deba93cba60cc75aeb641ffcdd7b8e2969d4def99763b7a",
       "mobile": {
-        "file": "600180000073-m-38cb730d.webp",
-        "sha256": "38cb730de6501126e7123d720c626998aaee6cffb0f93b9f05276f71a89c678c"
+        "file": "600180000073-m-1b284653.webp",
+        "sha256": "1b284653b68f92c36ab6fb5fb44ab6f9ea7f3c8526f2e67d4c9c294d19dc074f"
       },
-      "sourceUrl": "architalon:magma-dover-tiger-120x278.zip/dover_tiger_120x278_F1.tif",
-      "evidence": "Текстура ARCHITALON (Italon), архив magma-dover-tiger-120x278.zip, фейс F1; название и формат 120×278 совпадают с артикулом «МАГМА ДОВЕР ТАЙГЕР 120X278», рисунок совпадает с фото каталога. TIFF Adobe RGB → WebP sRGB: десктоп в родном разрешении, мобильная 1001×2320; без обрезки.",
-      "addedOn": "2026-10-23",
       "face": "F1",
+      "sourceUrl": "architalon:magma-dover-tiger-120x278.zip/dover_tiger_120x278_F1.tif",
+      "evidence": "Текстура ARCHITALON (Italon), архив magma-dover-tiger-120x278.zip, файл dover_tiger_120x278_F1.tif, фейс F1; название и формат 120×278 в имени файла совпадают с артикулом «МАГМА ДОВЕР ТАЙГЕР 120X278». Исходник 1992×4615 RGB (ICC → sRGB) → WebP: десктоп 1992×4615, мобильная 1400×3243; без обрезки.",
+      "addedOn": "2026-11-09",
       "provenance": {
         "archive": "magma-dover-tiger-120x278.zip",
         "entry": "dover_tiger_120x278_F1.tif",
         "crc32": "d444b8ef",
         "size": 83191288,
-        "acquiredOn": "2026-10-23",
+        "acquiredOn": "2026-11-09",
         "portalUrl": null,
         "finish": "СИЛК И РЕТТИФИЦИРОВАННАЯ",
-        "faces": 4
-      }
+        "faces": 4,
+        "sha256": "7bf2edf38b834ef004bd2f6e6ca0a79509a7c971dd5b359fc2694e1b6598cc0e"
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000073-f2-69253b06.webp",
+          "sha256": "69253b069acec1745f4c6fc208f31910eb20bf8c064788fff6d6831d44b250d3",
+          "mobile": {
+            "file": "600180000073-f2-m-626bcc63.webp",
+            "sha256": "626bcc63c2ab5564d605f4e9a87f4709c140e2025a8b719646e251a992128869"
+          },
+          "sourceUrl": "architalon:magma-dover-tiger-120x278.zip/dover_tiger_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000073-f3-a4ece539.webp",
+          "sha256": "a4ece53936a4c88939f1230eef9d60aab24566089a1a2b0875bad1f05e495758",
+          "mobile": {
+            "file": "600180000073-f3-m-7f4f14fc.webp",
+            "sha256": "7f4f14fc4d445e6f26516dfb6b4c5df68ba3784666fabe3f2b6ca49b4b8da205"
+          },
+          "sourceUrl": "architalon:magma-dover-tiger-120x278.zip/dover_tiger_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000073-f4-20446977.webp",
+          "sha256": "204469774b476c1692af93ed9571fc4fb55db5bfc6cff0a8c9727f45e85dedf2",
+          "mobile": {
+            "file": "600180000073-f4-m-bf72ebba.webp",
+            "sha256": "bf72ebba9f923b721bd5ca1080989f2c438d8600692882fa9a76e6bd300b411f"
+          },
+          "sourceUrl": "architalon:magma-dover-tiger-120x278.zip/dover_tiger_120x278_F4.tif"
+        }
+      ]
     },
     "600180000087": {
       "file": "600180000087-abdfe6a1.webp",

@@ -78,7 +78,7 @@ ${[['light', 'Свет'], ['layout', 'Укладка'], ['compare', 'Сравн�
 <div data-for="slabs" hidden><p class="lab-label">Плит в стене</p>
 <div class="lab-chips" role="radiogroup" aria-label="Число плит">${[1, 2, 3, 4].map(n => `<button type="button" role="radio" aria-checked="${n === 2}" data-slabs="${n}">${n}</button>`).join('')}</div>
 <p class="lab__hint">Каждая плита — 120 × 278 см, швы вертикальные. При повороте плиты ложатся горизонтально (до двух в высоту).</p>
-<p class="lab__hint lab__hint--note">Показан один рисунок лицевой стороны, повторённый на всех плитах. Книжное зеркалирование (bookmatch) не имитируется: у реальных плит рисунок может отличаться.</p></div>
+<p class="lab__hint lab__hint--note" data-faces-note>Показан один рисунок лицевой стороны, повторённый на всех плитах. Книжное зеркалирование (bookmatch) не имитируется: у реальных плит рисунок может отличаться.</p></div>
 <div data-for="floor"><p class="lab-label">Формат плитки, см</p>
 <div class="lab-chips" role="radiogroup" aria-label="Формат плитки">${FORMATS.map(f => `<button type="button" role="radio" aria-checked="${f.id === '60x60'}" data-format="${f.id}">${f.label}</button>`).join('')}</div></div>
 <div class="lab__row"><button type="button" class="lab-btn" data-turn aria-pressed="false"><span data-turn-label>Повернуть на 90°</span></button></div>
