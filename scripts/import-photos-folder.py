@@ -38,7 +38,9 @@ for folder in args.src:
         raw = path.read_bytes()
         try:
             with Image.open(io.BytesIO(raw)) as loaded:
-                image = ImageOps.exif_transpose(loaded).convert('RGB')
+                image = ImageOps.exif_transpose(loaded).convert('RGBA')
+                # прозрачный фон PNG — на белый, как у остальных фото каталога (иначе convert('RGB') даёт чёрный)
+                image = Image.alpha_composite(Image.new('RGBA', image.size, (255, 255, 255, 255)), image).convert('RGB')
         except Exception as error:
             problems.append((code, f'не открывается: {error}')); continue
         if min(image.size) < 100: problems.append((code, f'слишком мелкое: {image.size}')); continue

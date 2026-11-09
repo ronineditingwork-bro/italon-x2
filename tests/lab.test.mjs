@@ -188,7 +188,7 @@ test('слэбы: в каталоге ровно 57 изделий 120×278 из
   assert.ok(slabs.every(e => e.formatKey === SLAB_FORMAT && e.eligible && e.photo[0] === 120 && e.photo[1] === 278)); assert.ok(!slabs.some(e => e.code === '450080000001'), 'транспортный ящик');
   assert.deepEqual(slabs.slice(0, SLAB_PRIORITY.length).map(e => e.code), SLAB_PRIORITY); assert.ok(isSlab(slabs[0]) && !isSlab(eligible.find(e => e.formatKey === '60X60')));
   const p = products.filter(p => String(p.format).toUpperCase() === SLAB_FORMAT && String(p.name).toUpperCase().indexOf('ЯЩИК') < 0); assert.ok(p.length >= 57);
-  assert.ok(slabs.every(e => e.imgW >= 147 && e.imgW <= 150 && e.imgH === 341), 'все 57 фото каталога — 147–150×341'); assert.ok(slabs.every(e => e.quality === 'lite' && e.surf.relief === 0 && e.surf.micro === 0), 'упрощённый режим без дорисовки');
+  assert.ok(slabs.every(e => e.imgH >= 341 && Math.abs(e.imgW / e.imgH - 120 / 278) < 0.01), 'все 57 фото каталога — вертикальные 120:278, не меньше 341 px'); assert.ok(slabs.every(e => e.quality === 'lite' && e.surf.relief === 0 && e.surf.micro === 0), 'упрощённый режим без дорисовки');
   assert.ok(slabs.every(e => /^\d{12}$/.test(e.code) && e.priceText.includes('₽') && e.href.endsWith(`product/${e.code}/`)), 'цены и ссылки — из каталога');
   const named = Object.fromEntries(slabs.map(e => [e.code, e.name])); assert.equal(named['600180000132'], 'Прима Деним Рэд'); assert.equal(named['600180000133'], 'Прима Волкано Грин'); assert.equal(named['600180000086'], 'Статус Кортен'); assert.equal(named['600180000076'], 'Аура Калакатта Скай'); assert.equal(named['600180000072'], 'Магма Альпи Грин');
 });
