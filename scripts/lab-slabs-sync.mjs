@@ -46,6 +46,7 @@ const mb = n => (n / 1e6).toFixed(2) + ' МБ';
 const today = () => new Date().toISOString().slice(0, 10);
 // Карты рельефа и структуры поверхности из архивов ARCHITALON (structure_120x278.tif, struttura_nat_…, poverkhnost_naturalnaya_…) — не рисунок плиты
 const MAP_FILE = /(^|[^a-z])(structure|struttura|strukt\w*|poverkhnost\w*|surface|rilievo|relief|bump|normal|displace\w*|height|rough\w*)([^a-z]|$)/i;
+export const MAX_FACES = 4;
 const faceRank = f => /^F\d+$/.test(f) ? Number(f.slice(1)) : 100;
 
 function parseArgs(argv) {
@@ -176,13 +177,13 @@ async function cmdImport(opt, log = console.log) {
       const slot = byCode.get(t.code), product = productBy.get(t.code);
       const faces = [...slot.faces.values()].sort((a, b) => faceRank(a.face) - faceRank(b.face) || a.face.localeCompare(b.face));
       if (!faces.length || (only && !only.has(t.code))) continue;
-      let main = faces[0];
       const cur = man.items[t.code];
+      let main = faces.find(f => cur?.sourceUrl === sourceUrlOf(f)) || faces[0];   // уже опубликованный фейс остаётся основным (у части слэбов F1 негоден и основным взят другой)
       const portalUrl = f => downloads.files?.[basename(f.archive || f.entry)]?.url || null;
-      const provenance = f => ({ archive: f.archive ? basename(f.archive) : null, entry: f.entry, crc32: f.crc || null, size: f.size, acquiredOn: downloads.files?.[basename(f.archive || f.entry)]?.at?.slice(0, 10) || f.date, portalUrl: portalUrl(f), finish: t.finish, faces: faces.length });
+      const provenance = f => ({ archive: f.archive ? basename(f.archive) : null, entry: f.entry, crc32: f.crc || null, size: f.size, acquiredOn: downloads.files?.[basename(f.archive || f.entry)]?.at?.slice(0, 10) || f.date, portalUrl: portalUrl(f), finish: t.finish, faces: slot.faces.size });
       // Основной файл уже опубликован из этого же источника — не пересжимаем (иначе в Git появятся новые файлы без пользы).
       const sameMain = cur && cur.sourceUrl === sourceUrlOf(main) && !opt.force && existsSync(join(MEDIA, cur.file || ''));
-      const toConvert = sameMain ? (allFaces ? faces.slice(1) : []) : (allFaces ? faces : [main]);
+      const toConvert = sameMain ? (allFaces ? faces.filter(f => f !== main) : []) : (allFaces ? faces : [main]);
       const recs = {};
       for (const f of toConvert) {
         try { recs[f.face] = await convert(product, f, state, opt, log); if (recs[f.face].problems.length) errors.push({ code: t.code, face: f.face, key: f.key, reason: recs[f.face].problems.join('; ') }); }
@@ -217,7 +218,9 @@ async function cmdImport(opt, log = console.log) {
       }
       if (entry && opt['publish-faces']) {
         const extra = [];
-        for (const f of faces.slice(1)) {
+        for (const f of faces) {
+          // Не больше 4 фейсов: в стене до 4 плит, а атлас из 5 фейсов шире 8192 px — предел текстуры многих видеокарт телефонов.
+          if (f === main || extra.length >= MAX_FACES - 1) continue;
           const r = recs[f.face] || (state.converted?.[`${t.code}/${f.face}`]?.fp === f.fp ? state.converted[`${t.code}/${f.face}`] : null);
           if (!r || r.problems?.length || !existsSync(join(OUT, t.code, `${f.face}.webp`))) continue;
           extra.push({ face: f.face, ...(await publishFile(join(OUT, t.code, `${f.face}.webp`), t.code, `-${f.face.toLowerCase()}`, r.desktop.sha256)),
