@@ -1999,7 +1999,19 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 2,
         "sha256": "61967e6216c02ff55de34b5348407c4626440f125187fe60a4c5568c51604cac"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000080-f2-51920d8b.webp",
+          "sha256": "51920d8bb20c3b9d4174495e6e992a3af2428f39cf393b3fcde9f52eca74770c",
+          "mobile": {
+            "file": "600180000080-f2-m-4e4a0b7b.webp",
+            "sha256": "4e4a0b7bd285c92b793b833c3d4e384221e104163d599bc2280d561dc3df3a8b"
+          },
+          "sourceUrl": "architalon:forum-slim-desert-120x278.zip/Slim_Desert_120x278_F2.tif"
+        }
+      ]
     },
     "600180000078": {
       "file": "600180000078-b6a7111f.webp",
@@ -2022,7 +2034,19 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 2,
         "sha256": "741a892849f1f122ced15c160a59de13a6a466a65ad4637cd40613b931e0e239"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000078-f2-405112bb.webp",
+          "sha256": "405112bb43d63eecee284aa017c689d95a3b93a5c497e28e5700181707721702",
+          "mobile": {
+            "file": "600180000078-f2-m-cdd2db57.webp",
+            "sha256": "cdd2db57e46c18a5a322e68d01f956c0ba25ef23a7e81985ee3faa5ff3350357"
+          },
+          "sourceUrl": "architalon:forum-slim-polar-120x278.zip/Slim_Polar_120x278_F2.tif"
+        }
+      ]
     },
     "600180000079": {
       "file": "600180000079-b9a21362.webp",
@@ -2045,7 +2069,19 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 2,
         "sha256": "e9c0e02f3e4291087f4106c67c4743ec08641ef9704f89bb19e94b34cfd5cfef"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000079-f2-3b1d640a.webp",
+          "sha256": "3b1d640a3006e002311a8f3b16adebb33c6bf8f86cae41820d203fbd1588447b",
+          "mobile": {
+            "file": "600180000079-f2-m-8bf22a92.webp",
+            "sha256": "8bf22a9203799aab239906fc84c8cd8807375f43a31703d9a8a85e9ed87e0095"
+          },
+          "sourceUrl": "architalon:forum-slim-pure-120x278.zip/Slim_Pure_120x278_F2.tif"
+        }
+      ]
     },
     "600180000083": {
       "file": "600180000083-0c2f74f4.webp",
@@ -2068,7 +2104,29 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 3,
         "sha256": "8c2c14aa457a09ea2f15ba58cd9f149e014bcb2cf31a1ff0e378e96c3a145c0a"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000083-f2-22a710dd.webp",
+          "sha256": "22a710ddeac55c975aecb71a1f10ee9e819e223a10e54d177d98e591c390a121",
+          "mobile": {
+            "file": "600180000083-f2-m-4d2b5d4d.webp",
+            "sha256": "4d2b5d4d7d243c7d5006d3a8be1a499f53ba9ecde688e2c913a24bb78e4e13a3"
+          },
+          "sourceUrl": "architalon:forum-stone-iron-120x278.zip/Stone_Iron_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000083-f3-4d3111a9.webp",
+          "sha256": "4d3111a90d210efe12aca05490a9e053ed90e2f083f8bc6a94c98ebb3fb2e629",
+          "mobile": {
+            "file": "600180000083-f3-m-12a778db.webp",
+            "sha256": "12a778dbb61b05ac4b74dfbbd13f7ddd24aa05fef0bda9434d1932c4b4c0a0dd"
+          },
+          "sourceUrl": "architalon:forum-stone-iron-120x278.zip/Stone_Iron_120x278_F3.tif"
+        }
+      ]
     },
     "600180000081": {
       "file": "600180000081-02365d5a.webp",
@@ -2091,7 +2149,29 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 3,
         "sha256": "70d49de9e5dd8db95e56431dd765c4cc95485130a9d9bfe0862b45ed4779c6f3"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000081-f2-11267c63.webp",
+          "sha256": "11267c63ec1a690c6f1e15047bf3fad91436778731d1f3ab73113dd1fa776302",
+          "mobile": {
+            "file": "600180000081-f2-m-9266db99.webp",
+            "sha256": "9266db9910e2a4dd51ff0b502484cc6428b6a8e0815cbc08ee464f2279d6695a"
+          },
+          "sourceUrl": "architalon:forum-stone-polar-120x278.zip/Stone_Polar_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000081-f3-897d7455.webp",
+          "sha256": "897d7455ac4c9af6ca38b406dcfa44a720a616d12e055d39f8079e92bc9654d0",
+          "mobile": {
+            "file": "600180000081-f3-m-f914e272.webp",
+            "sha256": "f914e2725f60f521ac032d0d79748f124e2068e76c2a3b3c4bfc82f680bf09ea"
+          },
+          "sourceUrl": "architalon:forum-stone-polar-120x278.zip/Stone_Polar_120x278_F3.tif"
+        }
+      ]
     },
     "600180000082": {
       "file": "600180000082-8439a394.webp",
@@ -2114,7 +2194,29 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 3,
         "sha256": "2767931a22b0c456d194cda3dfcb121eb850726059c3766bea5721b5b4a45b85"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000082-f2-dda01423.webp",
+          "sha256": "dda01423cf2adfef7d466ccd23752cb343e99c77464840139cac1b6bb2baea17",
+          "mobile": {
+            "file": "600180000082-f2-m-fc6830c6.webp",
+            "sha256": "fc6830c653a781d5dc200d999fbb33081a01ddc2f7dbad20a91e67f11b7f3ab3"
+          },
+          "sourceUrl": "architalon:forum-stone-silver-120x278.zip/Stone_Silver_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000082-f3-9cdecbc3.webp",
+          "sha256": "9cdecbc3d269826429875fc82ae274a86846b2120ea211c8b4b1f119abcf8414",
+          "mobile": {
+            "file": "600180000082-f3-m-75eb701f.webp",
+            "sha256": "75eb701f5d4cad60b299dc862f957353c4ada988f9edf922b0d839ae09d778a0"
+          },
+          "sourceUrl": "architalon:forum-stone-silver-120x278.zip/Stone_Silver_120x278_F3.tif"
+        }
+      ]
     },
     "600180000005": {
       "file": "600180000005-2558726b.webp",
@@ -2137,7 +2239,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "033face0c26ce6dfb8db672c9ba8013e483fdb486ed1bc0f91662ab65dcff709"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000005-f2-79578bd0.webp",
+          "sha256": "79578bd04255c23d1c75457b35c37896358bf7bab2b2a491d0efce1d1bdbb697",
+          "mobile": {
+            "file": "600180000005-f2-m-c2ecc17e.webp",
+            "sha256": "c2ecc17e30df814660c78df96bd2b31361fcc8f74899f1c328da8686bcb54265"
+          },
+          "sourceUrl": "architalon:charme-deluxe-arabescato-white-120x278.zip/arabescato_white_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000005-f3-da61450a.webp",
+          "sha256": "da61450ac9f0795cd3b84e95f8f4dcf3e38aa06acc483b75a97e0f7831d77ab3",
+          "mobile": {
+            "file": "600180000005-f3-m-315088b0.webp",
+            "sha256": "315088b0fa2537258a92084e695bafbf6f196a92d25351921cda60fa1e321b73"
+          },
+          "sourceUrl": "architalon:charme-deluxe-arabescato-white-120x278.zip/arabescato_white_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000005-f4-953176cd.webp",
+          "sha256": "953176cdbce244c5e291a048b3010fff57aee52c256af0a8b9735e78faa70253",
+          "mobile": {
+            "file": "600180000005-f4-m-70acf5e1.webp",
+            "sha256": "70acf5e1ca1db38d4549100e9e479710e74dbc90cf5d437a983627d8f56433f6"
+          },
+          "sourceUrl": "architalon:charme-deluxe-arabescato-white-120x278.zip/arabescato_white_120x278_F4.tif"
+        }
+      ]
     },
     "600180000004": {
       "file": "600180000004-1495e279.webp",
@@ -2160,7 +2294,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "5d176b6a04da692ee18d2daa0bbcaa63c8a4313c07d7654a753f9c2b63244c45"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000004-f2-77182fdd.webp",
+          "sha256": "77182fdd4bfbd42c348c81d4f37e7f0afd2e436fe9004404f3239125e3207bab",
+          "mobile": {
+            "file": "600180000004-f2-m-e4c940e1.webp",
+            "sha256": "e4c940e15f338b5b8f9599db7beae3d540bcfcdc003caf200e68d9a1554679ba"
+          },
+          "sourceUrl": "architalon:charme-deluxe-bianco-michelangelo-120x278.zip/bianco_michelangelo_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000004-f3-82adacb2.webp",
+          "sha256": "82adacb228cbd1e1861c14d594724a517b1c8115da2ed37e40130acca5b101f4",
+          "mobile": {
+            "file": "600180000004-f3-m-37c13bc0.webp",
+            "sha256": "37c13bc0a15433fc398a1254b18d2bc3c94c2f1b759e219c9e8f26353763ec7d"
+          },
+          "sourceUrl": "architalon:charme-deluxe-bianco-michelangelo-120x278.zip/bianco_michelangelo_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000004-f4-6856d9a1.webp",
+          "sha256": "6856d9a132639a6bbb12b6938013ac76f55b71d375ce8b457a3029a9f7b4d3d8",
+          "mobile": {
+            "file": "600180000004-f4-m-0f6b73fb.webp",
+            "sha256": "0f6b73fb1364e5f25ce16670b6b30fdfdc9650e4171665b2c6bbdbb95cdaacdc"
+          },
+          "sourceUrl": "architalon:charme-deluxe-bianco-michelangelo-120x278.zip/bianco_michelangelo_120x278_F4.tif"
+        }
+      ]
     },
     "600180000006": {
       "file": "600180000006-f6463fa6.webp",
@@ -2183,7 +2349,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "f0a6c247d8b4341147acce9b3bc8c7902c048a995aded1362705d6e947d6bba4"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000006-f2-7834d07d.webp",
+          "sha256": "7834d07d7893371a66d6e764cc33ec687bc3707af22605643127973e76b7040a",
+          "mobile": {
+            "file": "600180000006-f2-m-6806b12c.webp",
+            "sha256": "6806b12caf9f8130d812c291680fa46988705ade73a1f89f385c8c70110c3ca7"
+          },
+          "sourceUrl": "architalon:charme-deluxe-invisible-white-120x278.zip/invisible_white_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000006-f3-d0761e29.webp",
+          "sha256": "d0761e298e0e75b24c3634905dde188b9a6c90827f1ccf1dc470f7980bacd119",
+          "mobile": {
+            "file": "600180000006-f3-m-1d589496.webp",
+            "sha256": "1d589496963404a792483e1eb7b6ea0919197185e03b2a02b8c67c64440c04de"
+          },
+          "sourceUrl": "architalon:charme-deluxe-invisible-white-120x278.zip/invisible_white_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000006-f4-0c67e2cb.webp",
+          "sha256": "0c67e2cb90fcda8d1377319bbbb8b978b6bc69b0582891446cbe5dfab193766b",
+          "mobile": {
+            "file": "600180000006-f4-m-c9469686.webp",
+            "sha256": "c946968661b2852d8f7c9d1485ebe0719fe2d87d49ea5799b15a2e2a04a445f5"
+          },
+          "sourceUrl": "architalon:charme-deluxe-invisible-white-120x278.zip/invisible_white_120x278_F4.tif"
+        }
+      ]
     },
     "600180000008": {
       "file": "600180000008-a01ee47a.webp",
@@ -2206,7 +2404,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "f0a4d0d347e316753665eb2139d5eef43df43da56fe2aa5722f1be558a17accc"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000008-f2-e6db6b39.webp",
+          "sha256": "e6db6b39035d3d3d54adfcdf36d9d15fe1bf64e2f74b4959ccc90166d4060f7c",
+          "mobile": {
+            "file": "600180000008-f2-m-b71e7098.webp",
+            "sha256": "b71e70982f98098056929f1ad6fbc582ce7785896e3d50dc2a1dbabb723c250f"
+          },
+          "sourceUrl": "architalon:charme-deluxe-sahara-noir-120x278.zip/sahara_noir_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000008-f3-edfd87cb.webp",
+          "sha256": "edfd87cb500e5d336170cb44a07df7f30b2a4975801e09dd0d7a16a05ede8364",
+          "mobile": {
+            "file": "600180000008-f3-m-2870e05c.webp",
+            "sha256": "2870e05c8348a861e7e21000384fe66724fa89768c52858e197087c61418e36e"
+          },
+          "sourceUrl": "architalon:charme-deluxe-sahara-noir-120x278.zip/sahara_noir_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000008-f4-f72b8929.webp",
+          "sha256": "f72b892914d211e87f38fb01c28f28b268fd3f6da7c2e143469fbe4ab451502a",
+          "mobile": {
+            "file": "600180000008-f4-m-72ae36cd.webp",
+            "sha256": "72ae36cd5abf889cdcb7cc817fdd74c9da514020b6c9221efade710d2de593d1"
+          },
+          "sourceUrl": "architalon:charme-deluxe-sahara-noir-120x278.zip/sahara_noir_120x278_F4.tif"
+        }
+      ]
     },
     "600180000007": {
       "file": "600180000007-421e9e2f.webp",
@@ -2229,7 +2459,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "b088449ea05252be7bbeb125c39764e470e6ee4073e0f3e85474b0200e37e73c"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000007-f2-7097f38b.webp",
+          "sha256": "7097f38bf41cb1262e1c671316995fef49118eda8a86c233d0a63a59314a832d",
+          "mobile": {
+            "file": "600180000007-f2-m-9ebde08a.webp",
+            "sha256": "9ebde08ae62bee34819086cf8e91d09b04f4c2444873a09f5a124ad5247dc08d"
+          },
+          "sourceUrl": "architalon:charme-deluxe-statuario-fantastico-120x278.zip/statuario_fantastico_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000007-f3-2cd926ac.webp",
+          "sha256": "2cd926aca91dc5f5d6ad706d3a7d9c3e576465b8be17317802a62be9663c3e98",
+          "mobile": {
+            "file": "600180000007-f3-m-696d3dd7.webp",
+            "sha256": "696d3dd7fb197ba73eb06eb71f21a1bd8edcfbdd9e5737687e46b35ccc7792da"
+          },
+          "sourceUrl": "architalon:charme-deluxe-statuario-fantastico-120x278.zip/statuario_fantastico_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000007-f4-30923229.webp",
+          "sha256": "3092322960c3376a9352c8d8b1170169419572dac8c96f0fb6f8d18b16edadce",
+          "mobile": {
+            "file": "600180000007-f4-m-c9efe5c3.webp",
+            "sha256": "c9efe5c36f67fe23ab491f556e81bc5f8e4a30c2c000dcd3380534629c17ab2e"
+          },
+          "sourceUrl": "architalon:charme-deluxe-statuario-fantastico-120x278.zip/statuario_fantastico_120x278_F4.tif"
+        }
+      ]
     },
     "600180000002": {
       "file": "600180000002-f28c9e06.webp",
