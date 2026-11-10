@@ -90,3 +90,18 @@ test('слой движения: хуки на четырёх страницах
   if (process.env.SITE_PREVIEW !== '1') assert.doesNotMatch(home, /data-preview/, 'панель сравнения не должна попадать в рабочую сборку');
   for (const path of ['/catalog/', '/lab/', '/outdoor/', '/product/610010004077/']) assert.doesNotMatch(await readFile(fileFor(path), 'utf8'), /data-motion-/, `${path} не должна получать эффекты`);
 });
+
+test('рекомендуемый клей: блок в карточке плитки с правилом, нет блока без правила; место под блок в корзине на каждой странице', async () => {
+  const catalog = JSON.parse(await readFile(resolve(pub, 'data/catalog.json'), 'utf8'));
+  const code = (section, format) => catalog.products.find(p => p.section === section && p.format === format).code;
+  const tile = await readFile(fileFor(`/product/${code('italon', '60X120')}/`), 'utf8');
+  assert.match(tile, /id="adhesive-title">Рекомендуемый клей</);
+  assert.match(tile, /Внутри помещений: пол и стены/); assert.match(tile, /<b>Keraflex Extra S1<\/b>/); assert.match(tile, /adhesive__class">C2TE&nbsp;S1</);
+  assert.match(tile, /На улице: пол<\/dt><dd>Ultralite S2 \(C2E&nbsp;S2\), Kerabond T-R \+ Isolastic \(C2E&nbsp;S2\) или Ultraflex S2 \(C2TE&nbsp;S2\)/);
+  assert.match(tile, /Keralastic T или Ultrabond Eco PU 2K \(R2T\)/); assert.match(tile, /Primer G/);
+  const x2 = await readFile(fileFor(`/product/${code('x2', '60X60')}/`), 'utf8');
+  assert.match(x2, /На улице: пол<\/h3>/); assert.match(x2, /толщиной 20&nbsp;мм при укладке на клей/); assert.match(x2, /Granirapid, Ultralite S1 Quick, Ultralite S2 Quick/);
+  for (const [section, format] of [['italon', '120X120'], ['italon', '120X278'], ['x2', '60X120'], ['coliseum', '60X60']])
+    assert.doesNotMatch(await readFile(fileFor(`/product/${code(section, format)}/`), 'utf8'), /adhesive-title/, `${section} ${format}: правила нет — блока быть не должно`);
+  for (const path of ['/', '/catalog/', '/salon/']) assert.match(await readFile(fileFor(path), 'utf8'), /id="cart-adhesive" hidden/, path);
+});

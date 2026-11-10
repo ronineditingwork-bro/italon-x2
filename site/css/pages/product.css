@@ -165,3 +165,14 @@
 .grout__result { font-size: var(--fs-lg, 1.125rem); }
 .grout__result span { color: var(--text-2); font-size: var(--fs-sm, .875rem); }
 .grout__calc .t-small, .pdp-grout .grout__colors + .t-small { color: var(--text-2); }
+
+/* ---------- рекомендуемый клей ---------- */
+.adhesive__list { list-style: none; padding: 0; margin: 0 0 var(--s-4); display: grid; border-top: 1px solid var(--line); }
+.adhesive__list li { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-3); padding-block: .8rem; border-bottom: 1px solid var(--line); min-width: 0; overflow-wrap: anywhere; }
+.adhesive__class { flex: none; color: var(--text-2); font-size: var(--fs-s); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pdp-adhesive .specs { margin-bottom: var(--s-4); }
+.pdp-adhesive .specs > div { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+.pdp-adhesive .specs dd { overflow-wrap: anywhere; min-width: 0; }
+.pdp-adhesive .pdp-specs__col > .t-small { color: var(--text-2); }
+/* с 1200 px слово «Рекомендуемый» помещается в колонку заголовка целиком: не даём балансировке строк разорвать его переносом */
+@media (min-width: 75rem) { .pdp-adhesive .pdp-specs__head .t-h2 { hyphens: manual; } }

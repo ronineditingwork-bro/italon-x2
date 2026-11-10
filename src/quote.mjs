@@ -2,6 +2,7 @@ import { PDFDocument, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import { quoteDiscount } from './discount.mjs';
 import { groutSummary, QUOTE_JOINT_MM } from './grouts.mjs';
+import { adhesiveSummary } from './adhesives.mjs';
 
 const W=595.28,H=841.89,M=36,R=W-M;
 // Реквизиты салона (те же, что на странице «Салон»).
@@ -121,6 +122,17 @@ export async function createQuote(cart, details, fontBytes, options={}) {
     paragraph('Рекомендуемая затирка',10,colors.ink,17);
     for(const g of grout)paragraph(`${g.label} - ${g.kg==null?'расход уточнит менеджер':`около ${number(g.kg,1)} кг`} (к ${g.names.join(', ')})`,9,colors.ink,13);
     paragraph(`Рекомендация производителя Italon. В сумму предложения не входит. Расход рассчитан на шов ${QUOTE_JOINT_MM} мм без запаса; цвет и количество менеджер уточнит по проекту.`,8.7,colors.muted,13);y-=15;
+  }
+  const glue=adhesiveSummary(cart.lines);
+  if(glue.length){
+    const rows=glue.map(g=>`${g.label} - ${g.use}${g.area==null?'':`, ${number(g.area,2)} м² плитки`} (к ${g.names.join(', ')})`);
+    const note='Рекомендация Italon и Mapei по формату плитки: подходит любой клей из перечисленных. В сумму предложения не входит. Марку клея и расход менеджер уточнит по основанию и месту укладки.';
+    // блок не разрываем: если он не помещается до конца листа целиком, начинаем его с новой страницы (заголовок не остаётся один внизу)
+    const need=17+rows.reduce((n,t)=>n+wrap(t,R-M,9).length*13,0)+wrap(note,R-M,8.7).length*13;
+    if(y-need<85&&need<H-134-85)newPage(false,false);
+    paragraph('Рекомендуемый клей',10,colors.ink,17);
+    for(const row of rows)paragraph(row,9,colors.ink,13);
+    paragraph(note,8.7,colors.muted,13);y-=15;
   }
   paragraph('Условия предложения',10,colors.ink,17);
   paragraph('Количество рассчитано с учётом целых упаковок и минимального заказа (одна коробка). Наличие, тон, калибр и сроки поставки уточняются при подтверждении заказа. Доставка рассчитывается отдельно.',8.7,colors.muted,13);

@@ -88,3 +88,17 @@ test('заявка менеджеру: рекомендуемая затирка
   const plain = leadText({ createdAt: Date.now(), phone: '+79182489248' }, calculateCart([{ code: products.find(p => p.collectionId === 'prima' && p.canOrder).code, packs: 1 }]));
   assert.doesNotMatch(plain, /затирк/i);
 });
+
+test('заявка менеджеру: рекомендуемый клей — отдельным блоком с местом укладки, форматом и площадью; количества клея нет', async () => {
+  const { leadText } = await import('../worker/quote-lead.mjs');
+  const { calculateCart, products } = await import('../src/catalog.mjs');
+  const tile = products.find(p => p.section === 'italon' && p.format === '60X120' && p.canOrder), x2 = products.find(p => p.section === 'x2' && p.format === '60X60' && p.canOrder);
+  const cart = calculateCart([{ code: tile.code, packs: 10 }, { code: x2.code, packs: 4 }]);
+  const text = leadText({ createdAt: Date.now(), phone: '+79182489248', customer: 'Иванов', address: 'Краснодар', project: '', note: '' }, cart);
+  assert.match(text, /<b>Рекомендуемый клей \(таблицы Italon и Mapei, в сумму не входит\):<\/b>/);
+  assert.match(text, /• Mapei Keraflex Extra S1, Keraflex Maxi S1 или Ultralite S1 \(C2TE S1\) — внутри помещений, формат 60×120, [\d,]+ м² плитки; расход уточнить/);
+  assert.match(text, /• Mapei Keraflex Extra S1, Keraflex Maxi S1 или Ultralite S1 \(C2TE S1\) — на улице, на пол, при укладке на клей, формат 60×60, [\d,]+ м² плитки; расход уточнить/);
+  assert.ok(text.indexOf('Рекомендуемый клей') < text.indexOf('Для контроля'), 'блок клея стоит до контрольной суммы');
+  const none = products.find(p => p.section === 'italon' && p.format === '120X120' && p.canOrder);
+  assert.doesNotMatch(leadText({ createdAt: Date.now(), phone: '+79182489248' }, calculateCart([{ code: none.code, packs: 1 }])), /клей/i);
+});

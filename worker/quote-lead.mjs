@@ -1,6 +1,7 @@
 import { calculateCart } from '../src/catalog.mjs';
 import { quoteDiscount } from '../src/discount.mjs';
 import { groutSummary, QUOTE_JOINT_MM } from '../src/grouts.mjs';
+import { adhesiveSummary } from '../src/adhesives.mjs';
 
 const rub = kopecks => (kopecks / 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' ₽';
 const clean = (value, max) => String(value ?? '').replace(/[\u0000-\u001f\u007f]+/g, ' ').trim().slice(0, max);
@@ -31,7 +32,7 @@ export function leadText(lead, cart) {
   const comment = [lead.note, `Тел. ${lead.phone}`].filter(Boolean).join('. ');
   const reason = discount.parts.map(r => `${r.label} ${r.percent}%`).join(' + ');
   const code = value => `<code>${esc(value)}</code>`;
-  const grout = groutSummary(cart.lines);
+  const grout = groutSummary(cart.lines), glue = adhesiveSummary(cart.lines);
   const lines = cart.lines.map((l, i) => `${i + 1}. ${code(l.code)} — ${esc(qty(l.quantity))} ${esc(l.product.unit)}\n    ${esc(l.product.name)}`);
   return [
     '🧾 <b>Новая заявка с сайта — Italon Experience</b>',
@@ -48,6 +49,7 @@ export function leadText(lead, cart) {
     '',
     '<b>Артикулы (количество):</b>', ...lines,
     ...(grout.length ? ['', `<b>Рекомендуемая затирка (шов ${QUOTE_JOINT_MM} мм, в сумму не входит):</b>`, ...grout.map(g => `• ${esc(g.label)} — ${g.kg == null ? 'расход уточнить' : `≈ ${esc(qty(g.kg))} кг`}`)] : []),
+    ...(glue.length ? ['', '<b>Рекомендуемый клей (таблицы Italon и Mapei, в сумму не входит):</b>', ...glue.map(g => `• ${esc(g.label)} — ${esc(g.use)}, формат ${esc(g.formats.join(', '))}${g.area == null ? '' : `, ${esc(qty(g.area))} м² плитки`}; расход уточнить`)] : []),
     '',
     `Для контроля: сумма с НДС ${esc(rub(cart.totalKopecks))}, к оплате со скидкой ${esc(rub(discount.payableKopecks))}.`,
     'PDF коммерческого предложения — следующим сообщением.',

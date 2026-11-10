@@ -11,6 +11,7 @@
 //   [data-cart-open]          — открыть корзину
 import { esc, money, number, fmt, titleRu, lower, packLabel, minimumLabel, lineOf, productImage, productUrl, collectionUrl, priceHtml, normalize } from '../shared/format.mjs';
 import { groutSummary, QUOTE_JOINT_MM } from '../../src/grouts.mjs';
+import { adhesiveSummary } from '../../src/adhesives.mjs';
 import { createPricing, MAX_PACKS } from '../../src/pricing.mjs';
 import { quoteDiscount, nextTier } from '../../src/discount.mjs';
 import { $, $$, ROOT, rootRel, openDialog, closeDialog, toast } from './ui.mjs';
@@ -172,6 +173,12 @@ function render() {
     grout.hidden = !rec.length;
     grout.innerHTML = rec.length ? `<h3 class="t-h4">Рекомендуемая затирка</h3><ul>${rec.map(r => `<li><b>${esc(r.label)}</b> — ${r.kg == null ? 'расход уточнит менеджер' : `≈ ${number(r.kg)} кг`}<span>к ${esc(r.names.join(', '))}</span></li>`).join('')}</ul>
 <p class="t-small">Рекомендация производителя Italon, расчёт на шов ${QUOTE_JOINT_MM}&nbsp;мм. В сумму не входит и попадёт в коммерческое предложение отдельным блоком; менеджер уточнит цвет и количество по проекту.</p>` : '';
+  }
+  const adhesive = $('#cart-adhesive'), glue = adhesiveSummary(shown.lines);
+  if (adhesive) {
+    adhesive.hidden = !glue.length;
+    adhesive.innerHTML = glue.length ? `<h3 class="t-h4">Рекомендуемый клей</h3><ul>${glue.map(r => `<li><b>${esc(r.label).replace(/(C\d[A-Z]*) (S\d)/g, '$1&nbsp;$2')}</b> — ${esc(r.use)}<span>к ${esc(r.names.join(', '))}${r.area == null ? '' : ` · ${number(r.area)}&nbsp;м² плитки`}</span></li>`).join('')}</ul>
+<p class="t-small">Рекомендация Italon и Mapei по формату плитки: подходит любой клей из перечисленных. В сумму не входит и попадёт в коммерческое предложение отдельным блоком; марку и расход менеджер уточнит по основанию.</p>` : '';
   }
   const list = $('#cart-list');
   if (list) list.innerHTML = shown.lines.length ? shown.lines.map(cartItem).join('') : `<div class="empty-state"><strong>Корзина пока пуста</strong><p>Добавьте позиции из каталога или сохраните расчёт из калькулятора.</p><a class="btn btn--outline" href="${rootRel}catalog/">Открыть каталог</a></div>`;

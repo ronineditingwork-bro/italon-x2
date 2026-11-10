@@ -6,6 +6,7 @@ import { esc, priceHtml, productCard, titleRu, collectionUrl, ARROW, lineOf } fr
 import { breadcrumbs } from '../shared/blocks.mjs';
 import { productSpecs, specsHtml, surfaceLabel, minimumNote, consultSubject, consultBody, formatLabel, variantsCount } from '../shared/product-view.mjs';
 import { products, collections, salon, finishVariantsOf as variantsOf, finishVariantKey as variantKey, categoryOf, categories, priceNote, groutOf } from '../data.mjs';
+import { adhesiveFor, adhesiveLabel, adhesiveTable, ADHESIVE_USES, ADHESIVE_SOURCE } from '../../src/adhesives.mjs';
 
 const collectionMap = new Map(collections.map(c => [c.id, c]));
 const ZOOM = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5M10.5 8v5M8 10.5h5"/></svg>';
@@ -109,6 +110,35 @@ function groutSection(p) {
 </section>`;
 }
 
+/** Блок «Рекомендуемый клей»: клеи Mapei по таблицам Italon для формата плитки (src/adhesives.mjs). Количество не считается: расхода в таблицах нет. */
+function adhesiveSection(p) {
+  const a = adhesiveFor(p);
+  if (!a) return '';
+  const x2 = a.use === 'exteriorFloor', table = adhesiveTable(a.use), main = a.rows[a.use];
+  const lower = s => /^[А-ЯЁ][а-яё]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s;
+  const upper = s => s[0].toUpperCase() + s.slice(1);
+  const cm = v => String(v / 10).replace('.', ',');
+  const row = (dt, dd) => `<div><dt>${esc(dt)}</dt><dd>${esc(dd).replace(/(C\d[A-Z]*) (S\d)/g, '$1&nbsp;$2').replace(/UM 35/g, 'UM&nbsp;35')}</dd></div>`;
+  const date = ADHESIVE_SOURCE.date.split('-').reverse().join('.');
+  return `<section class="section pdp-grout pdp-adhesive" aria-labelledby="adhesive-title">
+<div class="wrap grid">
+<div class="pdp-specs__head" data-reveal><h2 class="t-h2" id="adhesive-title">Рекомендуемый клей</h2>
+<p class="t-small">Рекомендация Italon и Mapei для ${x2 ? `плиты X2 ${cm(a.size[0])}&nbsp;×&nbsp;${cm(a.size[1])}&nbsp;см толщиной 20&nbsp;мм при укладке на клей` : `формата ${cm(a.size[0])}&nbsp;×&nbsp;${cm(a.size[1])}&nbsp;см`}: таблицы из статьи «${esc(ADHESIVE_SOURCE.title)}», ${date}.${x2 ? ' На траву, гравий и опоры X2 укладывают без клея.' : ''}</p></div>
+<div class="pdp-specs__col" data-reveal><h3 class="pdp-specs__title">${esc(ADHESIVE_USES[a.use].title)}</h3>
+<ul class="adhesive__list">${main.map(x => `<li><span><span class="grout__brand">Mapei</span> <b>${esc(x.name)}</b></span><span class="adhesive__class">${esc(x.class).replace(' ', '&nbsp;')}</span></li>`).join('')}</ul>
+<p class="t-small">${main.length > 1 ? 'Подходит любой клей из списка. ' : ''}Справа — класс клея по EN&nbsp;12004. Клей добавляется в коммерческое предложение рекомендацией и в сумму не входит: расход зависит от основания и шпателя, его рассчитает менеджер.</p></div>
+<div class="pdp-specs__col" data-reveal data-reveal-delay="70"><h3 class="pdp-specs__title">Основания и другие случаи</h3>
+<dl class="specs">
+${row('Основания по таблице', table.bases.map(lower).join(', '))}
+${table.otherBases ? row(upper(table.otherBases.bases.map(lower).join(', ')), `${adhesiveLabel(table.otherBases.adhesives)} — для плитки любого размера`) : ''}
+${table.quick.length ? row('Быстрый ввод в эксплуатацию', table.quick.join(', ')) : ''}
+${Object.keys(ADHESIVE_USES).filter(u => u !== a.use && a.rows[u]).map(u => row(ADHESIVE_USES[u].title, adhesiveLabel(a.rows[u]))).join('\n')}
+</dl>
+${table.notes.length ? `<p class="t-small">${esc(table.notes.join(' '))}</p>` : ''}</div>
+</div>
+</section>`;
+}
+
 function render(p) {
   return ctx => {
     const c = collectionMap.get(p.collectionId);
@@ -166,6 +196,7 @@ ${variantsBlock}
 </div>
 </section>
 ${groutSection(p)}
+${adhesiveSection(p)}
 ${related.length ? `<section class="section section--alt" aria-labelledby="related-title"><div class="wrap">
 <div class="section-head"><div class="section-head__text"><p class="eyebrow" data-reveal>${line}</p><h2 class="t-h2" id="related-title" data-reveal>Ещё в коллекции ${esc(c.label)}</h2></div>
 <a class="link-arrow" href="${collectionUrl(ctx.root, c.id)}" data-reveal>Вся коллекция · ${c.count} ${ARROW}</a></div>
