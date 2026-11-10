@@ -2514,7 +2514,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "4cd406026774ce26a9249c04140e3a5cbe2c1e7c68326ba801a744d8fd4c94aa"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000002-f2-fc89e191.webp",
+          "sha256": "fc89e191e49db850dee347af20a741b64a73cd00830b6739160a944831866bbb",
+          "mobile": {
+            "file": "600180000002-f2-m-76d3352c.webp",
+            "sha256": "76d3352c7414f96d09ead11f23376df6266aea7ae6ce126e1d70310798004144"
+          },
+          "sourceUrl": "architalon:charme-evo-imperiale-120x278.zip/imperiale_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000002-f3-59b75569.webp",
+          "sha256": "59b755694753273626d75b3fc77d42b767cfdcc99e2372c96d3615a79b5f324f",
+          "mobile": {
+            "file": "600180000002-f3-m-1fc2d612.webp",
+            "sha256": "1fc2d612b16c9a9143d1013e696c1b66385aca04ce1a646f757844b038ae250a"
+          },
+          "sourceUrl": "architalon:charme-evo-imperiale-120x278.zip/imperiale_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000002-f4-17426c68.webp",
+          "sha256": "17426c681f001bf0c55c4ed7c5923e92b5d8351fa839a2834308e2212a30a35a",
+          "mobile": {
+            "file": "600180000002-f4-m-f5a9d51c.webp",
+            "sha256": "f5a9d51cc57f8c4b555682fd4a946bcae25fc26b31439466c27db01735a1696c"
+          },
+          "sourceUrl": "architalon:charme-evo-imperiale-120x278.zip/imperiale_120x278_F4.tif"
+        }
+      ]
     },
     "600180000001": {
       "file": "600180000001-1ccc8afd.webp",
@@ -2537,7 +2569,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "e4b13e4afe5e5e50967a96871912d76e683cb913aaa65ed580920d49ca3a401d"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000001-f2-35381c34.webp",
+          "sha256": "35381c345b2eb96584d4ae2baf252ddc74dfe4dd5e881b3fb73e5fe9615cd823",
+          "mobile": {
+            "file": "600180000001-f2-m-0c967218.webp",
+            "sha256": "0c96721896f6d19d1eda8075adcbacfad80d971f33f8d1ebeaf588defa0650fb"
+          },
+          "sourceUrl": "architalon:charme-evo-calacatta-120x278.zip/calacatta_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000001-f3-317837f2.webp",
+          "sha256": "317837f2a3a9ea7aabc09ee5d7a8922c5555c00de5b959d12e7550907f5cbdec",
+          "mobile": {
+            "file": "600180000001-f3-m-5c558833.webp",
+            "sha256": "5c5588330500895a413c180db4c38c5d9ab835bb8820dbc7ada5246b467d5a73"
+          },
+          "sourceUrl": "architalon:charme-evo-calacatta-120x278.zip/calacatta_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000001-f4-49d5e536.webp",
+          "sha256": "49d5e5363a01a6af3950b7ba27acd1480c950240366665726a7c9abe1afce6d6",
+          "mobile": {
+            "file": "600180000001-f4-m-dee3bd43.webp",
+            "sha256": "dee3bd430d5b3e59e4fab324e2cbbdc35b5784d26c0b9c14766b312237ae0c01"
+          },
+          "sourceUrl": "architalon:charme-evo-calacatta-120x278.zip/calacatta_120x278_F4.tif"
+        }
+      ]
     },
     "600180000012": {
       "file": "600180000012-e5da1af8.webp",
@@ -2560,7 +2624,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "b9ae7b9bf8a2eedf8802533b45087ef9e97d7cd09c8678b640f163c30f5166af"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000012-f2-5e84fc99.webp",
+          "sha256": "5e84fc99ac79cb223cdc5fc7502ab6b2021ef387a220e5f4c40cfac63f69a1cc",
+          "mobile": {
+            "file": "600180000012-f2-m-837a97ba.webp",
+            "sha256": "837a97ba592ee337a7c31ae4e9cc7b2f54db3c361746eab23e83eb95b6b0b125"
+          },
+          "sourceUrl": "architalon:charme-evo-statuario-120x278.zip/statuario_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000012-f3-eb51399c.webp",
+          "sha256": "eb51399caef2125058986def76f25e56d9ee74afeb92a78ccb51711543306bac",
+          "mobile": {
+            "file": "600180000012-f3-m-196ad41b.webp",
+            "sha256": "196ad41b10e78934c795a50df181c4433e6022968fff7e0f9b0f5a4c7f978f33"
+          },
+          "sourceUrl": "architalon:charme-evo-statuario-120x278.zip/statuario_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000012-f4-5082da15.webp",
+          "sha256": "5082da153246ea74723beb7f8279bef8adb21878c75b9e96a1a285093165084d",
+          "mobile": {
+            "file": "600180000012-f4-m-030e695b.webp",
+            "sha256": "030e695bf5d938fc1c3b06442dd10e94071f21e17765898b29ce5e6043aaaedc"
+          },
+          "sourceUrl": "architalon:charme-evo-statuario-120x278.zip/statuario_120x278_F4.tif"
+        }
+      ]
     },
     "600180000018": {
       "file": "600180000018-63a86b17.webp",
@@ -2583,7 +2679,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "a920403d90a78d9f429c9758ee8114a9d69cd967a2368958c58d19ddf53d4dfe"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000018-f2-d3247aca.webp",
+          "sha256": "d3247aca933de1fc06f2e42a3fe4463f2d544da2e46f38621cb8a449326cbd4d",
+          "mobile": {
+            "file": "600180000018-f2-m-a1ef6d2e.webp",
+            "sha256": "a1ef6d2eea2cbde2358314d0344bf8a163f294ab45da585716046ddbc31b59a8"
+          },
+          "sourceUrl": "architalon:charme-advance-platinum-white-120x278.zip/platinum_white_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000018-f3-8293361c.webp",
+          "sha256": "8293361c7815fe581361a593ee2cfe285acfd7bf6fe4baef865553289b0b040e",
+          "mobile": {
+            "file": "600180000018-f3-m-343ba740.webp",
+            "sha256": "343ba7402d18d9a77777871a9b31e680df76c50a37a82a70eea286ae98cb9fb1"
+          },
+          "sourceUrl": "architalon:charme-advance-platinum-white-120x278.zip/platinum_white_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000018-f4-4fcae058.webp",
+          "sha256": "4fcae058a2ab5ddbdd56655a49bc058577faa08a07cb8a827cf8dd44ef07daec",
+          "mobile": {
+            "file": "600180000018-f4-m-aa951b26.webp",
+            "sha256": "aa951b26eaef25e0041de874e2dd8c8b05da512cb0fa89db7fc56597b88323a5"
+          },
+          "sourceUrl": "architalon:charme-advance-platinum-white-120x278.zip/platinum_white_120x278_F4.tif"
+        }
+      ]
     },
     "600180000003": {
       "file": "600180000003-e13591ca.webp",
@@ -2606,7 +2734,19 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 2,
         "sha256": "5ef8477e87656e6ee3201cb377b135872d4ba04bda4fdfd755dcdf2e66a2d480"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000003-f2-5b9457b1.webp",
+          "sha256": "5b9457b12c8c3ca4f53a5289d2a5016e1e8dd053089e61d6ba68e0ba3435011d",
+          "mobile": {
+            "file": "600180000003-f2-m-407712f4.webp",
+            "sha256": "407712f496f152d9f99159275393559f5baecddd1b33c06bf07129ca2405f732"
+          },
+          "sourceUrl": "architalon:charme-extra-lasa-120x278.zip/lasa_120x278 F2.tif"
+        }
+      ]
     },
     "600180000041": {
       "file": "600180000041-85562986.webp",
@@ -2629,7 +2769,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "9f774491bcccd11ab6cab3ce4f9d20399b823935d38fb862e7a8e9f021825374"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000041-f2-cc7f75fc.webp",
+          "sha256": "cc7f75fce335fb7d510b1f05b926b29ac9e1a431935b760b7c0e200f69c99f55",
+          "mobile": {
+            "file": "600180000041-f2-m-c0bde0b3.webp",
+            "sha256": "c0bde0b32395a09b80eb5ff08cf09171931f4faf046cb28088727896769e9aa6"
+          },
+          "sourceUrl": "architalon:eternum-volcano-120x278.zip/volcano_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000041-f3-fc5c942e.webp",
+          "sha256": "fc5c942efcba6ba64e6bb4c8c2991b409824842dc75752487d516b0d19d78ebd",
+          "mobile": {
+            "file": "600180000041-f3-m-e1b2d4eb.webp",
+            "sha256": "e1b2d4ebbbf64cbd855ce9c6f6e971fae3e81a18d251ff720841e560aa0ff7c5"
+          },
+          "sourceUrl": "architalon:eternum-volcano-120x278.zip/volcano_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000041-f4-9954ad3f.webp",
+          "sha256": "9954ad3fba3e43e2c95c481111209f63a33f7fc45f40408af80e637602416968",
+          "mobile": {
+            "file": "600180000041-f4-m-217d2d72.webp",
+            "sha256": "217d2d72c0ff55e81a9a8d31d782e36beb54e1714592145dd9219b9f1359bb65"
+          },
+          "sourceUrl": "architalon:eternum-volcano-120x278.zip/volcano_120x278_F4.tif"
+        }
+      ]
     },
     "600180000042": {
       "file": "600180000042-4fb97359.webp",
@@ -2652,7 +2824,39 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "af9111261b893e967b7f6c7ccd79968d0d59a122e78dc2da02fe87b1c8a27d7a"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000042-f2-09ae927b.webp",
+          "sha256": "09ae927bf2cb751120515ed151e884541bc9c51392301a72d7d6890669c4357a",
+          "mobile": {
+            "file": "600180000042-f2-m-e2b8683f.webp",
+            "sha256": "e2b8683fc4a0f4e0bf3297d350e7fcb14359a032e5ae37663024265ffd66e39a"
+          },
+          "sourceUrl": "architalon:eternum-carrara-120x278.zip/carrara_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000042-f3-76de0f0e.webp",
+          "sha256": "76de0f0ebb253454d31e759498f483d04b62c73a8bf92d4ced2e46ca60265d8b",
+          "mobile": {
+            "file": "600180000042-f3-m-41f61695.webp",
+            "sha256": "41f6169528184ae3fa275c94acf7b9aba3e1b24ec5bbb07a3bf539c9d173ded2"
+          },
+          "sourceUrl": "architalon:eternum-carrara-120x278.zip/carrara_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000042-f4-fb58fa4e.webp",
+          "sha256": "fb58fa4e2782dd2adbacec8b82a81388b6c7ac9004efb8d05981e64c8f670303",
+          "mobile": {
+            "file": "600180000042-f4-m-c5a44d09.webp",
+            "sha256": "c5a44d09f2a372a287050ef8cd53ae03d9678ceace62870c0e3157460b41c448"
+          },
+          "sourceUrl": "architalon:eternum-carrara-120x278.zip/carrara_120x278_F4.tif"
+        }
+      ]
     }
   }
 }
