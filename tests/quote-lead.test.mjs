@@ -77,3 +77,14 @@ test('сообщение для DAS предупреждает, чего не х
   assert.match(text, /&lt;b&gt;x&lt;\/b&gt; &amp; y/);
   assert.match(text, /Скидка для конечного покупателя: <b>0%<\/b>/);
 });
+
+test('заявка менеджеру: рекомендуемая затирка с расчётом на шов 2 мм — отдельным блоком, в сумму не входит', async () => {
+  const { leadText } = await import('../worker/quote-lead.mjs');
+  const { calculateCart, products } = await import('../src/catalog.mjs');
+  const cart = calculateCart([{ code: '600010001804', packs: 7 }]);                    // Авангард Пьюр 120×120
+  const text = leadText({ createdAt: Date.now(), phone: '+79182489248', customer: 'Иванов', address: 'Краснодар', project: '', note: '' }, cart);
+  assert.match(text, /Рекомендуемая затирка \(шов 2 мм, в сумму не входит\)/);
+  assert.match(text, /Mapei 111 «Серебристо-серый» \(аналог Litokol LLE\.105 «Серебристо-серый»\) — ≈ [\d,]+ кг/);
+  const plain = leadText({ createdAt: Date.now(), phone: '+79182489248' }, calculateCart([{ code: products.find(p => p.collectionId === 'prima' && p.canOrder).code, packs: 1 }]));
+  assert.doesNotMatch(plain, /затирк/i);
+});

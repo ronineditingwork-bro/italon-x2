@@ -2,9 +2,7 @@
 // Ничего не выдумываем: только то, что есть в прайсе и в описании салона.
 import { products, priceInfo } from '../src/catalog.mjs';
 import { collections as rawCollections, layingMethods, outdoorSpaces } from '../src/scenes.mjs';
-import groutRows from '../data/italon-grouts-2025.json' with { type: 'json' };
-import groutColors from '../data/grout-colors.json' with { type: 'json' };
-import { groutFor, groutView } from '../src/grouts.mjs';
+import { groutColor } from '../src/grouts.mjs';
 
 const plateFormat = f => /^\d+(\.\d+)?X\d+(\.\d+)?$/.test(f);
 const area = f => f.split('X').reduce((a, b) => a * Number(b), 1);
@@ -130,11 +128,8 @@ export const finishVariantGroups = variantGroups;
 export const finishVariantsOf = variantsOf;
 
 // Рекомендуемая затирка (каталог Italon «Затирки Mapei/Litokol», декабрь 2025) и исходные данные для расчёта расхода.
-/** { mapei: [...], litokol, size: [a, b] мм | null, thickness мм } или null, если рекомендации для товара нет. */
+/** Затирка для карточки товара: { mapei: [{ code, name, hex }], litokol: {…} | null, size, thickness } или null (данные — product.grout). */
 export function groutOf(p) {
-  const view = groutView(groutFor(p, groutRows), groutColors);
-  if (!view) return null;
-  const m = /^(\d+(?:\.\d+)?)X(\d+(?:\.\d+)?)$/.exec(p.format || '');   // расход считаем только для плитки; у мозаики на сетке размер листа, а не чипа
-  // толщины в прайсе нет: типовые значения Italon, в калькуляторе поле можно изменить
-  return { ...view, size: m ? [m[1] * 10, m[2] * 10] : null, thickness: p.section === 'x2' ? 20 : p.format === '120X278' ? 6 : 9 };
+  const g = p.grout;
+  return g ? { mapei: g.mapei.map(c => groutColor('mapei', c)), litokol: g.litokol ? groutColor('litokol', g.litokol) : null, size: g.size || null, thickness: g.thickness } : null;
 }

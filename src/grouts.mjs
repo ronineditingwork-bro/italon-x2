@@ -4,6 +4,7 @@
 // поэтому сокращение сравнивается по началу слова. У мозаик, декоров и вставок свои строки и часто другой цвет, поэтому
 // товар получает рекомендацию, только если в его названии не осталось «лишних» значимых слов. Спорное — без рекомендации.
 // Модуль чистый (без fs): формула расхода нужна и в браузере.
+import colors from '../data/grout-colors.json' with { type: 'json' };
 
 /** Слова названия товара, которые не отличают позицию каталога затирок: отделка, кромка, серия декора. */
 export const NOISE = new Set(['RET', 'RETT', 'LUX', 'NAT', 'PAT', 'GRIP', 'STR', 'STRUTT', 'SQ', 'CER', 'LAP', 'MM', 'X', 'SILK', 'RT', 'MAT', 'NATURAL', 'PLAY']);
@@ -46,14 +47,49 @@ export function groutFor(product, rows) {
   return tie ? null : best;
 }
 
-/** Блок для карточки: { mapei: [{ code, name, hex }, …], litokol: { code, name, hex } | null } или null. */
-export function groutView(row, colors) {
+/**
+ * Данные затирки для товара (хранятся в товаре как product.grout): { mapei: ['111'] | ['123', '111'], litokol?: 'LLE.105', size?: [a, b] мм, thickness мм } или null.
+ * size есть только у плитки (формат «60X120»): у мозаики на сетке в прайсе размер листа, а не чипа — расход по нему не посчитать.
+ */
+export function groutData(product, rows) {
+  const row = groutFor(product, rows);
   if (!row) return null;
-  const item = (brand, code) => { const c = colors[brand]?.[code]; return c ? { code, name: c.name, hex: c.hex } : null; };
-  const mapei = [row.mapei, row.mapei2].filter(Boolean).map(c => item('mapei', c));
-  if (!mapei.length || mapei.some(m => !m)) return null;
-  // check_litokol — аналог Litokol спорный или без названия (ТЗ, раздел 8): показываем только Mapei, пока производитель не подтвердит
-  return { mapei, litokol: row.litokol && !row.check_litokol ? item('litokol', row.litokol) : null };
+  const mapei = [row.mapei, row.mapei2].filter(Boolean);
+  if (!mapei.length || mapei.some(c => !colors.mapei[c])) return null;
+  const m = /^(\d+(?:\.\d+)?)X(\d+(?:\.\d+)?)$/.exec(product.format || '');
+  return { mapei,
+    // check_litokol — аналог Litokol спорный или без названия (ТЗ, раздел 8): показываем только Mapei, пока производитель не подтвердит
+    ...(row.litokol && !row.check_litokol && colors.litokol[row.litokol] ? { litokol: row.litokol } : {}),
+    ...(m ? { size: [m[1] * 10, m[2] * 10] } : {}),
+    // толщины в прайсе нет: типовые значения Italon; менеджер уточняет при заказе
+    thickness: product.section === 'x2' ? 20 : product.format === '120X278' ? 6 : 9 };
+}
+
+/** Цвет по коду: { code, name, hex }. */
+export const groutColor = (brand, code) => ({ code, ...colors[brand][code] });
+/** «Mapei 111 «Серебристо-серый» (аналог Litokol LLE.105 «Серебристо-серый»)»; два цвета Mapei — через «или». */
+export function groutLabel(g) {
+  const name = (brand, title, code) => `${title} ${code} «${colors[brand][code].name}»`;
+  return g.mapei.map(c => name('mapei', 'Mapei', c)).join(' или ') + (g.litokol ? ` (аналог ${name('litokol', 'Litokol', g.litokol)})` : '');
+}
+
+/** Ширина шва, на которую считается затирка в корзине и КП; менеджер корректирует по проекту. */
+export const QUOTE_JOINT_MM = 2;
+/**
+ * Рекомендуемая затирка к корзине: строки сгруппированы по цвету, расход суммируется по плитке, проданной в м².
+ * lines — строки корзины ({ product, quantity }). → [{ label, kg | null, names: [названия плитки] }]; kg = null — расход не посчитать (мозаика, штучный товар).
+ */
+export function groutSummary(lines, joint = QUOTE_JOINT_MM) {
+  const out = new Map();
+  for (const l of lines || []) {
+    const g = l.product?.grout;
+    if (!g) continue;
+    const label = groutLabel(g), item = out.get(label) || { label, kg: 0, names: [] };
+    const perM2 = g.size && l.product.unit === 'м²' ? groutKgPerM2(g.size[0], g.size[1], g.thickness, joint) : NaN;
+    item.kg = item.kg == null || Number.isNaN(perM2) ? null : item.kg + perM2 * l.quantity;
+    item.names.push(l.product.name); out.set(label, item);
+  }
+  return [...out.values()].map(x => ({ ...x, kg: x.kg == null ? null : Math.ceil(x.kg * 10) / 10 }));
 }
 
 /** Плотность цементной затирки для формулы расхода, кг/дм³ (коэффициент из таблиц расхода Mapei Ultracolor Plus). */

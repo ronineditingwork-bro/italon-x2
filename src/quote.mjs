@@ -1,6 +1,7 @@
 import { PDFDocument, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import { quoteDiscount } from './discount.mjs';
+import { groutSummary, QUOTE_JOINT_MM } from './grouts.mjs';
 
 const W=595.28,H=841.89,M=36,R=W-M;
 // Реквизиты салона (те же, что на странице «Салон»).
@@ -115,6 +116,12 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   while(font.widthOfTextAtSize(totalText,totalSize)>R-330)totalSize-=.5;
   right(totalText,R-14,y-49,totalSize);y-=92;
   if(disc.percent){paragraph(`Скидка: ${disc.parts.map(r=>`${r.label} ${r.percent}%`).join(', ')}.`,9,colors.muted,13);y-=6;}
+  const grout=groutSummary(cart.lines);
+  if(grout.length){
+    paragraph('Рекомендуемая затирка',10,colors.ink,17);
+    for(const g of grout)paragraph(`${g.label} - ${g.kg==null?'расход уточнит менеджер':`около ${number(g.kg,1)} кг`} (к ${g.names.join(', ')})`,9,colors.ink,13);
+    paragraph(`Рекомендация производителя Italon. В сумму предложения не входит. Расход рассчитан на шов ${QUOTE_JOINT_MM} мм без запаса; цвет и количество менеджер уточнит по проекту.`,8.7,colors.muted,13);y-=15;
+  }
   paragraph('Условия предложения',10,colors.ink,17);
   paragraph('Количество рассчитано с учётом целых упаковок и минимального заказа (одна коробка). Наличие, тон, калибр и сроки поставки уточняются при подтверждении заказа. Доставка рассчитывается отдельно.',8.7,colors.muted,13);
   y-=15;paragraph('Салон',10,colors.ink,17);

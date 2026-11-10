@@ -1,5 +1,7 @@
 import raw from '../data/italon-price-2026-07.json' with { type: 'json' };
 import images from '../data/product-images.json' with { type: 'json' };
+import groutRows from '../data/italon-grouts-2025.json' with { type: 'json' };
+import { groutData } from './grouts.mjs';
 import { createPricing, MAX_PACKS } from './pricing.mjs';
 
 export const priceInfo = { source: raw.source, validFrom: raw.validFrom, currency: 'RUB', vatIncluded: true };
@@ -44,6 +46,8 @@ for (const series of raw.series) for (const row of series.items) {
   });
 }
 export const products = [...unique.values()];
+// рекомендуемая затирка — в самом товаре: её видят и страницы сайта, и корзина, и КП, и заявка менеджеру
+for (const p of products) { const g = groutData(p, groutRows); if (g) p.grout = g; }
 export const productMap = new Map(products.map(p => [p.code, p]));
 export { MAX_PACKS };
 export const { lineFor, calculateCart, calculateArea } = createPricing(productMap, priceInfo);

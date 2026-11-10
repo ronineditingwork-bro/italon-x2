@@ -156,7 +156,7 @@
 .pdp-grout { padding-top: 0; }
 .pdp-grout .grid { row-gap: var(--s-6); }
 .pdp-grout .grid::before { content: ""; grid-column: 1 / -1; border-top: 1px solid var(--line); margin-bottom: clamp(.5rem, 2vw, 2.5rem); }
-.grout__colors { list-style: none; padding: 0; margin: 0 0 var(--s-5); display: grid; gap: var(--s-3); }
+.grout__colors { list-style: none; padding: 0; margin: 0 0 var(--s-4); display: grid; gap: var(--s-3); }
 .grout__color { display: flex; align-items: center; gap: var(--s-3); min-width: 0; overflow-wrap: anywhere; }
 .grout__swatch { flex: none; width: 2.25rem; height: 2.25rem; border-radius: 50%; border: 1px solid var(--line); }
 .grout__brand { color: var(--text-2); }
@@ -164,4 +164,4 @@
 .grout__fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: var(--s-3); }
 .grout__result { font-size: var(--fs-lg, 1.125rem); }
 .grout__result span { color: var(--text-2); font-size: var(--fs-sm, .875rem); }
-.grout__calc .t-small { color: var(--text-2); }
+.grout__calc .t-small, .pdp-grout .grout__colors + .t-small { color: var(--text-2); }

@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import rows from '../data/italon-grouts-2025.json' with { type: 'json' };
 import colors from '../data/grout-colors.json' with { type: 'json' };
-import { groutFor, groutView, groutKgPerM2 } from '../src/grouts.mjs';
+import { groutFor, groutData, groutSummary, groutKgPerM2 } from '../src/grouts.mjs';
 import { products, groutOf } from '../site/data.mjs';
 
 const byLatin = l => products.find(p => p.latin === l) || assert.fail('нет товара ' + l);
@@ -30,12 +30,23 @@ test('затирки: у мозаики и декора — своя строк�
 });
 
 test('затирки: Litokol скрыт, где его нет или он спорный; два альтернативных цвета Mapei выводятся оба', () => {
-  const view = (c, a) => groutView(rows.find(r => r.collection === c && r.article_en === a), colors);
-  assert.equal(view('Wonderful Life', 'Almond').litokol, null);                       // в каталоге «X»
-  assert.equal(view('Wonderful Life', 'Graphite').litokol, null);                     // Mapei серый, Litokol бежевый — на проверке
-  assert.equal(view('Stellaris', 'Crystal Pure').litokol, null);                      // LLE.202 — название не найдено
-  assert.deepEqual(view('Metropolis', 'Royal Ivory').mapei.map(c => c.code), ['123', '111']);
-  assert.equal(groutView(null, colors), null);
+  const data = l => byLatin(l).grout;
+  assert.equal(data('WON.LIFE ALMOND 80 RET').litokol, undefined);                    // в каталоге «X»
+  assert.equal(data('WON.LIFE GRAPHITE 80 RET').litokol, undefined);                  // Mapei серый, Litokol бежевый — на проверке
+  assert.deepEqual(data('MET.ROYAL IVORY 80X160').mapei, ['123', '111']);
+  assert.equal(groutData({ collectionId: 'prima', latin: 'PRI.DENIM RED 120X278 LUX' }, rows), null);
+});
+
+test('затирки в корзине и КП: расход на шов 2 мм суммируется по цвету; мозаика — без количества; товары без рекомендации не попадают', () => {
+  const a = byLatin('AVA.PURE 120X120 RET'), b = byLatin('AVA.PURE 120X278'), mos = byLatin('AVA.PURE MINIBRICK'), none = products.find(p => p.collectionId === 'prima');
+  const sum = groutSummary([{ product: a, quantity: 20 }, { product: b, quantity: 10 }, { product: mos, quantity: 3 }, { product: none, quantity: 5 }]);
+  assert.equal(sum.length, 2);
+  assert.match(sum[0].label, /^Mapei 111 «Серебристо-серый» \(аналог Litokol LLE\.105/); assert.deepEqual(sum[0].names, [a.name, b.name]);
+  const expected = groutKgPerM2(1200, 1200, 9, 2) * 20 + groutKgPerM2(1200, 2780, 6, 2) * 10;
+  assert.equal(sum[0].kg, Math.ceil(expected * 10) / 10);
+  assert.equal(sum[1].kg, null); assert.deepEqual(sum[1].names, [mos.name]);
+  assert.deepEqual(groutSummary([{ product: none, quantity: 5 }]), []); assert.deepEqual(groutSummary([]), []);
+  assert.match(groutSummary([{ product: byLatin('MET.ROYAL IVORY 80X160'), quantity: 1 }])[0].label, /Mapei 123 «Старый белый» или Mapei 111/);
 });
 
 test('затирки: рекомендация есть у большинства товаров коллекций из каталога, вне каталога её нет', () => {

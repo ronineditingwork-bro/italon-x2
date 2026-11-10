@@ -114,11 +114,10 @@ if (grout) {
   const num = v => Number(String(v).trim().replace(',', '.')), ru = (v, d = 1) => v.toLocaleString('ru-RU', { maximumFractionDigits: d });
   const update = () => {
     const f = grout.elements, area = num(f.area.value), perM2 = groutKgPerM2(grout.dataset.a, grout.dataset.b, num(f.thickness.value), num(f.joint.value));
-    const out = $('[data-grout-result]', grout), link = $('[data-grout-mail]');
-    if (!(area > 0) || !Number.isFinite(perM2)) { out.textContent = 'Введите площадь и толщину плитки числом больше нуля.'; link.href = grout.dataset.mail.replace('__CALC__', ''); return; }
+    const out = $('[data-grout-result]', grout);
+    if (!(area > 0) || !Number.isFinite(perM2)) { out.textContent = 'Введите площадь и толщину плитки числом больше нуля.'; return; }
     const total = Math.ceil(perM2 * area * 10) / 10;
-    out.innerHTML = `<b>${ru(total)} кг</b> на ${ru(area, 2)} м² <span>· расход ${ru(perM2, 2)} кг/м² · это ${Math.ceil(total / 2)} уп. по 2 кг</span>`;
-    link.href = grout.dataset.mail.replace('__CALC__', encodeURIComponent(`\nПлощадь ${ru(area, 2)} м², шов ${ru(num(f.joint.value))} мм, толщина плитки ${ru(num(f.thickness.value))} мм — по расчёту на сайте нужно около ${ru(total)} кг.`));
+    out.innerHTML = `<b>${ru(total)} кг</b> на ${ru(area, 2)} м² <span>· расход ${ru(perM2, 2)} кг/м²</span>`;
   };
   grout.addEventListener('input', update); grout.addEventListener('submit', e => e.preventDefault()); update();
 }

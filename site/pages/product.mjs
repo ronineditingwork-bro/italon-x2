@@ -87,9 +87,7 @@ function groutSection(p) {
   const g = groutOf(p);
   if (!g) return '';
   const chip = (brand, c) => `<li class="grout__color"><span class="grout__swatch" style="background:${c.hex}" aria-hidden="true"></span><span><span class="grout__brand">${brand}</span> <b>${esc(c.code)}</b> «${esc(c.name)}»</span></li>`;
-  const names = [...g.mapei.map(c => `Mapei ${c.code} «${c.name}»`), ...(g.litokol ? [`Litokol ${g.litokol.code} «${g.litokol.name}»`] : [])];
-  const mail = (extra = '') => `mailto:${salon.email}?subject=${encodeURIComponent(`Затирка к ${p.name} (арт. ${p.code})`)}&body=${encodeURIComponent(`Здравствуйте! Прошу подобрать затирку к плитке ${p.name}, артикул ${p.code}.\nРекомендация производителя: ${names.join(g.mapei.length > 1 && !g.litokol ? ' или ' : '; ')}.${extra}\n`)}`;
-  const calc = g.size ? `<form class="grout__calc" data-grout data-a="${g.size[0]}" data-b="${g.size[1]}" data-mail="${esc(mail('__CALC__'))}" novalidate>
+  const calc = g.size ? `<form class="grout__calc" data-grout data-a="${g.size[0]}" data-b="${g.size[1]}" novalidate>
 <h3 class="pdp-specs__title">Сколько нужно затирки</h3>
 <div class="grout__fields">
 <label class="field"><span class="field__label">Площадь, м²</span><input class="input" name="area" type="text" inputmode="decimal" value="20" autocomplete="off"></label>
@@ -105,7 +103,7 @@ function groutSection(p) {
 <p class="t-small">Рекомендация производителя Italon, каталог затирок Mapei / Litokol, декабрь 2025. Цвет кружка на экране условный — сверяйте по образцу.</p></div>
 <div class="pdp-specs__col" data-reveal><h3 class="pdp-specs__title">${g.mapei.length > 1 ? 'Цвет — любой из двух' : 'Цвет'}${g.litokol ? ' и аналог' : ''}</h3>
 <ul class="grout__colors">${g.mapei.map(c => chip('Mapei', c)).join('')}${g.litokol ? chip('Аналог Litokol', g.litokol) : ''}</ul>
-<a class="btn btn--outline btn--small" href="${esc(mail())}" data-grout-mail>Запросить затирку</a></div>
+<p class="t-small">Затирка добавляется в коммерческое предложение рекомендацией: расчёт на шов 2&nbsp;мм, менеджер уточнит по проекту.</p></div>
 <div class="pdp-specs__col" data-reveal data-reveal-delay="70">${calc}</div>
 </div>
 </section>`;
