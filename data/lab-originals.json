@@ -287,7 +287,39 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "886a48b818e147b6ebcca9f3263754bfbe3fc6b26d695e65bd2095141657465d"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000060-f2-cb53794e.webp",
+          "sha256": "cb53794e180e41cff227474a8c17664552269fe28abe831ce4e3a4c44ad575b2",
+          "mobile": {
+            "file": "600180000060-f2-m-65d69684.webp",
+            "sha256": "65d696844f83880998b4afbc1057728ba3268c4431051e582a62881889282efe"
+          },
+          "sourceUrl": "architalon:avantgarde-black-120x278.zip/black_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000060-f3-54009b86.webp",
+          "sha256": "54009b864ac9debeb1b7c4f2c3921f796ed9243cc9e42055823bd06ba72a32b4",
+          "mobile": {
+            "file": "600180000060-f3-m-c0687f8a.webp",
+            "sha256": "c0687f8a3a7f50af3a5d3993250ae9f4d442fa4f164763bdcd55af675d6b9070"
+          },
+          "sourceUrl": "architalon:avantgarde-black-120x278.zip/black_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000060-f4-a8e9f3f1.webp",
+          "sha256": "a8e9f3f1135ce0fa266147360e138d6857bc70911835e728a670bb68e886711a",
+          "mobile": {
+            "file": "600180000060-f4-m-083f9418.webp",
+            "sha256": "083f941827b5baa1c79bfc8d4f88ab6d4e84e6fc1a62e519517ef33b3aabe91b"
+          },
+          "sourceUrl": "architalon:avantgarde-black-120x278.zip/black_120x278_F4.tif"
+        }
+      ]
     },
     "600180000062": {
       "file": "600180000062-3280788d.webp",
@@ -819,7 +851,39 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "1a492986db1509eb76d46f27268ba2db9891262dcbcf9a5028c4b25d9528647a"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000033-f2-1cb1f21a.webp",
+          "sha256": "1cb1f21aa142239e72eb43a08406cd76f5e1887b37d2bbb966c22b12cb8923f0",
+          "mobile": {
+            "file": "600180000033-f2-m-87aedbab.webp",
+            "sha256": "87aedbabad40b289ee5d25e7b33defe5c5ed4abd8bc4a51b761be693fb285965"
+          },
+          "sourceUrl": "architalon:continuum-stone-beige-120x278.zip/continuum_stone beige_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000033-f3-1da219a6.webp",
+          "sha256": "1da219a6f9b04a64f3bb844cb88b4fb3e395236452892bcf7bb045a9a986350d",
+          "mobile": {
+            "file": "600180000033-f3-m-0c04d0da.webp",
+            "sha256": "0c04d0da46be1fb5d42435c3a374514afa20180f951cf9b2cab32e00fed72867"
+          },
+          "sourceUrl": "architalon:continuum-stone-beige-120x278.zip/continuum_stone beige_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000033-f4-ba9572de.webp",
+          "sha256": "ba9572ded79da45bd8b788cdc3456b8691bca39b082d4f028a8985fafbe7a11a",
+          "mobile": {
+            "file": "600180000033-f4-m-71e0f553.webp",
+            "sha256": "71e0f5532c1cfa6b13e1b99f616b5a1b957a5bae2e764033aa9147248676bbc0"
+          },
+          "sourceUrl": "architalon:continuum-stone-beige-120x278.zip/continuum_stone beige_120x278_F4.tif"
+        }
+      ]
     },
     "600180000034": {
       "file": "600180000034-100f571d.webp",
@@ -842,7 +906,39 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "480cd216059e936d17a5d1c63d11f6db6bbc5af6a3ddcbd2bbd1ce51033f33dd"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000034-f2-27946539.webp",
+          "sha256": "279465390f33927714e18fd069b53864909e182be277ac901417588d7c0c4b1a",
+          "mobile": {
+            "file": "600180000034-f2-m-6c34df84.webp",
+            "sha256": "6c34df844f87b020e724148ad2b6a8551c05971ee05def2f8af91e338fb469cd"
+          },
+          "sourceUrl": "architalon:continuum-stone-grey-120x278.zip/continuum_stone grey_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000034-f3-cd1f6212.webp",
+          "sha256": "cd1f6212a07ef63bee94b0179f124a3f65f53b2f23a3f901942f593e90d07b84",
+          "mobile": {
+            "file": "600180000034-f3-m-d38426db.webp",
+            "sha256": "d38426db9a6d9d03aa13c28e4d50952ff61bfb07dbebcc1fbfe12114a2b467a8"
+          },
+          "sourceUrl": "architalon:continuum-stone-grey-120x278.zip/continuum_stone grey_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000034-f4-715886ee.webp",
+          "sha256": "715886eeb9fc167cde02cf91fec00d52f1fce7278d258ddca52477c856161473",
+          "mobile": {
+            "file": "600180000034-f4-m-e36931b6.webp",
+            "sha256": "e36931b6706921c59cc66bdf75e1fbea340c31d9ad9b78d20c38305d774ac226"
+          },
+          "sourceUrl": "architalon:continuum-stone-grey-120x278.zip/continuum_stone grey_120x278_F4.tif"
+        }
+      ]
     },
     "600180000075": {
       "file": "600180000075-e9b7b20d.webp",
@@ -865,7 +961,39 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "423015f9625f4e34724fe436c99fdb240acf045944cf1205bae0528f941d4b16"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000075-f2-25ee8c96.webp",
+          "sha256": "25ee8c967fcae892f9056d04a54a38d48da651084db0a6c64314b067a2533614",
+          "mobile": {
+            "file": "600180000075-f2-m-9b6a321a.webp",
+            "sha256": "9b6a321ac69e8619ec9f10ff755bb696a201875b877e7b2e189d60c1afd57da4"
+          },
+          "sourceUrl": "architalon:magma-oak-120x278.zip/oak_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000075-f3-b4521d30.webp",
+          "sha256": "b4521d3013366b22926455c589bb493762f62438b0c2dc903c6130dc4587e8c3",
+          "mobile": {
+            "file": "600180000075-f3-m-5ba35ce4.webp",
+            "sha256": "5ba35ce4fc519b975feb10be16f5092e55e26ad516d70ea0c912a0723d24977c"
+          },
+          "sourceUrl": "architalon:magma-oak-120x278.zip/oak_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000075-f4-660205fb.webp",
+          "sha256": "660205fb5e40d5e8861e1c6198db2a10acfb2b6d72bdd0bfab103f730ea38577",
+          "mobile": {
+            "file": "600180000075-f4-m-b88b3e4b.webp",
+            "sha256": "b88b3e4b55b1589d09a5692b7a263c59a26a9aea640f26dd122dbc2e76083cee"
+          },
+          "sourceUrl": "architalon:magma-oak-120x278.zip/oak_120x278_F4.tif"
+        }
+      ]
     },
     "600180000074": {
       "file": "600180000074-4d342847.webp",
@@ -888,7 +1016,39 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "df85eb4d3ddce33a80af836f2409f73452d9872f71198856118aa47eb44bffa1"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000074-f2-0497334a.webp",
+          "sha256": "0497334ac893b9a2fe552ca759038a525c83afdac4bffb7e0e0c66fbaff921c7",
+          "mobile": {
+            "file": "600180000074-f2-m-842031fd.webp",
+            "sha256": "842031fdd3e14d3e5712ed259e068a01fe91ccddcef5753176090562f29d1909"
+          },
+          "sourceUrl": "architalon:magma-pepper-120x278.zip/pepper_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000074-f3-2680319e.webp",
+          "sha256": "2680319e97ae877dc8119037812a4efcdc6c008946aa3a91a1cce797afc95520",
+          "mobile": {
+            "file": "600180000074-f3-m-01372ec2.webp",
+            "sha256": "01372ec2cc4e5323ca087ec52c702b119ce4408ed2827d0c04ada5abba574378"
+          },
+          "sourceUrl": "architalon:magma-pepper-120x278.zip/pepper_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000074-f4-2fa61937.webp",
+          "sha256": "2fa61937910df098bd8a4ef74b9e10b544a16ebc1f64270557243f97801205ce",
+          "mobile": {
+            "file": "600180000074-f4-m-44fbd235.webp",
+            "sha256": "44fbd235d5675bca0d9198dac3bec5b79c3fe40ba6bedc26e169fbe869afc097"
+          },
+          "sourceUrl": "architalon:magma-pepper-120x278.zip/pepper_120x278_F4.tif"
+        }
+      ]
     },
     "600180000021": {
       "file": "600180000021-db1950ca.webp",
@@ -911,7 +1071,39 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "d35ef4b5205e4babba3500960bda2a7da55f406bc75bb504f9de85957c29ebfe"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000021-f2-d1916f28.webp",
+          "sha256": "d1916f282e59e4e0c1bfe8f8e8255802f34af3a2d97b09f3349ff836e1205b35",
+          "mobile": {
+            "file": "600180000021-f2-m-765909a8.webp",
+            "sha256": "765909a8d9eb6f28b33871e97c2f873fcfc786297eb11532dde9d2b35d9ca82a"
+          },
+          "sourceUrl": "architalon:metropolis-arcadia-brown-120x278.zip/arcadia_brown_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000021-f3-0b45165b.webp",
+          "sha256": "0b45165b7f8015018e0e64f0cd7fcb47a4ff14b61c383ad53c7a1bb4c834588c",
+          "mobile": {
+            "file": "600180000021-f3-m-586612eb.webp",
+            "sha256": "586612eb96e856b26d8168894b4fc05458a669286ef16361679cd14ee4d3f0c2"
+          },
+          "sourceUrl": "architalon:metropolis-arcadia-brown-120x278.zip/arcadia_brown_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000021-f4-9be34c42.webp",
+          "sha256": "9be34c42870769be2d91aa5fce90d3e8ad940fbb4adb46b256da0afe77526d99",
+          "mobile": {
+            "file": "600180000021-f4-m-dd3a3973.webp",
+            "sha256": "dd3a3973ae3b2338bd19e4855408ffbe198c33a876657b91681df2377d03c0d9"
+          },
+          "sourceUrl": "architalon:metropolis-arcadia-brown-120x278.zip/arcadia_brown_120x278_F4.tif"
+        }
+      ]
     },
     "600180000022": {
       "file": "600180000022-6bcdd5b8.webp",
@@ -934,7 +1126,39 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "0612f5f57c763548755af37579f94007a3ae1c02afc74ec1b24e36ad0b77fd60"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000022-f2-3f7d18ac.webp",
+          "sha256": "3f7d18ac1df74810c623c80ce55eb293a9555f110be010d1ddf24002722376f0",
+          "mobile": {
+            "file": "600180000022-f2-m-7dc55edf.webp",
+            "sha256": "7dc55edf75975b796352533d063c99967c289fc97c957b2e7dd9b7c851ca9150"
+          },
+          "sourceUrl": "architalon:metropolis-imperial-black-120x278.zip/imperial_black_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000022-f3-58a1d80f.webp",
+          "sha256": "58a1d80f627754458a43a9bb6c7e721b960a487f47a10394fa8474ecc22ed620",
+          "mobile": {
+            "file": "600180000022-f3-m-7a6bca5e.webp",
+            "sha256": "7a6bca5e4b3b6b4e12436634532f04e59dc2c46569ca9837a570e8260e15d175"
+          },
+          "sourceUrl": "architalon:metropolis-imperial-black-120x278.zip/imperial_black_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000022-f4-c6e3e2e9.webp",
+          "sha256": "c6e3e2e95cc21761f1425c6cda478337c3870d1c3b1da7387dee6380c2b61ce0",
+          "mobile": {
+            "file": "600180000022-f4-m-822ebbef.webp",
+            "sha256": "822ebbef7086a3ffa5a914d4a9c5269c80c7bdc20f5d25c024950213d3a94182"
+          },
+          "sourceUrl": "architalon:metropolis-imperial-black-120x278.zip/imperial_black_120x278_F4.tif"
+        }
+      ]
     },
     "600180000019": {
       "file": "600180000019-5a618bf0.webp",
@@ -957,7 +1181,39 @@
         "finish": "СИЛК И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "ec59f1694ce0a07a26e8a652bb36d48f95c8cd440fe5ee595a145eebde415b19"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000019-f2-5609e509.webp",
+          "sha256": "5609e5095678058076770bd7cdbf6f6912ea3f11e6733c7e565b29f2b73bf74b",
+          "mobile": {
+            "file": "600180000019-f2-m-508ddac0.webp",
+            "sha256": "508ddac0f6ad04932de27a8bfa1ca0733931546e9cbcd231852da67c9f2b2df8"
+          },
+          "sourceUrl": "architalon:metropolis-calacatta-gold-120x278.zip/calacatta_gold_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000019-f3-eaa1f06f.webp",
+          "sha256": "eaa1f06fc486ebd3ff1665cf73c540d7c6d95b7bb3cc6b9adbe5762bf4230965",
+          "mobile": {
+            "file": "600180000019-f3-m-ae2006c9.webp",
+            "sha256": "ae2006c9bc57a3a2b80332051482327152a93a406c7206090cde4f2b1c1f81c1"
+          },
+          "sourceUrl": "architalon:metropolis-calacatta-gold-120x278.zip/calacatta_gold_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000019-f4-6d50e61c.webp",
+          "sha256": "6d50e61c3bfe6c6f751bc9cb991bf6f0c58ff424e4712f24612d3e607a743b9a",
+          "mobile": {
+            "file": "600180000019-f4-m-88d616a5.webp",
+            "sha256": "88d616a508314480df21f072bcacda839334a3a3045af8123d5d4f2394101538"
+          },
+          "sourceUrl": "architalon:metropolis-calacatta-gold-120x278.zip/calacatta_gold_120x278_F4.tif"
+        }
+      ]
     },
     "600180000020": {
       "file": "600180000020-ab87cfc4.webp",
@@ -980,7 +1236,39 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "51d20067cedbdf4ccd4112fec4305541de1addcb9bbe2d64f012936756d853c2"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000020-f2-7638a254.webp",
+          "sha256": "7638a2549b738dd3d2590d1b29fa407fc59c269ca4d04c94ffa069949b92f5c3",
+          "mobile": {
+            "file": "600180000020-f2-m-47807c7e.webp",
+            "sha256": "47807c7e3bd93c5353c5fc1747a016397b4b03414b0e847868feaa34f6143d8f"
+          },
+          "sourceUrl": "architalon:metropolis-royal-ivory-120x278.zip/royal_ivory_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000020-f3-8fd8a8f7.webp",
+          "sha256": "8fd8a8f752f0550de8a3f9229c7e9b1735824438635664cdbfc309b36c70c1cc",
+          "mobile": {
+            "file": "600180000020-f3-m-6db7a6b0.webp",
+            "sha256": "6db7a6b03c0b1bf5e52f98d12cdfba391f0388f09bfc5b69e89f5bbf6bd9ed3d"
+          },
+          "sourceUrl": "architalon:metropolis-royal-ivory-120x278.zip/royal_ivory_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000020-f4-95ad0a77.webp",
+          "sha256": "95ad0a77d93770dc148ec9125df4895275d8be85beb913f98b80a402b86a0748",
+          "mobile": {
+            "file": "600180000020-f4-m-4cb76740.webp",
+            "sha256": "4cb767400631f1aa0bd760a4154c05aa3961df8d3c9b2b7aceb389f3796cb49a"
+          },
+          "sourceUrl": "architalon:metropolis-royal-ivory-120x278.zip/royal_ivory_120x278_F4.tif"
+        }
+      ]
     },
     "600180000011": {
       "file": "600180000011-6c59c78a.webp",
@@ -1003,7 +1291,29 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 3,
         "sha256": "2fff3c0b1da96b2c92eaba579eb6ad7dd759bb6cef85dedeef8f40a5f7e7990c"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000011-f2-d5bd71cc.webp",
+          "sha256": "d5bd71cca589b7e7494ffbcfc4bb9b71a7c38fd31bc907597280849ef1172335",
+          "mobile": {
+            "file": "600180000011-f2-m-ed25e9ae.webp",
+            "sha256": "ed25e9ae462b58f63451a8004742afafe084dd563d71d323a93f72c9f9433fe9"
+          },
+          "sourceUrl": "architalon:millennium-black-120x278.zip/black_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000011-f3-ee7bfd4d.webp",
+          "sha256": "ee7bfd4d0a3e647652b4039a0fff85767499311920d927bcd25cb7dcd6bce754",
+          "mobile": {
+            "file": "600180000011-f3-m-9a56edf5.webp",
+            "sha256": "9a56edf52cb82f7c14c47bb4dd1a7ec27a7e4e676d8f058a067efc8c3e73d6d3"
+          },
+          "sourceUrl": "architalon:millennium-black-120x278.zip/black_120x278_F3.tif"
+        }
+      ]
     },
     "600180000009": {
       "file": "600180000009-f3a62c45.webp",
@@ -1026,7 +1336,29 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 3,
         "sha256": "e8a90cae71da4f0fb8edfbc32a7e5b8401808b18f53b480300299f39b2372420"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000009-f2-02c65a34.webp",
+          "sha256": "02c65a346067b909bb09bc551ece7bcec3a78e927007badec3aca22a2cf7262d",
+          "mobile": {
+            "file": "600180000009-f2-m-302f168a.webp",
+            "sha256": "302f168a96d2400ef64ee799895e87ce52b4162c24cfde2d786e1857a209cc3b"
+          },
+          "sourceUrl": "architalon:millennium-pure-120x278.zip/pure_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000009-f3-9b2e5486.webp",
+          "sha256": "9b2e54860c685ef3dc39cedb339079bea7aa1493956c94bbeac29e9317b0f5ff",
+          "mobile": {
+            "file": "600180000009-f3-m-8a0a9a99.webp",
+            "sha256": "8a0a9a99df2e2e001350a37794c9f1a91ade41fb24bee056918d4865fb21edaa"
+          },
+          "sourceUrl": "architalon:millennium-pure-120x278.zip/pure_120x278_F3.tif"
+        }
+      ]
     },
     "600180000010": {
       "file": "600180000010-8880a92c.webp",
