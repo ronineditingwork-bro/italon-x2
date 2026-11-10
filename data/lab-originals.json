@@ -1381,7 +1381,29 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 3,
         "sha256": "05f557985b29b66702074c8cb9ad71a2c99f0fef945feb3cfb7653decc2f7a3d"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000010-f2-da617e6e.webp",
+          "sha256": "da617e6e149f870edf75686a67d570708f019b04e5043b6c872f3d35ee49b3a2",
+          "mobile": {
+            "file": "600180000010-f2-m-abecba33.webp",
+            "sha256": "abecba337d14103554f9e511b963dbef67f0cd657226420e0b6387d0a686647f"
+          },
+          "sourceUrl": "architalon:millennium-silver-120x278.zip/silver_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000010-f3-a2c0d25d.webp",
+          "sha256": "a2c0d25d41efde7cfc54cf14bc2e1294e6824965f1a2fb33a4cfee4a8352e783",
+          "mobile": {
+            "file": "600180000010-f3-m-c11caee8.webp",
+            "sha256": "c11caee8d728f559abe73b0c9c6270e5302156107620657fd1e74f550f9bcc02"
+          },
+          "sourceUrl": "architalon:millennium-silver-120x278.zip/silver_120x278_F3.tif"
+        }
+      ]
     },
     "600180000133": {
       "file": "600180000133-68387df0.webp",
@@ -1404,7 +1426,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "b033a5d951b66713caaa27f43638c85acc8fe7ffcc34787891c628c70e21f96b"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000133-f2-97cb54d7.webp",
+          "sha256": "97cb54d74371ba2562d472898ed36fea60aea34d11f27d851fcc41189a9eed76",
+          "mobile": {
+            "file": "600180000133-f2-m-f8f4132b.webp",
+            "sha256": "f8f4132bd0f2c9cf3677d26c2eeadede6289a864d427f5c13398d2ffd5dd4a85"
+          },
+          "sourceUrl": "architalon:prima-volcano-green-120x278.zip/volcano_green_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000133-f3-f2dec9b1.webp",
+          "sha256": "f2dec9b156fc25852d4e4c5668509577dd4ccb5d1a28dc3f2f0bf94bb26a3f56",
+          "mobile": {
+            "file": "600180000133-f3-m-f664347f.webp",
+            "sha256": "f664347fa15f80f3f5e822490c920d437bc394f41ce557a894d286651631598b"
+          },
+          "sourceUrl": "architalon:prima-volcano-green-120x278.zip/volcano_green_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000133-f4-c6e0ed17.webp",
+          "sha256": "c6e0ed1729bc0b7de8c579efbea7181537b659f6b8640c614f326ddd6facf3aa",
+          "mobile": {
+            "file": "600180000133-f4-m-afd159c0.webp",
+            "sha256": "afd159c09468c04b539579f37f84ef32d2a75a86d666e0680fdb955934d943ed"
+          },
+          "sourceUrl": "architalon:prima-volcano-green-120x278.zip/volcano_green_120x278_F4.tif"
+        }
+      ]
     },
     "600180000132": {
       "file": "600180000132-203f5079.webp",
@@ -1427,7 +1481,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "ab2b8ef88388782123f6bd59e1cfd40299f602060a32acd56e5ce10854059402"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000132-f2-2becd409.webp",
+          "sha256": "2becd409796f4f3a80ddfb65c9d1656690f4d6ac36ebf4e7d6fe29f699ecec8f",
+          "mobile": {
+            "file": "600180000132-f2-m-bc109942.webp",
+            "sha256": "bc109942764891a8cd88ce7fa07326014423d3819505c988c98c8fb94e61dd09"
+          },
+          "sourceUrl": "architalon:prima-denim-red-120x278.zip/denim_red_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000132-f3-0247b328.webp",
+          "sha256": "0247b328baa1b2b1122835e0e37ef2eddf6d79700bd81f87bd7d0f1b2a6f7d9f",
+          "mobile": {
+            "file": "600180000132-f3-m-dcede1e0.webp",
+            "sha256": "dcede1e0e7bf883516ef42a612f318e22ed602a3e2a16bc1927d176bb99c0dff"
+          },
+          "sourceUrl": "architalon:prima-denim-red-120x278.zip/denim_red_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000132-f4-ea752c65.webp",
+          "sha256": "ea752c6529f0ba04e6af5a71b0d3260f366b3ea673e8e9e5a2015c06dabd769d",
+          "mobile": {
+            "file": "600180000132-f4-m-23b47d61.webp",
+            "sha256": "23b47d6158947078f9b3915b05db981ede79092ecac68e3272705ea0c47439bc"
+          },
+          "sourceUrl": "architalon:prima-denim-red-120x278.zip/denim_red_120x278_F4.tif"
+        }
+      ]
     },
     "600180000049": {
       "file": "600180000049-7aef5be5.webp",
@@ -1450,7 +1536,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "3f5e5a196b50f2bf2b4064615d6c09825389f78cef72f1e663c61dd4b0717dc2"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000049-f2-d71a2c2e.webp",
+          "sha256": "d71a2c2e4d91f40d815170dbd747689f573f6c161c9c43b3b751341e3d84f95c",
+          "mobile": {
+            "file": "600180000049-f2-m-4ed90bdf.webp",
+            "sha256": "4ed90bdfb2c041cc2d5ad19d931a3f19c6441ac78432cfb265ec39befa4a13ff"
+          },
+          "sourceUrl": "architalon:stellaris-absolut-black-120x278.zip/absolut_black_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000049-f3-bdc3e995.webp",
+          "sha256": "bdc3e99581823b9b9bd4383cd43c95c1bf96a62ede3c81b6126a47ead470496d",
+          "mobile": {
+            "file": "600180000049-f3-m-0d7eec9f.webp",
+            "sha256": "0d7eec9fac6908b8c2457e6dbd16cf252958e482bed6ffc9fcf1cfa8936f13af"
+          },
+          "sourceUrl": "architalon:stellaris-absolut-black-120x278.zip/absolut_black_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000049-f4-ffe65350.webp",
+          "sha256": "ffe653508ae2d0bf13fad6ac01601f78e5de8b82d79f66405467ae700d8e3360",
+          "mobile": {
+            "file": "600180000049-f4-m-3617027d.webp",
+            "sha256": "3617027d5bfc54807c88d2f4ce018bf42eddbfb7a9a16bf51e2a2beb4a825d15"
+          },
+          "sourceUrl": "architalon:stellaris-absolut-black-120x278.zip/absolut_black_120x278_F4.tif"
+        }
+      ]
     },
     "600180000050": {
       "file": "600180000050-eae4e62f.webp",
@@ -1473,7 +1591,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "1ba8c82c496ee661d8ccd7a7b692a48f4ec81b023e3022e8807b73a4ef75717f"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000050-f2-7cdc55e5.webp",
+          "sha256": "7cdc55e5c4c6ab4958698a42868e2b932ccab5fdb309a9a23b0c5e18a59cc3c3",
+          "mobile": {
+            "file": "600180000050-f2-m-464177aa.webp",
+            "sha256": "464177aadf0027250237edb9e524ced01807faf00ee9c6207e720c023ebd08a3"
+          },
+          "sourceUrl": "architalon:stellaris-dover-light-120x278.zip/dover_light_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000050-f3-02a183b4.webp",
+          "sha256": "02a183b490cc26c20d056ed2754f60e7d7d83b329a756a468ae79271217f84bc",
+          "mobile": {
+            "file": "600180000050-f3-m-e2508bd6.webp",
+            "sha256": "e2508bd6794eec8d235b87c5b4ae41c512f90156fd1e913074e36873ecf19a51"
+          },
+          "sourceUrl": "architalon:stellaris-dover-light-120x278.zip/dover_light_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000050-f4-e6b94270.webp",
+          "sha256": "e6b94270740c03492759d072b16ef13a5173025a56369b8743a6a707ddddd753",
+          "mobile": {
+            "file": "600180000050-f4-m-eaa708a6.webp",
+            "sha256": "eaa708a6d3e750bbbcb09a0329d17dce3583c9474a5d13d52a54dae2dec947b3"
+          },
+          "sourceUrl": "architalon:stellaris-dover-light-120x278.zip/dover_light_120x278_F4.tif"
+        }
+      ]
     },
     "600180000044": {
       "file": "600180000044-c3bf5c16.webp",
@@ -1496,7 +1646,39 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "cbfe30621faedc8bb070bacafdd9500dcefca75c4601e0d1f8852b3610b840aa"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000044-f2-7ec0c4ca.webp",
+          "sha256": "7ec0c4ca044c5c82dc6d43dee0eaa02d04a091f8654303b89c564722f5a640e8",
+          "mobile": {
+            "file": "600180000044-f2-m-3d99ead5.webp",
+            "sha256": "3d99ead5a7ab332ed5cd040b7ded0fe062b15f479c30c6176f0d4e4b1d3f428b"
+          },
+          "sourceUrl": "architalon:stellaris-calacatta-gold-120x278.zip/calacatta_gold_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000044-f3-584b79ad.webp",
+          "sha256": "584b79add28e3e9e1674934c09e6ea45b5a1969a548b9bf71d22d4108ba30716",
+          "mobile": {
+            "file": "600180000044-f3-m-31c28929.webp",
+            "sha256": "31c2892984ba0137828c7d6c76796cfa1154485787cde24bff49f269db331da2"
+          },
+          "sourceUrl": "architalon:stellaris-calacatta-gold-120x278.zip/calacatta_gold_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000044-f4-5dd1cbee.webp",
+          "sha256": "5dd1cbeebdfeecf1f2f9f3a85cd8be526c347c5ed9e948ee2882e293eebd66e2",
+          "mobile": {
+            "file": "600180000044-f4-m-ea3d5d80.webp",
+            "sha256": "ea3d5d8066d335f72bbcd4d1b682789fb3de6f7b903030eb7862bcf2b4ea6e8d"
+          },
+          "sourceUrl": "architalon:stellaris-calacatta-gold-120x278.zip/calacatta_gold_120x278_F4.tif"
+        }
+      ]
     },
     "600180000047": {
       "file": "600180000047-b5fd5f3a.webp",
@@ -1519,7 +1701,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 5,
         "sha256": "a0ac6fbcea2223b0552f3feb9373d5ae9cf645005fc80a5f0f4939a1d43ce33b"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000047-f2-900e40ab.webp",
+          "sha256": "900e40ab78039339ade344be9a541023eeaed4e89a68c56fd9c8e14893abfc3f",
+          "mobile": {
+            "file": "600180000047-f2-m-2f2a43f5.webp",
+            "sha256": "2f2a43f560ca9af61237c4e9acb895246e6136c2a27e3b939c40464951ca82cf"
+          },
+          "sourceUrl": "architalon:stellaris-carrara-ivory-120x278.zip/carrara_ivory_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000047-f3-889927ca.webp",
+          "sha256": "889927cab9d5a42f617f5f32d2b2b3ba94281a1b276e99be8507e897e7328094",
+          "mobile": {
+            "file": "600180000047-f3-m-dd5f5f8e.webp",
+            "sha256": "dd5f5f8e1d426c8600d2e46156be057e8e4385544d637d3c2c01e6c480946d26"
+          },
+          "sourceUrl": "architalon:stellaris-carrara-ivory-120x278.zip/carrara_ivory_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000047-f4-e4dbe89d.webp",
+          "sha256": "e4dbe89dcd3ce9bdf856fa9264f0cf9fd4ff2aac7bdec8b2f2a6c1ad2e4c5a31",
+          "mobile": {
+            "file": "600180000047-f4-m-8f63411b.webp",
+            "sha256": "8f63411be0366bd02f4378536154b789ac2415fc592148852c29c501b0101937"
+          },
+          "sourceUrl": "architalon:stellaris-carrara-ivory-120x278.zip/carrara_ivory_120x278_F4.tif"
+        }
+      ]
     },
     "600180000048": {
       "file": "600180000048-6b6318a7.webp",
@@ -1542,7 +1756,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "ecaa7a53fd2b0b761666378d5d32e217315391624b0e6dbfbb36046a4615b100"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000048-f2-6f5cb562.webp",
+          "sha256": "6f5cb5620191876b1af71d322577dd58ad0870b7313c141f453d2a40431d86fd",
+          "mobile": {
+            "file": "600180000048-f2-m-abfb1381.webp",
+            "sha256": "abfb13817acd57c6202328d22d5c912698e1515afd22bce3e399b72f20b9fb8e"
+          },
+          "sourceUrl": "architalon:stellaris-crystal-pure-120x278.zip/crystal_pure_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000048-f3-a53a6471.webp",
+          "sha256": "a53a6471e7415adb0e7b0058691e9fcc7046f70a614977b2822cb99b9120e151",
+          "mobile": {
+            "file": "600180000048-f3-m-d0e2f131.webp",
+            "sha256": "d0e2f1317514872214fae1b0ca9456ebf850572d805952a24f4d0b7ade1b01d7"
+          },
+          "sourceUrl": "architalon:stellaris-crystal-pure-120x278.zip/crystal_pure_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000048-f4-468b2327.webp",
+          "sha256": "468b2327a207f8beaadcb69ca1652966d8c4d711c5cc2b2ac5e3489330277740",
+          "mobile": {
+            "file": "600180000048-f4-m-86d12dcb.webp",
+            "sha256": "86d12dcb9fb73b6f1a49217cc148fc5013f5d5d6e7feadb40ddca2664c7dc579"
+          },
+          "sourceUrl": "architalon:stellaris-crystal-pure-120x278.zip/crystal_pure_120x278_F4.tif"
+        }
+      ]
     },
     "600180000051": {
       "file": "600180000051-64a41a41.webp",
@@ -1565,7 +1811,39 @@
         "finish": "ЛЮКС И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "123eee7236326501c799c5f66038784deec35d97f5411089ded1bcecbbc17571"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000051-f2-3e5f7764.webp",
+          "sha256": "3e5f7764bf57a31cf9a4ce3274344e39c5c6a8f692eda4ed514f823b559cdb27",
+          "mobile": {
+            "file": "600180000051-f2-m-1d1f0ef6.webp",
+            "sha256": "1d1f0ef6be318fb8b33a7977e44e8a098c23a98f86593e933345760bb7eb2dac"
+          },
+          "sourceUrl": "architalon:stellaris-madagascar-dark-120x278.zip/madagascar_dark_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000051-f3-d9373e73.webp",
+          "sha256": "d9373e733e1b8c81cc4c2d52125598fd74c8f10bf84cabdc5224cd5781415e64",
+          "mobile": {
+            "file": "600180000051-f3-m-b4fb26fb.webp",
+            "sha256": "b4fb26fb49136b3aacdc1083e5374681de3b1c300a36f4c15019c093618523c0"
+          },
+          "sourceUrl": "architalon:stellaris-madagascar-dark-120x278.zip/madagascar_dark_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000051-f4-e5882038.webp",
+          "sha256": "e588203819d0d26a1106eb441d890c75d67a1a6faa03224aadbcf53e25a2c3e2",
+          "mobile": {
+            "file": "600180000051-f4-m-b24955dc.webp",
+            "sha256": "b24955dc2256ffd61cfa3828204e6f3f7f0e32ebc3d89c4e89a9037ddb1f76f7"
+          },
+          "sourceUrl": "architalon:stellaris-madagascar-dark-120x278.zip/madagascar_dark_120x278_F4.tif"
+        }
+      ]
     },
     "600180000043": {
       "file": "600180000043-d68742dc.webp",
@@ -1611,7 +1889,39 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "904814e8ff5769c9986fdeaf682030fc592550d33d7c27b8da954ba019bb13f9"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000046-f2-71e67bac.webp",
+          "sha256": "71e67bace92038d0885fd0fdb7e03fafac8cddaa16e546af1b542f7f806daa56",
+          "mobile": {
+            "file": "600180000046-f2-m-0e2df5f7.webp",
+            "sha256": "0e2df5f7a14e729f472d775614025a50afd57e84dcee7600e68467889d25d09f"
+          },
+          "sourceUrl": "architalon:stellaris-tuscania-grey-120x278.zip/tuscania_grey_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000046-f3-09472ed2.webp",
+          "sha256": "09472ed21b13530c815e0bdacf7a51dc32d9f52489f0d8c66708cb7c2215242f",
+          "mobile": {
+            "file": "600180000046-f3-m-3d28716d.webp",
+            "sha256": "3d28716d1f60aaf614390c3a78efe41345795627cf846b839b891bc4764be1a1"
+          },
+          "sourceUrl": "architalon:stellaris-tuscania-grey-120x278.zip/tuscania_grey_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000046-f4-dfda37e1.webp",
+          "sha256": "dfda37e1af88a611b8c73a09014a651dbb15279959feb80e9bae004b2664b0f5",
+          "mobile": {
+            "file": "600180000046-f4-m-4a58d5da.webp",
+            "sha256": "4a58d5da3e0554552037730242a4da9a282beb25113d0466ae46b9dc954a5623"
+          },
+          "sourceUrl": "architalon:stellaris-tuscania-grey-120x278.zip/tuscania_grey_120x278_F4.tif"
+        }
+      ]
     },
     "600180000045": {
       "file": "600180000045-3a7a166b.webp",
@@ -1634,7 +1944,39 @@
         "finish": "НАТУРАЛЬНЫЙ И РЕТТИФИЦИРОВАННАЯ",
         "faces": 4,
         "sha256": "28743f8f0cd2f374f4988fd93eb42a46997f115528d3929794173eed64e447d0"
-      }
+      },
+      "faces": [
+        {
+          "face": "F2",
+          "file": "600180000045-f2-6a0ad5dd.webp",
+          "sha256": "6a0ad5ddf2a621ac3955d61cae2dbfded6b9ec4277a59399e4c8dadd2b003c9d",
+          "mobile": {
+            "file": "600180000045-f2-m-1471d1f0.webp",
+            "sha256": "1471d1f0adcccd27bfc41c26b1788c443025d675254d782bd6b2bb0148194f80"
+          },
+          "sourceUrl": "architalon:stellaris-elegant-silver-120x278.zip/elegant_silver_120x278_F2.tif"
+        },
+        {
+          "face": "F3",
+          "file": "600180000045-f3-c52ee137.webp",
+          "sha256": "c52ee137eb68f9db5846f32d99c06acd478057649f2cbe95e8c8f8412e79f8ed",
+          "mobile": {
+            "file": "600180000045-f3-m-5e7f14b4.webp",
+            "sha256": "5e7f14b4a20573e2027555f6ceb57963553681ab1fd04b76105e9fe68d6bd27f"
+          },
+          "sourceUrl": "architalon:stellaris-elegant-silver-120x278.zip/elegant_silver_120x278_F3.tif"
+        },
+        {
+          "face": "F4",
+          "file": "600180000045-f4-7dee5032.webp",
+          "sha256": "7dee5032c37c87246febc17853ac39c6c00b65be01dca9a961e5bf21c5a588e5",
+          "mobile": {
+            "file": "600180000045-f4-m-9b89609d.webp",
+            "sha256": "9b89609d6216e5c13309f2618a7fe72fcbf293a9f40b1b0869dee25d2b4f1a41"
+          },
+          "sourceUrl": "architalon:stellaris-elegant-silver-120x278.zip/elegant_silver_120x278_F4.tif"
+        }
+      ]
     },
     "600180000080": {
       "file": "600180000080-3f02c3b4.webp",
