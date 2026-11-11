@@ -54,3 +54,18 @@ test('cart API persists, isolates visitors, rejects stale writes and ignores for
   const cleared=await put({version:1,items:[]});assert.equal(cleared.status,200);assert.equal((await cleared.json()).totalKopecks,0);
  } finally {close();}
 });
+
+test('слэбы: продаются листами; к корзине сам добавляется транспортный ящик — один на каждые 18 листов', async () => {
+  const { calculateCart, products } = await import('../src/catalog.mjs');
+  const [a, b] = products.filter(p => p.format === '120X278' && p.canOrder);
+  assert.equal(a.orderUnit, 'лист'); assert.equal(a.minimum, '1 лист');
+  const crate = cart => cart.lines.find(l => l.code === '450080000001');
+  for (const [sheets, crates] of [[1, 1], [18, 1], [19, 2], [36, 2], [37, 3]]) {
+    const c = crate(calculateCart([{ code: a.code, packs: sheets }]));
+    assert.deepEqual([c.packs, c.auto, c.sheets], [crates, true, sheets], `${sheets} листов`);
+  }
+  const mixed = calculateCart([{ code: a.code, packs: 10 }, { code: b.code, packs: 9 }, { code: '450080000001', packs: 5 }]);
+  assert.equal(crate(mixed).packs, 2, 'ящик из корзины пересчитывается по листам'); assert.equal(mixed.lines.length, 3);
+  assert.equal(mixed.totalKopecks, mixed.lines.reduce((s, l) => s + l.totalKopecks, 0), 'ящик входит в сумму КП');
+  assert.equal(crate(calculateCart([{ code: products.find(p => p.format === '60X120' && p.canOrder).code, packs: 2 }])), undefined, 'без слэбов ящика нет');
+});

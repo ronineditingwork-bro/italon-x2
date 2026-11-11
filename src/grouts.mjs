@@ -90,11 +90,13 @@ export const groutColor = (brand, code) => ({ code, ...colors[brand][code] });
 export const QUOTE_JOINT_MM = 2;
 /** Плотность цементной затирки для формулы расхода, кг/дм³ (коэффициент из таблиц расхода Mapei Ultracolor Plus). */
 export const GROUT_DENSITY = 1.6;
+/** Плотность эпоксидной затирки (Kerapoxy), кг/дм³ — по техкарте Mapei. */
+export const EPOXY_DENSITY = 1.55;
 /**
  * Расход затирки, кг/м²: (A + B) / (A × B) × C × D × плотность — стандартная формула производителей затирок.
  * a, b — стороны плитки, мм; thickness — толщина плитки (глубина шва), мм; joint — ширина шва, мм. Некорректный ввод → NaN.
  */
-export function groutKgPerM2(a, b, thickness, joint) {
+export function groutKgPerM2(a, b, thickness, joint, density = GROUT_DENSITY) {
   const v = [a, b, thickness, joint].map(Number);
-  return v.every(x => Number.isFinite(x) && x > 0) ? (v[0] + v[1]) / (v[0] * v[1]) * v[2] * v[3] * GROUT_DENSITY : NaN;
+  return v.every(x => Number.isFinite(x) && x > 0) ? (v[0] + v[1]) / (v[0] * v[1]) * v[2] * v[3] * density : NaN;
 }

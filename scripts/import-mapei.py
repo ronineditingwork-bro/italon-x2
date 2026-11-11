@@ -3,7 +3,7 @@
 
   python3 scripts/import-mapei.py catalog_export_11-11-2026.xml
 
-Берутся только затирки Ultracolor Plus и клеи (их рекомендует сайт). Склад — Краснодар, на дату выгрузки.
+Берутся затирки Ultracolor Plus (цементная), Kerapoxy и Kerapoxy Easy Design (эпоксидные) и клеи — их рекомендует сайт. Склад — Краснодар, на дату выгрузки.
 Фото скачиваются с сайта поставщика (адрес — из выгрузки) и сжимаются до 400 px в WebP на белом фоне.
 """
 import io, json, re, subprocess, sys
@@ -20,7 +20,7 @@ items = {}
 for offer in re.findall(r'<offer id="\d+">(.*?)</offer>', xml, re.S):
     tag = lambda t: (re.search(f'<{t}>(.*?)</{t}>', offer, re.S) or [None, ''])[1].strip()
     name, sku = tag('name'), tag('articul')
-    if not re.search(r'ULTRACOLOR PLUS \d{3}|клей', name): continue
+    if not re.search(r'ULTRACOLOR PLUS \d{3}|KERAPOXY EASY DESIGN №\d|КЕРАПОКСИ №\d|клей', name): continue   # цементная и эпоксидная затирка, клеи
     kg = re.search(r'\((\d+(?:[.,]\d+)?)\s*кг\)', name)
     item = {'name': name, 'price': round(float(tag('price'))), 'stock': int(float(tag('quantity') or 0)), 'kg': float(kg[1].replace(',', '.')) if kg else None}
     pics = re.findall(r'<picture>(.*?)</picture>', offer)

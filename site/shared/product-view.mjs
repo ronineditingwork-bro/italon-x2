@@ -69,10 +69,10 @@ export function productSpecs(p, { collectionLabel = '', categoryLabel = '' } = {
   const perPallet = packsPerPallet(p);
   const pack = p.collectionId === 'packaging' ? [['Продажа', 'Поштучно']] : [
     ['Цена за', p.unit === 'м²' ? 'м²' : 'штуку'],
-    p.boxed ? ['Продажа', 'Коробками'] : ['Продажа', 'Поштучно'],
-    p.boxed && p.areaPerPack && ['Площадь в коробке', `${number(p.areaPerPack)}\u00a0м²`],
+    p.orderUnit === 'лист' ? ['Продажа', 'Листами; транспортный ящик — на каждые 18 листов, добавляется в КП сам'] : p.boxed ? ['Продажа', 'Коробками'] : ['Продажа', 'Поштучно'],
+    p.boxed && p.areaPerPack && [p.orderUnit === 'лист' ? 'Площадь листа' : 'Площадь в коробке', `${number(p.areaPerPack)}\u00a0м²`],
     !p.boxed && p.areaPerPack && p.unit === 'м²' && ['Площадь одной плиты', `${number(p.areaPerPack)}\u00a0м²`],
-    p.boxed && p.piecesPerPack && ['Штук в коробке', number(p.piecesPerPack)],
+    p.boxed && p.piecesPerPack && p.orderUnit !== 'лист' && ['Штук в коробке', number(p.piecesPerPack)],
     ['Минимальный заказ', minimumLabel(p)],
     p.palletArea && ['Паллета', `${number(p.palletArea)}\u00a0м²${perPallet && p.boxed ? ` · ${number(perPallet)} ${p.orderUnit}` : ''}`],
   ].filter(Boolean);

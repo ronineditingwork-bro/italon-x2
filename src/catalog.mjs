@@ -31,8 +31,9 @@ for (const series of raw.series) for (const row of series.items) {
   const pieceMinimum = Number(row.min.match(/^(\d+)\s*ШТ/i)?.[1] || 0); // явный минимум в штуках («2 ШТ») — как в прайсе
   const minPacks = pieceMinimum ? Math.max(1, roundUp(pieceMinimum / (unitsPerPack || 1))) : 1;
   const canOrder = Number.isFinite(unitsPerPack) && unitsPerPack > 0;
-  const minimum = /паллета/i.test(row.min) ? '1 коробка' : (row.min || '1 шт');
   const crate = row.code === '450080000001';
+  const slab = row.fmt === '120X278' && !crate;   // слэб: «коробка» в прайсе — один лист 120×278, продаём и считаем листами
+  const minimum = slab ? '1 лист' : /паллета/i.test(row.min) ? '1 коробка' : (row.min || '1 шт');
   unique.set(row.code, {
     code: row.code, name: row.name, latin: row.latin,
     section: SECTION_BY_LINE[series.line] || 'italon',
@@ -40,7 +41,7 @@ for (const series of raw.series) for (const row of series.items) {
     collection: crate ? 'Упаковка' : series.series,
     format: crate ? '' : row.fmt, finish: crate ? '' : row.finish,
     unit, priceKopecks: Math.round(row.price * 100), boxed,
-    orderUnit: boxed ? 'кор.' : 'шт', unitsPerPack: unitsPerPack || null,
+    orderUnit: slab ? 'лист' : boxed ? 'кор.' : 'шт', unitsPerPack: unitsPerPack || null,
     unitMilliPerPack: Math.round((unitsPerPack || 0) * 1000),
     piecesPerPack: boxed ? row.pcs : 1, areaPerPack: crate ? null : row.box,
     palletArea: crate ? null : row.pallet, minPacks,
@@ -53,6 +54,7 @@ export const products = [...unique.values()];
 // Нет рекомендации Italon (Прима, Coliseum, мозаика без своей строки) — для КП подбираем Ultracolor Plus из прайса по цвету фото плитки (by: 'color').
 const priceCodes = Object.values(mapeiPrice.items).map(x => (/ULTRACOLOR PLUS (\d{3})\b/.exec(x.name) || [])[1]).filter(Boolean);
 for (const p of products) {
+  if (p.collectionId === 'packaging') continue;
   const g = groutData(p, groutRows);
   if (g) { p.grout = g; continue; }
   const f = p.image?.kind === 'sku' && features.items[p.image.src.replace(/^\//, '')];

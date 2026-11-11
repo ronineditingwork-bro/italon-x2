@@ -18,7 +18,7 @@ export const lower = s => String(s || '').toLocaleLowerCase('ru-RU');
 /** «АУРА X2» → «Аура X2» */
 export const titleRu = s => lower(s).replace(/^./u, c => c.toLocaleUpperCase('ru-RU')).replace(/[xх]2/gi, 'X2');
 export const normalize = s => lower(s).replace(/ё/g, 'е').replace(/[х×]/g, 'x').replace(/\s+/g, ' ').trim();
-export const packLabel = p => p.boxed ? `${number(p.unitsPerPack)} ${p.unit} в коробке` : 'Поштучная продажа';
+export const packLabel = p => p.orderUnit === 'лист' ? `${number(p.unitsPerPack)} ${p.unit} в листе` : p.boxed ? `${number(p.unitsPerPack)} ${p.unit} в коробке` : 'Поштучная продажа';
 export const minimumLabel = p => `Минимум: ${p.minimum}${p.minPacks > 1 && p.boxed ? ` · ${number(p.minPacks)} кор.` : ''}`;
 
 /** Путь медиа из данных («/media/…») → относительный к корню сайта. */

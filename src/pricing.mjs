@@ -1,6 +1,8 @@
 // Чистые функции расчёта корзины и площади. Не зависят от источника данных:
 // сервер передаёт productMap из src/catalog.mjs, браузер — из public/data/catalog.json.
 export const MAX_PACKS = 9999;
+/** Слэбы 120×278 возят в транспортном ящике: до 18 листов в ящике. Ящик добавляется к корзине сам и считается по числу листов. */
+export const SLAB_FORMAT = '120X278', CRATE_CODE = '450080000001', SLABS_PER_CRATE = 18;
 const roundUp = n => Math.ceil(n - 1e-9);
 export function createPricing(productMap, priceInfo) {
   function lineFor(code, packs) {
@@ -22,6 +24,12 @@ export function createPricing(productMap, priceInfo) {
       seen.add(item.code);
       return lineFor(item.code, item.packs);
     });
+    const sheets = lines.filter(l => l.product.format === SLAB_FORMAT).reduce((n, l) => n + l.packs * (l.product.piecesPerPack || 1), 0);
+    const i = lines.findIndex(l => l.code === CRATE_CODE);
+    if (sheets && productMap.get(CRATE_CODE)?.canOrder) {
+      const crate = { ...lineFor(CRATE_CODE, Math.ceil(sheets / SLABS_PER_CRATE)), auto: true, sheets };
+      if (i >= 0) lines[i] = crate; else lines.push(crate);
+    }
     return { lines, totalKopecks: lines.reduce((sum, l) => sum + l.totalKopecks, 0), priceInfo };
   }
   function calculateArea(code, area, reserve = 10) {

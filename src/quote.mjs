@@ -89,8 +89,8 @@ export async function createQuote(cart, details, fontBytes, options={}) {
     const l=cart.lines[index],p=l.product;
     const thumb=await embedImage(p.code);const textX=thumb?M+78:M+31,textW=thumb?190:236;
     const nameLines=wrap(p.name,textW,9.6);
-    const metaLines=wrap(`Арт. ${p.code}${p.format?' / '+p.format.replace(/[XХ]/g,'x'):''}`,textW,7.8);
-    const quantityLines=wrap(`${number(l.quantity)} ${p.unit}${p.boxed?'\n'+number(l.packs)+' кор.':''}`,70,8.5);
+    const metaLines=wrap(`Арт. ${p.code}${p.format?' / '+p.format.replace(/[XХ]/g,'x'):''}${l.auto?` / для слэбов: ${number(l.sheets)} л., до 18 листов в ящике`:''}`,textW,7.8);
+    const quantityLines=wrap(`${number(l.quantity)} ${p.unit}${p.boxed?'\n'+number(l.packs)+' '+p.orderUnit:''}`,70,8.5);
     const rowHeight=Math.max(thumb?64:46,26+nameLines.length*12+metaLines.length*11,26+Math.max(quantityLines.length,2)*12);
     if(y-rowHeight<105)newPage(false,true);
     if(index%2===0)page.drawRectangle({x:M,y:y-rowHeight,width:R-M,height:rowHeight,color:colors.stripe});
@@ -118,21 +118,21 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   right(totalText,R-14,y-49,totalSize);y-=92;
   if(disc.percent){paragraph(`Скидка: ${disc.parts.map(r=>`${r.label} ${r.percent}%`).join(', ')}.`,9,colors.muted,13);y-=6;}
   // Затирка и клей Mapei — справочно, отдельной таблицей и своим итогом: в сумму плитки не входят (другие скидки и условия)
-  const mats=mapeiMaterials(cart.lines),cards=[...mats.grout.map(c=>({...c,unit:'уп.'})),...mats.adhesive.map(c=>({...c,unit:'меш.'}))];
+  const mats=mapeiMaterials(cart.lines),cards=[...mats.grout.flatMap(c=>[{...c,unit:'уп.'},...(c.epoxy?[{...c.epoxy,for:c.for,by:[],unit:'уп.',isAlt:true}]:[])]),...mats.adhesive.map(c=>({...c,unit:'меш.'}))];
   if(cards.length){
     const dmy=mats.date.split('-').reverse().join('.');
-    const need=30+cards.length*62+56+80;   // раздел не разрываем: не помещается целиком — с новой страницы (если вообще помещается на страницу)
-    if(y-need<85&&need<H-134-85)newPage(false,false);
+    const need=30+cards.length*62+78+80;   // раздел не разрываем: не помещается целиком — с новой страницы (если вообще помещается на страницу)
+    if(y-need<85&&need<H-134-85||y-(30+2*62)<85)newPage(false,false);   // не помещается целиком — с новой страницы; длинный раздел — хотя бы заголовок с двумя строками
     paragraph('Затирка и клей Mapei - справочно, отдельно от плитки',10,colors.ink,17);y-=4;
     page.drawLine({start:{x:M,y},end:{x:R,y},thickness:.5,color:colors.line});
     for(const [index,c] of cards.entries()){
       const thumb=await embedImage('mapei:'+c.sku);const textX=M+52,textW=228;
       const need=c.kg==null?'расход уточнит менеджер':Array.isArray(c.kg)?`${number(c.kg[0])}-${number(c.kg[1])} кг`:`около ${number(c.kg,1)} кг`;
-      const nameLines=wrap(c.title,textW,9.2);
+      const nameLines=wrap((c.isAlt?'или эпоксидная: ':'')+c.title,textW,9.2);
       const meta=wrap(`арт. ${c.sku} · к ${c.for.join(', ')} · ${need}${c.alt?.length?` · или ${c.alt.join(', ')}`:''}${byNote(c)?` · подбор ${byNote(c)}`:''}${SHOW_STOCK?` · склад Краснодар на ${dmy}: ${c.stock>0?number(c.stock)+' '+c.unit:'нет, под заказ'}`:''}`,textW,7.6);
       const rowHeight=Math.max(56,20+nameLines.length*12+meta.length*10);
       if(y-rowHeight<105)newPage(false,false);
-      if(index%2===0)page.drawRectangle({x:M,y:y-rowHeight,width:R-M,height:rowHeight,color:colors.stripe});
+      if(!c.isAlt)page.drawRectangle({x:M,y:y-rowHeight,width:R-M,height:rowHeight,color:colors.stripe});   // вариант (эпоксидная) — без подложки, сразу под своей затиркой
       const top=y-17;
       if(thumb)drawThumb(thumb,M+6,y-4);
       nameLines.forEach((line,k)=>write(line,textX,top-k*12,9.2));
@@ -140,15 +140,18 @@ export async function createQuote(cart, details, fontBytes, options={}) {
       right(c.packs?`${number(c.packs)} ${c.unit}`:'-',378,top,9);
       right(money(c.price*100),455,top,9.2);right(`руб. / ${c.unit}`,455,top-12,7.6,colors.muted);
       right(c.packs?money(c.packs*c.price*100):'-',R-7,top,9.6);
-      y-=rowHeight;page.drawLine({start:{x:M,y},end:{x:R,y},thickness:.5,color:colors.line});
+      y-=rowHeight;if(!cards[index+1]?.isAlt)page.drawLine({start:{x:M,y},end:{x:R,y},thickness:.5,color:colors.line});
     }
-    y-=10;if(y<130)newPage(false,false);
-    page.drawRectangle({x:302,y:y-40,width:R-302,height:40,color:colors.stripe});
-    write('ИТОГО MAPEI (справочно)',316,y-24,9,colors.muted);right(money(mats.totalRub*100)+' руб.',R-14,y-26,14);y-=56;
-    paragraph(`Не суммируется с плиткой: скидки и условия продажи материалов Mapei отличаются. Цены - розничный прайс Mapei${SHOW_STOCK?`, склад Краснодар на ${dmy}`:''}. Количество - ориентир: затирка на шов ${QUOTE_JOINT_MM} мм без запаса, мозаика - по чипу ${MOSAIC_CHIP_MM/10}x${MOSAIC_CHIP_MM/10} см, клей по верхней границе расхода ${ADHESIVE_KG_M2.join('-')} кг/м² на идеальном основании. «Подбор по цвету / формату» - рекомендации Italon для этой плитки нет. Менеджер уточнит по проекту.${mats.noGrout.length?` Затирку к ${mats.noGrout.join(', ')} подберёт менеджер.`:''}${mats.noAdhesive.length?` Клей к ${mats.noAdhesive.join(', ')} подберёт менеджер.`:''}`,8.7,colors.muted,13);y-=15;
+    y-=10;if(y<150)newPage(false,false);
+    const two=mats.totalEpoxyRub!==mats.totalRub,h=two?62:40;
+    page.drawRectangle({x:262,y:y-h,width:R-262,height:h,color:colors.stripe});
+    write('MAPEI, с цементной затиркой',276,y-24,9,colors.muted);right(money(mats.totalRub*100)+' руб.',R-14,y-26,13);
+    if(two){write('с эпоксидной затиркой',276,y-46,9,colors.muted);right(money(mats.totalEpoxyRub*100)+' руб.',R-14,y-48,13);}
+    y-=h+16;
+    paragraph(`Итоги справочные, не суммируются с плиткой: скидки и условия продажи материалов Mapei отличаются. Цены - розничный прайс Mapei${SHOW_STOCK?`, склад Краснодар на ${dmy}`:''}. Затирка - цементная (Ultracolor Plus) или эпоксидная (Kerapoxy) на выбор, считается одна из них. Количество - ориентир: затирка на шов ${QUOTE_JOINT_MM} мм без запаса, мозаика - по чипу ${MOSAIC_CHIP_MM/10}x${MOSAIC_CHIP_MM/10} см, клей по верхней границе расхода ${ADHESIVE_KG_M2.join('-')} кг/м² на идеальном основании. «Подбор по цвету / формату» - рекомендации Italon для этой плитки нет. Менеджер уточнит по проекту.${mats.noGrout.length?` Затирку к ${mats.noGrout.join(', ')} подберёт менеджер.`:''}${mats.noAdhesive.length?` Клей к ${mats.noAdhesive.join(', ')} подберёт менеджер.`:''}`,8.7,colors.muted,13);y-=15;
   }
   paragraph('Условия предложения',10,colors.ink,17);
-  paragraph('Количество рассчитано с учётом целых упаковок и минимального заказа (одна коробка). Наличие, тон, калибр и сроки поставки уточняются при подтверждении заказа. Доставка рассчитывается отдельно.',8.7,colors.muted,13);
+  paragraph('Количество рассчитано с учётом целых упаковок и минимального заказа (одна коробка, у слэбов - один лист; транспортный ящик - на каждые 18 листов). Наличие, тон, калибр и сроки поставки уточняются при подтверждении заказа. Доставка рассчитывается отдельно.',8.7,colors.muted,13);
   y-=15;paragraph('Салон',10,colors.ink,17);
   paragraph(`${SALON.name}, ${SALON.city}, ${SALON.address}`,9,colors.ink,14);
   paragraph(`${SALON.hours}`,9,colors.muted,14);

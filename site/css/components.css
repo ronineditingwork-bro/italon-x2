@@ -240,9 +240,15 @@ a:hover .media > img, a:focus-visible .media > img, button:hover .media > img, .
 .mapei-card__stock.is-low { color: #8a5200; }
 .mapei-card__sum { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .mapei-card__sum span { display: block; color: var(--text-2); font-size: var(--fs-xs); }
+.mapei-card__alt { grid-column: 1 / -1; display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: var(--s-3); align-items: center; border-top: 1px dashed var(--line); padding-top: var(--s-2); font-size: var(--fs-sm, .875rem); }
+.mapei-card__alt img { width: 40px; height: 40px; justify-self: center; }
+.mapei-card__or { font-size: var(--fs-xs); letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); }
+.mapei-card__alt .mapei-card__stock { display: inline; }
+.mapei__total--alt { border-top: 0; padding-top: 0; margin-top: 0; }
+.mapei__total--alt strong { font-size: var(--fs-md, 1rem); color: var(--text-2); }
 .mapei__total { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--line); padding-top: var(--s-3); margin-top: var(--s-2); }
 .mapei__total strong { font-size: var(--fs-h4, 1.25rem); font-weight: 500; font-variant-numeric: tabular-nums; }
-@media (max-width: 420px) { .mapei-card { grid-template-columns: 48px minmax(0, 1fr); } .mapei-card img { width: 48px; height: 48px; } .mapei-card__sum { grid-column: 2; text-align: left; } }
+@media (max-width: 420px) { .mapei-card, .mapei-card__alt { grid-template-columns: 48px minmax(0, 1fr); } .mapei-card img { width: 48px; height: 48px; } .mapei-card__sum { grid-column: 2; text-align: left; } }
 .quote-form { display: grid; gap: var(--s-4); }
 
 /* ---------- Уведомление ---------- */

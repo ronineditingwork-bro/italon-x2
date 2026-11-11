@@ -12,7 +12,8 @@
 import { esc, money, number, fmt, titleRu, lower, packLabel, minimumLabel, lineOf, productImage, productUrl, collectionUrl, priceHtml, normalize } from '../shared/format.mjs';
 import { QUOTE_JOINT_MM } from '../../src/grouts.mjs';
 import { mapeiMaterials, byNote, SHOW_STOCK, ADHESIVE_KG_M2, MOSAIC_CHIP_MM } from '../../src/mapei.mjs';
-import { createPricing, MAX_PACKS } from '../../src/pricing.mjs';
+import { createPricing, MAX_PACKS, SLABS_PER_CRATE } from '../../src/pricing.mjs';
+const plural = (n, one, few, many) => { const m = n % 100, k = n % 10; return m > 10 && m < 20 ? many : k === 1 ? one : k > 1 && k < 5 ? few : many; };
 import { quoteDiscount, nextTier } from '../../src/discount.mjs';
 import { $, $$, ROOT, rootRel, openDialog, closeDialog, toast } from './ui.mjs';
 
@@ -159,7 +160,8 @@ function mapeiCard(c, kind) {
   const stock = SHOW_STOCK ? `<span class="mapei-card__stock${c.stock >= (c.packs || 1) ? '' : ' is-low'}">${c.stock > 0 ? `на складе ${number(c.stock)} ${kind === 'grout' ? 'уп.' : 'меш.'}` : 'нет на складе — под заказ'}</span>` : '';
   return `<div class="mapei-card">${c.image ? `<img src="${rootRel}${esc(c.image.replace(/^\//, ''))}" alt="" width="64" height="64" loading="lazy">` : '<span></span>'}
 <div><b>${esc(c.title)}</b><span class="mapei-card__for">к ${esc(c.for.join(', '))} · ${need}${c.alt?.length ? ` · или ${esc(c.alt.join(', '))}` : ''}${byNote(c) ? ` · <i>подбор ${esc(byNote(c))}</i>` : ''}</span>${stock}</div>
-<div class="mapei-card__sum">${c.packs ? `<b>${money(c.packs * c.price * 100)}</b><span>${number(c.packs)} ${kind === 'grout' ? 'уп.' : 'меш.'} × ${money(c.price * 100)}</span>` : `<span>${money(c.price * 100)} / ${kind === 'grout' ? 'уп.' : 'меш.'}</span>`}</div></div>`;
+<div class="mapei-card__sum">${c.packs ? `<b>${money(c.packs * c.price * 100)}</b><span>${number(c.packs)} ${kind === 'grout' ? 'уп.' : 'меш.'} × ${money(c.price * 100)}</span>` : `<span>${money(c.price * 100)} / ${kind === 'grout' ? 'уп.' : 'меш.'}</span>`}</div>
+${c.epoxy ? `<div class="mapei-card__alt">${c.epoxy.image ? `<img src="${rootRel}${esc(c.epoxy.image.replace(/^\//, ''))}" alt="" width="40" height="40" loading="lazy">` : '<span></span>'}<div><span class="mapei-card__or">или эпоксидная</span> ${esc(c.epoxy.title)}${SHOW_STOCK ? ` <span class="mapei-card__stock${c.epoxy.stock >= (c.epoxy.packs || 1) ? '' : ' is-low'}">${c.epoxy.stock > 0 ? `на складе ${number(c.epoxy.stock)} уп.` : 'под заказ'}</span>` : ''}</div><div class="mapei-card__sum">${c.epoxy.packs ? `<b>${money(c.epoxy.packs * c.epoxy.price * 100)}</b><span>${number(c.epoxy.packs)} уп. × ${money(c.epoxy.price * 100)}</span>` : `<span>${money(c.epoxy.price * 100)} / уп.</span>`}</div></div>` : ''}</div>`;
 }
 function renderMapei(shown) {
   const box = $('#cart-mapei'); if (!box) return;
@@ -168,10 +170,11 @@ function renderMapei(shown) {
   if (box.hidden) { box.innerHTML = ''; return; }
   box.innerHTML = `<div class="mapei__head"><h3 class="t-h4">Затирка и клей Mapei</h3><span class="mapei__badge">Справочно</span></div>
 <p class="t-small">Подобрано к плитке из корзины: по рекомендациям Italon, а где их нет — по цвету и формату плитки. Цены — розничный прайс Mapei${SHOW_STOCK ? `, склад Краснодар на ${dmy(m.date)}` : ''}.</p>
-${m.grout.length ? `<p class="mapei__group">Затирка · шов ${QUOTE_JOINT_MM}&nbsp;мм</p>${m.grout.map(c => mapeiCard(c, 'grout')).join('')}` : ''}
+${m.grout.length ? `<p class="mapei__group">Затирка · шов ${QUOTE_JOINT_MM}&nbsp;мм · цементная или эпоксидная</p>${m.grout.map(c => mapeiCard(c, 'grout')).join('')}` : ''}
 ${m.adhesive.length ? `<p class="mapei__group">Клей · расход ${ADHESIVE_KG_M2.join('–')}&nbsp;кг/м²</p>${m.adhesive.map(c => mapeiCard(c, 'adhesive')).join('')}` : ''}
 ${m.noGrout.length ? `<p class="t-small">Затирку к ${esc(m.noGrout.join(', '))} подберёт менеджер.</p>` : ''}${m.noAdhesive.length ? `<p class="t-small">Клей к ${esc(m.noAdhesive.join(', '))} подберёт менеджер.</p>` : ''}
-<div class="mapei__total"><span class="t-muted">Итого материалы Mapei</span><strong>${money(m.totalRub * 100)}</strong></div>
+<div class="mapei__total"><span class="t-muted">Итого Mapei с цементной затиркой</span><strong>${money(m.totalRub * 100)}</strong></div>
+${m.totalEpoxyRub !== m.totalRub ? `<div class="mapei__total mapei__total--alt"><span class="t-muted">с эпоксидной затиркой</span><strong>${money(m.totalEpoxyRub * 100)}</strong></div>` : ''}
 <p class="t-small">Не входит в сумму плитки: скидки и условия продажи у Mapei свои. Количество — ориентир: затирка на шов ${QUOTE_JOINT_MM}&nbsp;мм, мозаика — по чипу ${MOSAIC_CHIP_MM / 10}×${MOSAIC_CHIP_MM / 10}&nbsp;см, клей по верхней границе расхода на идеальном основании. «Подбор по цвету / формату» — рекомендации Italon для этой плитки нет. Менеджер уточнит по проекту.</p>`;
 }
 function render() {
@@ -224,13 +227,14 @@ function cartItem(line) {
 <div><h3 class="cart-item__name"><a href="${productUrl(rootRel, p.code)}">${esc(p.name)}</a></h3><p class="cart-item__meta">Арт. ${esc(p.code)} · ${esc(titleRu(p.collection))}${p.format ? ` · ${esc(fmt(p.format))}` : ''}</p></div>
 <p class="cart-item__total">${money(line.totalKopecks)}<small>${number(line.quantity)} ${esc(p.unit)} × ${money(p.priceKopecks)}</small></p>
 <div class="cart-item__controls">
+${line.auto ? `<span class="t-small">Добавлен автоматически: ${number(line.sheets)} ${plural(line.sheets, 'лист', 'листа', 'листов')} слэбов — ${number(line.packs)} ${plural(line.packs, 'ящик', 'ящика', 'ящиков')} (до ${SLABS_PER_CRATE} листов в ящике)</span>` : `
 <div class="qty" role="group" aria-label="Количество, ${esc(p.orderUnit)}">
 <button type="button" data-qty-step="-1" data-code="${esc(p.code)}" aria-label="Уменьшить: ${esc(p.name)}"${line.packs <= p.minPacks ? ' disabled' : ''}>−</button>
 <input type="number" inputmode="numeric" min="${p.minPacks}" max="${MAX_PACKS}" step="1" value="${line.packs}" data-qty="${esc(p.code)}" aria-label="Количество, ${esc(p.orderUnit)}: ${esc(p.name)}">
 <button type="button" data-qty-step="1" data-code="${esc(p.code)}" aria-label="Увеличить: ${esc(p.name)}"${line.packs >= MAX_PACKS ? ' disabled' : ''}>+</button>
 </div>
 <span class="t-small">${esc(p.orderUnit)} · ${esc(minimumLabel(p))}</span>
-<button type="button" class="remove-link" data-remove="${esc(p.code)}" aria-label="Удалить: ${esc(p.name)}">Удалить</button>
+<button type="button" class="remove-link" data-remove="${esc(p.code)}" aria-label="Удалить: ${esc(p.name)}">Удалить</button>`}
 </div>
 </article>`;
 }
@@ -298,7 +302,7 @@ function download(bytes, name, type) {
 // Картинки позиций для PDF: pdf-lib понимает только JPEG/PNG, поэтому webp перерисовываем в jpeg (белый фон, до 360 px).
 async function quoteImages(cart) {
   const images = new Map();
-  const m = mapeiMaterials(cart.lines), extra = [...m.grout, ...m.adhesive].filter(c => c.image).map(c => ({ key: 'mapei:' + c.sku, src: c.image.replace(/^\//, '') }));
+  const m = mapeiMaterials(cart.lines), extra = [...m.grout, ...m.grout.map(c => c.epoxy).filter(Boolean), ...m.adhesive].filter(c => c.image).map(c => ({ key: 'mapei:' + c.sku, src: c.image.replace(/^\//, '') }));
   await Promise.all([...cart.lines.map(line => ({ key: line.product?.code, src: line.product?.image?.src })), ...extra].map(async ({ key, src }) => {
     if (!src || !key || images.has(key)) return;
     try {

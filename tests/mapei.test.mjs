@@ -16,7 +16,7 @@ test('Mapei: в прайсе 40 затирок Ultracolor Plus и клеи; у �
   assert.ok(inPrice('Keraflex Maxi S1') && inPrice('Ultralite S2') && !inPrice('Keraflex') && !inPrice('Ultralite S1') && !inPrice('Granirapid'));
 });
 
-test('Mapei: затирка — упаковки по 2 кг по расходу на шов 2 мм, одинаковый цвет складывается; мозаика без количества', () => {
+test('Mapei: затирка — упаковки по 2 кг по расходу на шов 2 мм, одинаковый цвет складывается; мозаика — по чипу 5×5 см', () => {
   const a = byLatin('AVA.PURE 120X120 RET'), b = byLatin('AVA.PURE 120X278');
   const m = mapeiMaterials([{ product: a, quantity: 20 }, { product: b, quantity: 10 }, line('AVA.PURE MINIBRICK', 3)]);
   const g111 = m.grout.find(c => c.sku === '6011102A');
@@ -24,7 +24,7 @@ test('Mapei: затирка — упаковки по 2 кг по расходу
   const kg = groutKgPerM2(1200, 1200, 9, 2) * 20 + groutKgPerM2(1200, 2780, 6, 2) * 10;
   assert.equal(g111.kg, Math.ceil(kg * 10) / 10); assert.equal(g111.packs, Math.ceil(g111.kg / 2)); assert.equal(g111.price, 959);
   const mos = m.grout.find(c => c.for.includes(byLatin('AVA.PURE MINIBRICK').name));
-  assert.equal(mos.kg, null); assert.equal(mos.packs, null);
+  assert.ok(mos.kg > 0 && mos.packs >= 1, 'мозаика: расход по типовому чипу 5×5 см и площади листа');
 });
 
 test('Mapei: два цвета Mapei — берётся тот, что есть в прайсе и на складе, второй — как альтернатива', () => {
@@ -64,4 +64,23 @@ test('Mapei: товары без рекомендаций и пустая кор
   assert.deepEqual(mapeiMaterials([{ product: pack, quantity: 1 }]).grout, []);
   const empty = mapeiMaterials([]);
   assert.deepEqual([empty.grout, empty.adhesive, empty.noAdhesive, empty.totalRub], [[], [], [], 0]);
+});
+
+test('Mapei: клей серый (дешевле), белый — только к мозаике; штучная мозаика считается по площади листа', () => {
+  const tile = products.find(p => p.section === 'italon' && p.format === '60X120' && p.canOrder);
+  const sheet = products.find(p => p.code === '600110000609');                         // СЕР.УАЙТ МОЗ.ЛАУНЖ, продаётся штуками, лист 26,2×30,2 см
+  const m = mapeiMaterials([{ product: tile, quantity: 10 }, { product: sheet, quantity: 20 }]);
+  assert.match(m.adhesive.find(c => c.for.includes(tile.name)).title, /, серый, /);
+  const mos = m.adhesive.find(c => c.by.includes('mosaic'));
+  assert.match(mos.title, /^Adesilex P10, белый/); assert.ok(Math.abs(mos.area - 20 * 0.262 * 0.302) < 1e-9); assert.equal(mos.packs, 1);
+  assert.ok(m.grout.find(c => c.for.includes(sheet.name)).packs >= 1, 'затирка к штучной мозаике посчитана');
+});
+
+test('Mapei: к затирке — эпоксидный вариант того же цвета (Kerapoxy, иначе Easy Design); два итога — с цементной и с эпоксидной', () => {
+  const m = mapeiMaterials([line('AVA.PURE 120X120 RET', 20)]);
+  const [g] = m.grout;
+  assert.match(g.epoxy.title, /^Kerapoxy 111 «Серебристо-серый», 2 кг$/); assert.equal(g.epoxy.sku, 'FG01311102');
+  assert.ok(g.epoxy.packs >= 1 && g.epoxy.kg <= g.kg, 'эпоксидной по массе не больше: плотность 1,55 против 1,6');
+  const glue = m.adhesive.reduce((s, c) => s + c.packs * c.price, 0);
+  assert.equal(m.totalRub, g.packs * g.price + glue); assert.equal(m.totalEpoxyRub, g.epoxy.packs * g.epoxy.price + glue);
 });
