@@ -79,8 +79,17 @@ test('Mapei: клей серый (дешевле), белый — только �
 test('Mapei: к затирке — эпоксидный вариант того же цвета (Kerapoxy, иначе Easy Design); два итога — с цементной и с эпоксидной', () => {
   const m = mapeiMaterials([line('AVA.PURE 120X120 RET', 20)]);
   const [g] = m.grout;
-  assert.match(g.epoxy.title, /^Kerapoxy 111 «Серебристо-серый», 2 кг$/); assert.equal(g.epoxy.sku, 'FG01311102');
+  assert.match(g.epoxy.title, /^Kerapoxy 111 «Светло-серый», 2 кг$/); assert.equal(g.epoxy.sku, 'FG01311102');
   assert.ok(g.epoxy.packs >= 1 && g.epoxy.kg <= g.kg, 'эпоксидной по массе не больше: плотность 1,55 против 1,6');
   const glue = m.adhesive.reduce((s, c) => s + c.packs * c.price, 0);
   assert.equal(m.totalRub, g.packs * g.price + glue); assert.equal(m.totalEpoxyRub, g.epoxy.packs * g.epoxy.price + glue);
+});
+
+test('Mapei: названия цветов затирки — как в прайсе поставщика', async () => {
+  const colors = (await import('../data/grout-colors.json', { with: { type: 'json' } })).default;
+  for (const x of Object.values(price.items)) {
+    const m = /ULTRACOLOR PLUS (\d{3}) [^,]*, *([^(]+?) *\(/.exec(x.name);
+    if (m && colors.mapei[m[1]]) assert.equal(colors.mapei[m[1]].name.toLowerCase(), m[2].toLowerCase(), m[1]);
+  }
+  assert.equal(colors.mapei['119'].name, 'Серый Лондон');
 });

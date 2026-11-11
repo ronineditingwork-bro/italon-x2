@@ -33,6 +33,12 @@ for offer in re.findall(r'<offer id="\d+">(.*?)</offer>', xml, re.S):
         item['image'] = '/media/mapei/' + out.name
     items[sku] = item
 assert items, 'в выгрузке нет затирок Ultracolor Plus и клеёв'
+# названия цветов затирки — как в прайсе поставщика («…заполнитель, серый Лондон (2 кг)» → «Серый Лондон»); цвет кружка (hex) не трогаем
+colors_path = root / 'data/grout-colors.json'; colors = json.loads(colors_path.read_text(encoding='utf-8'))
+for x in items.values():
+    m = re.search(r'ULTRACOLOR PLUS (\d{3}) [^,]*, *([^(]+?) *\(', x['name'])
+    if m and m[1] in colors['mapei']: colors['mapei'][m[1]]['name'] = m[2][:1].upper() + m[2][1:]
+colors_path.write_text(json.dumps(colors, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 dest = root / 'data/mapei-price.json'
 dest.write_text(json.dumps({'source': f'Прайс Mapei поставщика, склад Краснодар, выгрузка {stamp}', 'date': stamp, 'items': items}, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
 print(len(items), 'позиций →', dest)

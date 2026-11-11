@@ -85,7 +85,7 @@ test('заявка менеджеру: затирка и клей Mapei из п�
   const cart = calculateCart([{ code: '600010001804', packs: 7 }, { code: tile.code, packs: 10 }]);   // Авангард Пьюр 120×120: затирка Italon, клея в таблицах нет — подбор по формату
   const text = leadText({ createdAt: Date.now(), phone: '+79182489248', customer: 'Иванов', address: 'Краснодар', project: '', note: '' }, cart);
   assert.match(text, /Затирка и клей Mapei — справочно, в сумму не входит \(шов 2 мм, склад Краснодар на \d\d\.\d\d\.\d{4}\)/);
-  assert.match(text, /• <code>6011102A<\/code> Ultracolor Plus 111 «Серебристо-серый», 2 кг — \d+ уп\. × 959 ₽, склад \d+ \(к АВА\.ПЬЮР 120X120 РЕТ/);
+  assert.match(text, /• <code>6011102A<\/code> Ultracolor Plus 111 «Светло-серый», 2 кг — \d+ уп\. × 959 ₽, склад \d+ \(к АВА\.ПЬЮР 120X120 РЕТ/);
   assert.match(text, /• <code>\d+<\/code> Keraflex (Extra|Maxi) S1, (серый|белый), 25 кг — \d+ меш\. × [\d\s ]+ ₽/);
   assert.match(text, /Итого Mapei: с цементной затиркой [\d\s ]+ ₽, с эпоксидной [\d\s ]+ ₽/); assert.match(text, /или эпоксидная <code>FG01311102<\/code> Kerapoxy 111/); assert.match(text, /Ultr(alite|aflex) S2, [а-я]+, \d+ кг — \d+ меш\..*АВА\.ПЬЮР 120X120 РЕТ\), подбор по формату плитки/);   // 120×120 — клей по ближайшему формату
   assert.ok(text.indexOf('Затирка и клей Mapei') < text.indexOf('Для контроля'), 'блок Mapei стоит до контрольной суммы');
