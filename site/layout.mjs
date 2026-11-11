@@ -105,8 +105,7 @@ function dialogs() {
 <div class="cart-tools"><button type="button" class="remove-link cart-clear" id="cart-clear" hidden>Очистить корзину</button></div>
 <div class="cart-summary">
 <div class="cart-total"><span class="t-muted">Итого с НДС</span><strong id="cart-total">0 ₽</strong></div>
-<div class="cart-grout" id="cart-grout" hidden></div>
-<div class="cart-grout" id="cart-adhesive" hidden></div>
+<div class="mapei" id="cart-mapei" aria-live="polite" hidden></div>
 <form class="quote-form" id="quote-form" novalidate>
 <h3 class="t-h4">Коммерческое предложение в PDF</h3>
 <label class="field"><span class="field__label">Телефон для связи <small>обязательно</small></span><input class="input" id="quote-phone" type="tel" inputmode="tel" maxlength="30" placeholder="+7 900 000-00-00" autocomplete="tel" required></label>

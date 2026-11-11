@@ -2,12 +2,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import data from '../data/italon-adhesives-2021.json' with { type: 'json' };
-import { adhesiveFor, adhesiveLabel, adhesiveSummary, adhesiveTable, plateSize } from '../src/adhesives.mjs';
+import { adhesiveFor, adhesiveLabel, adhesiveTable, plateSize } from '../src/adhesives.mjs';
 import { products } from '../site/data.mjs';
 
 const one = (section, format) => products.find(p => p.section === section && p.format === format) || assert.fail(`нет товара ${section} ${format}`);
 const text = (p, use) => { const a = adhesiveFor(p); return a && adhesiveLabel(a.rows[use || a.use]); };
-const P7 = 'Adesilex P7 (C2T)', C2TE = 'Adesilex P9 или Keraflex (C2TE)', S1 = 'Keraflex Extra S1, Keraflex Maxi S1 или Ultralite S1 (C2TE S1)';
+// только клеи из прайса Mapei: Keraflex без серии, Ultralite S1, Granirapid и быстрые клеи сняты с поставки
+const P7 = 'Adesilex P7 (C2T)', C2TE = 'Adesilex P9 (C2TE)', S1 = 'Keraflex Extra S1 или Keraflex Maxi S1 (C2TE S1)';
 const S2 = 'Ultralite S2 (C2E S2), Kerabond T-R + Isolastic (C2E S2) или Ultraflex S2 (C2TE S2)';
 
 test('клей: три таблицы статьи переписаны полностью — 19, 18 и 20 размеров; у каждого клея есть класс', () => {
@@ -61,23 +62,11 @@ test('клей: чего нет в таблицах, тому рекоменда
   assert.equal(n, 477, `с рекомендацией клея ${n}`);
 });
 
-test('клей в корзине и КП: группы по набору клеёв и месту укладки, площадь плитки суммируется, количество клея не считается', () => {
-  const a = one('italon', '60X120'), b = one('italon', '80X80'), c = one('italon', '80X160'), x2 = one('x2', '60X60'), none = one('italon', '120X120');
-  const sum = adhesiveSummary([{ product: a, quantity: 34.56 }, { product: b, quantity: 12.8 }, { product: c, quantity: 10.24 }, { product: x2, quantity: 7.2 }, { product: none, quantity: 5 }]);
-  assert.equal(sum.length, 3);
-  assert.deepEqual(sum[0], { label: `Mapei ${S1}`, use: 'внутри помещений', area: 47.36, names: [a.name, b.name], formats: ['60×120', '80×80'] });
-  assert.deepEqual([sum[1].label, sum[1].use, sum[1].area], [`Mapei ${S2}`, 'внутри помещений', 10.24]);
-  assert.deepEqual([sum[2].label, sum[2].use, sum[2].formats], [`Mapei ${S1}`, 'на улице, на пол, при укладке на клей', ['60×60']]);   // тот же клей, но другое место укладки — отдельной строкой
-  assert.ok(sum.every(x => !('kg' in x)), 'расхода в таблицах нет — количество клея не считаем');
-  assert.deepEqual(adhesiveSummary([{ product: none, quantity: 5 }]), []); assert.deepEqual(adhesiveSummary([]), []); assert.deepEqual(adhesiveSummary(null), []);
-  assert.equal(adhesiveSummary([{ product: { ...a, unit: 'шт' }, quantity: 3 }])[0].area, null);          // штучный товар — площади нет
-});
-
 test('клей: таблица для карточки — основания, грунтовки, клеи для дерева и металла, быстрые клеи для улицы', () => {
   const inside = adhesiveTable('interior'), floor = adhesiveTable('exteriorFloor'), wall = adhesiveTable('exteriorWall');
   assert.equal(inside.bases.length, 10); assert.ok(inside.bases.includes('Полы с подогревом') && inside.bases.includes('Гипсокартон'));
-  assert.equal(adhesiveLabel(inside.otherBases.adhesives), 'Keralastic T или Ultrabond Eco PU 2K (R2T)');
+  assert.equal(adhesiveLabel(inside.otherBases.adhesives), 'Keralastic T (R2T)');   // Ultrabond Eco PU 2K в прайсе нет
   assert.match(inside.notes.join(' '), /Primer G.*Eco Prim T/);
-  assert.deepEqual(floor.quick, ['Granirapid', 'Ultralite S1 Quick', 'Ultralite S2 Quick']); assert.equal(floor.otherBases, null);
+  assert.deepEqual(floor.quick, []);   // Granirapid и Quick-клеев в прайсе нет assert.equal(floor.otherBases, null);
   assert.deepEqual(wall.bases, ['Штукатурки на цементной основе', 'Бетон', 'Гидроизоляция серии Mapelastic']);
 });

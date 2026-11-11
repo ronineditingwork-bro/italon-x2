@@ -98,10 +98,10 @@ test('рекомендуемый клей: блок в карточке плит
   assert.match(tile, /id="adhesive-title">Рекомендуемый клей</);
   assert.match(tile, /Внутри помещений: пол и стены/); assert.match(tile, /<b>Keraflex Extra S1<\/b>/); assert.match(tile, /adhesive__class">C2TE&nbsp;S1</);
   assert.match(tile, /На улице: пол<\/dt><dd>Ultralite S2 \(C2E&nbsp;S2\), Kerabond T-R \+ Isolastic \(C2E&nbsp;S2\) или Ultraflex S2 \(C2TE&nbsp;S2\)/);
-  assert.match(tile, /Keralastic T или Ultrabond Eco PU 2K \(R2T\)/); assert.match(tile, /Primer G/);
+  assert.match(tile, /Keralastic T \(R2T\)/); assert.doesNotMatch(tile, /Ultrabond|Ultralite S1|Granirapid/); assert.match(tile, /Primer G/);
   const x2 = await readFile(fileFor(`/product/${code('x2', '60X60')}/`), 'utf8');
-  assert.match(x2, /На улице: пол<\/h3>/); assert.match(x2, /толщиной 20&nbsp;мм при укладке на клей/); assert.match(x2, /Granirapid, Ultralite S1 Quick, Ultralite S2 Quick/);
+  assert.match(x2, /На улице: пол<\/h3>/); assert.match(x2, /толщиной 20&nbsp;мм при укладке на клей/); assert.doesNotMatch(x2, /Быстрый ввод/);   // быстрых клеев в прайсе нет
   for (const [section, format] of [['italon', '120X120'], ['italon', '120X278'], ['x2', '60X120'], ['coliseum', '60X60']])
     assert.doesNotMatch(await readFile(fileFor(`/product/${code(section, format)}/`), 'utf8'), /adhesive-title/, `${section} ${format}: правила нет — блока быть не должно`);
-  for (const path of ['/', '/catalog/', '/salon/']) assert.match(await readFile(fileFor(path), 'utf8'), /id="cart-adhesive" hidden/, path);
+  for (const path of ['/', '/catalog/', '/salon/']) assert.match(await readFile(fileFor(path), 'utf8'), /id="cart-mapei" aria-live="polite" hidden/, path);   // затирка и клей Mapei — после создания КП
 });

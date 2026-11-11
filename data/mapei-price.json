@@ -1,0 +1,391 @@
+{
+ "source": "Прайс Mapei поставщика, склад Краснодар, выгрузка 2026-11-11",
+ "date": "2026-11-11",
+ "items": {
+  "6013002A": {
+   "name": "MAPEI ULTRACOLOR PLUS 130 цементный шовный заполнитель, жасмин  (2 кг)",
+   "price": 956,
+   "stock": 56,
+   "kg": 2.0,
+   "image": "/media/mapei/6013002A.webp"
+  },
+  "6013202A": {
+   "name": "MAPEI ULTRACOLOR PLUS 132 цементный шовный заполнитель, бежевый  (2 кг)",
+   "price": 961,
+   "stock": 22,
+   "kg": 2.0,
+   "image": "/media/mapei/6013202A.webp"
+  },
+  "6013502A": {
+   "name": "MAPEI ULTRACOLOR PLUS 135 цементный шовный заполнитель, золотой песок  (2 кг)",
+   "price": 869,
+   "stock": 89,
+   "kg": 2.0,
+   "image": "/media/mapei/6013502A.webp"
+  },
+  "6013602A": {
+   "name": "MAPEI ULTRACOLOR PLUS 136 цементный шовный заполнитель, гончарная глина  (2 кг)",
+   "price": 869,
+   "stock": 89,
+   "kg": 2.0,
+   "image": "/media/mapei/6013602A.webp"
+  },
+  "6014202A": {
+   "name": "MAPEI ULTRACOLOR PLUS 142 цементный шовный заполнитель, коричневый  (2 кг)",
+   "price": 869,
+   "stock": 18,
+   "kg": 2.0,
+   "image": "/media/mapei/6014202A.webp"
+  },
+  "6014402A": {
+   "name": "MAPEI ULTRACOLOR PLUS 144 цементный шовный заполнитель, шоколад  (2 кг)",
+   "price": 869,
+   "stock": 27,
+   "kg": 2.0,
+   "image": "/media/mapei/6014402A.webp"
+  },
+  "6011002A": {
+   "name": "MAPEI ULTRACOLOR PLUS 110 цементный шовный заполнитель, манхеттен  (2 кг)",
+   "price": 970,
+   "stock": 76,
+   "kg": 2.0,
+   "image": "/media/mapei/6011002A.webp"
+  },
+  "6012002A": {
+   "name": "MAPEI ULTRACOLOR PLUS 120 цементный шовный заполнитель, черный  (2 кг)",
+   "price": 869,
+   "stock": 79,
+   "kg": 2.0,
+   "image": "/media/mapei/6012002A.webp"
+  },
+  "6013102А": {
+   "name": "MAPEI ULTRACOLOR PLUS 131 цементный шовный заполнитель, ваниль  (2 кг)",
+   "price": 977,
+   "stock": 0,
+   "kg": 2.0,
+   "image": "/media/mapei/6013102_.webp"
+  },
+  "6014502A": {
+   "name": "MAPEI ULTRACOLOR PLUS 145 цементный шовный заполнитель, охра  (2 кг)",
+   "price": 1063,
+   "stock": 5,
+   "kg": 2.0,
+   "image": "/media/mapei/6014502A.webp"
+  },
+  "6017202A": {
+   "name": "MAPEI ULTRACOLOR PLUS 172 цементный шовный заполнитель, синий космос  (2 кг)",
+   "price": 1186,
+   "stock": 18,
+   "kg": 2.0,
+   "image": "/media/mapei/6017202A.webp"
+  },
+  "6010302A": {
+   "name": "MAPEI ULTRACOLOR PLUS 103 цементный шовный заполнитель, белая луна  (2 кг)",
+   "price": 956,
+   "stock": 109,
+   "kg": 2.0,
+   "image": "/media/mapei/6010302A.webp"
+  },
+  "6014902A": {
+   "name": "MAPEI ULTRACOLOR PLUS 149 цементный шовный заполнитель, вулканический пепел  (2 кг)",
+   "price": 869,
+   "stock": 64,
+   "kg": 2.0,
+   "image": "/media/mapei/6014902A.webp"
+  },
+  "6015002A": {
+   "name": "MAPEI ULTRACOLOR PLUS 150 цементный шовный заполнитель, желтый  (2 кг)",
+   "price": 1662,
+   "stock": 2,
+   "kg": 2.0,
+   "image": "/media/mapei/6015002A.webp"
+  },
+  "6017402A": {
+   "name": "MAPEI ULTRACOLOR PLUS 174 цементный шовный заполнитель, торнадо  (2 кг)",
+   "price": 919,
+   "stock": 16,
+   "kg": 2.0,
+   "image": "/media/mapei/6017402A.webp"
+  },
+  "60016802A": {
+   "name": "MAPEI ULTRACOLOR PLUS 168 цементный шовный заполнитель, лазурный (2 кг)",
+   "price": 1063,
+   "stock": 0,
+   "kg": 2.0,
+   "image": "/media/mapei/60016802A.webp"
+  },
+  "60017602A": {
+   "name": "MAPEI ULTRACOLOR PLUS 176 цементный шовный заполнитель, зелёно-серый (2 кг)",
+   "price": 1063,
+   "stock": 10,
+   "kg": 2.0,
+   "image": "/media/mapei/60017602A.webp"
+  },
+  "60017702A": {
+   "name": "MAPEI ULTRACOLOR PLUS 177 цементный шовный заполнитель, шалфей (2 кг)",
+   "price": 1316,
+   "stock": 13,
+   "kg": 2.0,
+   "image": "/media/mapei/60017702A.webp"
+  },
+  "60018702A": {
+   "name": "MAPEI ULTRACOLOR PLUS 187 цементный шовный заполнитель, лён (2 кг)",
+   "price": 986,
+   "stock": 24,
+   "kg": 2.0,
+   "image": "/media/mapei/60018702A.webp"
+  },
+  "60018802A": {
+   "name": "MAPEI ULTRACOLOR PLUS 188 цементный шовный заполнитель, бисквит (2 кг)",
+   "price": 996,
+   "stock": 6,
+   "kg": 2.0,
+   "image": "/media/mapei/60018802A.webp"
+  },
+  "60016302A": {
+   "name": "MAPEI ULTRACOLOR PLUS 163 цементный шовный заполнитель, светло-лиловый (2 кг)",
+   "price": 1094,
+   "stock": 6,
+   "kg": 2.0,
+   "image": "/media/mapei/60016302A.webp"
+  },
+  "60018902A": {
+   "name": "MAPEI ULTRACOLOR PLUS 189 цементный шовный заполнитель, спельта (2 кг)",
+   "price": 973,
+   "stock": 0,
+   "kg": 2.0,
+   "image": "/media/mapei/60018902A.webp"
+  },
+  "103505": {
+   "name": "MAPEI KERALASTIC T WHITE 2-х компонентный полиуретановый клей (5 кг)",
+   "price": 14934,
+   "stock": 1,
+   "kg": 5.0,
+   "image": "/media/mapei/103505.webp"
+  },
+  "006125": {
+   "name": "MAPEI ADESILEX P9 GREY клей на цементной основе, серый (25 кг)",
+   "price": 1994,
+   "stock": 215,
+   "kg": 25.0,
+   "image": "/media/mapei/006125.webp"
+  },
+  "103510": {
+   "name": "MAPEI KERALASTIC T WHITE 2-х компонентный полиуретановый клей (10 кг)",
+   "price": 27233,
+   "stock": 0,
+   "kg": 10.0,
+   "image": "/media/mapei/103510.webp"
+  },
+  "1201615": {
+   "name": "MAPEI ULTRALITE S2 BIANCO эластичный клей на цементной основе, белый (15 кг)",
+   "price": 7114,
+   "stock": 33,
+   "kg": 15.0,
+   "image": "/media/mapei/1201615.webp"
+  },
+  "1194325": {
+   "name": "MAPEI KERAFLEX EXTRA S1 GREY  клей на цементной основе, серый (25 кг)",
+   "price": 2229,
+   "stock": 76,
+   "kg": 25.0,
+   "image": "/media/mapei/1194325.webp"
+  },
+  "001725": {
+   "name": "MAPEI KERABOND T-R GREY клей на цементной основе, серый (25 кг)",
+   "price": 859,
+   "stock": 0,
+   "kg": 25.0,
+   "image": "/media/mapei/001725.webp"
+  },
+  "2182125": {
+   "name": "MAPEI ADESILEX P7 GREY клей на цементной основе, серый (25 кг)",
+   "price": 1244,
+   "stock": 452,
+   "kg": 25.0,
+   "image": "/media/mapei/2182125.webp"
+  },
+  "1203025": {
+   "name": "MAPEI KERAFLEX MAXI S1 GREY клей на цементной основе, серый (25 кг)",
+   "price": 2999,
+   "stock": 371,
+   "kg": 25.0,
+   "image": "/media/mapei/1203025.webp"
+  },
+  "1202325": {
+   "name": "MAPEI KERAFLEX MAXI S1 WHITE клей на цементной основе, белый (25 кг)",
+   "price": 3247,
+   "stock": 67,
+   "kg": 25.0,
+   "image": "/media/mapei/1202325.webp"
+  },
+  "6011202A": {
+   "name": "MAPEI ULTRACOLOR PLUS 112 цементный шовный заполнитель, серый  (2 кг)",
+   "price": 964,
+   "stock": 114,
+   "kg": 2.0,
+   "image": "/media/mapei/6011202A.webp"
+  },
+  "6014102A": {
+   "name": "MAPEI ULTRACOLOR PLUS 141 цементный шовный заполнитель, карамель  (2 кг)",
+   "price": 977,
+   "stock": 17,
+   "kg": 2.0,
+   "image": "/media/mapei/6014102A.webp"
+  },
+  "6014302A": {
+   "name": "MAPEI ULTRACOLOR PLUS 143 цементный шовный заполнитель, терракотовый  (2 кг)",
+   "price": 869,
+   "stock": 0,
+   "kg": 2.0,
+   "image": "/media/mapei/6014302A.webp"
+  },
+  "6011102A": {
+   "name": "MAPEI ULTRACOLOR PLUS 111 цементный шовный заполнитель, светло-серый  (2 кг)",
+   "price": 959,
+   "stock": 80,
+   "kg": 2.0,
+   "image": "/media/mapei/6011102A.webp"
+  },
+  "6013702A": {
+   "name": "MAPEI ULTRACOLOR PLUS 137 цементный шовный заполнитель, карибский песок (2 кг)",
+   "price": 959,
+   "stock": 19,
+   "kg": 2.0,
+   "image": "/media/mapei/6013702A.webp"
+  },
+  "6015202A": {
+   "name": "MAPEI ULTRACOLOR PLUS 152 цементный шовный заполнитель, лакрица (2 кг)",
+   "price": 919,
+   "stock": 25,
+   "kg": 2.0,
+   "image": "/media/mapei/6015202A.webp"
+  },
+  "60016702A": {
+   "name": "MAPEI ULTRACOLOR PLUS 167 цементный шовный заполнитель, авио (2 кг)",
+   "price": 1063,
+   "stock": 0,
+   "kg": 2.0,
+   "image": "/media/mapei/60016702A.webp"
+  },
+  "60016902A": {
+   "name": "MAPEI ULTRACOLOR PLUS 169 цементный шовный заполнитель, голубая сталь (2 кг)",
+   "price": 1316,
+   "stock": 1,
+   "kg": 2.0,
+   "image": "/media/mapei/60016902A.webp"
+  },
+  "1194425": {
+   "name": "MAPEI KERAFLEX EXTRA S1 WHITE  клей на цементной основе, белый (25 кг)",
+   "price": 2773,
+   "stock": 194,
+   "kg": 25.0,
+   "image": "/media/mapei/1194425.webp"
+  },
+  "277225": {
+   "name": "MAPEI ADESILEX P10 WHITE клей на цементной основе, для мозаики, белый (25 кг)",
+   "price": 2153,
+   "stock": 105,
+   "kg": 25.0,
+   "image": "/media/mapei/277225.webp"
+  },
+  "6010002A": {
+   "name": "MAPEI ULTRACOLOR PLUS 100 цементный шовный заполнитель, белый  (2 кг)",
+   "price": 950,
+   "stock": 84,
+   "kg": 2.0,
+   "image": "/media/mapei/6010002A.webp"
+  },
+  "6011902A": {
+   "name": "MAPEI ULTRACOLOR PLUS 119 цементный шовный заполнитель, серый Лондон (2 кг)",
+   "price": 869,
+   "stock": 42,
+   "kg": 2.0,
+   "image": "/media/mapei/6011902A.webp"
+  },
+  "60012302A": {
+   "name": "MAPEI ULTRACOLOR PLUS 123 цементный шовный заполнитель, античный белый (2 кг)",
+   "price": 959,
+   "stock": 162,
+   "kg": 2.0,
+   "image": "/media/mapei/60012302A.webp"
+  },
+  "60012502A": {
+   "name": "MAPEI ULTRACOLOR PLUS 125 цементный шовный заполнитель, серый замок (2 кг)",
+   "price": 998,
+   "stock": 7,
+   "kg": 2.0,
+   "image": "/media/mapei/60012502A.webp"
+  },
+  "2902125": {
+   "name": "MAPEI ULTRAFLEX S2 BIANCO эластичный клей на цементной основе, белый  (25 кг)",
+   "price": 5989,
+   "stock": 18,
+   "kg": 25.0,
+   "image": "/media/mapei/2902125.webp"
+  },
+  "6011402A": {
+   "name": "MAPEI ULTRACOLOR PLUS 114 цементный шовный заполнитель, антрацит  (2 кг)",
+   "price": 804,
+   "stock": 71,
+   "kg": 2.0,
+   "image": "/media/mapei/6011402A.webp"
+  },
+  "6013402A": {
+   "name": "MAPEI ULTRACOLOR PLUS 134 цементный шовный заполнитель, шелк  (2 кг)",
+   "price": 869,
+   "stock": 82,
+   "kg": 2.0,
+   "image": "/media/mapei/6013402A.webp"
+  },
+  "6011302A": {
+   "name": "MAPEI ULTRACOLOR PLUS 113 цементный шовный заполнитель, темно-серый  (2 кг)",
+   "price": 804,
+   "stock": 32,
+   "kg": 2.0,
+   "image": "/media/mapei/6011302A.webp"
+  },
+  "6013302A": {
+   "name": "MAPEI ULTRACOLOR PLUS 133 цементный шовный заполнитель, песочный  (2 кг)",
+   "price": 975,
+   "stock": 86,
+   "kg": 2.0,
+   "image": "/media/mapei/6013302A.webp"
+  },
+  "60012702A": {
+   "name": "MAPEI ULTRACOLOR PLUS 127 цементный шовный заполнитель, арктический серый (2 кг)",
+   "price": 1009,
+   "stock": 11,
+   "kg": 2.0,
+   "image": "/media/mapei/60012702A.webp"
+  },
+  "6013802A": {
+   "name": "MAPEI ULTRACOLOR PLUS 138 цементный шовный заполнитель, миндаль (2 кг)",
+   "price": 964,
+   "stock": 8,
+   "kg": 2.0,
+   "image": "/media/mapei/6013802A.webp"
+  },
+  "2903825": {
+   "name": "MAPEI ULTRAFLEX S2 GREY эластичный клей на цементной основе, серый  (25 кг)",
+   "price": 5373,
+   "stock": 29,
+   "kg": 25.0,
+   "image": "/media/mapei/2903825.webp"
+  },
+  "1201515": {
+   "name": "MAPEI ULTRALITE S2 GRIGIO эластичный клей на цементной основе, серый (15 кг)",
+   "price": 7013,
+   "stock": 2,
+   "kg": 15.0,
+   "image": "/media/mapei/1201515.webp"
+  },
+  "2182325": {
+   "name": "MAPEI ADESILEX P7 WHITE клей на цементной основе, белый (25 кг)",
+   "price": 1611,
+   "stock": 6,
+   "kg": 25.0,
+   "image": "/media/mapei/2182325.webp"
+  }
+ }
+}

@@ -67,31 +67,8 @@ export function groutData(product, rows) {
 
 /** Цвет по коду: { code, name, hex }. */
 export const groutColor = (brand, code) => ({ code, ...colors[brand][code] });
-/** «Mapei 111 «Серебристо-серый» (аналог Litokol LLE.105 «Серебристо-серый»)»; два цвета Mapei — через «или». */
-export function groutLabel(g) {
-  const name = (brand, title, code) => `${title} ${code} «${colors[brand][code].name}»`;
-  return g.mapei.map(c => name('mapei', 'Mapei', c)).join(' или ') + (g.litokol ? ` (аналог ${name('litokol', 'Litokol', g.litokol)})` : '');
-}
-
 /** Ширина шва, на которую считается затирка в корзине и КП; менеджер корректирует по проекту. */
 export const QUOTE_JOINT_MM = 2;
-/**
- * Рекомендуемая затирка к корзине: строки сгруппированы по цвету, расход суммируется по плитке, проданной в м².
- * lines — строки корзины ({ product, quantity }). → [{ label, kg | null, names: [названия плитки] }]; kg = null — расход не посчитать (мозаика, штучный товар).
- */
-export function groutSummary(lines, joint = QUOTE_JOINT_MM) {
-  const out = new Map();
-  for (const l of lines || []) {
-    const g = l.product?.grout;
-    if (!g) continue;
-    const label = groutLabel(g), item = out.get(label) || { label, kg: 0, names: [] };
-    const perM2 = g.size && l.product.unit === 'м²' ? groutKgPerM2(g.size[0], g.size[1], g.thickness, joint) : NaN;
-    item.kg = item.kg == null || Number.isNaN(perM2) ? null : item.kg + perM2 * l.quantity;
-    item.names.push(l.product.name); out.set(label, item);
-  }
-  return [...out.values()].map(x => ({ ...x, kg: x.kg == null ? null : Math.ceil(x.kg * 10) / 10 }));
-}
-
 /** Плотность цементной затирки для формулы расхода, кг/дм³ (коэффициент из таблиц расхода Mapei Ultracolor Plus). */
 export const GROUT_DENSITY = 1.6;
 /**

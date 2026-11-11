@@ -10,8 +10,8 @@
 //   [data-photo="<src>"]      — любое фото: data-photo-alt, data-photo-caption, data-photo-width/height
 //   [data-cart-open]          — открыть корзину
 import { esc, money, number, fmt, titleRu, lower, packLabel, minimumLabel, lineOf, productImage, productUrl, collectionUrl, priceHtml, normalize } from '../shared/format.mjs';
-import { groutSummary, QUOTE_JOINT_MM } from '../../src/grouts.mjs';
-import { adhesiveSummary } from '../../src/adhesives.mjs';
+import { QUOTE_JOINT_MM } from '../../src/grouts.mjs';
+import { mapeiMaterials, SHOW_STOCK, ADHESIVE_KG_M2 } from '../../src/mapei.mjs';
 import { createPricing, MAX_PACKS } from '../../src/pricing.mjs';
 import { quoteDiscount, nextTier } from '../../src/discount.mjs';
 import { $, $$, ROOT, rootRel, openDialog, closeDialog, toast } from './ui.mjs';
@@ -148,6 +148,32 @@ function shownCart() {
   try { const map = new Map(cart.lines.map(l => [l.code, l.product])); return { ...createPricing(map, cart.priceInfo).calculateCart(unsaved.filter(i => map.has(i.code))), version: cart.version }; }
   catch { return cart; }
 }
+// ---------------------------------------------------------------- затирка и клей Mapei (видны после создания КП)
+let quoteFor = '';                                    // корзина, для которой создано КП: изменилась корзина — блок прячется до нового КП
+const cartKey = lines => lines.map(l => `${l.code}:${l.quantity}`).join('|');
+const dmy = iso => iso.split('-').reverse().join('.');
+function mapeiCard(c, kind) {
+  const need = kind === 'grout'
+    ? (c.kg == null ? 'расход уточнит менеджер' : `нужно ≈ ${number(c.kg)} кг`)
+    : (c.kg == null ? 'расход уточнит менеджер' : `≈ ${number(c.kg[0])}–${number(c.kg[1])} кг`);
+  const stock = SHOW_STOCK ? `<span class="mapei-card__stock${c.stock >= (c.packs || 1) ? '' : ' is-low'}">${c.stock > 0 ? `на складе ${number(c.stock)} ${kind === 'grout' ? 'уп.' : 'меш.'}` : 'нет на складе — под заказ'}</span>` : '';
+  return `<div class="mapei-card">${c.image ? `<img src="${rootRel}${esc(c.image.replace(/^\//, ''))}" alt="" width="64" height="64" loading="lazy">` : '<span></span>'}
+<div><b>${esc(c.title)}</b><span class="mapei-card__for">к ${esc(c.for.join(', '))} · ${need}${c.alt?.length ? ` · или ${esc(c.alt.join(', '))}` : ''}</span>${stock}</div>
+<div class="mapei-card__sum">${c.packs ? `<b>${money(c.packs * c.price * 100)}</b><span>${number(c.packs)} ${kind === 'grout' ? 'уп.' : 'меш.'} × ${money(c.price * 100)}</span>` : `<span>${money(c.price * 100)} / ${kind === 'grout' ? 'уп.' : 'меш.'}</span>`}</div></div>`;
+}
+function renderMapei(shown) {
+  const box = $('#cart-mapei'); if (!box) return;
+  const m = quoteFor && quoteFor === cartKey(shown.lines) ? mapeiMaterials(shown.lines) : null;
+  box.hidden = !m || !(m.grout.length || m.adhesive.length);
+  if (box.hidden) { box.innerHTML = ''; return; }
+  box.innerHTML = `<div class="mapei__head"><h3 class="t-h4">Затирка и клей Mapei</h3><span class="mapei__badge">Справочно</span></div>
+<p class="t-small">Подобрано по рекомендациям Italon к плитке из корзины. Цены — розничный прайс Mapei${SHOW_STOCK ? `, склад Краснодар на ${dmy(m.date)}` : ''}.</p>
+${m.grout.length ? `<p class="mapei__group">Затирка · шов ${QUOTE_JOINT_MM}&nbsp;мм</p>${m.grout.map(c => mapeiCard(c, 'grout')).join('')}` : ''}
+${m.adhesive.length ? `<p class="mapei__group">Клей · расход ${ADHESIVE_KG_M2.join('–')}&nbsp;кг/м²</p>${m.adhesive.map(c => mapeiCard(c, 'adhesive')).join('')}` : ''}
+${m.noAdhesive.length ? `<p class="t-small">Клей к ${esc(m.noAdhesive.join(', '))} подберёт менеджер.</p>` : ''}
+<div class="mapei__total"><span class="t-muted">Итого материалы Mapei</span><strong>${money(m.totalRub * 100)}</strong></div>
+<p class="t-small">Не входит в сумму плитки: скидки и условия продажи у Mapei свои. Количество — ориентир: затирка на шов ${QUOTE_JOINT_MM}&nbsp;мм, клей по верхней границе расхода на идеальном основании; менеджер уточнит по проекту.</p>`;
+}
 function render() {
   const shown = shownCart();
   for (const el of $$('[data-cart-count]')) {
@@ -168,18 +194,7 @@ function render() {
   const total = $('#cart-total');
   if (total) total.textContent = money(shown.totalKopecks);
   renderDiscount();
-  const grout = $('#cart-grout'), rec = groutSummary(shown.lines);
-  if (grout) {
-    grout.hidden = !rec.length;
-    grout.innerHTML = rec.length ? `<h3 class="t-h4">Рекомендуемая затирка</h3><ul>${rec.map(r => `<li><b>${esc(r.label)}</b> — ${r.kg == null ? 'расход уточнит менеджер' : `≈ ${number(r.kg)} кг`}<span>к ${esc(r.names.join(', '))}</span></li>`).join('')}</ul>
-<p class="t-small">Рекомендация производителя Italon, расчёт на шов ${QUOTE_JOINT_MM}&nbsp;мм. В сумму не входит и попадёт в коммерческое предложение отдельным блоком; менеджер уточнит цвет и количество по проекту.</p>` : '';
-  }
-  const adhesive = $('#cart-adhesive'), glue = adhesiveSummary(shown.lines);
-  if (adhesive) {
-    adhesive.hidden = !glue.length;
-    adhesive.innerHTML = glue.length ? `<h3 class="t-h4">Рекомендуемый клей</h3><ul>${glue.map(r => `<li><b>${esc(r.label).replace(/(C\d[A-Z]*) (S\d)/g, '$1&nbsp;$2')}</b> — ${esc(r.use)}<span>к ${esc(r.names.join(', '))}${r.area == null ? '' : ` · ${number(r.area)}&nbsp;м² плитки`}</span></li>`).join('')}</ul>
-<p class="t-small">Рекомендация Italon и Mapei по формату плитки: подходит любой клей из перечисленных. В сумму не входит и попадёт в коммерческое предложение отдельным блоком; марку и расход менеджер уточнит по основанию.</p>` : '';
-  }
+  renderMapei(shown);
   const list = $('#cart-list');
   if (list) list.innerHTML = shown.lines.length ? shown.lines.map(cartItem).join('') : `<div class="empty-state"><strong>Корзина пока пуста</strong><p>Добавьте позиции из каталога или сохраните расчёт из калькулятора.</p><a class="btn btn--outline" href="${rootRel}catalog/">Открыть каталог</a></div>`;
   setExportState();
@@ -283,9 +298,9 @@ function download(bytes, name, type) {
 // Картинки позиций для PDF: pdf-lib понимает только JPEG/PNG, поэтому webp перерисовываем в jpeg (белый фон, до 360 px).
 async function quoteImages(cart) {
   const images = new Map();
-  await Promise.all(cart.lines.map(async line => {
-    const src = line.product?.image?.src;
-    if (!src || images.has(line.product.code)) return;
+  const m = mapeiMaterials(cart.lines), extra = [...m.grout, ...m.adhesive].filter(c => c.image).map(c => ({ key: 'mapei:' + c.sku, src: c.image.replace(/^\//, '') }));
+  await Promise.all([...cart.lines.map(line => ({ key: line.product?.code, src: line.product?.image?.src })), ...extra].map(async ({ key, src }) => {
+    if (!src || !key || images.has(key)) return;
     try {
       const response = await fetch(new URL(src, ROOT));
       if (!response.ok) return;
@@ -297,7 +312,7 @@ async function quoteImages(cart) {
       context.fillStyle = '#fff'; context.fillRect(0, 0, canvas.width, canvas.height);
       context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
       const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.85));
-      if (blob) images.set(line.product.code, { bytes: new Uint8Array(await blob.arrayBuffer()), format: 'jpg' });
+      if (blob) images.set(key, { bytes: new Uint8Array(await blob.arrayBuffer()), format: 'jpg' });
     } catch { /* без картинки позиция остаётся в КП, просто без миниатюры */ }
   }));
   return images;
@@ -346,6 +361,7 @@ async function exportQuote(event) {
     const images = await quoteImages(cart);
     const quote = await createQuote(cart, quoteDetails(), new Uint8Array(font), { images });
     download(quote.bytes, quote.filename, 'application/pdf');
+    quoteFor = cartKey(cart.lines); render();
     let sent = true;
     if (mode === 'server') sent = await sendLead(quote, phoneInput.value).catch(() => false);
     toast(sent ? 'Коммерческое предложение готово' : 'КП скачано. Заявку отправить не удалось — позвоните нам: +7 918 24 89 248');

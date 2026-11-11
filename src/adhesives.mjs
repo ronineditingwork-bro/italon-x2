@@ -2,9 +2,10 @@
 // Данные: data/italon-adhesives-2021.json — таблицы переписаны как есть (номинальный размер в мм → клеи и класс по EN 12004).
 // Клей подбирается по формату плитки. Чего в таблицах нет, того не показываем: нет строки для размера — нет рекомендации
 // (120×120, слэбы 120×278 в интерьере, мозаика, декоры, X2 толщиной 20 мм в форматах, которых нет в таблице).
-// Расхода и фасовки в источнике нет, поэтому количество клея не считается: его определяет менеджер по основанию и шпателю.
+// Показываются только клеи из прайса Mapei (src/mapei.mjs); количество, цены и склад к корзине — там же.
 // Модуль чистый (без fs): им пользуются страницы сайта, корзина в браузере, КП и заявка менеджеру.
 import data from '../data/italon-adhesives-2021.json' with { type: 'json' };
+import { inPrice } from './mapei.mjs';
 
 export const ADHESIVE_SOURCE = data.source;
 /** Где укладывают: ключ таблицы → подпись. */
@@ -55,7 +56,9 @@ export function adhesiveFor(product) {
   const x2 = product.section === 'x2', use = x2 ? 'exteriorFloor' : 'interior';
   const rows = Object.fromEntries(Object.keys(TABLES).map(id => {
     const row = rowFor(TABLES[id], size, x2);
-    return [id, row ? row.adhesives.map(([name, c]) => ({ name, class: cls(c) })) : null];
+    // только клеи из прайса Mapei: остальные сняты с поставки (Ultralite S1, Granirapid и др.)
+    const list = row ? row.adhesives.filter(([name]) => inPrice(name.split(' + ')[0])).map(([name, c]) => ({ name, class: cls(c) })) : [];
+    return [id, list.length ? list : null];
   }));
   return rows[use] ? { use, size, rows } : null;
 }
@@ -71,29 +74,7 @@ export function adhesiveLabel(list) {
 /** Основания, для которых составлена таблица, и примечания к ней — для карточки товара. */
 export function adhesiveTable(use) {
   const t = data.tables[use], other = t.otherBases;
-  return { bases: t.bases, notes: t.notes, quick: t.quick || [],
-    otherBases: other ? { bases: other.bases, adhesives: other.adhesives.map(([name, c]) => ({ name, class: cls(c) })) } : null };
-}
-
-/**
- * Рекомендуемый клей к корзине: строки сгруппированы по набору клеёв и месту укладки.
- * lines — строки корзины ({ product, quantity }). → [{ label: 'Mapei …', use: 'внутри помещений' | 'на улице, на пол, при укладке на клей', area | null, names: [названия плитки], formats: ['60×120'] }].
- * area — площадь плитки, м² (сумма по строкам, проданным в м²); количество клея не считается — расхода в таблицах Italon нет.
- */
-export function adhesiveSummary(lines) {
-  const out = new Map();
-  for (const l of lines || []) {
-    const a = adhesiveFor(l.product);
-    if (!a) continue;
-    const label = `Mapei ${adhesiveLabel(a.rows[a.use])}`, key = `${a.use}|${label}`;
-    // X2 кладут и без клея (трава, гравий, опоры), поэтому у него рекомендация с оговоркой
-    const use = ADHESIVE_USES[a.use].short + (l.product.section === 'x2' ? ', при укладке на клей' : '');
-    const item = out.get(key) || { label, use, area: 0, names: [], formats: [] };
-    item.area = item.area == null || l.product.unit !== 'м²' ? null : item.area + l.quantity;
-    item.names.push(l.product.name);
-    const format = `${a.size[0] / 10}×${a.size[1] / 10}`;
-    if (!item.formats.includes(format)) item.formats.push(format);
-    out.set(key, item);
-  }
-  return [...out.values()].map(x => ({ ...x, area: x.area == null ? null : Math.round(x.area * 1000) / 1000 }));
+  const sold = other ? other.adhesives.filter(([name]) => inPrice(name)) : [];
+  return { bases: t.bases, notes: t.notes, quick: (t.quick || []).filter(inPrice),
+    otherBases: sold.length ? { bases: other.bases, adhesives: sold.map(([name, c]) => ({ name, class: cls(c) })) } : null };
 }
