@@ -130,6 +130,6 @@ export const finishVariantsOf = variantsOf;
 // Рекомендуемая затирка (каталог Italon «Затирки Mapei/Litokol», декабрь 2025) и исходные данные для расчёта расхода.
 /** Затирка для карточки товара: { mapei: [{ code, name, hex }], litokol: {…} | null, size, thickness } или null (данные — product.grout). */
 export function groutOf(p) {
-  const g = p.grout;
+  const g = p.grout?.by ? null : p.grout;   // подбор по цвету — только для КП, в карточке показываем лишь рекомендацию Italon
   return g ? { mapei: g.mapei.map(c => groutColor('mapei', c)), litokol: g.litokol ? groutColor('litokol', g.litokol) : null, size: g.size || null, thickness: g.thickness } : null;
 }

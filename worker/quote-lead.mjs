@@ -1,7 +1,7 @@
 import { calculateCart } from '../src/catalog.mjs';
 import { quoteDiscount } from '../src/discount.mjs';
 import { QUOTE_JOINT_MM } from '../src/grouts.mjs';
-import { mapeiMaterials } from '../src/mapei.mjs';
+import { mapeiMaterials, byNote } from '../src/mapei.mjs';
 
 const rub = kopecks => (kopecks / 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' ₽';
 const clean = (value, max) => String(value ?? '').replace(/[\u0000-\u001f\u007f]+/g, ' ').trim().slice(0, max);
@@ -49,8 +49,8 @@ export function leadText(lead, cart) {
     '',
     '<b>Артикулы (количество):</b>', ...lines,
     ...(cards.length ? ['', `<b>Затирка и клей Mapei — справочно, в сумму не входит (шов ${QUOTE_JOINT_MM} мм, склад Краснодар на ${mats.date.split('-').reverse().join('.')}):</b>`,
-      ...cards.map(c => `• ${code(c.sku)} ${esc(c.title)} — ${c.packs ? `${c.packs} ${c.unit} × ${esc(rub(c.price * 100))}` : 'количество уточнить'}, склад ${c.stock} (к ${esc(c.for.join(', '))})`),
-      `Итого Mapei: ${esc(rub(mats.totalRub * 100))}`, ...(mats.noAdhesive.length ? [`Клей подобрать: ${esc(mats.noAdhesive.join(', '))}`] : [])] : []),
+      ...cards.map(c => `• ${code(c.sku)} ${esc(c.title)} — ${c.packs ? `${c.packs} ${c.unit} × ${esc(rub(c.price * 100))}` : 'количество уточнить'}, склад ${c.stock} (к ${esc(c.for.join(', '))})${byNote(c) ? `, подбор ${esc(byNote(c))}` : ''}`),
+      `Итого Mapei: ${esc(rub(mats.totalRub * 100))}`, ...(mats.noGrout.length ? [`Затирку подобрать: ${esc(mats.noGrout.join(', '))}`] : []), ...(mats.noAdhesive.length ? [`Клей подобрать: ${esc(mats.noAdhesive.join(', '))}`] : [])] : []),
     '',
     `Для контроля: сумма с НДС ${esc(rub(cart.totalKopecks))}, к оплате со скидкой ${esc(rub(discount.payableKopecks))}.`,
     'PDF коммерческого предложения — следующим сообщением.',

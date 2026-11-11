@@ -32,16 +32,31 @@ test('Mapei: два цвета Mapei — берётся тот, что есть 
   assert.match(c.title, /^Ultracolor Plus 123 /); assert.deepEqual(c.alt, ['111']);
 });
 
-test('Mapei: клей — из таблицы Italon и прайса, мешки по верхней границе расхода 5 кг/м², диапазон 2–5 кг/м²; без правила — «подберёт менеджер»', () => {
-  const tile = products.find(p => p.section === 'italon' && p.format === '60X120' && p.canOrder);
-  const m = mapeiMaterials([{ product: tile, quantity: 14.4 }, line('AVA.PURE 120X120 RET', 20)]);
-  assert.equal(m.adhesive.length, 1);
-  const [c] = m.adhesive;
-  assert.match(c.title, /^Keraflex (Extra|Maxi) S1, (серый|белый), 25 кг$/);
+test('Mapei: клей — из таблицы Italon и прайса, мешки по верхней границе расхода 5 кг/м², диапазон 2–5 кг/м²', () => {
+  const tile = products.find(p => p.section === 'italon' && p.format === '60X120' && p.canOrder && p.collectionId !== 'prima' && p.grout && !p.grout.by);
+  const [c] = mapeiMaterials([{ product: tile, quantity: 14.4 }]).adhesive;
+  assert.match(c.title, /^Keraflex (Extra|Maxi) S1, (серый|белый), 25 кг$/); assert.deepEqual(c.by, ['italon']);
   assert.deepEqual(c.kg, ADHESIVE_KG_M2.map(k => Math.ceil(k * 14.4)));
   assert.equal(c.packs, Math.ceil(5 * 14.4 / 25));
-  assert.deepEqual(m.noAdhesive, [byLatin('AVA.PURE 120X120 RET').name]);
-  assert.equal(m.totalRub, [...m.grout, ...m.adhesive].reduce((s, x) => s + (x.packs || 0) * x.price, 0));
+});
+
+test('Mapei: полный расчёт к любой плитке — КП 20261111-5D2089 (Прима, Coliseum, мозаика): затирка к каждой позиции, клей ко всей площади', () => {
+  const cart = [['610010003526', 5.76], ['610110001511', 2.97], ['610010001531', 8.64], ['610110001486', 2.97], ['610010001538', 34.56]]
+    .map(([code, quantity]) => ({ product: products.find(p => p.code === code), quantity }));
+  const m = mapeiMaterials(cart);
+  assert.deepEqual([m.noGrout, m.noAdhesive], [[], []]);
+  assert.equal(m.grout.flatMap(c => c.for).length, 5, 'затирка к каждой позиции');
+  assert.ok(m.grout.every(c => c.by.includes('color') && c.packs >= 1), 'рекомендации Italon нет — подбор по цвету, количество посчитано (мозаика — по чипу 5×5 см)');
+  const s1 = m.adhesive.find(c => /^Keraflex (Extra|Maxi) S1/.test(c.title));
+  assert.equal(s1.for.length, 3); assert.equal(Math.round(s1.area * 100), Math.round((5.76 + 8.64 + 34.56) * 100));   // все три плиты 60×120
+  assert.equal(s1.packs, Math.ceil(5 * 48.96 / 25));
+  assert.match(m.adhesive.find(c => c.by.includes('mosaic')).title, /^Adesilex P10, белый, 25 кг$/);
+});
+
+test('Mapei: 120×120 и слэбы — клей по ближайшему формату таблицы Italon (самый эластичный ряд)', () => {
+  const m = mapeiMaterials([line('AVA.PURE 120X120 RET', 20), line('AVA.PURE 120X278', 10)]);
+  assert.deepEqual(m.noAdhesive, []);
+  assert.ok(m.adhesive.every(c => c.by.includes('format') && /^Ultr(alite|aflex) S2/.test(c.title)), m.adhesive.map(c => c.title).join('; '));
 });
 
 test('Mapei: товары без рекомендаций и пустая корзина — ничего не добавляют', () => {

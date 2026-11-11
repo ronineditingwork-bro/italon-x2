@@ -65,6 +65,25 @@ export function groutData(product, rows) {
     thickness: product.section === 'x2' ? 20 : product.format === '120X278' ? 6 : 9 };
 }
 
+/** sRGB «#RRGGBB» → CIE L*a*b* (D65). */
+function hexToLab(hex) {
+  const lin = v => (v /= 255) <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  const [r, g, b] = [1, 3, 5].map(i => lin(parseInt(hex.slice(i, i + 2), 16)));
+  const f = t => t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116;
+  const [x, y, z] = [(r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047, r * 0.2126 + g * 0.7152 + b * 0.0722, (r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883].map(f);
+  return [116 * y - 16, 500 * (x - y), 200 * (y - z)];
+}
+/** Затирка по цвету плитки, когда рекомендации Italon нет: ближайший по ΔE цвет Mapei из codes. lab — средний цвет фото плитки. */
+export function groutByColor(lab, codes) {
+  let best = null, d = Infinity;
+  for (const code of codes) {
+    const c = colors.mapei[code]; if (!c) continue;
+    const [L, A, B] = hexToLab(c.hex), e = (L - lab[0]) ** 2 + (A - lab[1]) ** 2 + (B - lab[2]) ** 2;
+    if (e < d) { d = e; best = code; }
+  }
+  return best;
+}
+
 /** Цвет по коду: { code, name, hex }. */
 export const groutColor = (brand, code) => ({ code, ...colors[brand][code] });
 /** Ширина шва, на которую считается затирка в корзине и КП; менеджер корректирует по проекту. */

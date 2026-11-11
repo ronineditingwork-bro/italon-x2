@@ -2,7 +2,7 @@ import { PDFDocument, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import { quoteDiscount } from './discount.mjs';
 import { QUOTE_JOINT_MM } from './grouts.mjs';
-import { mapeiMaterials, SHOW_STOCK, ADHESIVE_KG_M2 } from './mapei.mjs';
+import { mapeiMaterials, byNote, SHOW_STOCK, ADHESIVE_KG_M2, MOSAIC_CHIP_MM } from './mapei.mjs';
 
 const W=595.28,H=841.89,M=36,R=W-M;
 // Реквизиты салона (те же, что на странице «Салон»).
@@ -121,7 +121,7 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   const mats=mapeiMaterials(cart.lines),cards=[...mats.grout.map(c=>({...c,unit:'уп.'})),...mats.adhesive.map(c=>({...c,unit:'меш.'}))];
   if(cards.length){
     const dmy=mats.date.split('-').reverse().join('.');
-    const need=30+cards.length*60+56+60;   // раздел не разрываем: не помещается целиком — с новой страницы (если вообще помещается на страницу)
+    const need=30+cards.length*62+56+80;   // раздел не разрываем: не помещается целиком — с новой страницы (если вообще помещается на страницу)
     if(y-need<85&&need<H-134-85)newPage(false,false);
     paragraph('Затирка и клей Mapei - справочно, отдельно от плитки',10,colors.ink,17);y-=4;
     page.drawLine({start:{x:M,y},end:{x:R,y},thickness:.5,color:colors.line});
@@ -129,7 +129,7 @@ export async function createQuote(cart, details, fontBytes, options={}) {
       const thumb=await embedImage('mapei:'+c.sku);const textX=M+52,textW=228;
       const need=c.kg==null?'расход уточнит менеджер':Array.isArray(c.kg)?`${number(c.kg[0])}-${number(c.kg[1])} кг`:`около ${number(c.kg,1)} кг`;
       const nameLines=wrap(c.title,textW,9.2);
-      const meta=wrap(`арт. ${c.sku} · к ${c.for.join(', ')} · ${need}${c.alt?.length?` · или ${c.alt.join(', ')}`:''}${SHOW_STOCK?` · склад Краснодар на ${dmy}: ${c.stock>0?number(c.stock)+' '+c.unit:'нет, под заказ'}`:''}`,textW,7.6);
+      const meta=wrap(`арт. ${c.sku} · к ${c.for.join(', ')} · ${need}${c.alt?.length?` · или ${c.alt.join(', ')}`:''}${byNote(c)?` · подбор ${byNote(c)}`:''}${SHOW_STOCK?` · склад Краснодар на ${dmy}: ${c.stock>0?number(c.stock)+' '+c.unit:'нет, под заказ'}`:''}`,textW,7.6);
       const rowHeight=Math.max(56,20+nameLines.length*12+meta.length*10);
       if(y-rowHeight<105)newPage(false,false);
       if(index%2===0)page.drawRectangle({x:M,y:y-rowHeight,width:R-M,height:rowHeight,color:colors.stripe});
@@ -145,7 +145,7 @@ export async function createQuote(cart, details, fontBytes, options={}) {
     y-=10;if(y<130)newPage(false,false);
     page.drawRectangle({x:302,y:y-40,width:R-302,height:40,color:colors.stripe});
     write('ИТОГО MAPEI (справочно)',316,y-24,9,colors.muted);right(money(mats.totalRub*100)+' руб.',R-14,y-26,14);y-=56;
-    paragraph(`Не суммируется с плиткой: скидки и условия продажи материалов Mapei отличаются. Цены - розничный прайс Mapei${SHOW_STOCK?`, склад Краснодар на ${dmy}`:''}. Количество - ориентир: затирка на шов ${QUOTE_JOINT_MM} мм без запаса, клей по верхней границе расхода ${ADHESIVE_KG_M2.join('-')} кг/м² на идеальном основании. Менеджер уточнит по проекту.${mats.noAdhesive.length?` Клей к ${mats.noAdhesive.join(', ')} подберёт менеджер.`:''}`,8.7,colors.muted,13);y-=15;
+    paragraph(`Не суммируется с плиткой: скидки и условия продажи материалов Mapei отличаются. Цены - розничный прайс Mapei${SHOW_STOCK?`, склад Краснодар на ${dmy}`:''}. Количество - ориентир: затирка на шов ${QUOTE_JOINT_MM} мм без запаса, мозаика - по чипу ${MOSAIC_CHIP_MM/10}x${MOSAIC_CHIP_MM/10} см, клей по верхней границе расхода ${ADHESIVE_KG_M2.join('-')} кг/м² на идеальном основании. «Подбор по цвету / формату» - рекомендации Italon для этой плитки нет. Менеджер уточнит по проекту.${mats.noGrout.length?` Затирку к ${mats.noGrout.join(', ')} подберёт менеджер.`:''}${mats.noAdhesive.length?` Клей к ${mats.noAdhesive.join(', ')} подберёт менеджер.`:''}`,8.7,colors.muted,13);y-=15;
   }
   paragraph('Условия предложения',10,colors.ink,17);
   paragraph('Количество рассчитано с учётом целых упаковок и минимального заказа (одна коробка). Наличие, тон, калибр и сроки поставки уточняются при подтверждении заказа. Доставка рассчитывается отдельно.',8.7,colors.muted,13);

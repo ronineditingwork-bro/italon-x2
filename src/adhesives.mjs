@@ -63,6 +63,19 @@ export function adhesiveFor(product) {
   return rows[use] ? { use, size, rows } : null;
 }
 
+/**
+ * Клей для КП, когда точной строки в таблицах Italon нет (Coliseum, 120×120, слэбы, нестандартные размеры):
+ * строка того же размера без учёта толщины, иначе — ближайшая по площади плиты не меньше нашей, иначе — самая крупная
+ * (чем крупнее плита, тем эластичнее клей: 120×120 и слэбы получают клей самых крупных плит таблицы). Только клеи из прайса; [{ name, class }] или null.
+ */
+export function adhesiveBySize([a, b], x2) {
+  const fits = s => (s.t === X2_THICKNESS) === x2, area = r => Math.max(...r.parsed.filter(fits).map(s => s.a * s.b));
+  const rows = TABLES[x2 ? 'exteriorFloor' : 'interior'].rows.filter(r => r.parsed.some(fits)).sort((p, q) => area(p) - area(q));
+  const row = rows.find(r => r.parsed.some(s => s.a === a && s.b === b)) || rows.find(r => area(r) >= a * b) || rows.at(-1);
+  const list = row ? row.adhesives.filter(([name]) => inPrice(name.split(' + ')[0])).map(([name, c]) => ({ name, class: cls(c) })) : [];
+  return list.length ? list : null;
+}
+
 /** «Keraflex Extra S1, Keraflex Maxi S1 или Ultralite S1 (C2TE S1)»; разные классы — у каждого клея свой: «Ultralite S2 (C2E S2), … или Ultraflex S2 (C2TE S2)». */
 export function adhesiveLabel(list) {
   const same = list.every(x => x.class === list[0].class);

@@ -11,7 +11,7 @@
 //   [data-cart-open]          — открыть корзину
 import { esc, money, number, fmt, titleRu, lower, packLabel, minimumLabel, lineOf, productImage, productUrl, collectionUrl, priceHtml, normalize } from '../shared/format.mjs';
 import { QUOTE_JOINT_MM } from '../../src/grouts.mjs';
-import { mapeiMaterials, SHOW_STOCK, ADHESIVE_KG_M2 } from '../../src/mapei.mjs';
+import { mapeiMaterials, byNote, SHOW_STOCK, ADHESIVE_KG_M2, MOSAIC_CHIP_MM } from '../../src/mapei.mjs';
 import { createPricing, MAX_PACKS } from '../../src/pricing.mjs';
 import { quoteDiscount, nextTier } from '../../src/discount.mjs';
 import { $, $$, ROOT, rootRel, openDialog, closeDialog, toast } from './ui.mjs';
@@ -158,7 +158,7 @@ function mapeiCard(c, kind) {
     : (c.kg == null ? 'расход уточнит менеджер' : `≈ ${number(c.kg[0])}–${number(c.kg[1])} кг`);
   const stock = SHOW_STOCK ? `<span class="mapei-card__stock${c.stock >= (c.packs || 1) ? '' : ' is-low'}">${c.stock > 0 ? `на складе ${number(c.stock)} ${kind === 'grout' ? 'уп.' : 'меш.'}` : 'нет на складе — под заказ'}</span>` : '';
   return `<div class="mapei-card">${c.image ? `<img src="${rootRel}${esc(c.image.replace(/^\//, ''))}" alt="" width="64" height="64" loading="lazy">` : '<span></span>'}
-<div><b>${esc(c.title)}</b><span class="mapei-card__for">к ${esc(c.for.join(', '))} · ${need}${c.alt?.length ? ` · или ${esc(c.alt.join(', '))}` : ''}</span>${stock}</div>
+<div><b>${esc(c.title)}</b><span class="mapei-card__for">к ${esc(c.for.join(', '))} · ${need}${c.alt?.length ? ` · или ${esc(c.alt.join(', '))}` : ''}${byNote(c) ? ` · <i>подбор ${esc(byNote(c))}</i>` : ''}</span>${stock}</div>
 <div class="mapei-card__sum">${c.packs ? `<b>${money(c.packs * c.price * 100)}</b><span>${number(c.packs)} ${kind === 'grout' ? 'уп.' : 'меш.'} × ${money(c.price * 100)}</span>` : `<span>${money(c.price * 100)} / ${kind === 'grout' ? 'уп.' : 'меш.'}</span>`}</div></div>`;
 }
 function renderMapei(shown) {
@@ -167,12 +167,12 @@ function renderMapei(shown) {
   box.hidden = !m || !(m.grout.length || m.adhesive.length);
   if (box.hidden) { box.innerHTML = ''; return; }
   box.innerHTML = `<div class="mapei__head"><h3 class="t-h4">Затирка и клей Mapei</h3><span class="mapei__badge">Справочно</span></div>
-<p class="t-small">Подобрано по рекомендациям Italon к плитке из корзины. Цены — розничный прайс Mapei${SHOW_STOCK ? `, склад Краснодар на ${dmy(m.date)}` : ''}.</p>
+<p class="t-small">Подобрано к плитке из корзины: по рекомендациям Italon, а где их нет — по цвету и формату плитки. Цены — розничный прайс Mapei${SHOW_STOCK ? `, склад Краснодар на ${dmy(m.date)}` : ''}.</p>
 ${m.grout.length ? `<p class="mapei__group">Затирка · шов ${QUOTE_JOINT_MM}&nbsp;мм</p>${m.grout.map(c => mapeiCard(c, 'grout')).join('')}` : ''}
 ${m.adhesive.length ? `<p class="mapei__group">Клей · расход ${ADHESIVE_KG_M2.join('–')}&nbsp;кг/м²</p>${m.adhesive.map(c => mapeiCard(c, 'adhesive')).join('')}` : ''}
-${m.noAdhesive.length ? `<p class="t-small">Клей к ${esc(m.noAdhesive.join(', '))} подберёт менеджер.</p>` : ''}
+${m.noGrout.length ? `<p class="t-small">Затирку к ${esc(m.noGrout.join(', '))} подберёт менеджер.</p>` : ''}${m.noAdhesive.length ? `<p class="t-small">Клей к ${esc(m.noAdhesive.join(', '))} подберёт менеджер.</p>` : ''}
 <div class="mapei__total"><span class="t-muted">Итого материалы Mapei</span><strong>${money(m.totalRub * 100)}</strong></div>
-<p class="t-small">Не входит в сумму плитки: скидки и условия продажи у Mapei свои. Количество — ориентир: затирка на шов ${QUOTE_JOINT_MM}&nbsp;мм, клей по верхней границе расхода на идеальном основании; менеджер уточнит по проекту.</p>`;
+<p class="t-small">Не входит в сумму плитки: скидки и условия продажи у Mapei свои. Количество — ориентир: затирка на шов ${QUOTE_JOINT_MM}&nbsp;мм, мозаика — по чипу ${MOSAIC_CHIP_MM / 10}×${MOSAIC_CHIP_MM / 10}&nbsp;см, клей по верхней границе расхода на идеальном основании. «Подбор по цвету / формату» — рекомендации Italon для этой плитки нет. Менеджер уточнит по проекту.</p>`;
 }
 function render() {
   const shown = shownCart();

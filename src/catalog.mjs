@@ -1,7 +1,10 @@
 import raw from '../data/italon-price-2026-07.json' with { type: 'json' };
 import images from '../data/product-images.json' with { type: 'json' };
 import groutRows from '../data/italon-grouts-2025.json' with { type: 'json' };
-import { groutData } from './grouts.mjs';
+import { groutData, groutByColor } from './grouts.mjs';
+import mapeiPrice from '../data/mapei-price.json' with { type: 'json' };
+import features from '../data/picker-features.json' with { type: 'json' };
+import { unpack, fromBase64 } from '../site/shared/picker-features.mjs';
 import { createPricing, MAX_PACKS } from './pricing.mjs';
 
 export const priceInfo = { source: raw.source, validFrom: raw.validFrom, currency: 'RUB', vatIncluded: true };
@@ -46,8 +49,17 @@ for (const series of raw.series) for (const row of series.items) {
   });
 }
 export const products = [...unique.values()];
-// рекомендуемая затирка — в самом товаре: её видят и страницы сайта, и корзина, и КП, и заявка менеджеру
-for (const p of products) { const g = groutData(p, groutRows); if (g) p.grout = g; }
+// рекомендуемая затирка — в самом товаре: её видят и страницы сайта, и корзина, и КП, и заявка менеджеру.
+// Нет рекомендации Italon (Прима, Coliseum, мозаика без своей строки) — для КП подбираем Ultracolor Plus из прайса по цвету фото плитки (by: 'color').
+const priceCodes = Object.values(mapeiPrice.items).map(x => (/ULTRACOLOR PLUS (\d{3})\b/.exec(x.name) || [])[1]).filter(Boolean);
+for (const p of products) {
+  const g = groutData(p, groutRows);
+  if (g) { p.grout = g; continue; }
+  const f = p.image?.kind === 'sku' && features.items[p.image.src.replace(/^\//, '')];
+  const code = f && groutByColor(unpack(fromBase64(f.f)).mean, priceCodes);
+  const m = /^(\d+(?:\.\d+)?)X(\d+(?:\.\d+)?)$/.exec(p.format || '');
+  if (code) p.grout = { mapei: [code], by: 'color', ...(m ? { size: [m[1] * 10, m[2] * 10] } : {}), thickness: p.section === 'x2' ? 20 : p.format === '120X278' ? 6 : 9 };
+}
 export const productMap = new Map(products.map(p => [p.code, p]));
 export { MAX_PACKS };
 export const { lineFor, calculateCart, calculateArea } = createPricing(productMap, priceInfo);
