@@ -1,10 +1,10 @@
 {
   "products": {
     "600010001804": {
-      "src": "/media/products/83459da491976ded881f.webp",
+      "src": "/media/products/dd98cf82d02cbe7c0eb2.webp",
       "kind": "sku",
-      "width": 341,
-      "height": 341
+      "width": 900,
+      "height": 900
     },
     "600010001805": {
       "src": "/media/products/c8d8c1eac7586b96cac6.webp",
@@ -523,16 +523,16 @@
       "height": 887
     },
     "600110001181": {
-      "src": "/media/products/670838b130e028219dbe.webp",
+      "src": "/media/products/2e01ef747441cff86aed.webp",
       "kind": "sku",
-      "width": 341,
-      "height": 336
+      "width": 900,
+      "height": 887
     },
     "600110001182": {
-      "src": "/media/products/40d2c40756089f11ed4a.webp",
+      "src": "/media/products/468e23f3efd56fc74028.webp",
       "kind": "sku",
-      "width": 324,
-      "height": 341
+      "width": 856,
+      "height": 900
     },
     "600110001183": {
       "src": "/media/products/004bd1912bfd6ed15386.webp",
@@ -685,10 +685,10 @@
       "height": 900
     },
     "600180000043": {
-      "src": "/media/products/02e818ed95c5073f143f.webp",
+      "src": "/media/products/3e6e97544b63fa897ac5.webp",
       "kind": "sku",
-      "width": 148,
-      "height": 341
+      "width": 390,
+      "height": 900
     },
     "600180000044": {
       "src": "/media/products/5525b7c5373e9ce5825c.webp",
@@ -955,10 +955,10 @@
       "height": 900
     },
     "610010000847": {
-      "src": "/media/products/5208374d10b4870c0fd1.webp",
+      "src": "/media/products/61b14e2eb3368269ba72.webp",
       "kind": "sku",
-      "width": 341,
-      "height": 341
+      "width": 900,
+      "height": 900
     },
     "610010000848": {
       "src": "/media/products/c634c82cddb6654ec775.webp",
@@ -1159,10 +1159,10 @@
       "height": 900
     },
     "610010001458": {
-      "src": "/media/products/5ca191fba7c2331219b0.webp",
+      "src": "/media/products/c92138cf687aecb9fd4e.webp",
       "kind": "sku",
-      "width": 171,
-      "height": 341
+      "width": 450,
+      "height": 900
     },
     "610010001459": {
       "src": "/media/products/4c524d665ecf94c75587.webp",
@@ -1357,10 +1357,10 @@
       "height": 258
     },
     "610010001682": {
-      "src": "/media/products/32446de1efdd6bf5a9f7.webp",
+      "src": "/media/products/063cec82cec04c448930.webp",
       "kind": "sku",
-      "width": 171,
-      "height": 341
+      "width": 258,
+      "height": 516
     },
     "610010001683": {
       "src": "/media/products/7667b73fd2f0ef17b234.webp",
@@ -2665,10 +2665,10 @@
       "height": 900
     },
     "610010004167": {
-      "src": "/media/products/c3026be41c5650b3df0c.webp",
+      "src": "/media/products/0267e1c10d8e22f9a7c7.webp",
       "kind": "sku",
-      "width": 171,
-      "height": 341
+      "width": 449,
+      "height": 900
     },
     "610010004168": {
       "src": "/media/products/631121ccfa17c75d468d.webp",
@@ -2725,10 +2725,10 @@
       "height": 900
     },
     "610010004177": {
-      "src": "/media/products/8001b0b835e3703df76f.webp",
+      "src": "/media/products/db71ae8652d1bead8999.webp",
       "kind": "sku",
-      "width": 44,
-      "height": 341
+      "width": 115,
+      "height": 900
     },
     "610010004178": {
       "src": "/media/products/bfb5b1f5858aea00e0a0.webp",
@@ -2749,16 +2749,16 @@
       "height": 900
     },
     "610010004181": {
-      "src": "/media/products/7d36dd26ae70b5254436.webp",
+      "src": "/media/products/11c7d090b8c48ac1d011.webp",
       "kind": "sku",
-      "width": 44,
-      "height": 341
+      "width": 115,
+      "height": 900
     },
     "610010004182": {
-      "src": "/media/products/40ccc0b6c0ffbd559d22.webp",
+      "src": "/media/products/f3ba316db3bdb9447081.webp",
       "kind": "sku",
-      "width": 43,
-      "height": 341
+      "width": 114,
+      "height": 900
     },
     "610010004183": {
       "src": "/media/products/930f709e198bffaf7178.webp",
@@ -2773,10 +2773,10 @@
       "height": 833
     },
     "610010004195": {
-      "src": "/media/products/4f18910c383ab5b09a1b.webp",
+      "src": "/media/products/ef18c7063880f0a3cfe8.webp",
       "kind": "sku",
-      "width": 341,
-      "height": 341
+      "width": 833,
+      "height": 833
     },
     "610010004196": {
       "src": "/media/products/4e7a3bf21c91b29300fc.webp",
@@ -2911,16 +2911,16 @@
       "height": 900
     },
     "610010004220": {
-      "src": "/media/products/9cda8724ae81e4ea0ef0.webp",
+      "src": "/media/products/fa0b5c49cc04d2fc2b97.webp",
       "kind": "sku",
-      "width": 43,
-      "height": 341
+      "width": 98,
+      "height": 787
     },
     "610010004221": {
-      "src": "/media/products/003c527f9f26d683d029.webp",
+      "src": "/media/products/5dfe93263dc6cd6be994.webp",
       "kind": "sku",
-      "width": 43,
-      "height": 341
+      "width": 98,
+      "height": 787
     },
     "610010004222": {
       "src": "/media/products/ff51c661a3377e03ed8c.webp",
@@ -2929,10 +2929,10 @@
       "height": 900
     },
     "610010004223": {
-      "src": "/media/products/8001b0b835e3703df76f.webp",
+      "src": "/media/products/cb94d2d15edde3230d8b.webp",
       "kind": "sku",
-      "width": 44,
-      "height": 341
+      "width": 98,
+      "height": 787
     },
     "610010004225": {
       "src": "/media/products/6c546789b8a0a3f9f8ad.webp",
@@ -3133,10 +3133,10 @@
       "height": 900
     },
     "610010006222": {
-      "src": "/media/products/3d317ddf8db33db46fec.webp",
+      "src": "/media/products/b506de69b7bab88fe86b.webp",
       "kind": "sku",
-      "width": 341,
-      "height": 341
+      "width": 900,
+      "height": 900
     },
     "610010006223": {
       "src": "/media/products/7abde2f5d12526a2ea15.webp",
@@ -3193,10 +3193,10 @@
       "height": 900
     },
     "610010006247": {
-      "src": "/media/products/0caa5fb917a6beead44e.webp",
+      "src": "/media/products/de7af86dbb0da295b2bc.webp",
       "kind": "sku",
-      "width": 84,
-      "height": 341
+      "width": 222,
+      "height": 900
     },
     "610010006248": {
       "src": "/media/products/4015e4c45a631c747edb.webp",
@@ -3727,10 +3727,10 @@
       "height": 900
     },
     "610015000512": {
-      "src": "/media/products/3485254354c937014caf.webp",
+      "src": "/media/products/cc32d2bbd1495fb7a7e0.webp",
       "kind": "sku",
-      "width": 341,
-      "height": 341
+      "width": 900,
+      "height": 900
     },
     "610015000513": {
       "src": "/media/products/d1355a22a65a5c21ef19.webp",
@@ -3787,10 +3787,10 @@
       "height": 900
     },
     "610015000552": {
-      "src": "/media/products/772b0167bef521ee01a2.webp",
+      "src": "/media/products/6471cf3ec2554d528513.webp",
       "kind": "sku",
-      "width": 341,
-      "height": 341
+      "width": 900,
+      "height": 900
     },
     "610015000553": {
       "src": "/media/products/bfc45ec049fe49784f3a.webp",
@@ -3877,10 +3877,10 @@
       "height": 900
     },
     "610015000629": {
-      "src": "/media/products/864ef8f52356b4ccc510.webp",
+      "src": "/media/products/26f2e061b95cffeb4099.webp",
       "kind": "sku",
-      "width": 171,
-      "height": 341
+      "width": 449,
+      "height": 898
     },
     "610015000630": {
       "src": "/media/products/cdd22da9c32e62a5a933.webp",
@@ -5839,10 +5839,10 @@
       "height": 900
     },
     "620110000244": {
-      "src": "/media/products/460961893e2905dd7422.webp",
+      "src": "/media/products/249143f0bf4ab865e4a2.webp",
       "kind": "sku",
-      "width": 341,
-      "height": 169
+      "width": 900,
+      "height": 446
     },
     "620110000245": {
       "src": "/media/products/0c1d362b44d359c70b96.webp",

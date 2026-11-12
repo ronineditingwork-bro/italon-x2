@@ -43,7 +43,8 @@ for folder in args.src:
                 image = Image.alpha_composite(Image.new('RGBA', image.size, (255, 255, 255, 255)), image).convert('RGB')
         except Exception as error:
             problems.append((code, f'не открывается: {error}')); continue
-        if min(image.size) < 100: problems.append((code, f'слишком мелкое: {image.size}')); continue
+        # мелкой считаем картинку меньше 300 px по длинной стороне; узкий бордюр 10×80 (98×787 px) — нормальное фото
+        if max(image.size) < 300: problems.append((code, f'слишком мелкое: {image.size}')); continue
         image.thumbnail((900, 900), Image.Resampling.LANCZOS)
         encoded = io.BytesIO(); image.save(encoded, format='WEBP', quality=76, method=6)
         data = encoded.getvalue(); name = hashlib.sha256(data).hexdigest()[:20] + '.webp'
