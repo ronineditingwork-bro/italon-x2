@@ -10,35 +10,35 @@ const ITEM_COLOR = { fan: '#ffb14a', rapid: '#7fe9ff', heavy: '#c9a2ff', shield:
 export class Level1 {
   constructor(ctx) {
     this.ctx = ctx; this.name = 'Побег'; this.hint = 'Асфальтоукладчик проснулся. Выведите бригаду с парковки.';
-    const g = this.game = new EscapeGame(), sc = this.scene = new THREE.Scene(), tm = this.tm = ctx.tm, hi = ctx.quality === 'high';
+    const g = this.game = ctx.game || new EscapeGame(), look = ctx.look || {}, sc = this.scene = new THREE.Scene(), tm = this.tm = ctx.tm, hi = ctx.quality === 'high';
     this.cam = new THREE.PerspectiveCamera(35, 16 / 9, 0.5, 700); this.t = 0; this.blink = 0;
     this.fx = new Fx(sc, hi ? 360 : 180, ctx.reduced);
-    sky(sc, [[0, '#02040c'], [0.36, '#0a1530'], [0.47, '#2a2c5c'], [0.5, '#6a4a62'], [0.52, '#090b16'], [1, '#04050a']]); sc.fog = new THREE.FogExp2('#111733', 0.017);
+    sky(sc, look.sky || [[0, '#02040c'], [0.36, '#0a1530'], [0.47, '#2a2c5c'], [0.5, '#6a4a62'], [0.52, '#090b16'], [1, '#04050a']]); sc.fog = new THREE.FogExp2(look.fog || '#111733', 0.017);
     sc.add(new THREE.HemisphereLight('#6a7cc0', '#141624', 0.42));
-    const moon = this.moon = new THREE.DirectionalLight('#a9c2ff', 0.9); if (hi) { moon.castShadow = true; moon.shadow.mapSize.set(1024, 1024); Object.assign(moon.shadow.camera, { left: -16, right: 16, top: 12, bottom: -8, near: 1, far: 60 }); moon.shadow.bias = -0.002; } sc.add(moon, moon.target);
+    const moon = this.moon = new THREE.DirectionalLight(look.moon || '#a9c2ff', 0.9); if (hi) { moon.castShadow = true; moon.shadow.mapSize.set(1024, 1024); Object.assign(moon.shadow.camera, { left: -16, right: 16, top: 12, bottom: -8, near: 1, far: 60 }); moon.shadow.bias = -0.002; } sc.add(moon, moon.target);
     const fill = new THREE.DirectionalLight('#3d4f8c', 0.25); fill.position.set(6, 6, 16); sc.add(fill);
     this.warm = new THREE.PointLight('#ffb878', 0.9, 16, 2); sc.add(this.warm);            // тёплый свет над уложенной плиткой
     this.lamp = new THREE.SpotLight('#cfe4ff', 1.1, 22, 0.5, 0.6); sc.add(this.lamp, this.lamp.target); // фонарь робота
-    this.rainG = new THREE.Group(); rain(this.rainG, 0, 0, -6, hi ? 900 : 350, 44); this.rainG.scale.z = 0.45; sc.add(this.rainG);
+    this.rainG = new THREE.Group(); if (look.rain !== false) rain(this.rainG, 0, 0, -6, hi ? 900 : 350, 44); this.rainG.scale.z = 0.45; sc.add(this.rainG);
 
     // ---- земля с ямами, уступы ----
-    const end = g.endX, gaps = [...g.level.gaps].filter(q => q.x0 < end + 600).sort((a, b) => a.x0 - b.x0); let x0 = -2400;
+    const [from, end] = ctx.range || [0, g.endX], gaps = [...g.level.gaps].filter(q => q.x0 < end + 600).sort((a, b) => a.x0 - b.x0); let x0 = from - 2400;
     const slab = (a, b) => { const w = (b - a) * U; if (w > 0.01) { const m = add(sc, B(w, 3, 170), MAT.asphalt, (a + b) / 2 * U, -1.5, 45); m.castShadow = false; } };
     for (const q of gaps) { slab(x0, q.x0); add(sc, B((q.x1 - q.x0) * U, 0.5, 170), MAT.rubber, (q.x0 + q.x1) / 2 * U, -3.2, 45).castShadow = false; for (const ex of [q.x0 - 14, q.x1 + 14]) { add(sc, C(0.05, 0.05, 1, 6), MAT.steel, ex * U, 0.5, 2.3); add(sc, B(0.14, 0.14, 0.14), MAT.orange, ex * U, 1.05, 2.3); } x0 = q.x1; }
     slab(x0, end + 3000);
     for (const l of g.level.ledges) { if (l.x0 > end) continue; const w = (l.x1 - l.x0) * U, h = l.h * U, cx = (l.x0 + l.x1) / 2 * U; add(sc, B(w, h, 2.6), l.kind === 'crate' ? MAT.wood : MAT.concrete, cx, h / 2, 0); add(sc, B(w + 0.08, 0.1, 2.7), l.kind === 'crate' ? MAT.kraft : MAT.steel, cx, h, 0); add(sc, B(w + 0.02, 0.22, 2.62), MAT.orange, cx, h * 0.55, 0); }
     // ---- город ----
     const L = (end + 1600) * U; this.lamps = [];
-    for (let i = 0, x = -30; x < L; i++, x += 9.5) { this.lit = this.lit || []; const b1 = building(sc, 8, 9 + rnd(i, 7) * 14, 8, x, -15, 0, '#1a2140'); b1.castShadow = false; if (hi || i % 2) building(sc, 9, 20 + rnd(i, 8) * 22, 9, x + 4, -30, 1, '#111836').castShadow = false; this.lit.push({ x: x * 48, m: b1.material }); }
-    for (let i = 0, x = -22; x < L; i++, x += 12) { const gp = new THREE.Group(); gp.position.set(x, 0, -4.4); sc.add(gp); add(gp, C(0.09, 0.12, 5.4, 8), MAT.steel, 0, 2.7, 0); add(gp, B(1.4, 0.09, 0.09), MAT.steel, 0.65, 5.4, 0);
+    for (let i = 0, x = from * U - 30; x < L; i++, x += 9.5) { this.lit = this.lit || []; const b1 = building(sc, 8, 9 + rnd(i, 7) * 14, 8, x, -15, 0, '#1a2140'); b1.castShadow = false; if (hi || i % 2) building(sc, 9, 20 + rnd(i, 8) * 22, 9, x + 4, -30, 1, '#111836').castShadow = false; this.lit.push({ x: x * 48, m: b1.material }); }
+    for (let i = 0, x = from * U - 22; x < L; i++, x += 12) { const gp = new THREE.Group(); gp.position.set(x, 0, -4.4); sc.add(gp); add(gp, C(0.09, 0.12, 5.4, 8), MAT.steel, 0, 2.7, 0); add(gp, B(1.4, 0.09, 0.09), MAT.steel, 0.65, 5.4, 0);
       const bulb = add(gp, RB(0.7, 0.14, 0.3, 0.05), MAT.dark, 1.2, 5.32, 0), gl = glow(gp, '#ffb060', 1.8, 1.2, 5.2, 0, 2.4); gl.visible = false; this.lamps.push({ x: (x + 1.2) * 48, bulb, gl, on: false });
       if (rnd(i, 21) < 0.45) car(sc, x + 5, -7 - rnd(i, 22), (rnd(i, 23) - 0.5) * 0.4, rnd(i, 24) < 0.5 ? '#232a44' : '#2a2032'); else if (rnd(i, 25) < 0.5) tree(sc, x + 6, -8.5, false);
       if (rnd(i, 26) < 0.18) barrier(sc, x + 3, 7 + rnd(i, 27), (rnd(i, 28) - 0.5) * 0.4); }
     // финиш: ворота, в которые врежется укладчик
-    { const ex = end * U + 3; for (const z of [-3.6, 3.6]) add(sc, B(1.4, 7, 1.4), MAT.concrete, ex, 3.5, z); add(sc, B(1.6, 1.2, 8.6), MAT.steel, ex, 7.4, 0); add(sc, B(0.2, 0.8, 5), MAT.warm, ex - 0.85, 7.4, 0); glow(sc, '#ffc988', 9, ex - 1.5, 7.4, 0, 1.5); }
+    if (!ctx.range) { const ex = end * U + 3; for (const z of [-3.6, 3.6]) add(sc, B(1.4, 7, 1.4), MAT.concrete, ex, 3.5, z); add(sc, B(1.6, 1.2, 8.6), MAT.steel, ex, 7.4, 0); add(sc, B(0.2, 0.8, 5), MAT.warm, ex - 0.85, 7.4, 0); glow(sc, '#ffc988', 9, ex - 1.5, 7.4, 0, 1.5); }
     // ---- действующие лица ----
-    this.cages = g.cages.map(c => { const o = cage(sc, tm, c.x * U, -0.9); return o; });
-    this.paver = makePaver(); sc.add(this.paver);
+    this.cages = (g.cages || []).map(c => cage(sc, tm, c.x * U, -0.9));
+    if (g.chaser) { this.paver = makePaver(); sc.add(this.paver); }
     this.robot = makeX2(tm); this.robot.scale.setScalar(1.08); sc.add(this.robot);
     this.helpers = []; this.trail = { x: new Float32Array(512), y: new Float32Array(512), i: 0 };
     this.views = new Map(); this.pools = {};
@@ -53,7 +53,7 @@ export class Level1 {
     this.reset();
   }
 
-  reset() { const g = this.game; for (const h of this.helpers) h.visible = false; this.helperN = 0; this.rows.forEach(r => { r.position.x = -999; }); for (let x = -1056; x < g.nextTileX; x += 96) this.layRow(x, true);
+  reset() { const g = this.game; for (const h of this.helpers) h.visible = false; this.helperN = 0; this.rows.forEach(r => { r.position.x = -999; }); for (let x = g.nextTileX - 1152; x < g.nextTileX; x += 96) this.layRow(x, true);
     this.cages.forEach(o => { o.visible = true; o.userData.helper.visible = true; }); this.lamps.forEach(l => { l.on = false; l.bulb.material = MAT.dark; l.gl.visible = false; }); this.lit.forEach(b => { b.on = false; b.m.emissiveIntensity = 0.9; }); this.trail.x.fill(g.player.x); this.trail.y.fill(0); this.crashed = false; }
   start() { this.game.start(); this.reset(); }
   get state() { const p = this.game.phase; return p === 'won' ? 'won' : p === 'over' ? 'lost' : 'running'; }
@@ -93,8 +93,12 @@ export class Level1 {
       case 'rescue': { const i = this.game.cages.findIndex(c => c.x === e.x); if (i >= 0) { this.cages[i].userData.helper.visible = false; fx.spark(X(e.x), 0.9, 0, 24, '#ffc988', 7, 0.6); fx.boom(X(e.x), 0.8, 0.2, 0.45); } break; }
       case 'cageLost': { const i = this.game.cages.findIndex(c => c.x === e.x); if (i >= 0) this.cages[i].visible = false; fx.boom(X(e.x), 0.8, 0, 0.9); break; }
       case 'helperLost': fx.spark(X(p.x) - 1.5, 0.8, 0, 14, '#ffb21e', 7, 0.6); break;
-      case 'explosion': fx.boom(X(e.x), Y(e.y), 0.2, e.big ? 2 : 1); break;
-      case 'win': fx.boom(X(this.game.endX) + 1, 3, 0, 2.6); fx.boom(X(this.game.endX), 1.5, 1.5, 2); fx.addShake(0.5); break;
+      case 'explosion': fx.boom(X(e.x), Y(e.y), 0.6, e.big ? 2 : 1); break;
+      case 'bossHit': fx.spark(X(e.x), Y(e.y), 0.5, 5, '#ffe6b0', 7, 0.3); break;
+      case 'helperShot': fx.spark(X(e.x), Y(e.y), 0.6, 8, '#ffc988', 7, 0.35); break;
+      case 'bossStart': fx.addShake(0.35); break;
+      case 'charge': case 'shake': fx.addShake(0.25); break;
+      case 'win': if (this.game.endX) { fx.boom(X(this.game.endX) + 1, 3, 0, 2.6); fx.boom(X(this.game.endX), 1.5, 1.5, 2); } fx.addShake(0.5); break;
     }
   }
 
@@ -124,12 +128,11 @@ export class Level1 {
     for (const l of this.lamps) if (!l.on && l.x < g.laidX) { l.on = true; l.bulb.material = MAT.warm; l.gl.visible = true; fx.spark(l.x * U, 5.2, -4.4, 8, '#ffc988', 2, 0.5, 2); }
     for (const b of this.lit) if (!b.on && b.x < g.laidX - 200) { b.on = true; b.m.emissiveIntensity = 2.6; }
     // укладчик
-    const c = g.chaser; this.paver.position.set(X(c.x) - 7.5, Math.sin(t * 22) * 0.03, -0.4); this.paver.rotation.z = c.stun > 0 ? 0.02 : Math.sin(t * 9) * 0.008;
-    if (live && Math.random() < 0.5) fx.spark(X(c.x) - 0.5, 0.2, (Math.random() - 0.5) * 4, 1, '#ff9a4a', 5, 0.4);
-    if (live && c.x > p.x - 420) fx.addShake(0.06);
-    if (g.phase === 'won' && !this.crashed) this.crashed = true;
+    const c = g.chaser; if (c) { this.paver.position.set(X(c.x) - 7.5, Math.sin(t * 22) * 0.03, -0.4); this.paver.rotation.z = c.stun > 0 ? 0.02 : Math.sin(t * 9) * 0.008;
+      if (live && Math.random() < 0.5) fx.spark(X(c.x) - 0.5, 0.2, (Math.random() - 0.5) * 4, 1, '#ff9a4a', 5, 0.4);
+      if (live && c.x > p.x - 420) fx.addShake(0.06); }
     // клетки
-    g.cages.forEach((cg, i) => { const o = this.cages[i]; if (cg.open && o.visible && o.userData.helper.visible === false) { o.scale.y = Math.max(0.05, o.scale.y - dt * 4); if (o.scale.y <= 0.06) { o.visible = false; o.scale.y = 1; } } else if (!cg.open) o.userData.helper.position.y = Math.abs(Math.sin(t * 5 + i)) * 0.12; });
+    (g.cages || []).forEach((cg, i) => { const o = this.cages[i]; if (cg.open && o.visible && o.userData.helper.visible === false) { o.scale.y = Math.max(0.05, o.scale.y - dt * 4); if (o.scale.y <= 0.06) { o.visible = false; o.scale.y = 1; } } else if (!cg.open) o.userData.helper.position.y = Math.abs(Math.sin(t * 5 + i)) * 0.12; });
     // враги
     for (const [id, o] of this.views) o.userData.seen = false;
     for (const e of g.enemies) { const o = this.view(e); o.userData.seen = true; const s = 1 + Math.max(0, e.flash) * 2.5; o.scale.setScalar(s);

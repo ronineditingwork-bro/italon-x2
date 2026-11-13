@@ -10,7 +10,7 @@ export const MAT = {
   shell: M('#f1ebde', { roughness: 0.38 }), shellD: M('#a9a498'), dark: M('#191b22', { roughness: 0.35, metalness: 0.4 }), orange: M('#f08a24', { roughness: 0.4, emissive: '#7a3a05', emissiveIntensity: 0.5 }),
   kraft: M('#c79a5e', { roughness: 0.9 }), glass: M('#0d1626', { roughness: 0.08, metalness: 0.7 }), eye: E('#7fe9ff', 1.0), red: E('#ff4a2a', 1.4), warm: E('#ffc988', 0.8), white: E('#fff4e0', 0.8),
   slab: M('#3d4150', { roughness: 0.9 }), steel: M('#2a2f3d', { metalness: 0.7, roughness: 0.4 }), yellow: M('#d9a21a', { roughness: 0.6 }), rubber: M('#0c0d11', { roughness: 0.95 }), rust: M('#6b4130', { roughness: 0.95 }),
-  asphalt: M('#161a26', { roughness: 0.32, metalness: 0.45 }), concrete: M('#3a4056', { roughness: 0.85 }), hat: M('#ffb21e', { roughness: 0.35, emissive: '#6a3d00', emissiveIntensity: 0.4 }), leaf: M('#3f8a45', { roughness: 0.9 }), leafD: M('#14262a', { roughness: 0.9 }), wood: M('#4a3626', { roughness: 0.9 }),
+  asphalt: M('#161a26', { roughness: 0.55, metalness: 0.25 }), concrete: M('#3a4056', { roughness: 0.85 }), hat: M('#ffb21e', { roughness: 0.35, emissive: '#6a3d00', emissiveIntensity: 0.4 }), leaf: M('#3f8a45', { roughness: 0.9 }), leafD: M('#14262a', { roughness: 0.9 }), wood: M('#4a3626', { roughness: 0.9 }),
 };
 const B = (w, h, d) => new THREE.BoxGeometry(w, h, d), C = (r1, r2, h, s = 18) => new THREE.CylinderGeometry(r1, r2, h, s), S = (r, w = 20, h = 14) => new THREE.SphereGeometry(r, w, h), RB = (w, h, d, r) => new RoundedBoxGeometry(w, h, d, 4, r);
 export function add(p, g, m, x = 0, y = 0, z = 0, rx = 0, ry = 0, rz = 0) { const o = new THREE.Mesh(g, m); o.position.set(x, y, z); o.rotation.set(rx, ry, rz); o.castShadow = true; o.receiveShadow = true; p.add(o); return o; }

@@ -9,9 +9,12 @@ import { Music } from './music.js';
 import { bindInput } from './input.js';
 import { mountUI, fmt } from './ui.js';
 import { Level1 } from './l1.js';
+import { Level2 } from './l2.js';
+import { Level3 } from './l3.js';
+import { Level4 } from './l4.js';
 
-const LEVELS = [Level1];
-const SOUND_AS = { rescue: 'pickup', crush: 'explosion', cageLost: 'explosion', helperLost: 'hit' };
+const LEVELS = [Level1, Level2, Level3, Level4];
+const SOUND_AS = { rescue: 'pickup', crush: 'explosion', cageLost: 'explosion', helperLost: 'hit', unlay: 'ping' };
 const loadImg = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src; });
 function fallbackTile() { const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d'); x.fillStyle = '#d9d2c6'; x.fillRect(0, 0, 256, 256); for (let i = 0; i < 900; i++) { x.fillStyle = `rgba(${Math.random() < 0.5 ? '255,255,255' : '90,80,70'},${Math.random() * 0.12})`; x.fillRect(Math.random() * 256, Math.random() * 256, 3, 3); } return c; }
 
@@ -22,7 +25,7 @@ export function mountGame(root, options = {}) {
   const R = new THREE.WebGLRenderer({ canvas, antialias: quality === 'high', powerPreference: 'high-performance' });
   R.outputEncoding = THREE.sRGBEncoding; R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1.0; R.shadowMap.type = THREE.PCFSoftShadowMap;
   const sfx = new Sfx(), music = new Music(sfx);
-  let level = null, li = 0, phase = 'menu', comp = null, raf = 0, last = 0, slow = 0, dead = false, total = { area: 0, helpers: 0, total: 0, time: 0 }, hintT = 0, hintI = 0, best = 0, offEv = null;
+  let level = null, li = 0, phase = 'menu', comp = null, raf = 0, last = 0, slow = 0, dead = false, total = { area: 0, helpers: 0, total: 0, time: 0 }, hintT = 0, hintI = 0, hints = [], best = 0, offEv = null;
   try { best = +localStorage.getItem('x2c:best') || 0; } catch { /* нет доступа к хранилищу */ }
   const active = () => phase === 'play';
   const input = bindInput(root, { active, onPause: () => { if (phase === 'play') { pause(); return true; } if (phase === 'pause') { resume(); return true; } return false; }, onFirst: () => sfx.init() });
@@ -33,14 +36,14 @@ export function mountGame(root, options = {}) {
     li = i; offEv?.(); level?.dispose();
     const tl = tiles[i % Math.max(1, tiles.length)], img = (tl && await loadImg(tl.img)) || fallbackTile();
     if (dead) return;
-    level = new LEVELS[i]({ tm: tileMats(img), quality, reduced });
+    level = new LEVELS[i]({ tm: tileMats(img), quality, reduced, touch });
     offEv = level.game.on(e => { sfx.play(SOUND_AS[e.type] ? { type: SOUND_AS[e.type] } : e); if ((e.type === 'hit' || e.type === 'fall') && !reduced) navigator.vibrate?.(40); if (e.type === 'rescue') ui.toast(`Помощник в бригаде: ${e.helpers}`, 1500); });
     comp = null; if (quality === 'high') { comp = new EffectComposer(R); comp.addPass(new RenderPass(level.scene, level.cam)); comp.addPass(new UnrealBloomPass(new THREE.Vector2(256, 256), reduced ? 0.12 : 0.2, 0.5, 0.93)); }
     music.setLevel(i); applyQuality();
   }
   const HINTS = touch ? [[1, root.clientHeight > root.clientWidth * 1.15 ? 'Поверните телефон горизонтально — так удобнее' : 'Крестовина — бежать'], [4, 'A — прыжок'], [7, 'B — огонь, держите'], [11, 'Стреляйте по клетке — помощник пойдёт за вами'], [15, 'Не стойте: укладчик догоняет']]
     : [[1, 'A и D — бежать'], [4, 'Пробел — прыжок'], [7, 'J или кнопка мыши — огонь, держите'], [11, 'Стреляйте по клетке — помощник пойдёт за вами'], [15, 'W — прицел вверх. Не стойте: укладчик догоняет']];
-  function play() { input.release(); level.start(); phase = 'play'; ui.show(null); hintT = 0; hintI = li === 0 ? 0 : 99; sfx.init(); music.start();
+  function play() { input.release(); level.start(); phase = 'play'; ui.show(null); hintT = 0; hintI = 0; hints = li === 0 ? HINTS : level.hints || []; sfx.init(); music.start();
     const tl = tiles[li % Math.max(1, tiles.length)]; ui.banner(`Уровень ${li + 1} из ${LEVELS.length}${tl ? ' · ' + tl.name : ''}`, level.name, level.hint); canvas.focus({ preventScroll: true }); }
   function pause() { if (phase !== 'play') return; phase = 'pause'; input.release(); music.stop(); ui.show('pause'); }
   function resume() { if (phase !== 'pause') return; phase = 'play'; ui.show(null); music.start(); canvas.focus({ preventScroll: true }); }
@@ -76,7 +79,7 @@ export function mountGame(root, options = {}) {
     const raw = last ? (now - last) / 1000 : 0, dt = Math.min(raw, 0.05); last = now; if (!level) return;
     input.poll();
     if (phase === 'play') { level.setInput(input.inp); level.update(dt); ui.hud(level.hud());
-      hintT += dt; if (hintI < HINTS.length && hintT > HINTS[hintI][0]) ui.toast(HINTS[hintI++][1], 2800);
+      hintT += dt; if (hintI < hints.length && hintT > hints[hintI][0]) ui.toast(hints[hintI++][1], 2800);
       music.tense = level.game.chaser && level.game.chaser.x > level.game.player.x - 420 ? 1 : 0;
       const st = level.state; if (st !== 'running') finishLevel(st === 'won');
       if (quality === 'high' && !options.quality) { slow = raw > 1 / 26 ? slow + raw : Math.max(0, slow - raw * 0.5); if (slow > 2.5) { quality = 'low'; comp = null; applyQuality(); } } }
@@ -85,6 +88,6 @@ export function mountGame(root, options = {}) {
   }
   ui.sound(!sfx.muted); ui.show('menu');
   const ready = load(0).then(() => { if (!dead) raf = requestAnimationFrame(frame); });
-  return { ready, get level() { return level; }, get phase() { return phase; }, input, play, pause, resume, advance(sec) { for (let i = 0; i < sec * 60 && phase === 'play'; i++) { level.setInput(input.inp); level.game.step(1 / 60); } },
+  return { ready, get level() { return level; }, get phase() { return phase; }, input, play, pause, resume, goto: async i => { await load(i); play(); }, advance(sec) { for (let i = 0; i < sec * 60 && phase === 'play'; i++) { level.setInput(input.inp); level.game.step(1 / 60); } },
     destroy() { dead = true; cancelAnimationFrame(raf); music.stop(); input.destroy(); offEv?.(); level?.dispose(); ro.disconnect(); document.removeEventListener('visibilitychange', onVis); root.removeEventListener('click', onClick); R.dispose(); R.forceContextLoss?.(); root.innerHTML = ''; } };
 }
