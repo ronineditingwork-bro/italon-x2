@@ -2,7 +2,7 @@
 import { CONFIG } from '../../x2-run/src/config.js';
 import { Game } from '../../x2-run/src/game.js';
 
-export const BOSS = { kind: 2, hpMul: 2.4, helpers: 6, throwEvery: 0.5, drops: ['fan', 'rapid', 'heart', 'heavy'] };
+export const BOSS = { kind: 2, hpMul: 3.4, helpers: 6, throwEvery: 0.5, drops: ['fan', 'rapid', 'heart', 'heavy'] };
 
 export class BossGame extends Game {
   constructor(seed) { super(seed); Object.assign(this.level, { gaps: [], ledges: [], spawns: [], drones: [], patches: [] }); this.reset(); }

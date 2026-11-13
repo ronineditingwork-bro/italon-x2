@@ -1,5 +1,5 @@
 // Уровень 2 «Захват двора»: вид сверху в 3D. Правила — yard.js; здесь только картинка.
-import { THREE, MAT, add, B, C, S, RB, rnd, glow, building, makeX2, makeHelper, makeBrak, makeRoller, car, tree, barrier, cage } from './kit.js';
+import { THREE, MAT, add, B, C, S, RB, rnd, glow, lampLight, building, makeX2, makeHelper, makeBrak, makeRoller, car, tree, barrier, cage } from './kit.js';
 import { YardGame, YARD } from './yard.js';
 import { Fx } from './fx.js';
 
@@ -21,7 +21,7 @@ export class Level2 {
     for (let ix = -8; ix <= 8; ix += 4) for (let k = -3; k <= 3; k++) add(sc, B(0.1, 0.02, 2.2), new THREE.MeshBasicMaterial({ color: '#2c3350' }), ix * Y.cell, 0.02, k * 3.2).castShadow = false;
     // двор: фонари и деревья оживают, когда под ними ложится плитка
     this.lamps = [[-6.4, -4.8], [6.4, -4.8], [-6.4, 4.8], [6.4, 4.8], [0, -9.6], [0, 9.6]].map(([x, z], i) => { const gp = new THREE.Group(); gp.position.set(x, 0, z); gp.rotation.y = i * 1.3; sc.add(gp); add(gp, C(0.09, 0.12, 5.4, 8), MAT.steel, 0, 2.7, 0); add(gp, B(1.4, 0.09, 0.09), MAT.steel, 0.65, 5.4, 0);
-      const bulb = add(gp, RB(0.7, 0.14, 0.3, 0.05), MAT.dark, 1.2, 5.32, 0), gl = glow(gp, '#ffb060', 2.2, 1.2, 5.2, 0, 2.4); gl.visible = false; return { c: g.cellAt(x, z), bulb, gl, on: false }; });
+      const bulb = add(gp, RB(0.7, 0.14, 0.3, 0.05), MAT.dark, 1.2, 5.32, 0), gl = lampLight(gp, 2.2); return { c: g.cellAt(x, z), bulb, gl, on: false }; });
     this.trees = [[-11.2, 0], [11.2, 0], [-3.2, 8], [3.2, -8], [-12.8, -8], [12.8, 8]].map(([x, z]) => { const gp = new THREE.Group(); sc.add(gp); tree(gp, x, z, false); const leaves = gp.children.slice(1); return { c: g.cellAt(x, z), leaves, on: false }; });
     for (let i = 0; i < 10; i++) { building(sc, 9, 5 + rnd(i, 3) * 6, 7, -41 + i * 9.2, -g.h / 2 - 9, i % 3 ? 0 : 1).castShadow = false; if (i < 6) for (const sd of [-1, 1]) building(sc, 7, 5 + rnd(i, 4 + sd) * 5, 8, sd * (g.w / 2 + 9), -18 + i * 8.5, 0).castShadow = false; }
     car(sc, -g.w / 2 - 3, 5, 1.5); car(sc, g.w / 2 + 3, -6, 1.6, '#2a2032'); barrier(sc, 8, g.h / 2 + 2, 0.2); barrier(sc, -9, g.h / 2 + 2.5, -0.2); car(sc, 2, g.h / 2 + 4, 0.1);

@@ -1,5 +1,5 @@
 // Уровень 1 «Побег»: вид сбоку в 3D. Правила — escape.js; здесь только картинка.
-import { THREE, MAT, add, B, C, S, RB, rnd, glow, building, makeX2, makeHelper, makeBrak, makePaver, makeRoller, car, tree, barrier, rain, sky, cage } from './kit.js';
+import { THREE, MAT, add, B, C, S, RB, rnd, glow, glowTex, lampLight, building, makeX2, makeHelper, makeBrak, makePaver, makeRoller, car, tree, barrier, rain, sky, cage } from './kit.js';
 import { CONFIG } from '../../x2-run/src/config.js';
 import { EscapeGame } from './escape.js';
 import { Fx } from './fx.js';
@@ -28,12 +28,19 @@ export class Level1 {
     slab(x0, end + 3000);
     for (const l of g.level.ledges) { if (l.x0 > end) continue; const w = (l.x1 - l.x0) * U, h = l.h * U, cx = (l.x0 + l.x1) / 2 * U; add(sc, B(w, h, 2.6), l.kind === 'crate' ? MAT.wood : MAT.concrete, cx, h / 2, 0); add(sc, B(w + 0.08, 0.1, 2.7), l.kind === 'crate' ? MAT.kraft : MAT.steel, cx, h, 0); add(sc, B(w + 0.02, 0.22, 2.62), MAT.orange, cx, h * 0.55, 0); }
     // ---- город ----
-    const L = (end + 1600) * U; this.lamps = [];
+    const L = (end + 1600) * U; this.lamps = []; this.cars = [];
     for (let i = 0, x = from * U - 30; x < L; i++, x += 9.5) { this.lit = this.lit || []; const b1 = building(sc, 8, 9 + rnd(i, 7) * 14, 8, x, -15, 0, '#1a2140'); b1.castShadow = false; if (hi || i % 2) building(sc, 9, 20 + rnd(i, 8) * 22, 9, x + 4, -30, 1, '#111836').castShadow = false; this.lit.push({ x: x * 48, m: b1.material }); }
     for (let i = 0, x = from * U - 22; x < L; i++, x += 12) { const gp = new THREE.Group(); gp.position.set(x, 0, -4.4); sc.add(gp); add(gp, C(0.09, 0.12, 5.4, 8), MAT.steel, 0, 2.7, 0); add(gp, B(1.4, 0.09, 0.09), MAT.steel, 0.65, 5.4, 0);
-      const bulb = add(gp, RB(0.7, 0.14, 0.3, 0.05), MAT.dark, 1.2, 5.32, 0), gl = glow(gp, '#ffb060', 1.8, 1.2, 5.2, 0, 2.4); gl.visible = false; this.lamps.push({ x: (x + 1.2) * 48, bulb, gl, on: false });
-      if (rnd(i, 21) < 0.45) car(sc, x + 5, -7 - rnd(i, 22), (rnd(i, 23) - 0.5) * 0.4, rnd(i, 24) < 0.5 ? '#232a44' : '#2a2032'); else if (rnd(i, 25) < 0.5) tree(sc, x + 6, -8.5, false);
+      const bulb = add(gp, RB(0.7, 0.14, 0.3, 0.05), MAT.dark, 1.2, 5.32, 0), gl = lampLight(gp); this.lamps.push({ i, x: (x + 1.2) * 48, bulb, gl, on: false });
+      if (rnd(i, 21) < 0.45) this.cars.push({ x: (x + 5) * 48, o: car(sc, x + 5, -7 - rnd(i, 22), (rnd(i, 23) - 0.5) * 0.4, rnd(i, 24) < 0.5 ? '#232a44' : '#2a2032') }); else if (rnd(i, 25) < 0.5) tree(sc, x + 6, -8.5, false);
       if (rnd(i, 26) < 0.18) barrier(sc, x + 3, 7 + rnd(i, 27), (rnd(i, 28) - 0.5) * 0.4); }
+    // гирлянды между фонарями: одна линия и одно облако лампочек на весь уровень; загораются вместе с фонарём
+    { const N = 9, n = this.lamps.length, pos = new Float32Array(n * N * 3), wire = [];
+      this.lamps.forEach((l, i) => { const a = l.x * U, b = (this.lamps[i + 1] || l).x * U; wire.push(a, 5.2, -4.4); for (let k = 0; k < N; k++) { const u = (k + 1) / (N + 1), j = (i * N + k) * 3; pos[j] = a + (b - a) * u; pos[j + 1] = 5.2 - Math.sin(u * Math.PI) * 1.1; pos[j + 2] = -4.4; wire.push(pos[j], pos[j + 1], -4.4); } });
+      const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); this.bulbs = new THREE.BufferAttribute(new Float32Array(n * N * 3), 3); geo.setAttribute('color', this.bulbs);
+      const pts = new THREE.Points(geo, new THREE.PointsMaterial({ size: 0.55, map: glowTex, vertexColors: true, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false })); pts.frustumCulled = false; sc.add(pts);
+      const wg = new THREE.BufferGeometry(); wg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(wire), 3)); const ln = new THREE.Line(wg, new THREE.LineBasicMaterial({ color: '#0a0e1e' })); ln.frustumCulled = false; sc.add(ln);
+      this.span = (i, on) => { const a = this.bulbs.array; for (let k = i * N * 3; k < (i + 1) * N * 3; k += 3) { a[k] = on ? 1 : 0; a[k + 1] = on ? 0.72 : 0; a[k + 2] = on ? 0.38 : 0; } this.bulbs.needsUpdate = true; }; }
     // финиш: ворота, в которые врежется укладчик
     if (!ctx.range) { const ex = end * U + 3; for (const z of [-3.6, 3.6]) add(sc, B(1.4, 7, 1.4), MAT.concrete, ex, 3.5, z); add(sc, B(1.6, 1.2, 8.6), MAT.steel, ex, 7.4, 0); add(sc, B(0.2, 0.8, 5), MAT.warm, ex - 0.85, 7.4, 0); glow(sc, '#ffc988', 9, ex - 1.5, 7.4, 0, 1.5); }
     // ---- действующие лица ----
@@ -54,7 +61,7 @@ export class Level1 {
   }
 
   reset() { const g = this.game; for (const h of this.helpers) h.visible = false; this.helperN = 0; this.rows.forEach(r => { r.position.x = -999; }); for (let x = g.nextTileX - 1152; x < g.nextTileX; x += 96) this.layRow(x, true);
-    this.cages.forEach(o => { o.visible = true; o.userData.helper.visible = true; }); this.lamps.forEach(l => { l.on = false; l.bulb.material = MAT.dark; l.gl.visible = false; }); this.lit.forEach(b => { b.on = false; b.m.emissiveIntensity = 0.9; }); this.trail.x.fill(g.player.x); this.trail.y.fill(0); this.crashed = false; }
+    this.cages.forEach(o => { o.visible = true; o.userData.helper.visible = true; }); this.lamps.forEach(l => { l.on = false; l.bulb.material = MAT.dark; l.gl.visible = false; this.span(l.i, false); }); this.cars.forEach(c => { c.hit = false; c.o.rotation.z = 0; c.o.position.y = 0; }); this.lit.forEach(b => { b.on = false; b.m.emissiveIntensity = 0.9; }); this.trail.x.fill(g.player.x); this.trail.y.fill(0); this.crashed = false; }
   start() { this.game.start(); this.reset(); }
   get state() { const p = this.game.phase; return p === 'won' ? 'won' : p === 'over' ? 'lost' : 'running'; }
   hud() { const g = this.game, p = g.player; return { hearts: p.hearts, max: CONFIG.player.maxHearts, helpers: g.helpers, total: g.total, area: g.area, weapon: g.weapon().name, shield: p.shield, progress: Math.min(1, p.x / g.endX), midLabel: 'До выезда' }; }
@@ -72,7 +79,8 @@ export class Level1 {
       else if (e.type === 'heavy') { const r = makeRoller(); r.scale.setScalar(0.3); o.add(r); }
       else if (e.type === 'turret') { add(o, C(0.9, 1, 0.3, 16), MAT.steel, 0, 0.15, 0); add(o, C(0.5, 0.6, 0.9, 12), MAT.rust, 0, 0.6, 0); o.userData.lid = add(o, C(0.95, 0.95, 0.12, 16), MAT.yellow, 0, 0.36, 0); o.userData.gun = add(o, C(0.1, 0.1, 1.1, 8), MAT.dark, -0.5, 0.9, 0, 0, 0, Math.PI / 2); add(o, S(0.14), MAT.red, 0, 1.1, 0.3); }
       else { add(o, RB(1, 0.42, 0.7, 0.15), e.type === 'drone' ? MAT.shell : MAT.steel); add(o, B(2.1, 0.05, 0.1), MAT.steel, 0, 0.16, 0); for (const dx of [-1, 1]) add(o, C(0.5, 0.5, 0.02, 14), new THREE.MeshBasicMaterial({ color: '#8fa0d0', transparent: true, opacity: 0.3 }), dx, 0.3, 0).castShadow = false;
-        if (e.type === 'drone') { add(o, B(0.6, 0.5, 0.6), MAT.kraft, 0, -0.5, 0); glow(o, '#ffc988', 1.6, 0, -0.5, 0.4, 1.4); } else { add(o, S(0.16), MAT.red, -0.3, -0.2, 0.2); glow(o, '#ff4020', 1.8, -0.3, -0.2, 0.3, 1.6); } }
+        if (e.type === 'drone') { add(o, B(0.6, 0.5, 0.6), MAT.kraft, 0, -0.5, 0); glow(o, '#ffc988', 1.6, 0, -0.5, 0.4, 1.4); } else { add(o, S(0.16), MAT.red, -0.3, -0.2, 0.2); glow(o, '#ff4020', 1.8, -0.3, -0.2, 0.3, 1.6);
+          const beam = new THREE.Mesh(new THREE.ConeGeometry(1.7, 6.5, 18, 1, true), new THREE.MeshBasicMaterial({ color: '#ff3a20', transparent: true, opacity: 0.1, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, fog: false })); beam.position.y = -3.4; o.add(beam); } }   // красный прожектор дрона
       sc.add(o); }
     o.visible = true; this.views.set(e.id, o); o.userData.type = e.type; return o;
   }
@@ -125,12 +133,13 @@ export class Level1 {
     // плитка встаёт на место
     for (const row of this.rows) { if (row.userData.t >= 1) continue; const k = row.userData.t = Math.min(1, row.userData.t + dt * 4.5), e = 1 - (1 - k) * (1 - k); row.position.y = 0.05 + (1 - e) * 1.55; row.rotation.z = -(1 - e) * 0.5; if (k >= 1) fx.spark(row.position.x, 0.12, 2.2, 5, '#ffe2a0', 3, 0.3, 4); }
     // фонари и окна зажигаются позади
-    for (const l of this.lamps) if (!l.on && l.x < g.laidX) { l.on = true; l.bulb.material = MAT.warm; l.gl.visible = true; fx.spark(l.x * U, 5.2, -4.4, 8, '#ffc988', 2, 0.5, 2); }
+    for (const l of this.lamps) if (!l.on && l.x < g.laidX) { l.on = true; l.bulb.material = MAT.warm; l.gl.visible = true; this.span(l.i, true); fx.spark(l.x * U, 5.2, -4.4, 8, '#ffc988', 2, 0.5, 2); }
     for (const b of this.lit) if (!b.on && b.x < g.laidX - 200) { b.on = true; b.m.emissiveIntensity = 2.6; }
     // укладчик
     const c = g.chaser; if (c) { this.paver.position.set(X(c.x) - 7.5, Math.sin(t * 22) * 0.03, -0.4); this.paver.rotation.z = c.stun > 0 ? 0.02 : Math.sin(t * 9) * 0.008;
       if (live && Math.random() < 0.5) fx.spark(X(c.x) - 0.5, 0.2, (Math.random() - 0.5) * 4, 1, '#ff9a4a', 5, 0.4);
-      if (live && c.x > p.x - 420) fx.addShake(0.06); }
+      if (live && c.x > p.x - 420) fx.addShake(0.06);
+      for (const cr of this.cars) if (!cr.hit && c.x - 250 > cr.x) { cr.hit = true; cr.o.rotation.z = 0.5; cr.o.position.y = 0.5; fx.boom(cr.x * U, 1.2, cr.o.position.z, 1.4); } }   // укладчик сносит машины
     // клетки
     (g.cages || []).forEach((cg, i) => { const o = this.cages[i]; if (cg.open && o.visible && o.userData.helper.visible === false) { o.scale.y = Math.max(0.05, o.scale.y - dt * 4); if (o.scale.y <= 0.06) { o.visible = false; o.scale.y = 1; } } else if (!cg.open) o.userData.helper.position.y = Math.abs(Math.sin(t * 5 + i)) * 0.12; });
     // враги

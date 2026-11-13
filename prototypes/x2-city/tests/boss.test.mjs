@@ -7,7 +7,7 @@ test('босс выходит сразу, бригада наносит урон
   for (let i = 0; i < 60 * 4; i++) g.step(1 / 60);
   assert.ok(g.boss, 'босс на арене'); assert.equal(g.boss.kind, BOSS.kind); g.input.right = false; g.input.fire = true;
   const hp = g.boss.hp; for (let i = 0; i < 60 * 6; i++) g.step(1 / 60); assert.ok(g.boss.hp < hp);
-  for (let i = 0; i < 60 * 240 && g.phase === 'running'; i++) { if (i % 50 === 0 && g.player.onGround) g.pressJump(); g.step(1 / 60); }
+  for (let i = 0; i < 60 * 400 && g.phase === 'running'; i++) { if (i % 50 === 0 && g.player.onGround) g.pressJump(); g.step(1 / 60); }
   assert.equal(g.phase, 'won'); console.log('время боя', g.time.toFixed(0), 'с; бригада', g.helpers, '/', g.total);
 });
 test('попадание по роботу стоит помощника', () => {

@@ -29,7 +29,19 @@ const WIN = [winTex(0.05), winTex(0.32)];
 export function building(p, w, h, d, x, z, lit = 0, tint = '#1a2140') {
   const t = WIN[lit].clone(); t.needsUpdate = true; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(Math.max(1, Math.round(w / 5)), Math.max(1, Math.round(h / 9)));
   const m = new THREE.MeshStandardMaterial({ color: tint, roughness: 0.8, emissive: '#ffffff', emissiveMap: t, emissiveIntensity: 0.9 });
-  const o = add(p, B(w, h, d), m, x, h / 2, z); add(p, B(w + 0.6, 0.5, d + 0.6), MAT.concrete, x, h + 0.25, z); return o;
+  const o = add(p, B(w, h, d), m, x, h / 2, z); add(p, B(w + 0.6, 0.5, d + 0.6), MAT.concrete, x, h + 0.25, z);
+  // крыши разные: надстройка, бак, антенна с красным огнём
+  const k = rnd(Math.round(x * 7 + h * 13), Math.round(z + w));
+  if (k < 0.45 && h > 11) { const th = 3 + k * 8; add(p, B(w * 0.55, th, d * 0.55), m, x - w * 0.12, h + 0.5 + th / 2, z).castShadow = false; }
+  if (k > 0.3) { add(p, C(0.05, 0.05, 3.2, 5), MAT.steel, x + w * 0.3, h + 2.1, z).castShadow = false; glow(p, '#ff4020', 1.5, x + w * 0.3, h + 3.8, z, 1.8); }
+  if (k > 0.62) add(p, C(0.9, 0.9, 1.5, 10), MAT.rust, x - w * 0.25, h + 1.25, z + d * 0.2).castShadow = false;
+  return o;
+}
+/** Свет зажжённого фонаря: ореол у лампы и тёплое пятно на земле. Скрыт, пока фонарь не горит. */
+export function lampLight(p, size = 1.8) {
+  const g = new THREE.Group(); p.add(g); glow(g, '#ffb060', size, 1.2, 5.2, 0, 2.4);
+  const m = new THREE.Mesh(new THREE.CircleGeometry(3.6, 24), new THREE.MeshBasicMaterial({ color: '#ffb060', transparent: true, opacity: 0.14, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
+  m.rotation.x = -Math.PI / 2; m.position.set(1.4, 0.13, 3); g.add(m); g.visible = false; return g;
 }
 export function tileMats(img, n = 4) {
   return Array.from({ length: n }, (_, i) => { const t = canvasTex(256, 256, (x) => { const s = Math.min(img.width, img.height) * 0.5; x.drawImage(img, (i % 2) * s * 0.9, ((i >> 1) % 2) * s * 0.9, s, s, 0, 0, 256, 256); x.strokeStyle = 'rgba(40,30,20,.55)'; x.lineWidth = 5; x.strokeRect(0, 0, 256, 256); x.strokeStyle = 'rgba(255,255,255,.35)'; x.lineWidth = 2; x.strokeRect(4, 4, 248, 248); });

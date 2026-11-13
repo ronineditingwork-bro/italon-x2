@@ -2,7 +2,7 @@
 // смена полосы, прыжок через барьер, выстрел по «браку» и клеткам; обломки нужно объезжать.
 import { createRng } from '../../x2-run/src/rng.js';
 
-export const CHASE = { lanes: [-2.4, 0, 2.4], dist: 1300, rowEvery: 13, first: 45, v0: 15, v1: 25, hearts: 5, maxHearts: 7, invuln: 1.3, jumpV: 9, grav: 26, fireEvery: 0.16, shotSpeed: 60, range: 34, helpers: 4, areaPerM: 0.72 };
+export const CHASE = { lanes: [-2.4, 0, 2.4], dist: 2300, rowEvery: 13, first: 45, v0: 15, v1: 25, hearts: 5, maxHearts: 7, invuln: 1.3, jumpV: 9, grav: 26, fireEvery: 0.16, shotSpeed: 60, range: 34, helpers: 4, areaPerM: 0.72 };
 const C = CHASE, FIXED = 1 / 60;
 
 export class ChaseGame {

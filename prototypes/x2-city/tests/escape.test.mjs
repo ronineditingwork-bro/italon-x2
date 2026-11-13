@@ -21,9 +21,9 @@ test('укладчик догоняет стоящего робота: мину�
 
 test('бот добегает до финиша и побеждает', () => {
   const g = new EscapeGame(); g.start(); g.player.hearts = 99;
-  run(g, 400, (g, i) => { g.input.right = true; g.input.fire = true; const p = g.player;
+  run(g, 600, (g, i) => { g.input.right = true; g.input.fire = true; const p = g.player;
     const gap = g.level.gaps.find(q => q.x0 > p.x && q.x0 - p.x < 70), wall = g.level.ledges.find(l => l.x0 > p.x && l.x0 - p.x < 90 && p.y > -l.h + 5);
     if ((gap || wall || i % 90 === 0) && p.onGround) g.pressJump(); });
-  assert.equal(g.phase, 'won'); assert.ok(g.area > 100); assert.ok(g.time < 240);
+  assert.equal(g.phase, 'won'); assert.ok(g.area > 100); assert.ok(g.time < 400);
   console.log('время', g.time.toFixed(0), 'с; помощники', g.helpers, '/', g.total, '; м²', g.area.toFixed(0));
 });

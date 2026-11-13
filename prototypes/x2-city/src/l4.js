@@ -79,7 +79,7 @@ export class Level4 {
     // рассвет: чем ближе экскаватор, тем светлее
     this.hemi.intensity = 0.45 + k * 0.45; this.sunL.intensity = 0.8 + k * 0.5; this.exc.position.set(-4 + Math.sin(t * 0.7) * 1.5, Math.abs(Math.sin(t * 5)) * 0.6, -(150 - k * 118));
     this.world.position.z = pz; this.sunL.position.set(2, 12, pz - 40); this.sunL.target.position.set(0, 0, pz);
-    const cam = this.cam, sh = fx.shake, port = cam.aspect < 1; cam.position.set(p.x * 0.55 + (Math.random() - 0.5) * sh, (port ? 6.4 : 5.2) + (Math.random() - 0.5) * sh, pz + (port ? 12 : 10.5)); cam.lookAt(p.x * 0.4, 2.6, pz - 22);
+    const cam = this.cam, sh = fx.shake, port = cam.aspect < 1; cam.position.set(p.x * 0.55 + (Math.random() - 0.5) * sh, (port ? 7.4 : 6.6) + (Math.random() - 0.5) * sh, pz + (port ? 14 : 13)); cam.lookAt(p.x * 0.4, 2, pz - 16);   // выше и дальше: бригаду за роботом видно
   }
   dispose() { this.off(); }
 }

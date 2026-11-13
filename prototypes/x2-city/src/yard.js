@@ -2,8 +2,8 @@
 // помощники мостят соседние; «брак» идёт с краёв и ломает плитку под собой. Победа — замощено GOAL двора.
 import { createRng } from '../../x2-run/src/rng.js';
 
-export const YARD = { cols: 21, rows: 15, cell: 1.6, goal: 0.85, speed: 6.2, hearts: 5, maxHearts: 7, invuln: 1.6, fireEvery: 0.15, shotSpeed: 24, range: 11.5,
-  dash: 0.22, dashSpeed: 17, dashCd: 0.9, helperSpeed: 4.6, layTime: 0.45, startHelpers: 2, cages: 5, maxEnemies: 14, crack: 1.7, cellArea: 1.44 };
+export const YARD = { cols: 25, rows: 17, cell: 1.6, goal: 0.85, speed: 6.2, hearts: 5, maxHearts: 7, invuln: 1.6, fireEvery: 0.15, shotSpeed: 24, range: 11.5,
+  dash: 0.22, dashSpeed: 17, dashCd: 0.9, helperSpeed: 4.6, layTime: 0.45, startHelpers: 2, cages: 5, maxEnemies: 14, crack: 2.6, cellArea: 1.44 };
 const FIXED = 1 / 60, Y = YARD;
 
 export class YardGame {

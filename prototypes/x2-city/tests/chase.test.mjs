@@ -14,7 +14,7 @@ test('столкновение с обломком: минус сердце и �
 });
 test('бот догоняет экскаватор', () => {
   const g = new ChaseGame(); g.start(); const safe = k => !k || k === 'cage' || k === 'heart';
-  for (let i = 0; i < 60 * 200 && g.phase === 'running'; i++) { const p = g.player, inp = g.input; inp.fire = true; inp.left = inp.right = false;
+  for (let i = 0; i < 60 * 300 && g.phase === 'running'; i++) { const p = g.player, inp = g.input; inp.fire = true; inp.left = inp.right = false;
     const next = g.objs.filter(o => !o.done && o.z > g.d + 0.5 && o.z < g.d + 14), z = next[0]?.z, row = [0, 1, 2].map(l => next.find(o => o.z === z && o.lane === l)?.kind);
     if (z) { const want = [p.lane, 1, 0, 2].find(l => safe(row[l])) ?? [p.lane, 1, 0, 2].find(l => row[l] === 'brak') ?? [0, 1, 2].find(l => row[l] === 'barrier');
       if (i % 6 === 0) { inp.left = want < p.lane; inp.right = want > p.lane; } if (row[p.lane] === 'barrier' && z - g.d < 4.5) g.pressJump(); }

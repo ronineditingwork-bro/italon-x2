@@ -3,7 +3,7 @@
 import { CONFIG } from '../../x2-run/src/config.js';
 import { Game } from '../../x2-run/src/game.js';
 
-export const ESCAPE = { zones: 2, cageEvery: 1150, cageW: 76, cageH: 96, chaseFrom: 150, chaseTo: 225, chaseBand: 440, chaseStun: 1.4, startGap: 440 };
+export const ESCAPE = { zones: 4, cageEvery: 1500, cageW: 76, cageH: 96, chaseFrom: 150, chaseTo: 225, chaseBand: 440, chaseStun: 1.4, startGap: 440 };
 
 export class EscapeGame extends Game {
   reset() {

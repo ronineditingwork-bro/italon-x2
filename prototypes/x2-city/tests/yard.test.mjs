@@ -20,7 +20,7 @@ test('брак не появляется вплотную к роботу у к�
 });
 test('бот замощает двор до победы', () => {
   const g = new YardGame(); g.start(); g.player.hearts = 99; let row = 0, dir = 1;
-  for (let i = 0; i < 60 * 400 && g.phase === 'running'; i++) { const p = g.player, inp = g.input; inp.fire = true;
+  for (let i = 0; i < 60 * 600 && g.phase === 'running'; i++) { const p = g.player, inp = g.input; inp.fire = true;
     const tz = -g.h / 2 + 0.8 + row * YARD.cell * 2; inp.left = inp.right = inp.up = inp.down = false;
     if (Math.abs(p.z - tz) > 0.3) { inp.down = p.z < tz; inp.up = p.z > tz; } else { inp.right = dir > 0; inp.left = dir < 0; if ((dir > 0 && p.x > g.w / 2 - 0.6) || (dir < 0 && p.x < -g.w / 2 + 0.6)) { dir = -dir; row = (row + 1) % Math.ceil(YARD.rows / 2); } }
     g.step(1 / 60); }
