@@ -8,6 +8,8 @@
 .x2-game__stage:fullscreen { aspect-ratio: auto; max-height: none; width: 100vw; height: 100vh; }
 .x2-game__stage:-webkit-full-screen { aspect-ratio: auto; max-height: none; width: 100vw; height: 100vh; }
 
+.x2-game__stage.is-max { position: fixed; inset: 0; z-index: 300; width: 100vw; height: 100dvh !important; min-height: 0; max-height: none; aspect-ratio: auto; }
+
 .x2-game__poster { position: absolute; inset: 0; display: grid; align-content: center; justify-items: start; gap: var(--s-4); padding: clamp(1.5rem, 1rem + 4vw, 5rem); color: #f4efe6;
   background: radial-gradient(120% 90% at 85% 10%, rgba(246,162,26,.28), transparent 55%), linear-gradient(135deg, #1b2230, #0e1117); }
 .x2-game__poster[hidden] { display: none; }
@@ -20,8 +22,8 @@
 .x2-game__full { position: absolute; top: .75rem; right: .75rem; z-index: 5; display: none; width: 2.5rem; height: 2.5rem; padding: 0; place-items: center; border: 1px solid rgba(255,255,255,.2); background: rgba(17,19,23,.6); color: #f4efe6; cursor: pointer; }
 .x2-game__stage.is-live .x2-game__full:not([hidden]) { display: grid; }
 .x2-game__full svg { width: 1.2rem; height: 1.2rem; fill: none; stroke: currentColor; stroke-width: 1.6; }
-/* кнопка пауза/таймер игры стоит в том же углу — сдвигаем нашу кнопку вниз */
-.x2-game__stage.is-live .x2-game__full { top: 4.25rem; }
+/* кнопка паузы игры стоит в том же углу — сдвигаем нашу кнопку вниз */
+.x2-game__stage.is-live .x2-game__full { top: 4rem; border-radius: 50%; background: rgba(255,255,255,.94); color: #151515; border: 0; }
 
 .x2-game__help { display: grid; gap: var(--s-5); margin-top: clamp(2rem, 1.5rem + 2vw, 3.5rem); max-width: 52rem; }
 .x2-game__note { max-width: 46rem; }
@@ -29,6 +31,7 @@
 @media (max-width: 63.99rem) {
   .page-x2-game .page-head__text, .page-x2-game .page-head__aside { grid-column: 1 / -1; }
 }
+@media (max-width: 32.5rem) { .x2-game__stage.is-live .x2-game__full { top: 9.5rem; } }
 @media (max-width: 47.99rem) {
   .x2-game__stage { aspect-ratio: auto; height: min(78svh, 40rem); min-height: 26rem; }
 }
