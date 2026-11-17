@@ -37,7 +37,7 @@ def plane_uv(f, ys, xs):
     if 'H' in f:  # homography from fit_grid.py: pixels -> (u long side, v short side) metres
         Hm = np.array(f['H']); q = Hm @ np.vstack([xs, ys, np.ones_like(xs)])
         return q[0] / q[2], q[1] / q[2]
-    return f['c'] / (ys - f['hu']) - f['u0'], f['a'] * (xs - f['x0']) / (ys - f['hx'])
+    return f['c'] / (ys - f['hu']) - f['u0'], f['a'] * (xs - f['x0']) / (ys - f['hx']) - f.get('v0', 0)
 
 
 TILE = (1.2, 0.6)  # tile the fits index in; joints sit on multiples of it
