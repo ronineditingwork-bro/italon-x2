@@ -57,6 +57,14 @@ export function leadText(lead, cart) {
   ].filter(x => x !== false && x !== undefined && x !== 0).join('\n').slice(0, 4000);
 }
 
+const FILE_TIMEOUT_MS = 30000, RETRY_PAUSE_MS = 1000;
+
+/**
+ * Заявка в Telegram каждому получателю из TELEGRAM_CHAT_ID: текст, затем файл (PDF КП или картинка Outdoor Lab).
+ * Файл грузится дольше текста: у него своё время ожидания (30 с) и вторая попытка при обрыве связи или ответе 429/5xx
+ * (после истечения времени не повторяем — посетитель ждёт ответа сайта). Если файл так и не ушёл, в тот же чат приходит
+ * короткое предупреждение с причиной: иначе менеджер ждёт «следующее сообщение» впустую, а причина видна только в журнале сервера.
+ */
 export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch, media = { method: 'sendDocument', field: 'document', type: 'application/pdf' }) {
   const token = env.TELEGRAM_BOT_TOKEN;
   const chats = String(env.TELEGRAM_CHAT_ID || '').split(',').map(x => x.trim()).filter(Boolean);
@@ -64,18 +72,41 @@ export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch, 
   // TELEGRAM_API_BASE — адрес ретранслятора, если сервер не достаёт до api.telegram.org напрямую.
   const base = String(env.TELEGRAM_API_BASE || 'https://api.telegram.org').replace(/\/+$/, '');
   const api = method => `${base}/bot${token}/${method}`;
-  const signal = () => AbortSignal.timeout(15000);
+  const hide = value => String(value).split(token).join('***');   // токен бота — ни в журнал, ни в чат
+  const message = (chat, body) => fetchImpl(api('sendMessage'), { method: 'POST', signal: AbortSignal.timeout(15000),
+    headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, text: body, parse_mode: 'HTML', disable_web_page_preview: true }) });
+  async function upload(chat) {
+    for (let attempt = 1; ; attempt++) {
+      let reason, retry;
+      try {
+        const form = new FormData();
+        form.set('chat_id', chat);
+        form.set(media.field, new Blob([pdf], { type: media.type }), filename);
+        const response = await fetchImpl(api(media.method), { method: 'POST', body: form, signal: AbortSignal.timeout(FILE_TIMEOUT_MS) });
+        if (response.ok) return;
+        reason = `ответ ${response.status} ${(await response.text().catch(() => '')).slice(0, 200)}`.trim();
+        retry = response.status === 429 || response.status >= 500;
+      } catch (error) {
+        const timedOut = error?.name === 'TimeoutError';
+        reason = timedOut ? `нет ответа за ${FILE_TIMEOUT_MS / 1000} с` : `сбой связи: ${error?.cause?.code || error?.message || error}`;
+        retry = !timedOut;
+      }
+      if (!retry || attempt === 2)
+        throw Object.assign(new Error(hide(`telegram ${media.method} (pdf ${pdf.length} bytes, попыток: ${attempt}) ${reason}`)), { reason: hide(reason) });
+      await new Promise(resolve => setTimeout(resolve, RETRY_PAUSE_MS));
+    }
+  }
   // Каждому получателю отдельно: сбой у одного не мешает остальным; ошибка, только если не дошло никому.
   const results = await Promise.allSettled(chats.map(async chat => {
-    let response = await fetchImpl(api('sendMessage'), { method: 'POST', signal: signal(),
-      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, text, parse_mode: 'HTML', disable_web_page_preview: true }) });
-    if (!response.ok) throw new Error('telegram sendMessage ' + response.status + ' ' + (await response.text().catch(() => '')).slice(0, 200));
-    if (pdf) {
-      const form = new FormData();
-      form.set('chat_id', chat);
-      form.set(media.field, new Blob([pdf], { type: media.type }), filename);
-      response = await fetchImpl(api(media.method), { method: 'POST', body: form, signal: signal() });
-      if (!response.ok) throw new Error(`telegram ${media.method} ${response.status} (pdf ${pdf.length} bytes) ` + (await response.text().catch(() => '')).slice(0, 200));
+    const response = await message(chat, text);
+    if (!response.ok) throw new Error(hide('telegram sendMessage ' + response.status + ' ' + (await response.text().catch(() => '')).slice(0, 200)));
+    if (!pdf) return;
+    try { await upload(chat); } catch (error) {
+      const lost = media.method === 'sendDocument'
+        ? 'PDF коммерческого предложения к заявке выше. Клиент скачал КП у себя; позиции и суммы — в сообщении выше'
+        : 'картинку к заявке выше. Спецификация — в сообщении выше';
+      await message(chat, `⚠️ Не удалось отправить ${lost}.\nПричина: ${esc(error.reason || error.message)}.`).catch(() => {});
+      throw error;
     }
   }));
   const failed = results.filter(r => r.status === 'rejected');
