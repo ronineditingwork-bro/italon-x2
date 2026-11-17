@@ -72,6 +72,7 @@ export function poolAreas({ length, width, depth, deckArea, type }) {
 /** One calculation line per zone; the same SKU on two zones is merged before rounding to boxes. */
 export function estimate(state) {
   const areas = poolAreas({ ...state, type: SCENES[state.scene].pool.type });
+  if (!SCENES[state.scene].zones.includes(3)) areas.coping = 0;  // scene shows no separate coping
   const byCode = new Map();
   for (const zone of ZONES) {
     if (!areas[zone.id]) continue;

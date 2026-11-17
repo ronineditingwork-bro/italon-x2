@@ -33,6 +33,40 @@
           "light": 1.5859929323196411
         }
       }
+    },
+    "ispansky": {
+      "label": "Испанский двор",
+      "kind": "photo",
+      "resolution": [
+        2000,
+        1342
+      ],
+      "pool": {
+        "type": "skimmer",
+        "length": 8,
+        "width": 4,
+        "depth": 1.4
+      },
+      "hotspots": {
+        "deck": [
+          0.18,
+          0.86
+        ],
+        "bowl": [
+          0.47,
+          0.52
+        ]
+      },
+      "zones": [
+        1,
+        2
+      ],
+      "layers": {
+        "sun": {
+          "base": 0.97430020570755,
+          "light": 1.4802600145339966
+        }
+      }
     }
   }
 }
