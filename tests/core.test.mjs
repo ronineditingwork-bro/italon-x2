@@ -71,7 +71,8 @@ test('pool lab areas follow the scene pool type and merge a shared SKU',async()=
  const result=estimate({...DEFAULT_STATE,scene:overflow,length:8,width:4,depth:1.5,coping:DEFAULT_STATE.deck});
  const deck=result.lines.find(l=>l.code===DEFAULT_STATE.deck);
  assert.equal(result.lines.length,2);assert.equal(result.areas.coping,0);assert.equal(deck.zoneArea,60);assert.deepEqual(deck.zones,['Терраса']);
- const skimmer=Object.keys(SCENES).find(k=>SCENES[k].pool.type==='skimmer');
+ for(const k of Object.keys(SCENES).filter(k=>!SCENES[k].zones.includes(3)))assert.equal(estimate({...DEFAULT_STATE,scene:k}).areas.coping,0);
+ const skimmer=Object.keys(SCENES).find(k=>SCENES[k].pool.type==='skimmer'&&SCENES[k].zones.includes(3));
  if(skimmer){const merged=estimate({...DEFAULT_STATE,scene:skimmer,length:8,width:4,depth:1.5,coping:DEFAULT_STATE.deck}).lines.find(l=>l.code===DEFAULT_STATE.deck);
   assert.equal(merged.zoneArea,67.56);assert.equal(merged.areaRequested,67.56);assert.deepEqual(merged.zones,['Терраса','Бортик']);}
  assert.equal(result.totalKopecks,result.lines.reduce((s,l)=>s+l.totalKopecks,0));
