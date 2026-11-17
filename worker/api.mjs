@@ -3,6 +3,7 @@ import { cartStore } from './cart-store.mjs';
 import { normalizePhone, leadText, sendTelegram, clean } from './quote-lead.mjs';
 import { handleOutdoorSend } from './outdoor-send.mjs';
 import { handleSalonBook } from './salon-book.mjs';
+import { putFile, getFile } from './quote-files.mjs';
 const json = (body, status = 200, headers = {}) => new Response(JSON.stringify(body), {
   status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex', ...headers },
 });
@@ -11,6 +12,7 @@ export async function handleApi(request, env) {
   const url = new URL(request.url);
   if (url.pathname === '/api/catalog' && request.method === 'GET') return json({ products, priceInfo, sections });
   if (url.pathname === '/api/quote') return handleQuote(request, env, url);
+  if (url.pathname.startsWith('/api/quote/file/')) return handleQuoteFile(request, url);
   if (url.pathname === '/api/outdoor/send') return handleOutdoorSend(request, env, url, json);
   if (url.pathname === '/api/salon/book') return handleSalonBook(request, env, url);
   if (url.pathname !== '/api/cart') return json({ error: 'Адрес не найден.' }, 404);
@@ -56,6 +58,17 @@ export async function handleApi(request, env) {
   }
 }
 
+/** PDF заявки по ссылке из Telegram (её открывает Telegram или менеджер). Нет файла или ссылка устарела — 404. */
+function handleQuoteFile(request, url) {
+  if (!['GET', 'HEAD'].includes(request.method)) return json({ error: 'Метод не поддерживается.' }, 405, { Allow: 'GET, HEAD' });
+  const m = /^\/api\/quote\/file\/([a-f0-9]{64})\/([\w.\-]{1,90}\.pdf)$/.exec(url.pathname);
+  const file = m && getFile(m[1], m[2]);
+  if (!file) return json({ error: 'Файл не найден: ссылка действует сутки.' }, 404);
+  return new Response(request.method === 'HEAD' ? null : file.bytes, { headers: {
+    'Content-Type': 'application/pdf', 'Content-Length': String(file.bytes.length), 'Content-Disposition': `inline; filename="${file.name}"`,
+    'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex, nofollow', 'Referrer-Policy': 'no-referrer' } });
+}
+
 const rateLimit = new Map();
 async function handleQuote(request, env, url) {
   if (request.method !== 'POST') return json({ error: 'Метод не поддерживается.' }, 405, { Allow: 'POST' });
@@ -89,7 +102,10 @@ async function handleQuote(request, env, url) {
     const saved = await env.DB.prepare('INSERT INTO quotes (created_at, customer, phone, project, note, items, total_kopecks) VALUES (?, ?, ?, ?, ?, ?, ?)')
       .bind(now, lead.customer, phone, lead.project, lead.note, items, cart.totalKopecks).run();
     let sent = false;
-    try { sent = await sendTelegram(env, leadText(lead, cart), pdf, clean(form.get('filename'), 80).replace(/[^\w.\-]/g, '_') || 'KP-Italon-Experience.pdf', env.fetch); }
+    const filename = (clean(form.get('filename'), 80).replace(/[^\w.\-]/g, '_').replace(/\.pdf$/i, '') || 'KP-Italon-Experience') + '.pdf';
+    // PDF уходит в Telegram ссылкой: Telegram сам скачивает его с сайта (см. quote-files.mjs)
+    const link = pdf ? `${url.origin}/api/quote/file/${putFile(pdf, filename)}/${filename}` : '';
+    try { sent = await sendTelegram(env, leadText(lead, cart), pdf, filename, env.fetch, undefined, link); }
     catch (e) { console.error('telegram_error', e.message); }
     if (sent) await env.DB.prepare('UPDATE quotes SET telegram_ok = 1 WHERE created_at = ? AND phone = ?').bind(now, phone).run();
     return json({ ok: true, sent, saved: saved.meta.changes === 1 });
