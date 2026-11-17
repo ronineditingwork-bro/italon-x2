@@ -41,7 +41,7 @@ function renderSpaces() {
   $('#space-list').innerHTML=outdoorSpaces.map(space=>{
     const collection=collectionMap.get(space.collectionId);
     if(!collection?.image)return '';
-    return `<article class="space-card" data-space-id="${esc(space.id)}"><button type="button" class="space-photo" data-scene="${esc(collection.id)}" aria-label="Увеличить визуализацию: ${esc(space.label)}, ${esc(collection.label)}">${sceneImage(collection.image,`${space.label}: коллекция ${collection.label}`)}<span class="photo-enlarge">Увеличить</span></button><div class="space-card-copy"><h3>${esc(space.label)}</h3><p class="space-description">${esc(space.description)}</p><p class="space-material">${esc(collection.label)} <span>Керамогранит · 20 мм</span></p><button type="button" class="text-button" data-collection="${esc(collection.id)}" data-space="${esc(space.project)}">Смотреть товары коллекции</button></div></article>`;
+    return `<article class="space-card" data-space-id="${esc(space.id)}"><button type="button" class="space-photo" data-scene="${esc(collection.id)}" aria-label="Увеличить визуализацию: ${esc(space.label)}, ${esc(collection.label)}">${sceneImage(collection.image,`${space.label}: коллекция ${collection.label}`)}<span class="photo-enlarge">Увеличить</span></button><div class="space-card-copy"><h3>${esc(space.label)}</h3><p class="space-description">${esc(space.description)}</p><p class="space-material">${esc(collection.label)} <span>Керамогранит · 20 мм</span></p><button type="button" class="text-button" data-collection="${esc(collection.id)}" data-space="${esc(space.project)}">Смотреть товары коллекции</button>${space.id==='pool'?'<a class="text-button" href="/pool-lab.html">Подобрать в Бассейн Lab</a>':''}</div></article>`;
   }).join('');
 }
 function updateCollectionSelection() {
@@ -233,6 +233,7 @@ $('#quote-form').addEventListener('submit',async event=>{
   finally{exporting=false;$('#download-quote').textContent='Скачать КП в PDF';setExportState();}
 });
 rebuildFilters();renderSpaces();renderCollections();renderProducts();updateCalc();renderCart();ensureCart().catch(()=>{});
+if(location.hash==='#cart')openCart();
 
 // Keep structured browser actions on the same visible product and calculator state.
 if(document.modelContext?.registerTool){

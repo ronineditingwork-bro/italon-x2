@@ -72,7 +72,7 @@ const server = createServer({ maxHeaderSize: 16384 }, async (req, res) => {
     const etag = `"${info.size.toString(16)}-${Math.floor(info.mtimeMs).toString(16)}"`;
     const headers = {
       'Content-Type': types[extname(filename).toLowerCase()] || 'application/octet-stream',
-      'Cache-Control': pathname.endsWith('.html') || ['/', '/app.js', '/styles.css'].includes(pathname) ? 'no-cache' : 'public, max-age=3600',
+      'Cache-Control': pathname.endsWith('.html') || ['/', '/app.js', '/pool-lab.js', '/styles.css'].includes(pathname) ? 'no-cache' : 'public, max-age=3600',
       'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'strict-origin-when-cross-origin',
       'X-Robots-Tag': 'noindex, nofollow', 'ETag': etag,
     };

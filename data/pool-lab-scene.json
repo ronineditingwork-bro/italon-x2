@@ -1,0 +1,37 @@
+{
+  "resolution": [
+    640,
+    400
+  ],
+  "variants": {
+    "skimmer": {
+      "pool": {
+        "length": 8.0,
+        "width": 4.0,
+        "depth": 1.5,
+        "waterLevel": -0.14,
+        "type": "skimmer"
+      },
+      "areas": {
+        "bowl": 72.64,
+        "deck": 263.29,
+        "coping": 10.6,
+        "copingLength": 26.4
+      },
+      "layers": {
+        "sun": {
+          "base": 2.044921875,
+          "light": 3.406494379043579
+        },
+        "pool": {
+          "base": 0.2015390694141388,
+          "light": 2.3006370067596436
+        },
+        "house": {
+          "base": 2.619140625,
+          "light": 1.633056640625
+        }
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@ const output = resolve(root, '.hosting-runtime/release');
 await rm(output, { recursive: true, force: true });
 await mkdir(resolve(output, 'server'), { recursive: true });
 await cp(resolve(root, 'public'), resolve(output, 'public'), { recursive: true });
-await build({ entryPoints: [resolve(root, 'src/app.mjs')], outdir: resolve(output, 'public'), entryNames: 'app',
+await build({ entryPoints: { app: resolve(root, 'src/app.mjs'), 'pool-lab': resolve(root, 'src/pool-lab.mjs') }, outdir: resolve(output, 'public'), entryNames: '[name]',
   chunkNames: 'chunks/[name]-[hash]', bundle: true, splitting: true, format: 'esm', platform: 'browser',
   target: 'es2022', minify: true, legalComments: 'linked', define: { 'process.env.NODE_ENV': '"production"' } });
 await build({ entryPoints: [resolve(root, 'hosting/api-entry.mjs')], outfile: resolve(output, 'server/api.mjs'),
