@@ -130,11 +130,13 @@ async function draw() {
     if (token !== drawToken) return;
     variant.textures.forEach((t, unit) => { gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t); });
     zoneTextures.forEach((t, i) => { gl.activeTexture(gl.TEXTURE8 + i); gl.bindTexture(gl.TEXTURE_2D, t); });
-    const { layers, resolution: [W, H], kind } = sceneOf(), g = GAINS[hasNight() ? state.light : 'day'], glow = POOL_GLOW[state.glow].rgb;
+    const { layers, resolution: [W, H], kind } = sceneOf(), glow = POOL_GLOW[state.glow].rgb;
+    // photo scenes: the 'pool' slot holds the evening shot, shown as is
+    const g = kind === 'photo' ? (state.light === 'day' || !hasNight() ? GAINS.day : { sun: [0, 0, 0], pool: 1, house: 0 }) : GAINS[hasNight() ? state.light : 'day'];
     if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; $('#lab-stage').style.aspectRatio = `${W} / ${H}`; }
     GROUPS.forEach((group, i) => {
       gl.uniform2f(uniforms[`uScale${i}`], layers[group]?.base ?? 0, layers[group]?.light ?? 0);
-      const gain = group === 'sun' ? g.sun : group === 'pool' ? glow.map(c => c * g.pool) : [g.house, g.house * 0.97, g.house * 0.92];
+      const gain = group === 'sun' ? g.sun : group === 'pool' ? (kind === 'photo' ? [g.pool, g.pool, g.pool] : glow.map(c => c * g.pool)) : [g.house, g.house * 0.97, g.house * 0.92];
       gl.uniform3fv(uniforms[`uGain${i}`], gain);
     });
     ZONES.forEach((z, i) => {
@@ -164,8 +166,8 @@ function renderPanel() {
   $('#lab-hotspots').innerHTML = zones.map(z => `<button type="button" class="lab-hotspot${z.id === openZone ? ' active' : ''}" data-open="${z.id}" style="left:${sceneOf().hotspots[z.id][0] * 100}%;top:${sceneOf().hotspots[z.id][1] * 100}%">${esc(z.label)}</button>`).join('');
   $('#lab-panel').innerHTML = `
   <div class="lab-group"><h2 class="lab-label">Сцена</h2><div class="lab-scenes">${Object.entries(SCENES).map(([id, sc]) => `<button type="button" class="lab-scene${state.scene === id ? ' active' : ''}" data-key="scene" data-value="${id}" aria-pressed="${state.scene === id}"><img src="/media/pool-lab/${id}-thumb.webp" alt="" width="480" height="${Math.round(480 * sc.resolution[1] / sc.resolution[0])}" loading="lazy"><span>${esc(sc.label)}<small>${esc(POOL_TYPES[sc.pool.type])}</small></span></button>`).join('')}</div></div>
-  ${hasNight() ? `<div class="lab-group"><h2 class="lab-label">Время суток</h2><div class="lab-segment">${Object.entries(LIGHTS).map(([k, l]) => choice('light', k, l)).join('')}</div>
-    ${state.light === 'day' ? '' : `<p class="lab-sub">Подсветка чаши</p><div class="lab-glow">${Object.entries(POOL_GLOW).map(([k, v]) => `<button type="button" class="lab-dot${state.glow === k ? ' active' : ''}" data-key="glow" data-value="${k}" aria-pressed="${state.glow === k}" title="${esc(v.label)}" style="--dot:rgb(${v.rgb.map(c => Math.round(c * 255)).join(',')})"><span class="sr-only">${esc(v.label)}</span></button>`).join('')}</div>`}</div>` : ''}
+  ${hasNight() ? `<div class="lab-group"><h2 class="lab-label">Время суток</h2><div class="lab-segment">${Object.entries(LIGHTS).filter(([k]) => sceneOf().kind !== 'photo' || k !== 'night').map(([k, l]) => choice('light', k, l)).join('')}</div>
+    ${state.light === 'day' || sceneOf().kind === 'photo' ? '' : `<p class="lab-sub">Подсветка чаши</p><div class="lab-glow">${Object.entries(POOL_GLOW).map(([k, v]) => `<button type="button" class="lab-dot${state.glow === k ? ' active' : ''}" data-key="glow" data-value="${k}" aria-pressed="${state.glow === k}" title="${esc(v.label)}" style="--dot:rgb(${v.rgb.map(c => Math.round(c * 255)).join(',')})"><span class="sr-only">${esc(v.label)}</span></button>`).join('')}</div>`}</div>` : ''}
   ${zones.map(z => {
     const p = productMap.get(state[z.id]); const open = openZone === z.id;
     const collection = OPTIONS[z.id].find(o => o.code === state[z.id]).labCollection;

@@ -5,7 +5,8 @@ joint grid:  v = a*(x-x0)/(y-hx)  (across, metres)  and  u = c/(y-hu) - u0  (dep
 The tile layer is the photo with the original joints closed, divided by the original tile albedo,
 so any catalog tile is relit by the photo's own sun, shadows and water.
 
-Usage: python photo_scene.py scripts/pool-lab/scenes/gory.json IMAGE public/media/pool-lab data/pool-lab-scene.json
+Usage: python photo_scene.py scripts/pool-lab/scenes/gory.json IMAGE public/media/pool-lab data/pool-lab-scene.json [EVENING_IMAGE]
+An evening image must be the same shot (same camera); it reuses the day masks and fits.
 """
 import json, sys
 import numpy as np
@@ -13,12 +14,12 @@ from PIL import Image, ImageDraw, ImageFilter
 from fit_grid import dlt
 
 spec_path, image_path, dst, manifest_path = sys.argv[1:5]
+evening_path = sys.argv[5] if len(sys.argv) > 5 else None
 spec = json.load(open(spec_path))
 name, W = spec['id'], spec['width']
 photo = Image.open(image_path).convert('RGB')
 photo = photo.resize((W, round(photo.height * W / photo.width)), Image.LANCZOS)
 H = photo.height
-lin = (np.asarray(photo, np.float32) / 255) ** 2.2
 UV0 = 24.0  # keeps coordinates positive; a multiple of every tile side so joints stay on the photo grid
 
 
@@ -67,16 +68,18 @@ for plane in spec['planes']:
         wsum = sum(weights); pu, pv = sum(w * c for w, c in zip(weights, coords)) / wsum
     zone[m] = plane['zone']; u[m] = pu + UV0; v[m] = pv + UV0
 
-# remove the photo's own thin joints (dark: closing, light: opening) so only the new grout is drawn
-k = spec.get('jointPx', 5)
-first, second = (ImageFilter.MinFilter, ImageFilter.MaxFilter) if spec.get('joints') == 'light' else (ImageFilter.MaxFilter, ImageFilter.MinFilter)
-closed = photo.filter(first(k)).filter(second(k)).filter(ImageFilter.GaussianBlur(1.2))
-clin = (np.asarray(closed, np.float32) / 255) ** 2.2
 albedo0 = np.array(spec['albedo0'], np.float32)
 keep = np.array([spec.get('keepUnderwater', 0.1) if z == 2 else 0.0 for z in range(4)], np.float32)[zone][..., None]
 tiled = (zone > 0)[..., None]
-base = np.where(tiled, clin * keep, lin)
-light = np.where(tiled, clin * (1 - keep) / albedo0, 0)
+
+
+def split(img):
+    """Untiled base and per-albedo light of one photo."""
+    # remove the photo's own thin joints (dark: closing, light: opening) so only the new grout is drawn
+    k = spec.get('jointPx', 5)
+    first, second = (ImageFilter.MinFilter, ImageFilter.MaxFilter) if spec.get('joints') == 'light' else (ImageFilter.MaxFilter, ImageFilter.MinFilter)
+    clin = (np.asarray(img.filter(first(k)).filter(second(k)).filter(ImageFilter.GaussianBlur(1.2)), np.float32) / 255) ** 2.2
+    return np.where(tiled, clin * keep, (np.asarray(img, np.float32) / 255) ** 2.2), np.where(tiled, clin * (1 - keep) / albedo0, 0)
 
 
 def save_hdr(a, file):
@@ -89,7 +92,13 @@ for axis, arr in [('u', u), ('v', v)]:
     mm = np.where(zone > 0, np.rint(arr * 1000), 0).clip(0, 65535).astype(np.uint16)
     assert mm[zone > 0].min() > 0, f'{axis}: tile coordinates must stay positive'
     Image.fromarray(np.stack([(mm >> 8).astype(np.uint8), (mm & 255).astype(np.uint8), zone * 80], 2)).save(f'{dst}/{name}-{axis}.png', optimize=True)
-layers = {'sun': {'base': save_hdr(base, f'{name}-sun-base.webp'), 'light': save_hdr(light, f'{name}-sun-light.webp')}}
+layers = {}
+# photo scenes put the evening shot in the renderer's 'pool' light slot; the page shows it as «Вечер»
+for group, path in [('sun', image_path), ('pool', evening_path)]:
+    if not path: continue
+    img = Image.open(path).convert('RGB').resize((W, H), Image.LANCZOS)
+    base, light = split(img)
+    layers[group] = {'base': save_hdr(base, f'{name}-{group}-base.webp'), 'light': save_hdr(light, f'{name}-{group}-light.webp')}
 photo.resize((480, round(480 * H / W)), Image.LANCZOS).save(f'{dst}/{name}-thumb.webp', 'WEBP', quality=80)
 
 manifest = json.load(open(manifest_path))
