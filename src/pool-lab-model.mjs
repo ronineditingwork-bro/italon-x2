@@ -49,7 +49,8 @@ export function parseState(hash) {
   const q = new URLSearchParams(String(hash).replace(/^#/, ''));
   const state = { ...DEFAULT_STATE };
   const pick = (key, allowed) => { if (q.has(key) && Object.hasOwn(allowed, q.get(key))) state[key] = q.get(key); };
-  pick('scene', SCENES); pick('light', LIGHTS); pick('glow', POOL_GLOW); pick('grout', GROUT); pick('layout', LAYOUTS);
+  pick('scene', SCENES); pick('light', LIGHTS);
+  Object.assign(state, (({ length, width, depth }) => ({ length, width, depth }))(SCENES[state.scene].pool)); pick('glow', POOL_GLOW); pick('grout', GROUT); pick('layout', LAYOUTS);
   for (const zone of ZONES) if (OPTIONS[zone.id].some(p => p.code === q.get(zone.id))) state[zone.id] = q.get(zone.id);
   for (const [key, [min, max]] of Object.entries(NUMBERS)) {
     const value = Number(q.get(key));

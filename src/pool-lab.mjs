@@ -150,6 +150,7 @@ async function draw() {
     gl.uniform1f(uniforms.uHeight, H);
     gl.viewport(0, 0, W, H); gl.drawArrays(gl.TRIANGLES, 0, 3);
     $('#lab-stage').classList.remove('loading', 'failed');
+    canvas.classList.remove('lab-fade'); void canvas.offsetWidth; canvas.classList.add('lab-fade');  // same short fade the site uses for photos
   } catch (e) {
     if (token !== drawToken) return;
     $('#lab-stage').classList.remove('loading'); $('#lab-stage').classList.add('failed');
@@ -159,37 +160,38 @@ async function draw() {
 
 // ---------------------------------------------------------------- panel
 const swatch = (zone, p) => `<button type="button" class="lab-swatch${state[zone] === p.code ? ' active' : ''}" data-zone="${zone}" data-code="${p.code}" aria-pressed="${state[zone] === p.code}" title="${esc(p.name)}"><img src="${esc(p.image.src)}" alt="" width="${p.image.width}" height="${p.image.height}" loading="lazy"><span>${esc(colorName(p))}</span></button>`;
-const choice = (key, value, label, extra = '') => `<button type="button" class="lab-choice${state[key] === value ? ' active' : ''}" data-key="${key}" data-value="${value}" aria-pressed="${state[key] === value}">${extra}${esc(label)}</button>`;
+const tab = (key, value, label) => `<button type="button" class="${state[key] === value ? 'active' : ''}" data-key="${key}" data-value="${value}" aria-pressed="${state[key] === value}">${esc(label)}</button>`;
+const rgb = c => `rgb(${c.map(v => Math.round(v * 255)).join(',')})`;
 function renderPanel() {
   const zones = zonesOf();
   if (!zones.some(z => z.id === openZone)) openZone = 'deck';
+  const zone = zones.find(z => z.id === openZone), current = productMap.get(state[zone.id]);
   $('#lab-hotspots').innerHTML = zones.map(z => `<button type="button" class="lab-hotspot${z.id === openZone ? ' active' : ''}" data-open="${z.id}" style="left:${sceneOf().hotspots[z.id][0] * 100}%;top:${sceneOf().hotspots[z.id][1] * 100}%">${esc(z.label)}</button>`).join('');
+  $('#lab-scenes').innerHTML = Object.entries(SCENES).map(([id, sc]) => `<button type="button" class="lab-scene${state.scene === id ? ' active' : ''}" data-key="scene" data-value="${id}" aria-pressed="${state.scene === id}"><span class="lab-scene-photo"><img src="/media/pool-lab/${id}-thumb.webp" alt="" width="480" height="${Math.round(480 * sc.resolution[1] / sc.resolution[0])}" loading="lazy"></span><span class="lab-scene-copy"><strong>${esc(sc.label)}</strong><small>${esc(POOL_TYPES[sc.pool.type])} · ${n(sc.pool.length)} × ${n(sc.pool.width)} м${sc.layers.pool ? ' · день и вечер' : ''}</small></span></button>`).join('');
+  $('#lab-light').innerHTML = hasNight() ? `<div class="calc-mode" role="group" aria-label="Время суток">${Object.entries(LIGHTS).filter(([k]) => sceneOf().kind !== 'photo' || k !== 'night').map(([k, l]) => tab('light', k, l)).join('')}</div>
+    ${state.light === 'day' || sceneOf().kind === 'photo' ? '' : `<div class="lab-glow">${Object.entries(POOL_GLOW).map(([k, v]) => `<button type="button" class="lab-dot${state.glow === k ? ' active' : ''}" data-key="glow" data-value="${k}" aria-pressed="${state.glow === k}" title="${esc(v.label)}" style="--dot:${rgb(v.rgb)}"><span class="sr-only">${esc(v.label)}</span></button>`).join('')}</div>`}` : '';
   $('#lab-panel').innerHTML = `
-  <div class="lab-group"><h2 class="lab-label">Сцена</h2><div class="lab-scenes">${Object.entries(SCENES).map(([id, sc]) => `<button type="button" class="lab-scene${state.scene === id ? ' active' : ''}" data-key="scene" data-value="${id}" aria-pressed="${state.scene === id}"><img src="/media/pool-lab/${id}-thumb.webp" alt="" width="480" height="${Math.round(480 * sc.resolution[1] / sc.resolution[0])}" loading="lazy"><span>${esc(sc.label)}<small>${esc(POOL_TYPES[sc.pool.type])}</small></span></button>`).join('')}</div></div>
-  ${hasNight() ? `<div class="lab-group"><h2 class="lab-label">Время суток</h2><div class="lab-segment">${Object.entries(LIGHTS).filter(([k]) => sceneOf().kind !== 'photo' || k !== 'night').map(([k, l]) => choice('light', k, l)).join('')}</div>
-    ${state.light === 'day' || sceneOf().kind === 'photo' ? '' : `<p class="lab-sub">Подсветка чаши</p><div class="lab-glow">${Object.entries(POOL_GLOW).map(([k, v]) => `<button type="button" class="lab-dot${state.glow === k ? ' active' : ''}" data-key="glow" data-value="${k}" aria-pressed="${state.glow === k}" title="${esc(v.label)}" style="--dot:rgb(${v.rgb.map(c => Math.round(c * 255)).join(',')})"><span class="sr-only">${esc(v.label)}</span></button>`).join('')}</div>`}</div>` : ''}
-  ${zones.map(z => {
-    const p = productMap.get(state[z.id]); const open = openZone === z.id;
-    const collection = OPTIONS[z.id].find(o => o.code === state[z.id]).labCollection;
-    return `<div class="lab-zone${open ? ' open' : ''}"><button type="button" class="lab-zone-head" data-open="${z.id}" aria-expanded="${open}"><img src="${esc(p.image.src)}" alt="" width="${p.image.width}" height="${p.image.height}"><span><strong>${esc(z.label)}</strong><small>${esc(colorName(p))} · ${esc(z.note)}</small></span></button>
-      ${open ? `<div class="lab-zone-body">${LAB_COLLECTIONS.map(c => `<p class="lab-sub">${esc(c.label)}</p><div class="lab-swatches">${OPTIONS[z.id].filter(o => o.labCollection === c.id).map(o => swatch(z.id, o)).join('')}</div>`).join('')}<p class="lab-hint">Сейчас: ${esc(LAB_COLLECTIONS.find(c => c.id === collection).label)}, ${esc(p.format.replace(/[XХ]/, ' × '))} см</p></div>` : ''}</div>`;
-  }).join('')}
-  <div class="lab-group"><h2 class="lab-label">Укладка</h2><div class="lab-segment">${Object.entries(LAYOUTS).map(([k, l]) => choice('layout', k, l)).join('')}</div>
-    <p class="lab-sub">Затирка</p><div class="lab-segment">${Object.entries(GROUT).map(([k, v]) => choice('grout', k, v.label, `<i class="lab-chip" style="--dot:rgb(${v.rgb.map(c => Math.round(c * 255)).join(',')})"></i>`)).join('')}</div></div>`;
+  <div class="section-tabs lab-zone-tabs" role="tablist" aria-label="Поверхность">${zones.map(z => `<button type="button" role="tab" class="section-tab${z.id === openZone ? ' active' : ''}" data-open="${z.id}" aria-selected="${z.id === openZone}">${esc(z.label)}</button>`).join('')}</div>
+  <div class="lab-current"><img src="${esc(current.image.src)}" alt="" width="${current.image.width}" height="${current.image.height}"><div><p class="eyebrow">${esc(zone.note.toLocaleUpperCase('ru-RU'))}</p><h3>${esc(colorName(current))}</h3><p>${esc(current.format.replace(/[XХ]/, ' × '))} см · ${money(current.priceKopecks)} / м²</p></div></div>
+  ${LAB_COLLECTIONS.map(c => `<p class="lab-sub">${esc(c.label)}${zone.x2 ? ' X2' : ''}</p><div class="lab-swatches">${OPTIONS[zone.id].filter(o => o.labCollection === c.id).map(o => swatch(zone.id, o)).join('')}</div>`).join('')}
+  <div class="lab-options"><div><p class="lab-sub">Укладка</p><div class="calc-mode">${Object.entries(LAYOUTS).map(([k, l]) => tab('layout', k, l)).join('')}</div></div>
+    <div><p class="lab-sub">Затирка</p><div class="lab-grout">${Object.entries(GROUT).map(([k, v]) => `<button type="button" class="lab-dot${state.grout === k ? ' active' : ''}" data-key="grout" data-value="${k}" aria-pressed="${state.grout === k}" title="${esc(v.label)}" style="--dot:${rgb(v.rgb)}"><span class="sr-only">${esc(v.label)}</span></button>`).join('')}<span>${esc(GROUT[state.grout].label)}</span></div></div></div>`;
 }
 function renderEstimate() {
   for (const key of ['length', 'width', 'depth', 'deckArea', 'reserve']) { const el = $(`#lab-${key}`); if (document.activeElement !== el) el.value = state[key]; }
   try {
     const result = estimate(state);
     $('#lab-areas').innerHTML = ZONES.filter(z => result.areas[z.id]).map(z => `<div><dt>${esc(z.label)}</dt><dd>${n(result.areas[z.id])} м²</dd></div>`).join('');
-    $('#lab-lines').innerHTML = result.lines.map(l => `<tr><td><img src="${esc(l.product.image.src)}" alt="" width="34" height="68"><span><strong>${esc(l.product.name)}</strong><small>${esc(l.zones.join(' + '))} · ${l.product.code}</small></span></td><td>${n(l.target)} м²</td><td>${n(l.packs, 0)} ${esc(l.product.orderUnit)}${l.minimumApplied ? '<small>минимум по прайсу</small>' : ''}</td><td>${money(l.totalKopecks)}</td></tr>`).join('');
-    $('#lab-total').textContent = money(result.totalKopecks);
+    $('#lab-lines').innerHTML = result.lines.map(l => `<article class="lab-line"><img src="${esc(l.product.image.src)}" alt="" width="${l.product.image.width}" height="${l.product.image.height}"><div><p class="lab-line-zone">${esc(l.zones.join(' + '))}</p><h3>${esc(l.product.name)}</h3><p>${n(l.packs, 0)} ${esc(l.product.orderUnit)} · ${n(l.quantity)} м²${l.minimumApplied ? ' · минимум по прайсу' : ''}</p></div><strong>${money(l.totalKopecks)}</strong></article>`).join('');
+    $('#lab-total').textContent = `Итого ${money(result.totalKopecks)}`;
     $('#lab-calc-error').hidden = true; $('#lab-add').disabled = false;
     return result;
   } catch (e) {
     $('#lab-calc-error').hidden = false; $('#lab-calc-error').textContent = e.message; $('#lab-add').disabled = true;
   }
 }
+const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function revealPanel() { $('#lab-panel').scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'nearest' }); }
 function update(changes, redraw = true) {
   state = { ...state, ...changes };
   history.replaceState(null, '', '#' + stateHash(state));
@@ -208,7 +210,7 @@ async function addToCart() {
       for (const line of result.lines) { const old = items.find(i => i.code === line.code); if (old) old.packs += line.packs; else items.push({ code: line.code, packs: line.packs }); }
       const saved = await fetch('/api/cart', { method: 'PUT', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ version: cart.version, items }) });
       const data = await saved.json();
-      if (saved.ok) { toast('Расчёт добавлен в корзину. Откройте её, чтобы скачать КП в PDF.'); $('#lab-cart-link').hidden = false; return; }
+      if (saved.ok) { toast('Расчёт добавлен в корзину. Откройте её, чтобы скачать КП в PDF.'); $('#lab-cart-link').hidden = false; $$('.cart-count').forEach(el => { el.textContent = data.lines.length; }); return; }
       if (saved.status !== 409) throw new Error(data.error || 'Не удалось сохранить корзину.');
     }
     throw new Error('Корзина изменилась в другой вкладке. Повторите попытку.');
@@ -236,14 +238,14 @@ document.addEventListener('click', e => {
   if (t.dataset.code) update({ [t.dataset.zone]: t.dataset.code });
   else if (t.dataset.key === 'scene') { const { length, width, depth } = SCENES[t.dataset.value].pool; update({ scene: t.dataset.value, length, width, depth }); }
   else if (t.dataset.key) update({ [t.dataset.key]: t.dataset.value }, true);
-  else if (t.dataset.open) { openZone = openZone === t.dataset.open && t.closest('#lab-panel') ? '' : t.dataset.open; renderPanel(); if (!t.closest('#lab-panel')) $('#lab-panel .lab-zone.open')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  else if (t.dataset.open) { openZone = t.dataset.open; renderPanel(); if (!t.closest('#lab-panel')) revealPanel(); }
 });
 canvas.addEventListener('click', async e => {
   const r = canvas.getBoundingClientRect();
   const x = Math.floor((e.clientX - r.left) / r.width * canvas.width), y = Math.floor((e.clientY - r.top) / r.height * canvas.height);
   const variant = await variants[state.scene]?.catch(() => null);
   const zone = variant && zonesOf().find(z => z.zone === variant.zoneAt(x, y));
-  if (zone) { openZone = zone.id; renderPanel(); $('#lab-panel .lab-zone.open')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  if (zone) { openZone = zone.id; renderPanel(); revealPanel(); }
 });
 $('#lab-form').addEventListener('input', e => {
   const key = e.target.id.replace('lab-', ''), value = Number(e.target.value);
@@ -257,3 +259,5 @@ $('#lab-retry').addEventListener('click', draw);
 if (!gl) { $('#lab-stage').classList.add('failed'); $('#lab-error').textContent = 'Браузер не поддерживает WebGL 2. Откройте страницу в современном Chrome, Safari, Firefox или Edge.'; }
 else { setupGl(); draw(); }
 renderPanel(); renderEstimate();
+// header badge shows the site cart; the lab works without it
+fetch('/api/cart', { credentials: 'same-origin', cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(c => { if (c) $$('.cart-count').forEach(el => { el.textContent = c.lines.length; }); }).catch(() => {});
