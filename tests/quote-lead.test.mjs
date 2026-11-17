@@ -99,7 +99,8 @@ function telegramStub(plan = {}, failFor = () => null) {
   const calls = [];
   const fetch = async (url, init) => {
     const method = String(url).split('/').pop(), form = init.body instanceof FormData;
-    const call = { method, chat: form ? init.body.get('chat_id') : JSON.parse(init.body).chat_id, text: form ? null : JSON.parse(init.body).text, timeoutSignal: !!init.signal };
+    const body = form ? null : JSON.parse(init.body);
+    const call = { method, chat: form ? init.body.get('chat_id') : body.chat_id, text: body?.text ?? null, document: body?.document ?? null, upload: form, timeoutSignal: !!init.signal };
     calls.push(call);
     const step = failFor(call) ?? (plan[method] || []).shift();
     if (step instanceof Error) throw step;
@@ -171,6 +172,76 @@ test('/api/quote: PDF не дошёл — заявка сохранена, те�
     assert.deepEqual(t.calls.map(c => c.method), ['sendMessage', 'sendDocument', 'sendMessage']);
     assert.match(t.calls[0].text, /PDF коммерческого предложения — следующим сообщением/);
     assert.match(t.calls[2].text, /^⚠️ Не удалось отправить PDF/);
+    // Telegram файл не забрал — менеджеру в чат ссылка на этот же PDF на сайте
+    const href = /<a href="(http:\/\/localhost\/api\/quote\/file\/[a-f0-9]{64}\/KP-Italon-Experience\.pdf)">KP-Italon-Experience\.pdf<\/a> \(ссылка действует сутки\)\.$/.exec(t.calls[2].text);
+    assert.ok(href, t.calls[2].text);
+    assert.equal(t.calls[1].document, href[1], 'Telegram получил ту же ссылку, файл не загружался');
+    const file = await handleApi(new Request(href[1]), { DB });
+    assert.equal(file.status, 200); assert.equal(file.headers.get('Content-Type'), 'application/pdf');
+    assert.equal(await file.text(), '%PDF-1.7 test');
     assert.equal((await DB.prepare('SELECT telegram_ok FROM quotes').first()).telegram_ok, 0);
   } finally { close(); }
+});
+
+test('/api/quote: PDF уходит ссылкой — Telegram сам скачивает его с сайта, сервер файл не загружает', async () => {
+  const { DB, close } = localDatabase();
+  const token = 'd'.repeat(64), id = createHash('sha256').update(token).digest('hex');
+  await DB.prepare('INSERT INTO carts (id, items, version, updated_at) VALUES (?, ?, 1, ?)').bind(id, JSON.stringify([{ code: '620110000263', packs: 2 }]), Date.now()).run();
+  const pdf = '%PDF-1.7 ' + 'x'.repeat(150_000), fetched = [], calls = [];
+  // «Telegram»: на sendDocument сам скачивает файл по ссылке — так, как это делает настоящий Bot API
+  const telegram = async (url, init) => {
+    const method = String(url).split('/').pop(), body = JSON.parse(init.body);
+    calls.push({ method, body });
+    if (method === 'sendDocument') {
+      assert.equal(typeof init.body, 'string', 'вместо файла — короткий JSON со ссылкой');
+      assert.ok(init.body.length < 300, `запрос ${init.body.length} байт`);
+      const r = await handleApi(new Request(body.document), { DB });
+      fetched.push({ status: r.status, type: r.headers.get('Content-Type'), text: await r.text() });
+    }
+    return new Response('{"ok":true}');
+  };
+  const form = new FormData(); form.set('phone', '+7 900 000-00-00'); form.set('filename', 'KP-Italon-Experience-20261117-ABC123.pdf');
+  form.set('pdf', new Blob([pdf], { type: 'application/pdf' }), 'kp.pdf');
+  try {
+    const response = await handleApi(new Request('http://localhost/api/quote', { method: 'POST', body: form, headers: { Origin: 'http://localhost', Cookie: 'italon_cart_preview=' + token } }),
+      { DB, TELEGRAM_BOT_TOKEN: 'T', TELEGRAM_CHAT_ID: '42', fetch: telegram });
+    assert.deepEqual(await response.json(), { ok: true, sent: true, saved: true });
+    assert.deepEqual(calls.map(c => c.method), ['sendMessage', 'sendDocument']);
+    assert.match(calls[1].body.document, /^http:\/\/localhost\/api\/quote\/file\/[a-f0-9]{64}\/KP-Italon-Experience-20261117-ABC123\.pdf$/);
+    assert.deepEqual(fetched, [{ status: 200, type: 'application/pdf', text: pdf }], 'Telegram скачал тот же PDF');
+    assert.equal((await DB.prepare('SELECT telegram_ok FROM quotes').first()).telegram_ok, 1);
+  } finally { close(); }
+});
+
+test('ссылка на PDF: только GET/HEAD, точный ключ и имя, живёт сутки; лишнего не отдаёт', async () => {
+  const { putFile, FILE_TTL_MS } = await import('../worker/quote-files.mjs');
+  const bytes = new TextEncoder().encode('%PDF-1.7 файл'), key = putFile(bytes, 'kp.pdf');
+  const get = (path, method = 'GET') => handleApi(new Request('https://italon-x2.ru' + path, { method }), {});
+  const ok = await get(`/api/quote/file/${key}/kp.pdf`);
+  assert.equal(ok.status, 200);
+  assert.deepEqual(new Uint8Array(await ok.arrayBuffer()), bytes);
+  assert.equal(ok.headers.get('Content-Disposition'), 'inline; filename="kp.pdf"');
+  assert.match(ok.headers.get('Cache-Control'), /no-store/); assert.match(ok.headers.get('X-Robots-Tag'), /noindex/); assert.equal(ok.headers.get('Referrer-Policy'), 'no-referrer');
+  const head = await get(`/api/quote/file/${key}/kp.pdf`, 'HEAD');
+  assert.equal(head.status, 200); assert.equal(head.headers.get('Content-Length'), String(bytes.length)); assert.equal((await head.arrayBuffer()).byteLength, 0);
+  assert.equal((await get(`/api/quote/file/${key}/kp.pdf`, 'POST')).status, 405);
+  for (const path of [`/api/quote/file/${key}/other.pdf`, `/api/quote/file/${'0'.repeat(64)}/kp.pdf`, `/api/quote/file/${key.slice(1)}/kp.pdf`, `/api/quote/file/${key}/kp.pdf/x`, `/api/quote/file/${key}/..%2Fkp.pdf`, '/api/quote/file/'])
+    assert.equal((await get(path)).status, 404, path);
+  const old = putFile(bytes, 'old.pdf', Date.now() - FILE_TTL_MS - 1000);
+  assert.equal((await get(`/api/quote/file/${old}/old.pdf`)).status, 404, 'через сутки ссылка не работает');
+  assert.notEqual(putFile(bytes, 'kp.pdf'), key, 'у каждого файла своя ссылка');
+});
+
+test('PDF по ссылке: Telegram не смог скачать — вторая попытка при 5xx, затем ссылка менеджеру; токен бота не светится', async () => {
+  const link = 'https://italon-x2.ru/api/quote/file/' + 'a'.repeat(64) + '/kp.pdf';
+  const ok = telegramStub({ sendDocument: [{ status: 502 }] });
+  assert.equal(await sendTelegram(TG, 'заявка', FILE, 'kp.pdf', ok.fetch, undefined, link), true);
+  assert.deepEqual(ok.calls.map(c => [c.method, c.upload, c.document]), [['sendMessage', false, null], ['sendDocument', false, link], ['sendDocument', false, link]]);
+  const bad = telegramStub({ sendDocument: [{ status: 400, body: '{"ok":false,"error_code":400,"description":"Bad Request: failed to get HTTP URL content"}' }] });
+  await quietly(async () => assert.rejects(sendTelegram(TG, 'заявка', FILE, 'kp.pdf', bad.fetch, undefined, link), /sendDocument по ссылке .*ответ 400/));
+  assert.deepEqual(bad.calls.map(c => c.method), ['sendMessage', 'sendDocument', 'sendMessage']);
+  assert.equal(bad.calls[2].text, '⚠️ Не удалось отправить PDF коммерческого предложения к заявке выше. Клиент скачал КП у себя; позиции и суммы — в сообщении выше.\n'
+    + 'Причина: ответ 400 {"ok":false,"error_code":400,"description":"Bad Request: failed to get HTTP URL content"}.\n'
+    + `Скачать PDF с сайта: <a href="${link}">kp.pdf</a> (ссылка действует сутки).`);
+  assert.ok(bad.calls.every(c => !/SECRET/.test(JSON.stringify(c))));
 });

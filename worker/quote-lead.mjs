@@ -61,28 +61,30 @@ const FILE_TIMEOUT_MS = 30000, RETRY_PAUSE_MS = 1000;
 
 /**
  * Заявка в Telegram каждому получателю из TELEGRAM_CHAT_ID: текст, затем файл (PDF КП или картинка Outdoor Lab).
- * Файл грузится дольше текста: у него своё время ожидания (30 с) и вторая попытка при обрыве связи или ответе 429/5xx
- * (после истечения времени не повторяем — посетитель ждёт ответа сайта). Если файл так и не ушёл, в тот же чат приходит
- * короткое предупреждение с причиной: иначе менеджер ждёт «следующее сообщение» впустую, а причина видна только в журнале сервера.
+ * fileUrl — ссылка на этот же файл на сайте (PDF КП): тогда сервер шлёт Telegram только её, и Telegram скачивает файл сам —
+ * загрузка файла с сервера до Telegram не проходит, а короткие запросы проходят. Без fileUrl файл загружается, как раньше.
+ * У файла своё время ожидания (30 с) и вторая попытка при обрыве связи или ответе 429/5xx (после истечения времени
+ * не повторяем — посетитель ждёт ответа сайта). Если файл так и не ушёл, в тот же чат приходит короткое предупреждение
+ * с причиной, а для PDF по ссылке — и сама ссылка: менеджер скачает файл с сайта.
  */
-export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch, media = { method: 'sendDocument', field: 'document', type: 'application/pdf' }) {
+export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch, media = { method: 'sendDocument', field: 'document', type: 'application/pdf' }, fileUrl = '') {
   const token = env.TELEGRAM_BOT_TOKEN;
   const chats = String(env.TELEGRAM_CHAT_ID || '').split(',').map(x => x.trim()).filter(Boolean);
   if (!token || !chats.length) return false;
   // TELEGRAM_API_BASE — адрес ретранслятора, если сервер не достаёт до api.telegram.org напрямую.
   const base = String(env.TELEGRAM_API_BASE || 'https://api.telegram.org').replace(/\/+$/, '');
   const api = method => `${base}/bot${token}/${method}`;
-  const hide = value => String(value).split(token).join('***');   // токен бота — ни в журнал, ни в чат
+  const hide = value => token.length < 8 ? String(value) : String(value).split(token).join('***');   // токен бота — ни в журнал, ни в чат
   const message = (chat, body) => fetchImpl(api('sendMessage'), { method: 'POST', signal: AbortSignal.timeout(15000),
     headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, text: body, parse_mode: 'HTML', disable_web_page_preview: true }) });
   async function upload(chat) {
     for (let attempt = 1; ; attempt++) {
       let reason, retry;
       try {
-        const form = new FormData();
-        form.set('chat_id', chat);
-        form.set(media.field, new Blob([pdf], { type: media.type }), filename);
-        const response = await fetchImpl(api(media.method), { method: 'POST', body: form, signal: AbortSignal.timeout(FILE_TIMEOUT_MS) });
+        let request;
+        if (fileUrl) request = { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, [media.field]: fileUrl }) };
+        else { const form = new FormData(); form.set('chat_id', chat); form.set(media.field, new Blob([pdf], { type: media.type }), filename); request = { body: form }; }
+        const response = await fetchImpl(api(media.method), { method: 'POST', ...request, signal: AbortSignal.timeout(FILE_TIMEOUT_MS) });
         if (response.ok) return;
         reason = `ответ ${response.status} ${(await response.text().catch(() => '')).slice(0, 200)}`.trim();
         retry = response.status === 429 || response.status >= 500;
@@ -92,7 +94,7 @@ export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch, 
         retry = !timedOut;
       }
       if (!retry || attempt === 2)
-        throw Object.assign(new Error(hide(`telegram ${media.method} (pdf ${pdf.length} bytes, попыток: ${attempt}) ${reason}`)), { reason: hide(reason) });
+        throw Object.assign(new Error(hide(`telegram ${media.method}${fileUrl ? ' по ссылке' : ''} (pdf ${pdf.length} bytes, попыток: ${attempt}) ${reason}`)), { reason: hide(reason) });
       await new Promise(resolve => setTimeout(resolve, RETRY_PAUSE_MS));
     }
   }
@@ -105,7 +107,8 @@ export async function sendTelegram(env, text, pdf, filename, fetchImpl = fetch, 
       const lost = media.method === 'sendDocument'
         ? 'PDF коммерческого предложения к заявке выше. Клиент скачал КП у себя; позиции и суммы — в сообщении выше'
         : 'картинку к заявке выше. Спецификация — в сообщении выше';
-      await message(chat, `⚠️ Не удалось отправить ${lost}.\nПричина: ${esc(error.reason || error.message)}.`).catch(() => {});
+      const download = fileUrl ? `\nСкачать PDF с сайта: <a href="${esc(fileUrl)}">${esc(filename)}</a> (ссылка действует сутки).` : '';
+      await message(chat, `⚠️ Не удалось отправить ${lost}.\nПричина: ${esc(error.reason || error.message)}.${download}`).catch(() => {});
       throw error;
     }
   }));
