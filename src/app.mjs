@@ -233,7 +233,7 @@ $('#quote-form').addEventListener('submit',async event=>{
   finally{exporting=false;$('#download-quote').textContent='Скачать КП в PDF';setExportState();}
 });
 rebuildFilters();renderSpaces();renderCollections();renderProducts();updateCalc();renderCart();ensureCart().catch(()=>{});
-if(location.hash==='#cart')openCart();
+if(window.location.hash==='#cart')openCart();
 
 // Keep structured browser actions on the same visible product and calculator state.
 if(document.modelContext?.registerTool){

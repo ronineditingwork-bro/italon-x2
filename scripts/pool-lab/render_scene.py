@@ -321,8 +321,8 @@ def build(variant, uv_pass):
         lo = bpy.data.objects.new(f'room{k}', L); lo.location = (x + 1.7, 6.3, 1.6); lo.rotation_euler = (math.radians(-90), 0, 0)
         s.collection.objects.link(lo); pool_lamps.append(lo)
 
-    sun = bpy.data.lights.new('sun', 'SUN'); sun.energy = 4.2; sun.angle = math.radians(0.6)
-    so = bpy.data.objects.new('sun', sun); so.rotation_euler = (math.radians(44), 0, math.radians(148))
+    sun = bpy.data.lights.new('sun', 'SUN'); sun.energy = 4.2; sun.angle = math.radians(0.6); sun.color = (1, 0.95, 0.88)
+    so = bpy.data.objects.new('sun', sun); so.rotation_euler = (math.radians(40), 0, math.radians(90))  # light travels to -x: shadows fall left, pool stays sunlit
     s.collection.objects.link(so)
     w = bpy.data.worlds.new('world'); s.world = w
     nt = w.node_tree; nt.nodes.clear()
