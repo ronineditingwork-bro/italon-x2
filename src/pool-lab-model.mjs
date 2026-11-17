@@ -1,4 +1,9 @@
 import { products, calculateArea } from './catalog.mjs';
+import scene from '../data/pool-lab-scene.json' with { type: 'json' };
+
+/** Scenes built by scripts/pool-lab (photo_scene.py or render_scene.py + encode_layers.py). */
+export const SCENES = scene.variants;
+const FIRST_SCENE = Object.keys(SCENES)[0];
 
 // shortcut: three test collections; add slugs here once their 60x120 textures are checked in the lab
 export const LAB_COLLECTIONS = [
@@ -9,7 +14,7 @@ export const LAB_COLLECTIONS = [
 export const ZONES = [
   { id: 'deck', zone: 1, label: 'Терраса', note: 'X2 · 20 мм', x2: true },
   { id: 'bowl', zone: 2, label: 'Чаша', note: 'Керамогранит', x2: false },
-  { id: 'coping', zone: 3, label: 'Бортик', note: 'X2 · 20 мм', x2: true, skimmerOnly: true },
+  { id: 'coping', zone: 3, label: 'Бортик', note: 'X2 · 20 мм', x2: true },
 ];
 export const POOL_TYPES = { skimmer: 'Скиммерный', overflow: 'Переливной' };
 export const LIGHTS = { day: 'День', dusk: 'Вечер', night: 'Ночь' };
@@ -31,11 +36,11 @@ export const OPTIONS = { deck: optionsFor(true), bowl: optionsFor(false) };
 OPTIONS.coping = OPTIONS.deck;
 
 export const DEFAULT_STATE = {
-  type: 'skimmer', light: 'day', glow: 'aqua', grout: 'grey', layout: 'straight',
+  scene: FIRST_SCENE, light: 'day', glow: 'aqua', grout: 'grey', layout: 'straight',
   deck: OPTIONS.deck.find(p => /МАГМА АЙС/.test(p.name))?.code ?? OPTIONS.deck[0].code,
   bowl: OPTIONS.bowl.find(p => /МАГМА СИЛЬВЕР/.test(p.name))?.code ?? OPTIONS.bowl[0].code,
   coping: OPTIONS.deck.find(p => /МАГМА АЙС/.test(p.name))?.code ?? OPTIONS.deck[0].code,
-  length: 8, width: 4, depth: 1.5, deckArea: 60, reserve: 10,
+  length: SCENES[FIRST_SCENE].pool.length, width: SCENES[FIRST_SCENE].pool.width, depth: SCENES[FIRST_SCENE].pool.depth, deckArea: 60, reserve: 10,
 };
 const NUMBERS = { length: [2, 50], width: [1.5, 25], depth: [0.4, 3], deckArea: [0, 2000] };
 
@@ -44,7 +49,7 @@ export function parseState(hash) {
   const q = new URLSearchParams(String(hash).replace(/^#/, ''));
   const state = { ...DEFAULT_STATE };
   const pick = (key, allowed) => { if (q.has(key) && Object.hasOwn(allowed, q.get(key))) state[key] = q.get(key); };
-  pick('type', POOL_TYPES); pick('light', LIGHTS); pick('glow', POOL_GLOW); pick('grout', GROUT); pick('layout', LAYOUTS);
+  pick('scene', SCENES); pick('light', LIGHTS); pick('glow', POOL_GLOW); pick('grout', GROUT); pick('layout', LAYOUTS);
   for (const zone of ZONES) if (OPTIONS[zone.id].some(p => p.code === q.get(zone.id))) state[zone.id] = q.get(zone.id);
   for (const [key, [min, max]] of Object.entries(NUMBERS)) {
     const value = Number(q.get(key));
@@ -66,7 +71,7 @@ export function poolAreas({ length, width, depth, deckArea, type }) {
 }
 /** One calculation line per zone; the same SKU on two zones is merged before rounding to boxes. */
 export function estimate(state) {
-  const areas = poolAreas(state);
+  const areas = poolAreas({ ...state, type: SCENES[state.scene].pool.type });
   const byCode = new Map();
   for (const zone of ZONES) {
     if (!areas[zone.id]) continue;

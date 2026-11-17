@@ -57,17 +57,22 @@ test('pool lab offers 60x120 porcelain for the bowl and X2 for the deck and copi
 test('pool lab share link ignores unknown and out-of-range values',async()=>{
  const { parseState,stateHash,DEFAULT_STATE,OPTIONS }=await import('../src/pool-lab-model.mjs');
  const bowl=OPTIONS.bowl.at(-1).code;
- const state=parseState(`#type=overflow&light=night&bowl=${bowl}&deck=600010001804&length=12.5&width=999&reserve=7`);
- assert.equal(state.type,'overflow');assert.equal(state.light,'night');assert.equal(state.bowl,bowl);
+ const state=parseState(`#scene=nope&light=night&bowl=${bowl}&deck=600010001804&length=12.5&width=999&reserve=7`);
+ assert.equal(state.scene,DEFAULT_STATE.scene);assert.equal(state.light,'night');assert.equal(state.bowl,bowl);
  assert.equal(state.deck,DEFAULT_STATE.deck);assert.equal(state.length,12.5);assert.equal(state.width,DEFAULT_STATE.width);assert.equal(state.reserve,10);
  assert.deepEqual(parseState('#'+stateHash(state)),state);
 });
-test('pool lab areas and estimate merge a SKU shared by deck and coping',async()=>{
- const { poolAreas,estimate,DEFAULT_STATE }=await import('../src/pool-lab-model.mjs');
+test('pool lab areas follow the scene pool type and merge a shared SKU',async()=>{
+ const { poolAreas,estimate,DEFAULT_STATE,SCENES }=await import('../src/pool-lab-model.mjs');
+ assert.ok(Object.values(SCENES).every(s=>s.zones.includes(1)&&s.zones.includes(2)&&s.hotspots.deck&&s.hotspots.bowl));
  assert.deepEqual(poolAreas({length:8,width:4,depth:1.5,deckArea:60,type:'skimmer'}),{deck:60,bowl:68,coping:7.56});
  assert.equal(poolAreas({length:8,width:4,depth:1.5,deckArea:60,type:'overflow'}).coping,0);
- const result=estimate({...DEFAULT_STATE,coping:DEFAULT_STATE.deck});
+ const overflow=Object.keys(SCENES).find(k=>SCENES[k].pool.type==='overflow');
+ const result=estimate({...DEFAULT_STATE,scene:overflow,length:8,width:4,depth:1.5,coping:DEFAULT_STATE.deck});
  const deck=result.lines.find(l=>l.code===DEFAULT_STATE.deck);
- assert.equal(result.lines.length,2);assert.equal(deck.zoneArea,67.56);assert.equal(deck.areaRequested,67.56);assert.deepEqual(deck.zones,['Терраса','Бортик']);
+ assert.equal(result.lines.length,2);assert.equal(result.areas.coping,0);assert.equal(deck.zoneArea,60);assert.deepEqual(deck.zones,['Терраса']);
+ const skimmer=Object.keys(SCENES).find(k=>SCENES[k].pool.type==='skimmer');
+ if(skimmer){const merged=estimate({...DEFAULT_STATE,scene:skimmer,length:8,width:4,depth:1.5,coping:DEFAULT_STATE.deck}).lines.find(l=>l.code===DEFAULT_STATE.deck);
+  assert.equal(merged.zoneArea,67.56);assert.equal(merged.areaRequested,67.56);assert.deepEqual(merged.zones,['Терраса','Бортик']);}
  assert.equal(result.totalKopecks,result.lines.reduce((s,l)=>s+l.totalKopecks,0));
 });

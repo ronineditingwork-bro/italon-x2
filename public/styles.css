@@ -168,3 +168,10 @@ body{font-size:1rem}.field input,.field textarea{font-size:1rem}.product-price{o
 .desktop-nav a[aria-current=page]{color:var(--olive)}
 @media(max-width:1120px){.lab-layout{grid-template-columns:1fr}.lab-panel{position:static;max-height:none}.lab-estimate-grid{grid-template-columns:1fr}.lab-intro{grid-template-columns:1fr}}
 @media(max-width:760px){.lab{padding-top:26px}.lab-stage{margin:0 calc(-1 * var(--gutter))}.lab-tools{right:8px;top:8px;bottom:auto}.lab-tool{padding:6px 10px;font-size:12px}.lab-hotspot{padding:5px 10px;font-size:12px}.lab-result{padding:18px}.lab-table thead{display:none}.lab-table tr{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--line)}.lab-table td{border:0;padding:0}.lab-table td:first-child{grid-column:1/-1}.lab-areas dd{font-size:17px}}
+.lab-scenes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lab-scene{display:flex;flex-direction:column;text-align:left;border:1px solid var(--line);font-size:12px;line-height:1.35}
+.lab-scene img{width:100%;height:auto;aspect-ratio:3/2}
+.lab-scene span{padding:6px 8px 8px}
+.lab-scene small{display:block;color:var(--muted)}
+.lab-scene:hover{border-color:var(--olive)}
+.lab-scene.active{border-color:var(--ink);outline:1px solid var(--ink);font-weight:500}
