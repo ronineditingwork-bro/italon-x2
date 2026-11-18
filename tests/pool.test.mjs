@@ -13,12 +13,16 @@ test('pool lab: Italon 60×120 in the bowl, X2 60×120 on deck and coping, one o
   assert.equal(optionsFor(options, 'coping'), options.x2);
   assert.ok(options.italon.some(o => o.texture?.src.includes('media/lab/')), 'scans of the same colour are used where they exist');
 });
+test('pool lab: an evening from another camera is its own hidden scene, linked from the day scene', () => {
+  for (const [id, s] of Object.entries(scenes)) if (s.eveningOf) { assert.equal(scenes[s.eveningOf].eveningScene, id); assert.equal(parseHash(`#scene=${id}`, scenes, options).scene, defaults(scenes, options).scene); }
+  assert.ok(Object.values(scenes).some(s => s.eveningScene));
+});
 test('pool lab: every scene has deck and bowl layers and hotspots', () => {
   for (const s of Object.values(scenes)) { assert.ok(s.zones.includes(1) && s.zones.includes(2)); assert.ok(s.layers.sun); }
   assert.ok(Object.values(scenes).some(s => s.layers.pool), 'at least one scene has an evening shot');
 });
 test('pool lab: share link keeps known values and drops the rest', () => {
-  const ids = Object.keys(scenes), bowl = options.italon.at(-1).code;
+  const ids = Object.keys(scenes).filter(k => !scenes[k].eveningOf), bowl = options.italon.at(-1).code;
   const s = parseHash(`#scene=${ids.at(-1)}&light=dusk&bowl=${bowl}&deck=600010001804&length=12.5&width=999&zone=nope`, scenes, options);
   assert.equal(s.scene, ids.at(-1)); assert.equal(s.light, 'dusk'); assert.equal(s.bowl, bowl);
   assert.equal(s.deck, defaults(scenes, options).deck); assert.equal(s.length, 12.5); assert.equal(s.width, scenes[ids.at(-1)].pool.width); assert.equal(s.zone, 'deck');

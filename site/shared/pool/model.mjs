@@ -69,7 +69,7 @@ const NUMBERS = { length: [2, 50], width: [1.5, 25], depth: [0.4, 3], deckArea: 
 /** Ссылка на вариант: только перечисленные значения; всё неизвестное или вне диапазона — по умолчанию. */
 export function parseHash(hash, scenes, options) {
   const q = new URLSearchParams(String(hash || '').replace(/^#/, '')), s = defaults(scenes, options);
-  if (Object.hasOwn(scenes, q.get('scene') || '')) Object.assign(s, { scene: q.get('scene') }, dims(scenes[q.get('scene')]));
+  if (Object.hasOwn(scenes, q.get('scene') || '') && !scenes[q.get('scene')].eveningOf) Object.assign(s, { scene: q.get('scene') }, dims(scenes[q.get('scene')]));
   for (const [key, list] of [['light', LIGHTS], ['layout', LAYOUTS], ['grout', GROUT], ['zone', ZONES]]) if (list.some(x => x.id === q.get(key))) s[key] = q.get(key);
   for (const z of ZONES) if (optionsFor(options, z.id).some(o => o.code === q.get(z.id))) s[z.id] = q.get(z.id);
   for (const [key, [lo, hi]] of Object.entries(NUMBERS)) { const v = Number(q.get(key)); if (q.has(key) && Number.isFinite(v) && v >= lo && v <= hi) s[key] = v; }

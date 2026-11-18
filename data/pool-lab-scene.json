@@ -70,7 +70,8 @@
           "base": 0.97430020570755,
           "light": 1.4802600145339966
         }
-      }
+      },
+      "eveningScene": "ispansky-vecher"
     },
     "les": {
       "label": "Хвойный лес",
@@ -108,6 +109,10 @@
         "sun": {
           "base": 0.859173595905304,
           "light": 1.5739951133728027
+        },
+        "pool": {
+          "base": 0.7969165444374084,
+          "light": 1.654511570930481
         }
       }
     },
@@ -262,6 +267,77 @@
         "sun": {
           "base": 0.9489649534225464,
           "light": 1.7658129930496216
+        }
+      },
+      "eveningScene": "kryty-vecher"
+    },
+    "kryty-vecher": {
+      "eveningOf": "kryty",
+      "label": "Крытый бассейн — вечер",
+      "kind": "photo",
+      "resolution": [
+        2000,
+        1342
+      ],
+      "pool": {
+        "type": "skimmer",
+        "length": 10,
+        "width": 6,
+        "depth": 1.4
+      },
+      "hotspots": {
+        "deck": [
+          0.3,
+          0.88
+        ],
+        "bowl": [
+          0.6,
+          0.55
+        ]
+      },
+      "zones": [
+        1,
+        2
+      ],
+      "layers": {
+        "sun": {
+          "base": 0.9913928508758545,
+          "light": 1.7379021644592285
+        }
+      }
+    },
+    "ispansky-vecher": {
+      "eveningOf": "ispansky",
+      "label": "Испанский двор — вечер",
+      "kind": "photo",
+      "resolution": [
+        2000,
+        1342
+      ],
+      "pool": {
+        "type": "skimmer",
+        "length": 8,
+        "width": 4,
+        "depth": 1.4
+      },
+      "hotspots": {
+        "deck": [
+          0.2,
+          0.85
+        ],
+        "bowl": [
+          0.5,
+          0.6
+        ]
+      },
+      "zones": [
+        1,
+        2
+      ],
+      "layers": {
+        "sun": {
+          "base": 0.9573695659637451,
+          "light": 1.7352012395858765
         }
       }
     }

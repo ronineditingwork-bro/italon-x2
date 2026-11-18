@@ -18,6 +18,7 @@ export async function startPool(root, { scenes, options, root: siteRoot = './' }
   const base = `${siteRoot}media/pool-lab/`;
   let S = parseHash(location.hash, scenes, options), token = 0, shown = null;
   const scene = () => scenes[S.scene], zones = () => zonesOf(scene());
+  const viewId = () => (S.light === 'dusk' && scene().eveningScene) || S.scene;   // вечер с другого ракурса — своя сцена
   const opt = zoneId => optionsFor(options, zoneId).find(o => o.code === S[zoneId]);
 
   // ------------------------------------------------------------------ кадр
@@ -26,14 +27,14 @@ export async function startPool(root, { scenes, options, root: siteRoot = './' }
     return { src: o.image, crop: [1, 1] };
   }
   async function draw() {
-    const my = ++token, sceneChanged = shown !== S.scene; if (sceneChanged) root.dataset.state = 'loading';
+    const my = ++token, sceneChanged = shown !== viewId(); if (sceneChanged) root.dataset.state = 'loading';
     try {
       const list = ZONES.map(z => { const o = opt(z.id); return { o, ...zoneTex(o, o.format) }; });
-      const [sceneTex, ...tex] = await Promise.all([engine.loadScene(S.scene, scene(), base), ...list.map(z => engine.loadTile(z.src))]);
+      const [sceneTex, ...tex] = await Promise.all([engine.loadScene(viewId(), scenes[viewId()], base), ...list.map(z => engine.loadTile(z.src))]);
       if (my !== token) return;
-      engine.draw({ scene: scene(), sceneTex, zones: list.map((z, i) => ({ texture: tex[i], size: sizeOf(z.o.format), crop: z.crop })),
-        light: S.light, offset: S.layout === 'offset' ? 0.5 : 0, grout: GROUT.find(g => g.id === S.grout).rgb });
-      stage.style.setProperty('--ol-ar', String(scene().resolution[0] / scene().resolution[1])); shown = S.scene;
+      engine.draw({ scene: scenes[viewId()], sceneTex, zones: list.map((z, i) => ({ texture: tex[i], size: sizeOf(z.o.format), crop: z.crop })),
+        light: viewId() === S.scene ? S.light : 'day', offset: S.layout === 'offset' ? 0.5 : 0, grout: GROUT.find(g => g.id === S.grout).rgb });
+      const v = scenes[viewId()]; stage.style.setProperty('--ol-ar', String(v.resolution[0] / v.resolution[1])); shown = viewId();
       canvas.classList.remove('pl-fade'); void canvas.offsetWidth; canvas.classList.add('pl-fade');
       root.dataset.state = 'ready'; say('');
     } catch (e) { if (my === token) { root.dataset.state = 'error'; say(`Не удалось построить изображение: ${e.message}`, 'error'); } }
@@ -45,7 +46,7 @@ export async function startPool(root, { scenes, options, root: siteRoot = './' }
     if (!zones().some(z => z.id === S.zone)) S.zone = 'deck';
     const zone = ZONES.find(z => z.id === S.zone), o = opt(zone.id), list = optionsFor(options, zone.id);
     $$('[data-scene]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.scene === S.scene)));
-    const lightStep = $('[data-light-step]'); lightStep.hidden = !scene().layers.pool;
+    const lightStep = $('[data-light-step]'); lightStep.hidden = !(scene().layers.pool || scene().eveningScene);
     $('[data-group="light"]').innerHTML = chips('light', LIGHTS, S.light);
     $('[data-light-hint]').textContent = S.light === 'dusk' ? 'Вечерний кадр той же сцены: подсветка чаши и свет из окон.' : '';
     $('[data-zones]').innerHTML = zones().map(z => `<button type="button" class="ol-zone" role="radio" aria-checked="${z.id === S.zone}" data-zone="${z.id}"><b>${esc(z.label)}</b><small>${esc(z.note)}</small></button>`).join('');
@@ -126,7 +127,7 @@ ${z.id === 'deck' ? field('deckArea', 'Площадь, м²', 1, 0, 2000) : `<sp
     if (t.closest('[data-request]')) { request(); return; }
     if (t === canvas) {
       const r = canvas.getBoundingClientRect(), x = Math.floor((e.clientX - r.left) / r.width * canvas.width), y = Math.floor((e.clientY - r.top) / r.height * canvas.height);
-      const tex = await engine.loadScene(S.scene, scene(), base).catch(() => null), hit = tex && zones().find(zz => zz.zone === tex.zoneAt(x, y));
+      const tex = await engine.loadScene(viewId(), scenes[viewId()], base).catch(() => null), hit = tex && zones().find(zz => zz.zone === tex.zoneAt(x, y));
       if (hit) selectZone(hit.id);
     }
   });

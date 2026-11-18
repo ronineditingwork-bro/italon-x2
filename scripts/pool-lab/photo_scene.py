@@ -104,7 +104,9 @@ for group, path in [('sun', image_path), ('pool', evening_path)]:
 photo.resize((480, round(480 * H / W)), Image.LANCZOS).save(f'{dst}/{name}-thumb.webp', 'WEBP', quality=80)
 
 manifest = json.load(open(manifest_path))
-manifest.setdefault('variants', {})[name] = {
+variants = manifest.setdefault('variants', {})
+if spec.get('eveningOf'): variants[spec['eveningOf']]['eveningScene'] = name   # evening shot from another camera: its own maps, shown by «Вечер»
+variants[name] = {**({'eveningOf': spec['eveningOf']} if spec.get('eveningOf') else {}),
     'label': spec['label'], 'kind': 'photo', 'resolution': [W, H], 'pool': spec['pool'], 'hotspots': spec['hotspots'],
     'zones': sorted({int(z) for z in np.unique(zone) if z}), 'layers': layers}
 json.dump(manifest, open(manifest_path, 'w'), indent=2, ensure_ascii=False)

@@ -7,9 +7,9 @@ const step = (n, title, body, attrs = '') => `<section class="ol-step" ${attrs}>
 
 /** scenes: { id: { label, pool, layers } } из data/pool-lab-scene.json; root — относительный путь к корню сайта. */
 export function poolMarkup({ scenes, root = './' }) {
-  const list = Object.entries(scenes);
+  const list = Object.entries(scenes).filter(([, s]) => !s.eveningOf);
   const thumb = id => `${root}media/pool-lab/${id}-thumb.webp`;
-  const sub = s => `${POOL_TYPES[s.pool.type]} · ${String(s.pool.length).replace('.', ',')} × ${String(s.pool.width).replace('.', ',')} м${s.layers.pool ? ' · день и вечер' : ''}`;
+  const sub = s => `${POOL_TYPES[s.pool.type]} · ${String(s.pool.length).replace('.', ',')} × ${String(s.pool.width).replace('.', ',')} м${s.layers.pool || s.eveningScene ? ' · день и вечер' : ''}`;
   const cards = list.map(([id, s], i) => `<button type="button" class="ol-scene" data-scene="${esc(id)}" aria-pressed="${i === 0}"><img src="${esc(thumb(id))}" alt="" width="320" height="213" loading="eager" decoding="async"><span>${esc(s.label)}</span></button>`).join('');
   const more = list.map(([id, s]) => `<button type="button" class="ol-more__card" data-scene="${esc(id)}"><img src="${esc(thumb(id))}" alt="" width="320" height="213" loading="lazy" decoding="async"><span><b>${esc(s.label)}</b><small>${esc(sub(s))}</small></span></button>`).join('');
   return `<section class="ol pl" data-pl data-state="loading" aria-labelledby="pl-title">
