@@ -13,10 +13,13 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 
-def joint_map(img):
-    g = img.convert('L')
-    closed = g.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.MinFilter(5))
-    return np.asarray(closed, np.float32) - np.asarray(g, np.float32)
+def joint_map(img, kind='dark'):
+    """Strength of thin joints: dark lines (closing), light lines (opening) or either."""
+    g = img.convert('L'); a = np.asarray(g, np.float32)
+    dark = np.asarray(g.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.MinFilter(5)), np.float32) - a
+    if kind == 'dark': return dark
+    light = a - np.asarray(g.filter(ImageFilter.MinFilter(5)).filter(ImageFilter.MaxFilter(5)), np.float32)
+    return light if kind == 'light' else np.maximum(dark, light)
 
 
 def dlt(img_pts, plane_pts):

@@ -77,8 +77,10 @@ def split(img):
     """Untiled base and per-albedo light of one photo."""
     # remove the photo's own thin joints (dark: closing, light: opening) so only the new grout is drawn
     k = spec.get('jointPx', 5)
-    first, second = (ImageFilter.MinFilter, ImageFilter.MaxFilter) if spec.get('joints') == 'light' else (ImageFilter.MaxFilter, ImageFilter.MinFilter)
-    clin = (np.asarray(img.filter(first(k)).filter(second(k)).filter(ImageFilter.GaussianBlur(1.2)), np.float32) / 255) ** 2.2
+    order = {'light': 'o', 'both': 'co'}.get(spec.get('joints'), 'c')   # c: closing removes dark lines, o: opening removes light ones
+    clean = img
+    for op in order: clean = clean.filter(ImageFilter.MaxFilter(k)).filter(ImageFilter.MinFilter(k)) if op == 'c' else clean.filter(ImageFilter.MinFilter(k)).filter(ImageFilter.MaxFilter(k))
+    clin = (np.asarray(clean.filter(ImageFilter.GaussianBlur(1.2)), np.float32) / 255) ** 2.2
     return np.where(tiled, clin * keep, (np.asarray(img, np.float32) / 255) ** 2.2), np.where(tiled, clin * (1 - keep) / albedo0, 0)
 
 
