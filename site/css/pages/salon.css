@@ -1,0 +1,128 @@
+/* Салон (/salon/): карточка адреса, карта по нажатию с запасной карточкой, запись, «перед визитом». */
+.salon-main__grid { row-gap: var(--s-7); align-items: stretch; }
+
+/* ---------- Карточка адреса ---------- */
+.salon-card { grid-column: 1 / span 5; display: grid; gap: var(--s-5); align-content: start; padding-top: var(--s-5); border-top: 1px solid var(--text); }
+.salon-card__address { display: grid; gap: var(--s-2); }
+.salon-card__street { font-size: var(--fs-h2); font-weight: 400; letter-spacing: -.025em; line-height: 1.1; }
+.salon-card__city { font-size: var(--fs-l); color: var(--text-2); }
+.salon-card__hours { width: 100%; }
+.salon-card__hours > div { grid-template-columns: minmax(7rem, 2fr) 3fr; }
+.salon-card__hours > div.is-today dt, .salon-card__hours > div.is-today dd { color: var(--text); font-weight: 500; }
+.salon-card__today { display: flex; align-items: center; gap: .5rem; color: var(--text); margin-top: calc(var(--s-3) * -1); }
+.salon-card__today::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--text-2); }
+.salon-card__today.is-open::before { background: #2f6b3a; }
+.salon-card__contacts { display: grid; grid-template-columns: minmax(0, 1fr); }
+.salon-contact { display: grid; gap: .2rem; padding-block: var(--s-3); border-bottom: 1px solid var(--line); }
+.salon-contact__value { font-size: var(--fs-h4); letter-spacing: -.01em; overflow-wrap: anywhere; transition: color var(--t) var(--ease); }
+.salon-contact:hover .salon-contact__value { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+.salon-card__routes { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+
+/* ---------- Карта: запасная карточка, iframe — по нажатию ---------- */
+.salon-map { grid-column: 7 / -1; position: relative; min-height: 32rem; background: var(--bg-2); overflow: hidden; isolation: isolate; }
+.salon-map::before { /* схематичная «карта» из тонких линий */
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: .9;
+  background:
+    linear-gradient(28deg, transparent calc(50% - 14px), #fff calc(50% - 14px), #fff calc(50% + 14px), transparent calc(50% + 14px)),
+    linear-gradient(118deg, transparent calc(38% - 9px), #fff calc(38% - 9px), #fff calc(38% + 9px), transparent calc(38% + 9px)),
+    repeating-linear-gradient(0deg, transparent 0 63px, var(--line) 63px 64px),
+    repeating-linear-gradient(90deg, transparent 0 63px, var(--line) 63px 64px);
+}
+.salon-map__fallback { position: relative; min-height: inherit; display: grid; align-content: center; justify-items: center; gap: var(--s-5); padding: var(--s-6); text-align: center; }
+.salon-map__pin { display: grid; place-items: center; width: 3.5rem; height: 3.5rem; border-radius: 50%; background: var(--btn); color: #fff; box-shadow: 0 0 0 .6rem rgba(21, 21, 21, .08); }
+.salon-map__pin svg { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 1.4; }
+.salon-map__label { display: grid; gap: .35rem; justify-items: center; padding: var(--s-4) var(--s-5); background: rgba(255, 255, 255, .92); border: 1px solid var(--line); }
+.salon-map__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s-3) var(--s-5); }
+.salon-map__actions .btn--light { border-color: var(--text); }
+.salon-map__actions .link-arrow { padding: .5rem .75rem; min-height: var(--tap); background: rgba(255, 255, 255, .92); }
+.salon-map__note { max-width: 26rem; font-size: var(--fs-xs); line-height: 1.5; color: var(--text-2); background: rgba(245, 243, 239, .92); padding: .25rem .5rem; }
+.salon-map iframe { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; border: 0; background: var(--bg-2); }
+.salon-map.is-loaded .salon-map__fallback { visibility: hidden; }
+
+/* ---------- Запись ---------- */
+.salon-book__grid { row-gap: var(--s-7); align-items: start; }
+.salon-book__text { grid-column: 1 / span 5; display: grid; gap: var(--s-4); justify-items: start; }
+.salon-ways { width: 100%; margin-top: var(--s-3); border-top: 1px solid var(--line); }
+.salon-way { display: grid; grid-template-columns: 2.5rem 1fr auto; align-items: center; gap: var(--s-3); min-height: 4.5rem; padding-block: var(--s-3); border-bottom: 1px solid var(--line); }
+.salon-way strong { display: block; font-size: var(--fs-h4); font-weight: 500; letter-spacing: -.01em; }
+.salon-way span span { display: block; font-size: var(--fs-s); color: var(--text-2); overflow-wrap: anywhere; }
+.salon-way:hover strong { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+.salon-way:hover .arrow { transform: translateX(.25rem); }
+.salon-way__n { font-size: var(--fs-s); color: var(--text-2); }
+.salon-form { grid-column: 7 / -1; display: grid; gap: var(--s-4); padding: clamp(1.5rem, 1rem + 2vw, 3rem); background: var(--bg); }
+.salon-form__title { display: flex; align-items: baseline; gap: var(--s-3); margin-bottom: var(--s-2); }
+.salon-form .btn { justify-self: start; }
+
+/* ---------- Перед визитом ---------- */
+.salon-before__grid { row-gap: var(--s-7); align-items: center; }
+.salon-before__text { grid-column: 1 / span 6; display: grid; gap: var(--s-4); justify-items: start; }
+.salon-links { width: 100%; margin-top: var(--s-3); border-top: 1px solid var(--line); }
+.salon-link { display: grid; gap: .25rem; padding-block: var(--s-4); border-bottom: 1px solid var(--line); }
+.salon-link__title { display: inline-flex; align-items: center; gap: .75rem; font-size: var(--fs-h4); font-weight: 500; letter-spacing: -.01em; }
+.salon-link__text { font-size: var(--fs-s); color: var(--text-2); }
+.salon-link:hover .arrow { transform: translateX(.25rem); }
+.salon-before__figure { grid-column: 8 / -1; }
+.salon-before__media { display: block; aspect-ratio: 4 / 5; max-width: 33rem; }
+
+@media (max-width: 63.99rem) {
+  .salon-card, .salon-map, .salon-book__text, .salon-form, .salon-before__text, .salon-before__figure { grid-column: 1 / -1; }
+  .salon-map { min-height: 26rem; }
+  .salon-before__media { aspect-ratio: 4 / 3; max-width: none; }
+}
+@media (max-width: 47.99rem) {
+  .salon-card__routes .btn { flex: 1 1 40%; }
+  .salon-card__routes .btn:first-child { flex-basis: 100%; }
+  .salon-map { min-height: 24rem; }
+  .salon-map__fallback { padding: var(--s-4); }
+}
+
+/* крупный системный шрифт: колонки текста не распираются содержимым */
+.salon-card, .salon-book__text, .salon-before__text, .salon-form { grid-template-columns: minmax(0, 1fr); }
+.salon-card > *, .salon-book__text > *, .salon-before__text > * { max-width: 100%; }
+.salon-card__hours > div { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+
+/* Реальная запись в салон */
+.salon-form__consent { display: flex; align-items: flex-start; gap: .7rem; font-size: var(--fs-s); line-height: 1.5; }
+.salon-form__consent input { margin-top: .25rem; flex: 0 0 auto; width: 1rem; height: 1rem; accent-color: var(--text); }
+.salon-form__consent a { text-decoration: underline; text-underline-offset: .18em; }
+.salon-form__success { padding: .85rem 1rem; border-left: 3px solid #246a43; background: #eaf4ee; color: #1d5135; font-size: var(--fs-s); line-height: 1.5; }
+.salon-form__trap { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.salon-form [aria-invalid="true"] { outline: 2px solid #a32229; outline-offset: 2px; }
+.salon-form .btn:disabled { opacity: .6; cursor: wait; }
+.salon-form [hidden] { display: none !important; }
+
+/* 3D-модель салона */
+.salon-3d__facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: var(--s-5) var(--gap); margin: 0 0 var(--s-4); padding: var(--s-4) 0; border-block: 1px solid var(--line); }
+.salon-3d__facts dt { font-size: var(--fs-h3); line-height: 1.15; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.salon-3d__facts dd { margin: .25rem 0 0; color: var(--text-2); font-size: var(--fs-s); }
+.salon-3d__partner { margin: 0 0 var(--s-5); }
+.sh3d { position: relative; margin: 0; aspect-ratio: 16 / 10; min-height: 18rem; overflow: hidden; background: #ececec; }
+.sh3d__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.sh3d__enter { position: absolute; inset: 0; width: 100%; display: grid; place-content: end center; justify-items: center; gap: .6rem; padding: 1rem 1rem clamp(1rem, 4%, 2rem); border: 0; cursor: pointer; color: #fff; background: linear-gradient(0deg, rgba(21,21,21,.16), rgba(21,21,21,0) 45%); }
+.sh3d__enter-btn { display: inline-flex; align-items: center; min-height: 3.25rem; padding: 0 1.75rem; background: #fff; color: #151515; font-weight: 500; font-size: var(--fs-m); transition: background var(--t-fast), color var(--t-fast); }
+.sh3d__enter:hover .sh3d__enter-btn { background: #151515; color: #fff; }
+.sh3d__enter:focus-visible { outline: 2px solid #fff; outline-offset: -6px; }
+.sh3d-full { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; overflow: hidden; background: #ececec; color: #1d1d1f; }
+.sh3d-full::backdrop { background: #ececec; }
+.sh3d-full__box { position: absolute; inset: 0; }
+.sh3d-full__box canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; outline: none; }
+.sh3d-full__box canvas:active { cursor: grabbing; }
+.sh3d-full__msg { position: absolute; inset: 0; margin: 0; display: grid; place-content: center; padding: 1.5rem; text-align: center; font-size: var(--fs-s); color: #6e6e73; }
+.sh3d-full__msg[hidden] { display: none; }
+.sh3d-full__exit { position: absolute; z-index: 3; top: calc(env(safe-area-inset-top, 0px) + .75rem); right: max(.75rem, env(safe-area-inset-right, 0px)); min-height: var(--tap); padding: 0 1.2rem; border: 1px solid rgba(29,29,31,.18); border-radius: 999px; background: rgba(255,255,255,.88); color: #1d1d1f; font: inherit; font-size: var(--fs-s); font-weight: 500; cursor: pointer; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.sh3d-full__exit:hover { background: #fff; }
+.sh3d-full__exit:focus-visible, .sh3d__ctrl button:focus-visible { outline: 2px solid #1d1d1f; outline-offset: 2px; }
+.sh3d-full__ui { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: .6rem; padding: .75rem max(.75rem, env(safe-area-inset-right, 0px)) calc(.75rem + env(safe-area-inset-bottom, 0px)) max(.75rem, env(safe-area-inset-left, 0px)); pointer-events: none; }
+.sh3d__event, .sh3d__ctrl { pointer-events: auto; background: rgba(255,255,255,.74); border: 1px solid rgba(29,29,31,.08); border-radius: 12px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); padding: .6rem .8rem; font-size: var(--fs-s); }
+.sh3d__event { flex: 1 1 14rem; max-width: 24rem; }
+.sh3d__event small { color: #6e6e73; font-size: var(--fs-xs); }
+.sh3d__event p { margin: .15rem 0 .45rem; min-height: 2.6em; line-height: 1.3; color: #1d1d1f; }
+.sh3d__track { height: 2px; background: rgba(29,29,31,.12); border-radius: 2px; overflow: hidden; }
+.sh3d__track > div { height: 100%; width: 0; background: #ff4949; }
+.sh3d__ctrl { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.sh3d__ctrl button[hidden] { display: none; }
+.sh3d__hint { color: #6e6e73; font-size: var(--fs-xs); flex: 1 1 100%; }
+.sh3d__ctrl button { min-height: var(--tap); padding: 0 .9rem; border: 1px solid rgba(29,29,31,.18); border-radius: 999px; background: #fff; color: #1d1d1f; font: inherit; font-size: var(--fs-s); cursor: pointer; }
+.sh3d__ctrl button[aria-pressed="true"] { background: #1d1d1f; color: #fff; }
+@media (max-width: 40rem) { .sh3d { aspect-ratio: 4 / 3; min-height: 0; } .sh3d__poster { transform: scale(1.22); transform-origin: 50% 46%; } .sh3d__event { max-width: none; padding: .45rem .7rem; } .sh3d__event p { min-height: 0; margin-bottom: .3rem; } .sh3d__hint { display: none; } }
+@media (prefers-reduced-motion: reduce) { .sh3d__enter-btn { transition: none; } }

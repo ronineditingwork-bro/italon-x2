@@ -1,7 +1,12 @@
 import { PDFDocument, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
+import { quoteDiscount } from './discount.mjs';
+import { QUOTE_JOINT_MM } from './grouts.mjs';
+import { mapeiMaterials, byNote, SHOW_STOCK, ADHESIVE_KG_M2, MOSAIC_CHIP_MM } from './mapei.mjs';
 
 const W=595.28,H=841.89,M=36,R=W-M;
+// Реквизиты салона (те же, что на странице «Салон»).
+const SALON={name:'Italon Experience',city:'Краснодар',address:'ул. Бабушкина, 248',phone:'+7 918 24 89 248',email:'italon@amanagroup.org',site:'italon-x2.ru',hours:'Пн—Пт 10:00—19:00, Сб—Вс 10:00—18:00'};
 const colors={ink:rgb(.18,.22,.17),muted:rgb(.39,.43,.36),pale:rgb(.9,.92,.86),line:rgb(.81,.83,.78),stripe:rgb(.97,.97,.95)};
 const number=(v,d=3)=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:d}).format(v).replace(/\u00a0|\u202f/g,' ');
 const money=k=>new Intl.NumberFormat('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}).format(k/100).replace(/\u00a0|\u202f/g,' ');
@@ -14,7 +19,25 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   const now=options.now||new Date();
   const date=new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Moscow',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);
   const id=options.quoteId||`${date.split('.').reverse().join('')}-${crypto.randomUUID().slice(0,6).toUpperCase()}`;
-  doc.setTitle('Коммерческое предложение - Italon / X2');doc.setAuthor('italon-x2.ru');doc.setCreationDate(now);doc.setModificationDate(now);
+  doc.setTitle(`Коммерческое предложение - ${SALON.name} ${SALON.city}, ${SALON.address}`);doc.setAuthor(`${SALON.name} ${SALON.city}`);doc.setCreationDate(now);doc.setModificationDate(now);
+  // Картинки товаров: options.images — Map код → {bytes, format:'jpg'|'png'} (webp перед этим переводится в jpeg в браузере).
+  const imageSource=options.images instanceof Map?options.images:new Map(Object.entries(options.images||{}));
+  const embedded=new Map();
+  async function embedImage(code){
+    if(embedded.has(code))return embedded.get(code);
+    const src=imageSource.get(code);let value=null;
+    if(src?.bytes){try{value=src.format==='png'?await doc.embedPng(src.bytes):await doc.embedJpg(src.bytes);}catch{value=null;}}
+    embedded.set(code,value);return value;
+  }
+  const THUMB={w:40,h:48};
+  function drawThumb(image,x,top){
+    const box={x,y:top-THUMB.h,width:THUMB.w,height:THUMB.h};
+    page.drawRectangle({...box,color:rgb(1,1,1),borderColor:colors.line,borderWidth:.5});
+    if(!image)return;
+    const k=Math.min((THUMB.w-4)/image.width,(THUMB.h-4)/image.height);
+    const w=image.width*k,h=image.height*k;
+    page.drawImage(image,{x:x+(THUMB.w-w)/2,y:box.y+(THUMB.h-h)/2,width:w,height:h});
+  }
   let page,y;
   const write=(text,x,baseline,size=10,color=colors.ink)=>page.drawText(clean(text),{x,y:baseline,font,size,color});
   const right=(text,rightX,baseline,size=10,color=colors.ink)=>{const s=clean(text);write(s,rightX-font.widthOfTextAtSize(s,size),baseline,size,color);};
@@ -37,13 +60,16 @@ export async function createQuote(cart, details, fontBytes, options={}) {
   function tableHeader(){
     page.drawRectangle({x:M,y:y-26,width:R-M,height:26,color:colors.pale});
     write('№',M+7,y-17,8.5);write('Материал / артикул',M+31,y-17,8.5);
-    write('Количество',302,y-17,8);right('Цена / ед.',447,y-17,8.5);right('Сумма, руб.',R-7,y-17,8.5);y-=26;
+    right('Количество',378,y-17,8.5);right('Цена / ед.',455,y-17,8.5);right('Сумма, руб.',R-7,y-17,8.5);y-=26;
   }
   function newPage(first=false,table=false){
     page=doc.addPage([W,H]);page.drawRectangle({x:0,y:H-7,width:W,height:7,color:colors.ink});
-    write('ITALON / X2',M,H-51,23);right('italon-x2.ru',R,H-48,10,colors.muted);
-    if(first){write('Коммерческое предложение',M,H-101,23);write(`№ ${id}`,M,H-129,10,colors.muted);right(`от ${date}`,R,H-129,10,colors.muted);y=H-159;}
-    else{write(`Предложение № ${id} / продолжение`,M,H-80,9,colors.muted);y=H-105;}
+    write(SALON.name,M,H-53,23);
+    write(`${SALON.city} · ${SALON.address}`,M,H-73,10.5,colors.muted);
+    right(SALON.phone,R,H-47,10);right(SALON.email,R,H-61,9,colors.muted);right(SALON.site,R,H-74,9,colors.muted);
+    page.drawLine({start:{x:M,y:H-90},end:{x:R,y:H-90},thickness:.5,color:colors.line});
+    if(first){write('Коммерческое предложение',M,H-126,20);write(`№ ${id}`,M,H-150,10,colors.muted);right(`от ${date}`,R,H-150,10,colors.muted);y=H-178;}
+    else{write(`Коммерческое предложение № ${id} / продолжение`,M,H-112,9,colors.muted);y=H-134;}
     if(table)tableHeader();
   }
   function paragraph(text,size=10,color=colors.ink,gap=15){
@@ -53,40 +79,88 @@ export async function createQuote(cart, details, fontBytes, options={}) {
     }
   }
   newPage(true);
-  if(details.customer?.trim()){paragraph(`Получатель: ${details.customer.trim().slice(0,100)}`,10);y-=5;}
+  if(details.phone?.trim()){paragraph(`Телефон: ${details.phone.trim().slice(0,30)}`,10);y-=5;}
+  if(details.customer?.trim()){paragraph(`ФИО: ${details.customer.trim().slice(0,100)}`,10);y-=5;}
+  if(details.address?.trim()){paragraph(`Адрес объекта: ${details.address.trim().slice(0,200)}`,10);y-=5;}
   if(details.project?.trim()){paragraph(`Объект: ${details.project.trim().slice(0,150)}`,10);y-=5;}
   paragraph('Цены с НДС. Прайс от 01.07.2026, склад Краснодар.',9,colors.muted,13);y-=19;
   tableHeader();
   for(let index=0;index<cart.lines.length;index++){
     const l=cart.lines[index],p=l.product;
-    const nameLines=wrap(p.name,222,9.6);
-    const metaLines=wrap(`Арт. ${p.code}${p.format?' / '+p.format.replace(/[XХ]/g,'x'):''}`,222,7.8);
-    const quantityLines=wrap(`${number(l.quantity)} ${p.unit}${p.boxed?'\n'+number(l.packs)+' кор.':''}`,65,8.5);
-    const rowHeight=Math.max(57,18+nameLines.length*12+metaLines.length*11,24+quantityLines.length*12);
+    const thumb=await embedImage(p.code);const textX=thumb?M+78:M+31,textW=thumb?190:236;
+    const nameLines=wrap(p.name,textW,9.6);
+    const metaLines=wrap(`Арт. ${p.code}${p.format?' / '+p.format.replace(/[XХ]/g,'x'):''}${l.auto?` / для слэбов: ${number(l.sheets)} л., до 18 листов в ящике`:''}`,textW,7.8);
+    const quantityLines=wrap(`${number(l.quantity)} ${p.unit}${p.boxed?'\n'+number(l.packs)+' '+p.orderUnit:''}`,70,8.5);
+    const rowHeight=Math.max(thumb?64:46,26+nameLines.length*12+metaLines.length*11,26+Math.max(quantityLines.length,2)*12);
     if(y-rowHeight<105)newPage(false,true);
     if(index%2===0)page.drawRectangle({x:M,y:y-rowHeight,width:R-M,height:rowHeight,color:colors.stripe});
-    const top=y-18;write(String(index+1),M+7,top,8.5,colors.muted);
-    nameLines.forEach((line,j)=>write(line,M+31,top-j*12,9.6));
-    metaLines.forEach((line,j)=>write(line,M+31,top-nameLines.length*12-3-j*11,7.8,colors.muted));
-    quantityLines.forEach((line,j)=>write(line,302,top-j*12,8.5));
-    right(money(p.priceKopecks),447,top,9);right(`руб. / ${p.unit}`,447,top-14,7.8,colors.muted);
+    const top=y-19;write(String(index+1),M+7,top,8.5,colors.muted);
+    if(thumb)drawThumb(thumb,M+29,y-8);
+    nameLines.forEach((line,j)=>write(line,textX,top-j*12,9.6));
+    metaLines.forEach((line,j)=>write(line,textX,top-nameLines.length*12-3-j*11,7.8,colors.muted));
+    quantityLines.forEach((line,j)=>right(line,378,top-j*12,j?8:9,j?colors.muted:colors.ink));
+    right(money(p.priceKopecks),455,top,9.6);right(`руб. / ${p.unit}`,455,top-12,7.8,colors.muted);
     let amountSize=10;while(font.widthOfTextAtSize(money(l.totalKopecks),amountSize)>98)amountSize-=.5;
     right(money(l.totalKopecks),R-7,top,amountSize);
     y-=rowHeight;page.drawLine({start:{x:M,y},end:{x:R,y},thickness:.5,color:colors.line});
   }
   y-=24;if(y<180)newPage(false,false);
-  page.drawRectangle({x:302,y:y-66,width:R-302,height:66,color:colors.pale});
+  const disc=quoteDiscount(details,cart.totalKopecks),extra=disc.percent?40:0;
+  page.drawRectangle({x:302,y:y-66-extra,width:R-302,height:66+extra,color:colors.pale});
+  if(disc.percent){
+    write('Сумма без скидки',316,y-16,9,colors.muted);right(money(cart.totalKopecks)+' руб.',R-14,y-16,9);
+    write(`Скидка ${disc.percent}%`,316,y-32,9,colors.muted);right('-'+money(disc.discountKopecks)+' руб.',R-14,y-32,9);
+    y-=extra;
+  }
   write('ИТОГО С НДС',316,y-20,9,colors.muted);
-  const totalText=money(cart.totalKopecks)+' руб.';let totalSize=23;
+  const totalText=money(disc.payableKopecks)+' руб.';let totalSize=23;
   while(font.widthOfTextAtSize(totalText,totalSize)>R-330)totalSize-=.5;
   right(totalText,R-14,y-49,totalSize);y-=92;
+  if(disc.percent){paragraph(`Скидка: ${disc.parts.map(r=>`${r.label} ${r.percent}%`).join(', ')}.`,9,colors.muted,13);y-=6;}
+  // Затирка и клей Mapei — справочно, отдельной таблицей и своим итогом: в сумму плитки не входят (другие скидки и условия)
+  const mats=mapeiMaterials(cart.lines),cards=[...mats.grout.flatMap(c=>[{...c,unit:'уп.'},...(c.epoxy?[{...c.epoxy,for:c.for,by:[],unit:'уп.',isAlt:true}]:[])]),...mats.adhesive.map(c=>({...c,unit:'меш.'}))];
+  if(cards.length){
+    const dmy=mats.date.split('-').reverse().join('.');
+    const need=30+cards.length*62+78+80;   // раздел не разрываем: не помещается целиком — с новой страницы (если вообще помещается на страницу)
+    if(y-need<85&&need<H-134-85||y-(30+2*62)<85)newPage(false,false);   // не помещается целиком — с новой страницы; длинный раздел — хотя бы заголовок с двумя строками
+    paragraph('Затирка и клей Mapei - справочно, отдельно от плитки',10,colors.ink,17);y-=4;
+    page.drawLine({start:{x:M,y},end:{x:R,y},thickness:.5,color:colors.line});
+    for(const [index,c] of cards.entries()){
+      const thumb=await embedImage('mapei:'+c.sku);const textX=M+52,textW=228;
+      const need=c.kg==null?'расход уточнит менеджер':Array.isArray(c.kg)?`${number(c.kg[0])}-${number(c.kg[1])} кг`:`около ${number(c.kg,1)} кг`;
+      const nameLines=wrap((c.isAlt?'или эпоксидная: ':'')+c.title,textW,9.2);
+      const meta=wrap(`арт. ${c.sku} · к ${c.for.join(', ')} · ${need}${c.alt?.length?` · или ${c.alt.join(', ')}`:''}${byNote(c)?` · подбор ${byNote(c)}`:''}${SHOW_STOCK?` · склад Краснодар на ${dmy}: ${c.stock>0?number(c.stock)+' '+c.unit:'нет, под заказ'}`:''}`,textW,7.6);
+      const rowHeight=Math.max(56,20+nameLines.length*12+meta.length*10);
+      if(y-rowHeight<105)newPage(false,false);
+      if(!c.isAlt)page.drawRectangle({x:M,y:y-rowHeight,width:R-M,height:rowHeight,color:colors.stripe});   // вариант (эпоксидная) — без подложки, сразу под своей затиркой
+      const top=y-17;
+      if(thumb)drawThumb(thumb,M+6,y-4);
+      nameLines.forEach((line,k)=>write(line,textX,top-k*12,9.2));
+      meta.forEach((line,k)=>write(line,textX,top-nameLines.length*12-2-k*10,7.6,colors.muted));
+      right(c.packs?`${number(c.packs)} ${c.unit}`:'-',378,top,9);
+      right(money(c.price*100),455,top,9.2);right(`руб. / ${c.unit}`,455,top-12,7.6,colors.muted);
+      right(c.packs?money(c.packs*c.price*100):'-',R-7,top,9.6);
+      y-=rowHeight;if(!cards[index+1]?.isAlt)page.drawLine({start:{x:M,y},end:{x:R,y},thickness:.5,color:colors.line});
+    }
+    y-=10;if(y<150)newPage(false,false);
+    const two=mats.totalEpoxyRub!==mats.totalRub,h=two?62:40;
+    page.drawRectangle({x:262,y:y-h,width:R-262,height:h,color:colors.stripe});
+    write('MAPEI, с цементной затиркой',276,y-24,9,colors.muted);right(money(mats.totalRub*100)+' руб.',R-14,y-26,13);
+    if(two){write('с эпоксидной затиркой',276,y-46,9,colors.muted);right(money(mats.totalEpoxyRub*100)+' руб.',R-14,y-48,13);}
+    y-=h+16;
+    paragraph(`Итоги справочные, не суммируются с плиткой: скидки и условия продажи материалов Mapei отличаются. Цены - розничный прайс Mapei${SHOW_STOCK?`, склад Краснодар на ${dmy}`:''}. Затирка - цементная (Ultracolor Plus) или эпоксидная (Kerapoxy) на выбор, считается одна из них. Количество - ориентир: затирка на шов ${QUOTE_JOINT_MM} мм без запаса, мозаика - по чипу ${MOSAIC_CHIP_MM/10}x${MOSAIC_CHIP_MM/10} см, клей по верхней границе расхода ${ADHESIVE_KG_M2.join('-')} кг/м² на идеальном основании. «Подбор по цвету / формату» - рекомендации Italon для этой плитки нет. Менеджер уточнит по проекту.${mats.noGrout.length?` Затирку к ${mats.noGrout.join(', ')} подберёт менеджер.`:''}${mats.noAdhesive.length?` Клей к ${mats.noAdhesive.join(', ')} подберёт менеджер.`:''}`,8.7,colors.muted,13);y-=15;
+  }
   paragraph('Условия предложения',10,colors.ink,17);
-  paragraph('Количество рассчитано с учётом целых упаковок и минимального заказа из прайса. Наличие, тон, калибр и сроки поставки уточняются при подтверждении заказа. Доставка рассчитывается отдельно.',8.7,colors.muted,13);
+  paragraph('Количество рассчитано с учётом целых упаковок и минимального заказа (одна коробка, у слэбов - один лист; транспортный ящик - на каждые 18 листов). Наличие, тон, калибр и сроки поставки уточняются при подтверждении заказа. Доставка рассчитывается отдельно.',8.7,colors.muted,13);
+  y-=15;paragraph('Салон',10,colors.ink,17);
+  paragraph(`${SALON.name}, ${SALON.city}, ${SALON.address}`,9,colors.ink,14);
+  paragraph(`${SALON.hours}`,9,colors.muted,14);
+  paragraph(`Тел. ${SALON.phone} · ${SALON.email}`,9,colors.muted,14);
   if(details.note?.trim()){y-=15;paragraph('Комментарий',10,colors.ink,17);paragraph(details.note.trim().slice(0,500),9,colors.ink,14);}
   for(const [i,p] of doc.getPages().entries()){
     page=p;page.drawLine({start:{x:M,y:49},end:{x:R,y:49},thickness:.5,color:colors.line});
-    write('ITALON / X2  •  italon-x2.ru',M,33,8,colors.muted);
+    write(`${SALON.name} · ${SALON.city}, ${SALON.address} · ${SALON.phone}`,M,33,8,colors.muted);
     right(`${i+1} / ${doc.getPageCount()}`,R,33,8,colors.muted);
   }
-  return {bytes:await doc.save(),filename:`KP-Italon-X2-${id}.pdf`,pageCount:doc.getPageCount(),id};
+  return {bytes:await doc.save(),filename:`KP-Italon-Experience-${id}.pdf`,pageCount:doc.getPageCount(),id};
 }

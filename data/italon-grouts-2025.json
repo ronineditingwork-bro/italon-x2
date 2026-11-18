@@ -1,0 +1,3513 @@
+[
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Слим Полар",
+"article_en": "Slim Polar",
+"mapei": "103",
+"litokol": "LLE.200"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Слим Пьюр",
+"article_en": "Slim Pure",
+"mapei": "103",
+"litokol": "LLE.210"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Слим Дезерт",
+"article_en": "Slim Desert",
+"mapei": "110",
+"litokol": "LLE.230"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Слим Сильвер",
+"article_en": "Slim Silver",
+"mapei": "110",
+"litokol": "LLE.125"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Слим Айрон",
+"article_en": "Slim Iron",
+"mapei": "113",
+"litokol": "LLE.125"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Слим Петрол",
+"article_en": "Slim Petrol",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Вэйв Полар",
+"article_en": "Wave Polar",
+"mapei": "103",
+"litokol": "LLE.200"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Вэйв Пьюр",
+"article_en": "Wave Pure",
+"mapei": "103",
+"litokol": "LLE.210"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Вэйв Дезерт",
+"article_en": "Wave Desert",
+"mapei": "110",
+"litokol": "LLE.230"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Вэйв Сильвер",
+"article_en": "Wave Silver",
+"mapei": "110",
+"litokol": "LLE.125"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Вэйв Айрон",
+"article_en": "Wave Iron",
+"mapei": "113",
+"litokol": "LLE.125"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Вэйв Петрол",
+"article_en": "Wave Petrol",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Стоун Полар",
+"article_en": "Stone Polar",
+"mapei": "103",
+"litokol": "LLE.200"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Стоун Пьюр",
+"article_en": "Stone Pure",
+"mapei": "103",
+"litokol": "LLE.210"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Стоун Дезерт",
+"article_en": "Stone Desert",
+"mapei": "110",
+"litokol": "LLE.230"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Стоун Сильвер",
+"article_en": "Stone Silver",
+"mapei": "110",
+"litokol": "LLE.125"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Стоун Айрон",
+"article_en": "Stone Iron",
+"mapei": "113",
+"litokol": "LLE.125"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Стоун Петрол",
+"article_en": "Stone Petrol",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Полар Мозаика Стрип",
+"article_en": "Polar Mosaico Strip",
+"mapei": "103",
+"litokol": "LLE.200"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Пьюр Мозаика Стрип",
+"article_en": "Pure Mosaico Strip",
+"mapei": "103",
+"litokol": "LLE.210"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Дезерт Мозаика Стрип",
+"article_en": "Desert Mosaico Strip",
+"mapei": "110",
+"litokol": "LLE.230"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Сильвер Мозаика Стрип",
+"article_en": "Silver Mosaico Strip",
+"mapei": "110",
+"litokol": "LLE.125"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Айрон Мозаика Стрип",
+"article_en": "Iron Mosaico Strip",
+"mapei": "113",
+"litokol": "LLE.125"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Петрол Мозаика Стрип",
+"article_en": "Petrol Mosaico Strip",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Полар Мозаика",
+"article_en": "Polar Mosaico",
+"mapei": "103",
+"litokol": "LLE.200"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Пьюр Мозаика",
+"article_en": "Pure Mosaico",
+"mapei": "103",
+"litokol": "LLE.210"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Дезерт Мозаика",
+"article_en": "Desert Mosaico",
+"mapei": "110",
+"litokol": "LLE.230"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Сильвер Мозаика",
+"article_en": "Silver Mosaico",
+"mapei": "110",
+"litokol": "LLE.125"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Айрон Мозаика",
+"article_en": "Iron Mosaico",
+"mapei": "113",
+"litokol": "LLE.125"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Петрол Мозаика",
+"article_en": "Petrol Mosaico",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Полар Мозаика Макси",
+"article_en": "Polar Mosaico Maxi",
+"mapei": "103",
+"litokol": "LLE.200"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Пьюр Мозаика Макси",
+"article_en": "Pure Mosaico Maxi",
+"mapei": "103",
+"litokol": "LLE.210"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Дезерт Мозаика Макси",
+"article_en": "Desert Mosaico Maxi",
+"mapei": "110",
+"litokol": "LLE.230"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Сильвер Мозаика Макси",
+"article_en": "Silver Mosaico Maxi",
+"mapei": "110",
+"litokol": "LLE.125"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Айрон Мозаика Макси",
+"article_en": "Iron Mosaico Maxi",
+"mapei": "113",
+"litokol": "LLE.125"
+},
+{
+"collection": "Forum",
+"collection_ru": "Форум",
+"use": "—",
+"article_ru": "Петрол Мозаика Макси",
+"article_en": "Petrol Mosaico Maxi",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Айс",
+"article_en": "Ice",
+"mapei": "103",
+"litokol": "LLE.200"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Минерал",
+"article_en": "Mineral",
+"mapei": "111",
+"litokol": "LLE.105"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Сильвер",
+"article_en": "Silver",
+"mapei": "111",
+"litokol": "LLE.105"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Фог",
+"article_en": "Fog",
+"mapei": "113",
+"litokol": "LLE.125"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Графит",
+"article_en": "Graphite",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Довер Тайгер",
+"article_en": "Dover Tiger",
+"mapei": "103",
+"litokol": "LLE.200"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Альпи Грин",
+"article_en": "Alpi Green",
+"mapei": "113",
+"litokol": "LLE.125"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Оак",
+"article_en": "Oak",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Пэппер",
+"article_en": "Pepper",
+"mapei": "113",
+"litokol": "LLE.125"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Айс Мозаика Призм",
+"article_en": "Ice Mosaico Prism",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Минерал Мозаика Призм",
+"article_en": "Mineral Mosaico Prism",
+"mapei": "113",
+"litokol": "LLE.130"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Сильвер Мозаика Призм",
+"article_en": "Silver Mosaico Prism",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Фог Мозаика Призм",
+"article_en": "Fog Mosaico Prism",
+"mapei": "111",
+"litokol": "LLE.105"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Графит Мозаика Призм",
+"article_en": "Graphite Mosaico Prism",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Айс Мозаика Стрип",
+"article_en": "Ice Mosaico Strip",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Минерал Мозаика Стрип",
+"article_en": "Mineral Mosaico Strip",
+"mapei": "113",
+"litokol": "LLE.130"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Сильвер Мозаика Стрип",
+"article_en": "Silver Mosaico Strip",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Фог Мозаика Стрип",
+"article_en": "Fog Mosaico Strip",
+"mapei": "111",
+"litokol": "LLE.105"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Графит Мозаика Стрип",
+"article_en": "Graphite Mosaico Strip",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Айс Мозаика",
+"article_en": "Ice Mosaico",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Минерал Мозаика",
+"article_en": "Mineral Mosaico",
+"mapei": "113",
+"litokol": "LLE.130"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Сильвер Мозаика",
+"article_en": "Silver Mosaico",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Фог Мозаика",
+"article_en": "Fog Mosaico",
+"mapei": "111",
+"litokol": "LLE.105"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Блэк Мозаика Стрип",
+"article_en": "Black Mosaico Strip",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Стрип",
+"article_en": "Strip",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Купрум Мозаика Мэджик",
+"article_en": "Cuprum Mosaico Magic",
+"mapei": "143",
+"litokol": "LLE.305",
+"check_litokol": "1",
+"note": "Название цвета Litokol уточнить"
+},
+{
+"collection": "Magma",
+"collection_ru": "Магма",
+"use": "—",
+"article_ru": "Петрол Мозаика Энигма",
+"article_en": "Petrol Mosaico Enigma",
+"mapei": "113",
+"litokol": "LLE.125"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Пьюр",
+"article_en": "Pure",
+"mapei": "111",
+"litokol": "LLE.105"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Даст",
+"article_en": "Dust",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Сильвер",
+"article_en": "Silver",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Айрон",
+"article_en": "Iron",
+"mapei": "113"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Блэк",
+"article_en": "Black",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Калакатта Ворм",
+"article_en": "Calacatta Warm",
+"mapei": "103"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Эксклюзив Грин",
+"article_en": "Exclusive Green",
+"mapei": "111",
+"litokol": "LLE.105"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Оак",
+"article_en": "Oak",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Пэппер",
+"article_en": "Pepper",
+"mapei": "136",
+"litokol": "LLE.130"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Пьюр Мозаика Люксор",
+"article_en": "Pure Mosaico Luxor",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Даст Мозаика Люксор",
+"article_en": "Dust Mosaico Luxor",
+"mapei": "134",
+"litokol": "LLE.225"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Сильвер Мозаика Люксор",
+"article_en": "Silver Mosaico Luxor",
+"mapei": "125",
+"litokol": "LLE.110"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Айрон Мозаика Люксор",
+"article_en": "Iron Mosaico Luxor",
+"mapei": "125",
+"litokol": "LLE.110"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Блэк Мозаика Люксор",
+"article_en": "Black Mosaico Luxor",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Пьюр Мини Брик",
+"article_en": "Pure Mini Brick",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Даст Мини Брик",
+"article_en": "Dust Mini Brick",
+"mapei": "134",
+"litokol": "LLE.225"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Сильвер Мини Брик",
+"article_en": "Silver Mini Brick",
+"mapei": "125",
+"litokol": "LLE.110"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Айрон Мини Брик",
+"article_en": "Iron Mini Brick",
+"mapei": "125",
+"litokol": "LLE.110"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Блэк Мини Брик",
+"article_en": "Black Mini Brick",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Пьюр Мозаика Стрип",
+"article_en": "Pure Mosaico Strip",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Даст Мозаика Стрип",
+"article_en": "Dust Mosaico Strip",
+"mapei": "134",
+"litokol": "LLE.225"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Сильвер Мозаика Стрип",
+"article_en": "Silver Mosaico Strip",
+"mapei": "125",
+"litokol": "LLE.110"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Айрон Мозаика Стрип",
+"article_en": "Iron Mosaico Strip",
+"mapei": "125",
+"litokol": "LLE.110"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Блэк Мозаика Стрип",
+"article_en": "Black Mosaico Strip",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Пьюр Мозаика",
+"article_en": "Pure Mosaico",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Даст Мозаика",
+"article_en": "Dust Mosaico",
+"mapei": "134",
+"litokol": "LLE.225"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Сильвер Мозаика",
+"article_en": "Silver Mosaico",
+"mapei": "125",
+"litokol": "LLE.110"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Айрон Мозаика",
+"article_en": "Iron Mosaico",
+"mapei": "125",
+"litokol": "LLE.110"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Блэк Мозаика",
+"article_en": "Black Mosaico",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Оак Мозаика Татами",
+"article_en": "Oak Mosaico Tatami",
+"mapei": "136",
+"litokol": "LLE.235"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Пэппер Мозаика Татами",
+"article_en": "Pepper Mosaico Tatami",
+"mapei": "133",
+"litokol": "LLE.210"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Аурум Мозаика Мэджик",
+"article_en": "Aurum Mosaico Magic",
+"mapei": "130",
+"litokol": "LLE.210"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Титаниум Мозаика Мэджик",
+"article_en": "Titanium Mosaico Magic",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Амбер Мозаика Спектрум",
+"article_en": "Amber Mosaico Spectrum",
+"mapei": "130",
+"litokol": "LLE.210"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Эмеральд Мозаика Спектрум",
+"article_en": "Emerald Mosaico Spectrum",
+"mapei": "130",
+"litokol": "LLE.210"
+},
+{
+"collection": "Avantgarde",
+"collection_ru": "Авангард",
+"use": "—",
+"article_ru": "Руби Мозаика Спектрум",
+"article_en": "Ruby Mosaico Spectrum",
+"mapei": "130",
+"litokol": "LLE.210"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Статуарио Уайт",
+"article_en": "Statuario White",
+"mapei": "100",
+"litokol": "LLE.200"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Калакатта Голд",
+"article_en": "Calacatta Gold",
+"mapei": "100",
+"litokol": "LLE.200"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Каррара Айвори",
+"article_en": "Carrara Ivory",
+"mapei": "100",
+"litokol": "LLE.200"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Кристал Пьюр",
+"article_en": "Crystal Pure",
+"mapei": "123",
+"litokol": "LLE.202",
+"check_litokol": "1",
+"note": "Название цвета Litokol уточнить"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Элегант Сильвер",
+"article_en": "Elegant Silver",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Тусканиа Грэй",
+"article_en": "Tuscania Grey",
+"mapei": "113"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Абсолют Блэк",
+"article_en": "Absolut Black",
+"mapei": "120",
+"litokol": "LLE.145"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Довер Лайт",
+"article_en": "Dover Light",
+"mapei": "111",
+"litokol": "LLE.105"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Мадагаскар Дарк",
+"article_en": "Madagascar Dark",
+"mapei": "120",
+"litokol": "LLE.145"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Грэй Мозаика Орфеус",
+"article_en": "Grey Mosaico Orpheus",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Дарк Мозаика Орфеус",
+"article_en": "Dark Mosaico Orpheus",
+"mapei": "113"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Айвори Мозаика Арган",
+"article_en": "Ivory Mosaico Argan",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Грэй Мозаика Арган",
+"article_en": "Grey Mosaico Argan",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Блэк Мозаика Арган",
+"article_en": "Black Mosaico Argan",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Статуарио Уайт Мозаика Шик",
+"article_en": "Statuario White Mosaico Chic",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Калакатта Голд Мозаика Шик",
+"article_en": "Calacatta Gold Mosaico Chic",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Каррара Айвори Мозаика Шик",
+"article_en": "Carrara Ivory Mosaico Chic",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Кристал Пьюр Мозаика Шик",
+"article_en": "Crystal Pure Mosaico Chic",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Элегант Сильвер Мозаика Шик",
+"article_en": "Elegant Silver Mosaico Chic",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Тусканиа Грэй Мозаика Шик",
+"article_en": "Tuscania Grey Mosaico Chic",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Абсолют Блэк Мозаика Шик",
+"article_en": "Absolut Black Mosaico Chic",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Довер Лайт Мозаика Шик",
+"article_en": "Dover Light Mosaico Chic",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Мадагаскар Дарк Мозаика Шик",
+"article_en": "Madagascar Dark Mosaico Chic",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Статуарио Уайт Мозаика Элегант",
+"article_en": "Statuario White Mosaico Elegant",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Калакатта Голд Мозаика Элегант",
+"article_en": "Calacatta Gold Mosaico Elegant",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Каррара Айвори Мозаика Элегант",
+"article_en": "Carrara Ivory Mosaico Elegant",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Кристал Пьюр Мозаика Элегант",
+"article_en": "Crystal Pure Mosaico Elegant",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Элегант Сильвер Мозаика Элегант",
+"article_en": "Elegant Silver Mosaico Elegant",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Тусканиа Грэй Мозаика Элегант",
+"article_en": "Tuscania Grey Mosaico Elegant",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Абсолют Блэк Мозаика Элегант",
+"article_en": "Absolut Black Mosaico Elegant",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Довер Лайт Мозаика Элегант",
+"article_en": "Dover Light Mosaico Elegant",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Мадагаскар Дарк Мозаика Элегант",
+"article_en": "Madagascar Dark Mosaico Elegant",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Статуарио Уайт Мозаика Даймонд",
+"article_en": "Statuario White Mosaico Diamond",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Калакатта Голд Мозаика Даймонд",
+"article_en": "Calacatta Gold Mosaico Diamond",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Каррара Айвори Мозаика Даймонд",
+"article_en": "Carrara Ivory Mosaico Diamond",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Кристал Пьюр Мозаика Даймонд",
+"article_en": "Crystal Pure Mosaico Diamond",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Элегант Сильвер Мозаика Даймонд",
+"article_en": "Elegant Silver Mosaico Diamond",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Тусканиа Грэй Мозаика Даймонд",
+"article_en": "Tuscania Grey Mosaico Diamond",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Абсолют Блэк Мозаика Даймонд",
+"article_en": "Absolut Black Mosaico Diamond",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Довер Лайт Мозаика Даймонд",
+"article_en": "Dover Light Mosaico Diamond",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Мадагаскар Дарк Мозаика Даймонд",
+"article_en": "Madagascar Dark Mosaico Diamond",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Статуарио Уайт Мозаика Кросс",
+"article_en": "Statuario White Mosaico Cross",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Калакатта Голд Мозаика Кросс",
+"article_en": "Calacatta Gold Mosaico Cross",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Каррара Айвори Мозаика Кросс",
+"article_en": "Carrara Ivory Mosaico Cross",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Кристал Пьюр Мозаика Кросс",
+"article_en": "Crystal Pure Mosaico Cross",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Элегант Сильвер Мозаика Кросс",
+"article_en": "Elegant Silver Mosaico Cross",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Тусканиа Грэй Мозаика Кросс",
+"article_en": "Tuscania Grey Mosaico Cross",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Абсолют Блэк Мозаика Кросс",
+"article_en": "Absolut Black Mosaico Cross",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Довер Лайт Мозаика Кросс",
+"article_en": "Dover Light Mosaico Cross",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Мадагаскар Дарк Мозаика Кросс",
+"article_en": "Madagascar Dark Mosaico Cross",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Статуарио Уайт Мозаика",
+"article_en": "Statuario White Mosaico",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Калакатта Голд Мозаика",
+"article_en": "Calacatta Gold Mosaico",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Каррара Айвори Мозаика",
+"article_en": "Carrara Ivory Mosaico",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Кристал Пьюр Мозаика",
+"article_en": "Crystal Pure Mosaico",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Элегант Сильвер Мозаика",
+"article_en": "Elegant Silver Mosaico",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Тусканиа Грэй Мозаика",
+"article_en": "Tuscania Grey Mosaico",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Абсолют Блэк Мозаика",
+"article_en": "Absolut Black Mosaico",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Довер Лайт Мозаика",
+"article_en": "Dover Light Mosaico",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Stellaris",
+"collection_ru": "Стелларис",
+"use": "—",
+"article_ru": "Мадагаскар Дарк Мозаика",
+"article_en": "Madagascar Dark Mosaico",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Ачеро",
+"article_en": "Acero",
+"mapei": "132"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Роверэ",
+"article_en": "Rovere",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Фумэ",
+"article_en": "Fumè",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Могано",
+"article_en": "Mogano",
+"mapei": "136",
+"litokol": "LLE.130"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Сноу",
+"article_en": "Snow",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Крим",
+"article_en": "Cream",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Голд",
+"article_en": "Gold",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Кофи",
+"article_en": "Coffee",
+"mapei": "149",
+"litokol": "LLE.145"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Каррара",
+"article_en": "Carrara",
+"mapei": "103"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Волкано",
+"article_en": "Volcano",
+"mapei": "130",
+"litokol": "LLE.210"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Гласс Корал",
+"article_en": "Glass Coral",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Гласс Авио",
+"article_en": "Glass Avio",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Плэй Платинум",
+"article_en": "Play Platinum",
+"mapei": "136",
+"litokol": "LLE.130"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Плэй Империал",
+"article_en": "Play Imperial",
+"mapei": "143",
+"litokol": "LLE.305",
+"check_litokol": "1",
+"note": "Название цвета Litokol уточнить"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Плэй Голд",
+"article_en": "Play Gold",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Ачеро Татами",
+"article_en": "Acero Tatami",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Роверэ Татами",
+"article_en": "Rovere Tatami",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Фумэ Татами",
+"article_en": "Fumè Tatami",
+"mapei": "132"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Могано Татами",
+"article_en": "Mogano Tatami",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Сноу Декоры",
+"article_en": "Snow Mosaico",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Крим Декоры",
+"article_en": "Cream Mosaico",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Голд Декоры",
+"article_en": "Gold Mosaico",
+"mapei": "132"
+},
+{
+"collection": "Eternum",
+"collection_ru": "Этернум",
+"use": "—",
+"article_ru": "Кофи Декоры",
+"article_en": "Coffee Mosaico",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Boutique",
+"collection_ru": "Бутик",
+"use": "—",
+"article_ru": "Инканто",
+"article_en": "Incanto",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Boutique",
+"collection_ru": "Бутик",
+"use": "—",
+"article_ru": "Канвас",
+"article_en": "Canvas",
+"mapei": "125",
+"litokol": "LLE.110"
+},
+{
+"collection": "Boutique",
+"collection_ru": "Бутик",
+"use": "—",
+"article_ru": "Блоссом",
+"article_en": "Blossom",
+"mapei": "125",
+"litokol": "LLE.110"
+},
+{
+"collection": "Boutique",
+"collection_ru": "Бутик",
+"use": "—",
+"article_ru": "Нинфеа",
+"article_en": "Ninfea",
+"mapei": "149",
+"litokol": "LLE.145"
+},
+{
+"collection": "Boutique",
+"collection_ru": "Бутик",
+"use": "—",
+"article_ru": "Тропикал",
+"article_en": "Tropical",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Boutique",
+"collection_ru": "Бутик",
+"use": "—",
+"article_ru": "Лас Пальмас",
+"article_en": "Las Palmas",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Полар",
+"article_en": "Polar",
+"mapei": "103",
+"litokol": "LLE.115"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Петрол",
+"article_en": "Petrol",
+"mapei": "114",
+"litokol": "LLE.135"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Стоун Беж",
+"article_en": "Stone Beige",
+"mapei": "132"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Стоун Грэй",
+"article_en": "Stone Grey",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Пьюр",
+"article_en": "Pure",
+"mapei": "123"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Сильвер",
+"article_en": "Silver",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Айрон",
+"article_en": "Iron",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Брасс Голд",
+"article_en": "Brass Gold",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Брасс Дарк",
+"article_en": "Brass Dark",
+"mapei": "149",
+"litokol": "LLE.145"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Полар Декоры",
+"article_en": "Polar Mosaico",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Петрол Декоры",
+"article_en": "Petrol Mosaico",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Стоун Беж Декоры",
+"article_en": "Stone Beige Mosaico",
+"mapei": "132"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Пьюр Декоры",
+"article_en": "Pure Mosaico",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Сильвер Декоры",
+"article_en": "Silver Mosaico",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Айрон Декоры",
+"article_en": "Iron Mosaico",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Плэй Милк",
+"article_en": "Play Milk",
+"mapei": "100",
+"litokol": "LLE.200"
+},
+{
+"collection": "Continuum",
+"collection_ru": "Континуум",
+"use": "—",
+"article_ru": "Плэй Шайн",
+"article_en": "Play Shine",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Калакатта Голд",
+"article_en": "Calacatta Gold",
+"mapei": "103"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Роял Айвори",
+"article_en": "Royal Ivory",
+"mapei": "123",
+"mapei2": "111",
+"note": "Два варианта Mapei через «/» — показать оба"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Дезерт Беж",
+"article_en": "Desert Beige",
+"mapei": "132"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Абсолют Сильвер",
+"article_en": "Absolut Silver",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Графит Дарк",
+"article_en": "Graphite Dark",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Аркадиа Браун",
+"article_en": "Arcadia Brown",
+"mapei": "133",
+"mapei2": "149",
+"litokol": "LLE.230",
+"note": "Два варианта Mapei через «/» — показать оба"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Империал Блэк",
+"article_en": "Imperial Black",
+"mapei": "120",
+"litokol": "LLE.135"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Гласс Сэнд",
+"article_en": "Glass Sand",
+"mapei": "134"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Гласс Паудер",
+"article_en": "Glass Powder",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Гласс Скай",
+"article_en": "Glass Sky",
+"mapei": "110",
+"litokol": "LLE.110"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Гексагон Ворм",
+"article_en": "Hexagon Warm",
+"mapei": "149",
+"litokol": "LLE.125"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Гексагон Колд",
+"article_en": "Hexagon Cold",
+"mapei": "120",
+"litokol": "LLE.110"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Аркадиа Мозаика Вертекс",
+"article_en": "Arcadia Mosaico Vertex",
+"mapei": "149",
+"litokol": "LLE.125"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Империал Мозаика Вертекс",
+"article_en": "Imperial Mosaico Vertex",
+"mapei": "120",
+"litokol": "LLE.110"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Стрип Ворм",
+"article_en": "Strip Warm",
+"mapei": "149",
+"litokol": "LLE.125"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Стрип Колд",
+"article_en": "Strip Cold",
+"mapei": "120",
+"litokol": "LLE.110"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Калакатта Мозаика Элегант",
+"article_en": "Calacatta Mosaico Elegant",
+"mapei": "111",
+"litokol": "LLE.115"
+},
+{
+"collection": "Metropolis",
+"collection_ru": "Метрополис",
+"use": "—",
+"article_ru": "Роял Мозаика Элегант",
+"article_en": "Royal Mosaico Elegant",
+"mapei": "134",
+"litokol": "LLE.115"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Кремо Стрип",
+"article_en": "Cremo Strip",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Платинум Стрип",
+"article_en": "Platinum Strip",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Алабастро Стрип",
+"article_en": "Alabastro Strip",
+"mapei": "132"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Травертино Стрип",
+"article_en": "Travertino Strip",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Силк Стрип",
+"article_en": "Silk Strip",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Элегант Стрип",
+"article_en": "Elegant Strip",
+"mapei": "113"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Палиссандро Стрип",
+"article_en": "Palissandro Strip",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Кремо Деликато",
+"article_en": "Cremo Delicato",
+"mapei": "103"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Платинум Уайт",
+"article_en": "Platinum White",
+"mapei": "103"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Алабастро Уайт",
+"article_en": "Alabastro White",
+"mapei": "132",
+"litokol": "LLE.210"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Травертино Романо",
+"article_en": "Travertino Romano",
+"mapei": "132"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Силк Грэй",
+"article_en": "Silk Grey",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Элегант Браун",
+"article_en": "Elegant Brown",
+"mapei": "136",
+"litokol": "LLE.130"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Палиссандро Дарк",
+"article_en": "Palissandro Dark",
+"mapei": "113",
+"litokol": "LLE.110"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Кремо Мозаика Роу",
+"article_en": "Cremo Mosaico Raw",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Платинум Мозаика Роу",
+"article_en": "Platinum Mosaico Raw",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Алабастро Мозаика Роу",
+"article_en": "Alabastro Mosaico Raw",
+"mapei": "132"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Травертино Мозаика Роу",
+"article_en": "Travertino Mosaico Raw",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Силк Мозаика Роу",
+"article_en": "Silk Mosaico Raw",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Кремо Лакшери Лайн",
+"article_en": "Cremo Luxury Line",
+"mapei": "103"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Платинум Лакшери Лайн",
+"article_en": "Platinum Luxury Line",
+"mapei": "103"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Алабастро Лакшери Лайн",
+"article_en": "Alabastro Luxury Line",
+"mapei": "130",
+"litokol": "LLE.210"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Травертино Лакшери Лайн",
+"article_en": "Travertino Luxury Line",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Силк Лакшери Лайн",
+"article_en": "Silk Luxury Line",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Кремо Мозаика Люкс",
+"article_en": "Cremo Mosaico Lux",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Платинум Мозаика Люкс",
+"article_en": "Platinum Mosaico Lux",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Алабастро Мозаика Люкс",
+"article_en": "Alabastro Mosaico Lux",
+"mapei": "132"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Травертино Мозаика Люкс",
+"article_en": "Travertino Mosaico Lux",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Силк Мозаика Люкс",
+"article_en": "Silk Mosaico Lux",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Элегант Мозаика Люкс",
+"article_en": "Elegant Mosaico Lux",
+"mapei": "113"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Палиссандро Мозаика Люкс",
+"article_en": "Palissandro Mosaico Lux",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Кремо Мозаика Даймонд",
+"article_en": "Cremo Mosaico Diamond",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Платинум Мозаика Даймонд",
+"article_en": "Platinum Mosaico Diamond",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Алабастро Мозаика Даймонд",
+"article_en": "Alabastro Mosaico Diamond",
+"mapei": "132"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Травертино Мозаика Даймонд",
+"article_en": "Travertino Mosaico Diamond",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Силк Мозаика Даймонд",
+"article_en": "Silk Mosaico Diamond",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Элегант Мозаика Даймонд",
+"article_en": "Elegant Mosaico Diamond",
+"mapei": "113"
+},
+{
+"collection": "Charme Advance",
+"collection_ru": "Шарм Эдванс",
+"use": "Пол",
+"article_ru": "Палиссандро Мозаика Даймонд",
+"article_en": "Palissandro Mosaico Diamond",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Wonderful Life",
+"collection_ru": "Вандефул Лайф",
+"use": "—",
+"article_ru": "Пур",
+"article_en": "Pure",
+"mapei": "123",
+"mapei2": "111",
+"litokol": "LLE.210",
+"note": "Два варианта Mapei через «/» — показать оба"
+},
+{
+"collection": "Wonderful Life",
+"collection_ru": "Вандефул Лайф",
+"use": "—",
+"article_ru": "Алмонд",
+"article_en": "Almond",
+"mapei": "132"
+},
+{
+"collection": "Wonderful Life",
+"collection_ru": "Вандефул Лайф",
+"use": "—",
+"article_ru": "Графит",
+"article_en": "Graphite",
+"mapei": "112",
+"litokol": "LLE.230",
+"check_litokol": "1",
+"note": "Mapei серый, а Litokol бежевый/коричневый — проверить"
+},
+{
+"collection": "Wonderful Life",
+"collection_ru": "Вандефул Лайф",
+"use": "—",
+"article_ru": "Брик Мультиколор",
+"article_en": "Brick Multicolor",
+"mapei": "130",
+"litokol": "LLE.210"
+},
+{
+"collection": "Wonderful Life",
+"collection_ru": "Вандефул Лайф",
+"use": "—",
+"article_ru": "Хани",
+"article_en": "Honey",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Wonderful Life",
+"collection_ru": "Вандефул Лайф",
+"use": "—",
+"article_ru": "Аш",
+"article_en": "Ash",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Wonderful Life",
+"collection_ru": "Вандефул Лайф",
+"use": "—",
+"article_ru": "Пэппер",
+"article_en": "Pepper",
+"mapei": "112",
+"litokol": "LLE.235",
+"check_litokol": "1",
+"note": "Mapei серый, а Litokol бежевый/коричневый — проверить"
+},
+{
+"collection": "Wonderful Life",
+"collection_ru": "Вандефул Лайф",
+"use": "—",
+"article_ru": "Вуд",
+"article_en": "Wood",
+"mapei": "149",
+"litokol": "LLE.130"
+},
+{
+"collection": "Wonderful Life",
+"collection_ru": "Вандефул Лайф",
+"use": "—",
+"article_ru": "Сноу",
+"article_en": "Snow",
+"mapei": "100",
+"litokol": "LLE.200"
+},
+{
+"collection": "Wonderful Life",
+"collection_ru": "Вандефул Лайф",
+"use": "—",
+"article_ru": "Мока",
+"article_en": "Moka",
+"mapei": "136",
+"litokol": "LLE.130"
+},
+{
+"collection": "Wonderful Life",
+"collection_ru": "Вандефул Лайф",
+"use": "—",
+"article_ru": "Кристал",
+"article_en": "Kristal",
+"mapei": "114",
+"litokol": "LLE.135"
+},
+{
+"collection": "Charme Deluxe",
+"collection_ru": "Шарм Делюкс",
+"use": "Пол",
+"article_ru": "Бьянко Микеланджело",
+"article_en": "Bianco Michelangelo",
+"mapei": "103"
+},
+{
+"collection": "Charme Deluxe",
+"collection_ru": "Шарм Делюкс",
+"use": "Пол",
+"article_ru": "Арабескато Уайт",
+"article_en": "Arabescato White",
+"mapei": "103"
+},
+{
+"collection": "Charme Deluxe",
+"collection_ru": "Шарм Делюкс",
+"use": "Пол",
+"article_ru": "Инвизибл Уайт",
+"article_en": "Invisible White",
+"mapei": "103"
+},
+{
+"collection": "Charme Deluxe",
+"collection_ru": "Шарм Делюкс",
+"use": "Пол",
+"article_ru": "Статуарио Фантастико",
+"article_en": "Statuario Fantastico",
+"mapei": "103"
+},
+{
+"collection": "Charme Deluxe",
+"collection_ru": "Шарм Делюкс",
+"use": "Пол",
+"article_ru": "Крим Ривер",
+"article_en": "Cream River",
+"mapei": "132"
+},
+{
+"collection": "Charme Deluxe",
+"collection_ru": "Шарм Делюкс",
+"use": "Пол",
+"article_ru": "Сахара Нуар",
+"article_en": "Sahara Noir",
+"mapei": "120",
+"litokol": "LLE.145"
+},
+{
+"collection": "Charme Deluxe",
+"collection_ru": "Шарм Делюкс",
+"use": "Пол",
+"article_ru": "Имперадор Дарк",
+"article_en": "Emperador Dark",
+"mapei": "136",
+"litokol": "LLE.130"
+},
+{
+"collection": "Charme Deluxe",
+"collection_ru": "Шарм Делюкс",
+"use": "Пол",
+"article_ru": "Гриджио Оробико",
+"article_en": "Grigio Orobico",
+"mapei": "113"
+},
+{
+"collection": "Skyfall",
+"collection_ru": "Скайфолл",
+"use": "—",
+"article_ru": "Бьянко Парадизо",
+"article_en": "Bianco Paradiso",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Skyfall",
+"collection_ru": "Скайфолл",
+"use": "—",
+"article_ru": "Гриджио Альпино",
+"article_en": "Grigio Alpino",
+"mapei": "113"
+},
+{
+"collection": "Skyfall",
+"collection_ru": "Скайфолл",
+"use": "—",
+"article_ru": "Неро Смеральдо",
+"article_en": "Nero Smeraldo",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Skyfall",
+"collection_ru": "Скайфолл",
+"use": "—",
+"article_ru": "Роверэ",
+"article_en": "Rovere",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Skyfall",
+"collection_ru": "Скайфолл",
+"use": "—",
+"article_ru": "Лариче",
+"article_en": "Larice",
+"mapei": "132"
+},
+{
+"collection": "Skyfall",
+"collection_ru": "Скайфолл",
+"use": "—",
+"article_ru": "Палиссандро",
+"article_en": "Palissandro",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Skyfall",
+"collection_ru": "Скайфолл",
+"use": "—",
+"article_ru": "Мока Вставка Текстур",
+"article_en": "Moka Inserto Texture",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Skyfall",
+"collection_ru": "Скайфолл",
+"use": "—",
+"article_ru": "Блу Вставка Текстур",
+"article_en": "Blu Inserto Texture",
+"mapei": "103"
+},
+{
+"collection": "Terraviva",
+"collection_ru": "Терравива",
+"use": "Пол",
+"article_ru": "Мун",
+"article_en": "Moon",
+"mapei": "110"
+},
+{
+"collection": "Terraviva",
+"collection_ru": "Терравива",
+"use": "Пол",
+"article_ru": "Грейдж",
+"article_en": "Greige",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Terraviva",
+"collection_ru": "Терравива",
+"use": "Пол",
+"article_ru": "Грэй",
+"article_en": "Grey",
+"mapei": "113"
+},
+{
+"collection": "Terraviva",
+"collection_ru": "Терравива",
+"use": "Пол",
+"article_ru": "Дарк",
+"article_en": "Dark",
+"mapei": "113",
+"litokol": "LLE.130"
+},
+{
+"collection": "Terraviva",
+"collection_ru": "Терравива",
+"use": "Стена",
+"article_ru": "Нэве",
+"article_en": "Neve",
+"mapei": "100",
+"litokol": "LLE.200"
+},
+{
+"collection": "Terraviva",
+"collection_ru": "Терравива",
+"use": "Стена",
+"article_ru": "Сенапэ",
+"article_en": "Senape",
+"mapei": "132"
+},
+{
+"collection": "Terraviva",
+"collection_ru": "Терравива",
+"use": "Стена",
+"article_ru": "Каннэлла",
+"article_en": "Cannella",
+"mapei": "143",
+"litokol": "LLE.305",
+"check_litokol": "1",
+"note": "Название цвета Litokol уточнить"
+},
+{
+"collection": "Terraviva",
+"collection_ru": "Терравива",
+"use": "Стена",
+"article_ru": "Мока",
+"article_en": "Moka",
+"mapei": "149",
+"litokol": "LLE.145"
+},
+{
+"collection": "Room",
+"collection_ru": "Рум",
+"use": "Пол",
+"article_ru": "Уайт Вуд",
+"article_en": "White Wood",
+"mapei": "130",
+"litokol": "LLE.210"
+},
+{
+"collection": "Room",
+"collection_ru": "Рум",
+"use": "Пол",
+"article_ru": "Беж Вуд",
+"article_en": "Beige Wood",
+"mapei": "132"
+},
+{
+"collection": "Room",
+"collection_ru": "Рум",
+"use": "Пол",
+"article_ru": "Грэй Вуд",
+"article_en": "Grey Wood",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Room",
+"collection_ru": "Рум",
+"use": "Пол",
+"article_ru": "Блэк Вуд",
+"article_en": "Black Wood",
+"mapei": "114",
+"litokol": "LLE.135"
+},
+{
+"collection": "Room",
+"collection_ru": "Рум",
+"use": "Пол",
+"article_ru": "Уайт Стоун",
+"article_en": "White Stone",
+"mapei": "130",
+"litokol": "LLE.210"
+},
+{
+"collection": "Room",
+"collection_ru": "Рум",
+"use": "Пол",
+"article_ru": "Беж Стоун",
+"article_en": "Beige Stone",
+"mapei": "132"
+},
+{
+"collection": "Room",
+"collection_ru": "Рум",
+"use": "Пол",
+"article_ru": "Грэй Стоун",
+"article_en": "Grey Stone",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Room",
+"collection_ru": "Рум",
+"use": "Пол",
+"article_ru": "Блэк Стоун",
+"article_en": "Black Stone",
+"mapei": "114",
+"litokol": "LLE.135"
+},
+{
+"collection": "Millennium",
+"collection_ru": "Миллениум",
+"use": "—",
+"article_ru": "Пьюр",
+"article_en": "Pure",
+"mapei": "111"
+},
+{
+"collection": "Millennium",
+"collection_ru": "Миллениум",
+"use": "—",
+"article_ru": "Даст",
+"article_en": "Dust",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Millennium",
+"collection_ru": "Миллениум",
+"use": "—",
+"article_ru": "Сильвер",
+"article_en": "Silver",
+"mapei": "113",
+"litokol": "LLE.105"
+},
+{
+"collection": "Millennium",
+"collection_ru": "Миллениум",
+"use": "—",
+"article_ru": "Айрон",
+"article_en": "Iron",
+"mapei": "113",
+"litokol": "LLE.125"
+},
+{
+"collection": "Millennium",
+"collection_ru": "Миллениум",
+"use": "—",
+"article_ru": "Блэк",
+"article_en": "Black",
+"mapei": "114",
+"litokol": "LLE.130"
+},
+{
+"collection": "Loft",
+"collection_ru": "Лофт",
+"use": "—",
+"article_ru": "Магнолия",
+"article_en": "Magnolia",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Loft",
+"collection_ru": "Лофт",
+"use": "—",
+"article_ru": "Хани",
+"article_en": "Honey",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Loft",
+"collection_ru": "Лофт",
+"use": "—",
+"article_ru": "Оак",
+"article_en": "Oak",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Loft",
+"collection_ru": "Лофт",
+"use": "—",
+"article_ru": "Мурлэнд",
+"article_en": "Moorland",
+"mapei": "112",
+"litokol": "LLE.230",
+"check_litokol": "1",
+"note": "Mapei серый, а Litokol бежевый/коричневый — проверить"
+},
+{
+"collection": "Loft",
+"collection_ru": "Лофт",
+"use": "—",
+"article_ru": "Пэппер",
+"article_en": "Pepper",
+"mapei": "136",
+"litokol": "LLE.130"
+},
+{
+"collection": "3D Experience",
+"collection_ru": "3D Экспириенс",
+"use": "—",
+"article_ru": "Уайт Матт",
+"article_en": "White Matt",
+"mapei": "100",
+"litokol": "LLE.200"
+},
+{
+"collection": "3D Experience",
+"collection_ru": "3D Экспириенс",
+"use": "—",
+"article_ru": "3D Лайн",
+"article_en": "3D Line",
+"mapei": "100",
+"litokol": "LLE.200"
+},
+{
+"collection": "3D Experience",
+"collection_ru": "3D Экспириенс",
+"use": "—",
+"article_ru": "3D Вэйв",
+"article_en": "3D Wave",
+"mapei": "100",
+"litokol": "LLE.200"
+},
+{
+"collection": "3D Experience",
+"collection_ru": "3D Экспириенс",
+"use": "—",
+"article_ru": "3D Болд",
+"article_en": "3D Bold",
+"mapei": "100",
+"litokol": "LLE.200"
+},
+{
+"collection": "3D Experience",
+"collection_ru": "3D Экспириенс",
+"use": "—",
+"article_ru": "3D Полигон",
+"article_en": "3D Polygon",
+"mapei": "100",
+"litokol": "LLE.200"
+},
+{
+"collection": "3D Experience",
+"collection_ru": "3D Экспириенс",
+"use": "—",
+"article_ru": "Мозаика Шик",
+"article_en": "Mosaico Chic",
+"mapei": "103"
+},
+{
+"collection": "3D Experience",
+"collection_ru": "3D Экспириенс",
+"use": "—",
+"article_ru": "Мозаика Голд",
+"article_en": "Mosaico Gold",
+"mapei": "103"
+},
+{
+"collection": "Charme Extra",
+"collection_ru": "Шарм Экстра",
+"use": "Пол",
+"article_ru": "Лаза",
+"article_en": "Lasa",
+"mapei": "103"
+},
+{
+"collection": "Charme Extra",
+"collection_ru": "Шарм Экстра",
+"use": "Пол",
+"article_ru": "Каррара",
+"article_en": "Carrara",
+"mapei": "100",
+"litokol": "LLE.200"
+},
+{
+"collection": "Charme Extra",
+"collection_ru": "Шарм Экстра",
+"use": "Пол",
+"article_ru": "Аркадиа",
+"article_en": "Arcadia",
+"mapei": "132"
+},
+{
+"collection": "Charme Extra",
+"collection_ru": "Шарм Экстра",
+"use": "Пол",
+"article_ru": "Силвер",
+"article_en": "Silver",
+"mapei": "113"
+},
+{
+"collection": "Charme Extra",
+"collection_ru": "Шарм Экстра",
+"use": "Пол",
+"article_ru": "Атлантик",
+"article_en": "Atlantic",
+"mapei": "125",
+"litokol": "LLE.110"
+},
+{
+"collection": "Charme Extra",
+"collection_ru": "Шарм Экстра",
+"use": "Пол",
+"article_ru": "Лоран",
+"article_en": "Laurent",
+"mapei": "114",
+"litokol": "LLE.135"
+},
+{
+"collection": "Genesis",
+"collection_ru": "Дженезис",
+"use": "—",
+"article_ru": "Мун Уайт",
+"article_en": "Moon White",
+"mapei": "132"
+},
+{
+"collection": "Genesis",
+"collection_ru": "Дженезис",
+"use": "—",
+"article_ru": "Венус Крим",
+"article_en": "Venus Cream",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Genesis",
+"collection_ru": "Дженезис",
+"use": "—",
+"article_ru": "Сатурн Грэй",
+"article_en": "Saturn Grey",
+"mapei": "113"
+},
+{
+"collection": "Genesis",
+"collection_ru": "Дженезис",
+"use": "—",
+"article_ru": "Юпитер Силвер",
+"article_en": "Jupiter Silver",
+"mapei": "125",
+"litokol": "LLE.110"
+},
+{
+"collection": "Genesis",
+"collection_ru": "Дженезис",
+"use": "—",
+"article_ru": "Меркури Браун",
+"article_en": "Mercury Brown",
+"mapei": "136",
+"litokol": "LLE.130"
+},
+{
+"collection": "Materia",
+"collection_ru": "Материя",
+"use": "—",
+"article_ru": "Магнезио",
+"article_en": "Magnesio",
+"mapei": "132"
+},
+{
+"collection": "Materia",
+"collection_ru": "Материя",
+"use": "—",
+"article_ru": "Хелио",
+"article_en": "Helio",
+"mapei": "132"
+},
+{
+"collection": "Materia",
+"collection_ru": "Материя",
+"use": "—",
+"article_ru": "Карбонио",
+"article_en": "Carbonio",
+"mapei": "113"
+},
+{
+"collection": "Materia",
+"collection_ru": "Материя",
+"use": "—",
+"article_ru": "Титанио",
+"article_en": "Titanio",
+"mapei": "120",
+"litokol": "LLE.145"
+},
+{
+"collection": "Materia",
+"collection_ru": "Материя",
+"use": "—",
+"article_ru": "Магнезио Мозаика Рома",
+"article_en": "Magnesio Mosaico Roma",
+"mapei": "132"
+},
+{
+"collection": "Materia",
+"collection_ru": "Материя",
+"use": "—",
+"article_ru": "Карбонио Мозаика Рома",
+"article_en": "Carbonio Mosaico Roma",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Materia",
+"collection_ru": "Материя",
+"use": "—",
+"article_ru": "Титанио Мозаика Рома",
+"article_en": "Titanio Mosaico Roma",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Materia",
+"collection_ru": "Материя",
+"use": "—",
+"article_ru": "Брик Мультилайн Ворм",
+"article_en": "Multiline Warm",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Materia",
+"collection_ru": "Материя",
+"use": "—",
+"article_ru": "Брик Мультилайн Колд",
+"article_en": "Multiline Cold",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Materia",
+"collection_ru": "Материя",
+"use": "—",
+"article_ru": "Мозаика Голд",
+"article_en": "Mosaico Gold",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Materia",
+"collection_ru": "Материя",
+"use": "—",
+"article_ru": "Мозаика Платинум",
+"article_en": "Mosaico Platinum",
+"mapei": "136",
+"litokol": "LLE.130"
+},
+{
+"collection": "Charme Evo",
+"collection_ru": "Шарм Эво",
+"use": "Пол",
+"article_ru": "Статуарио",
+"article_en": "Statuario",
+"mapei": "103"
+},
+{
+"collection": "Charme Evo",
+"collection_ru": "Шарм Эво",
+"use": "Пол",
+"article_ru": "Калакатта",
+"article_en": "Calacatta",
+"mapei": "103"
+},
+{
+"collection": "Charme Evo",
+"collection_ru": "Шарм Эво",
+"use": "Пол",
+"article_ru": "Оникс",
+"article_en": "Onyx",
+"mapei": "132"
+},
+{
+"collection": "Charme Evo",
+"collection_ru": "Шарм Эво",
+"use": "Пол",
+"article_ru": "Империале",
+"article_en": "Imperiale",
+"mapei": "113"
+},
+{
+"collection": "Charme Evo",
+"collection_ru": "Шарм Эво",
+"use": "Пол",
+"article_ru": "Антрачит",
+"article_en": "Antracite",
+"mapei": "113",
+"litokol": "LLE.130"
+},
+{
+"collection": "Charme Evo",
+"collection_ru": "Шарм Эво",
+"use": "Пол",
+"article_ru": "Брик Мультиколор",
+"article_en": "Brick Multicolor",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Contempora",
+"collection_ru": "Контемпора",
+"use": "—",
+"article_ru": "Пур",
+"article_en": "Pure",
+"mapei": "130",
+"litokol": "LLE.210"
+},
+{
+"collection": "Contempora",
+"collection_ru": "Контемпора",
+"use": "—",
+"article_ru": "Флэйр",
+"article_en": "Flare",
+"mapei": "132"
+},
+{
+"collection": "Contempora",
+"collection_ru": "Контемпора",
+"use": "—",
+"article_ru": "Карбон",
+"article_en": "Carbon",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Contempora",
+"collection_ru": "Контемпора",
+"use": "—",
+"article_ru": "Бёрн",
+"article_en": "Burn",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Surface",
+"collection_ru": "Cерфейс",
+"use": "—",
+"article_ru": "Сан",
+"article_en": "Sun",
+"mapei": "130",
+"litokol": "LLE.210"
+},
+{
+"collection": "Surface",
+"collection_ru": "Cерфейс",
+"use": "—",
+"article_ru": "Оушн",
+"article_en": "Ocean",
+"mapei": "113"
+},
+{
+"collection": "Surface",
+"collection_ru": "Cерфейс",
+"use": "—",
+"article_ru": "Скарлет",
+"article_en": "Scarlet",
+"mapei": "143",
+"litokol": "LLE.305",
+"check_litokol": "1",
+"note": "Название цвета Litokol уточнить"
+},
+{
+"collection": "Surface",
+"collection_ru": "Cерфейс",
+"use": "—",
+"article_ru": "Ониче Миэле",
+"article_en": "Onice Miele",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Surface",
+"collection_ru": "Cерфейс",
+"use": "—",
+"article_ru": "Эрамоза",
+"article_en": "Eramosa",
+"mapei": "136",
+"litokol": "LLE.130"
+},
+{
+"collection": "Surface",
+"collection_ru": "Cерфейс",
+"use": "—",
+"article_ru": "Аструс",
+"article_en": "Astrus",
+"mapei": "120",
+"litokol": "LLE.145"
+},
+{
+"collection": "Surface",
+"collection_ru": "Cерфейс",
+"use": "—",
+"article_ru": "Диаманте",
+"article_en": "Diamante",
+"mapei": "127",
+"litokol": "LLE.105"
+},
+{
+"collection": "Surface",
+"collection_ru": "Cерфейс",
+"use": "—",
+"article_ru": "Кристалло",
+"article_en": "Cristalo",
+"mapei": "149",
+"litokol": "LLE.145"
+},
+{
+"collection": "Surface",
+"collection_ru": "Cерфейс",
+"use": "—",
+"article_ru": "Амбра",
+"article_en": "Ambra",
+"mapei": "113"
+},
+{
+"collection": "Surface",
+"collection_ru": "Cерфейс",
+"use": "—",
+"article_ru": "Kортен",
+"article_en": "Corten",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Surface",
+"collection_ru": "Cерфейс",
+"use": "—",
+"article_ru": "Cтил",
+"article_en": "Steel",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Climb",
+"collection_ru": "Клаймб",
+"use": "—",
+"article_ru": "Айс",
+"article_en": "Ice",
+"mapei": "103"
+},
+{
+"collection": "Climb",
+"collection_ru": "Клаймб",
+"use": "—",
+"article_ru": "Роу",
+"article_en": "Rope",
+"mapei": "132"
+},
+{
+"collection": "Climb",
+"collection_ru": "Клаймб",
+"use": "—",
+"article_ru": "Рок",
+"article_en": "Rock",
+"mapei": "113"
+},
+{
+"collection": "Climb",
+"collection_ru": "Клаймб",
+"use": "—",
+"article_ru": "Айрон",
+"article_en": "Iron",
+"mapei": "113"
+},
+{
+"collection": "Climb",
+"collection_ru": "Клаймб",
+"use": "—",
+"article_ru": "Графит",
+"article_en": "Graphite",
+"mapei": "136",
+"litokol": "LLE.130"
+},
+{
+"collection": "Climb",
+"collection_ru": "Клаймб",
+"use": "—",
+"article_ru": "Стрип",
+"article_en": "Strip",
+"mapei": "113"
+},
+{
+"collection": "Climb",
+"collection_ru": "Клаймб",
+"use": "—",
+"article_ru": "Айс Брик",
+"article_en": "Ice Brick",
+"mapei": "132"
+},
+{
+"collection": "Climb",
+"collection_ru": "Клаймб",
+"use": "—",
+"article_ru": "Роу Брик",
+"article_en": "Rope Brick",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Climb",
+"collection_ru": "Клаймб",
+"use": "—",
+"article_ru": "Рок Брик",
+"article_en": "Rock Brick",
+"mapei": "113"
+},
+{
+"collection": "Climb",
+"collection_ru": "Клаймб",
+"use": "—",
+"article_ru": "Айрон Брик",
+"article_en": "Iron Brick",
+"mapei": "113"
+},
+{
+"collection": "Climb",
+"collection_ru": "Клаймб",
+"use": "—",
+"article_ru": "Графит Брик",
+"article_en": "Graphite Brick",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Maison",
+"collection_ru": "Мезон",
+"use": "—",
+"article_ru": "Хани",
+"article_en": "Honey",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Maison",
+"collection_ru": "Мезон",
+"use": "—",
+"article_ru": "Шампэйн",
+"article_en": "Champagne",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Maison",
+"collection_ru": "Мезон",
+"use": "—",
+"article_ru": "Фумэ",
+"article_en": "Fumé",
+"mapei": "136",
+"litokol": "LLE.130"
+},
+{
+"collection": "Maison",
+"collection_ru": "Мезон",
+"use": "—",
+"article_ru": "Бренди",
+"article_en": "Brandy",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Maison",
+"collection_ru": "Мезон",
+"use": "—",
+"article_ru": "Волнат",
+"article_en": "Walnut",
+"mapei": "135",
+"litokol": "LLE.235"
+},
+{
+"collection": "Voyager",
+"collection_ru": "Вояджер",
+"use": "—",
+"article_ru": "Айвори",
+"article_en": "Ivory",
+"mapei": "103"
+},
+{
+"collection": "Voyager",
+"collection_ru": "Вояджер",
+"use": "—",
+"article_ru": "Грей",
+"article_en": "Grey",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Voyager",
+"collection_ru": "Вояджер",
+"use": "—",
+"article_ru": "Блэк",
+"article_en": "Black",
+"mapei": "120",
+"litokol": "LLE.145"
+},
+{
+"collection": "Eclipse",
+"collection_ru": "Эклипс",
+"use": "—",
+"article_ru": "Уайт",
+"article_en": "White",
+"mapei": "132"
+},
+{
+"collection": "Eclipse",
+"collection_ru": "Эклипс",
+"use": "—",
+"article_ru": "Грэй",
+"article_en": "Grey",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Eclipse",
+"collection_ru": "Эклипс",
+"use": "—",
+"article_ru": "Фумэ",
+"article_en": "Fumè",
+"mapei": "113"
+},
+{
+"collection": "Nova",
+"collection_ru": "Нова",
+"use": "—",
+"article_ru": "Айвори",
+"article_en": "Ivory",
+"mapei": "132"
+},
+{
+"collection": "Nova",
+"collection_ru": "Нова",
+"use": "—",
+"article_ru": "Фог",
+"article_en": "Fog",
+"mapei": "113"
+},
+{
+"collection": "Nova",
+"collection_ru": "Нова",
+"use": "—",
+"article_ru": "Браун",
+"article_en": "Brown",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Discover",
+"collection_ru": "Дискавер",
+"use": "—",
+"article_ru": "Уайт",
+"article_en": "White",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Discover",
+"collection_ru": "Дискавер",
+"use": "—",
+"article_ru": "Грэй",
+"article_en": "Grey",
+"mapei": "112",
+"litokol": "LLE.125"
+},
+{
+"collection": "Discover",
+"collection_ru": "Дискавер",
+"use": "—",
+"article_ru": "Дезерт",
+"article_en": "Desert",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Discover",
+"collection_ru": "Дискавер",
+"use": "—",
+"article_ru": "Фумэ",
+"article_en": "Fumè",
+"mapei": "119",
+"litokol": "LLE.130"
+},
+{
+"collection": "Auris",
+"collection_ru": "Аурис",
+"use": "—",
+"article_ru": "Сэнд",
+"article_en": "Sand",
+"mapei": "132"
+},
+{
+"collection": "Auris",
+"collection_ru": "Аурис",
+"use": "—",
+"article_ru": "Мока",
+"article_en": "Moka",
+"mapei": "133",
+"litokol": "LLE.230"
+},
+{
+"collection": "Auris",
+"collection_ru": "Аурис",
+"use": "—",
+"article_ru": "Графит",
+"article_en": "Graphite",
+"mapei": "110",
+"litokol": "LLE.115"
+},
+{
+"collection": "Auris",
+"collection_ru": "Аурис",
+"use": "—",
+"article_ru": "Блэк",
+"article_en": "Black",
+"mapei": "114",
+"litokol": "LLE.135"
+}
+]

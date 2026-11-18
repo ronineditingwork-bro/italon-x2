@@ -1,0 +1,14 @@
+<!doctype html><meta charset="utf-8"><title>Робот X2 — лист поз (инструмент разработчика)</title>
+<body style="margin:0;background:#e9dcc6"><canvas id="c" width="1500" height="500"></canvas>
+<script type="module">
+  import { drawRobot, drawShield } from '../src/art/robot.js';
+  const ctx = document.getElementById('c').getContext('2d');
+  ctx.fillStyle = '#e9dcc6'; ctx.fillRect(0, 0, 1500, 500); ctx.fillStyle = '#8a8d94'; ctx.fillRect(0, 420, 1500, 80);
+  const base = { facing: 1, t: 1, run: 0, vx: 0, vy: 0, onGround: true, crouch: false, aim: 0, flash: 0, hurt: 0, feed: 0, blink: 0 };
+  const poses = [
+    { ...base }, { ...base, vx: 300, run: 0.0 }, { ...base, vx: 300, run: 1.0 }, { ...base, vx: 300, run: 2.1, flash: 1, feed: 0.6 }, { ...base, vx: 300, run: 3.3 },
+    { ...base, onGround: false, vy: -300, vx: 100, aim: -Math.PI / 4 }, { ...base, crouch: true, flash: 0.5 }, { ...base, aim: -Math.PI / 2 }, { ...base, facing: -1, vx: -300, run: 1.6, aim: Math.PI }, { ...base, hurt: 0.4 },
+  ];
+  poses.forEach((r, i) => { ctx.save(); ctx.translate(90 + i * 145, 420); ctx.scale(1.35, 1.35); drawRobot(ctx, r); if (i === 9) drawShield(ctx, 1); ctx.restore(); });
+  window.__done = true;
+</script>

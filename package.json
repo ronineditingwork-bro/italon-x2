@@ -5,11 +5,19 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/dev-hosting.mjs",
-    "check": "node --check src/app.mjs && node --check src/pool-lab.mjs && node --check src/pool-lab-model.mjs && node --check src/quote.mjs && node --check worker/api.mjs",
+    "check": "node scripts/check.mjs",
     "build": "node scripts/build-hosting.mjs",
-    "test": "node --test tests/core.test.mjs",
+    "build:site": "node scripts/build-site.mjs",
+    "test": "node --test tests/core.test.mjs tests/site.test.mjs tests/quote-lead.test.mjs tests/picker.test.mjs tests/lab.test.mjs tests/outdoor.test.mjs tests/outdoor-send.test.mjs tests/pool.test.mjs tests/salon-book.test.mjs tests/grouts.test.mjs tests/adhesives.test.mjs tests/mapei.test.mjs",
     "build:hosting": "node scripts/build-hosting.mjs",
-    "test:hosting": "node --test tests/hosting.test.mjs"
+    "test:hosting": "node --test tests/hosting.test.mjs",
+    "test:picker": "node tests/picker-e2e.cjs",
+    "test:lab": "node tests/lab-e2e.cjs",
+    "picker:features": "node scripts/build-site.mjs --quiet && node scripts/build-picker-features.cjs",
+    "test:outdoor": "node tests/outdoor-e2e.cjs",
+    "test:motion": "node tests/motion-e2e.cjs",
+    "test:salon": "node --test tests/salon-book.test.mjs",
+    "test:salon3d": "node tests/salon3d-e2e.cjs"
   },
   "engines": {
     "node": "24.x"
@@ -17,7 +25,10 @@
   "dependencies": {
     "@pdf-lib/fontkit": "1.1.1",
     "drizzle-orm": "0.45.3",
-    "pdf-lib": "1.17.1"
+    "gsap": "3.15.0",
+    "lenis": "1.3.27",
+    "pdf-lib": "1.17.1",
+    "three": "0.128.0"
   },
   "devDependencies": {
     "drizzle-kit": "0.31.11",

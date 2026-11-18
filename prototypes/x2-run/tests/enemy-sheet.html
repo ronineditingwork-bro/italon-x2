@@ -1,0 +1,26 @@
+<!doctype html><meta charset="utf-8"><title>Враги X2 — лист (инструмент разработчика)</title>
+<body style="margin:0;background:#e9dcc6"><canvas id="c" width="1600" height="900"></canvas>
+<script type="module">
+  import * as E from '../src/art/enemies.js';
+  const ctx = document.getElementById('c').getContext('2d');
+  ctx.fillStyle = '#d9cdb8'; ctx.fillRect(0, 0, 1600, 900);
+  const at = (x, y, s, fn) => { ctx.save(); ctx.translate(x, y); ctx.scale(s, s); fn(); ctx.restore(); };
+  ctx.fillStyle = '#8a8d94'; ctx.fillRect(0, 240, 1600, 6); ctx.fillRect(0, 560, 1600, 6); ctx.fillRect(0, 860, 1600, 6);
+  at(80, 240, 1.6, () => E.drawRunner(ctx, { id: 1, dir: -1 }, 0.3));
+  at(220, 240, 1.6, () => E.drawRunner(ctx, { id: 2, dir: 1 }, 0.6));
+  at(360, 160, 1.6, () => E.drawFlyer(ctx, { id: 1, shootIn: 2 }, 0.3));
+  at(500, 160, 1.6, () => E.drawFlyer(ctx, { id: 1, shootIn: 0.2 }, 0.3));
+  at(660, 240, 1.6, () => E.drawTurret(ctx, { k: 0, state: 'closed' }, 0));
+  at(800, 240, 1.6, () => E.drawTurret(ctx, { k: 1, state: 'open', ang: -2.7, burstLeft: 1 }, 0));
+  at(960, 240, 1.4, () => E.drawHeavy(ctx, { id: 1, dir: -1, state: 'walk', x: 50 }, 0));
+  at(1140, 240, 1.4, () => E.drawHeavy(ctx, { id: 1, dir: -1, state: 'charge', x: 120 }, 0.3));
+  at(1320, 150, 1.6, () => E.drawDrone(ctx, { id: 1, item: 'fan' }, 0.3));
+  ['fan', 'rapid', 'heavy', 'shield', 'heart'].forEach((k, i) => at(1020 + i * 110, 340, 1.5, () => E.drawItem(ctx, { id: i, kind: k, x: 0, y: 0, life: 9 }, 0.2)));
+  at(100, 380, 1, () => E.drawSlabBullet(ctx, { x: 0, y: 0, vx: 900, vy: 0, size: 1, id: 1 }, 0.1));
+  at(220, 380, 1, () => E.drawSlabBullet(ctx, { x: 0, y: 0, vx: 900, vy: 0, size: 1.8, id: 1 }, 0.1));
+  at(330, 380, 1.4, () => E.drawEnemyBullet(ctx, { x: 0, y: 0, r: 9, kind: 'pebble', id: 1 }, 0.1));
+  at(400, 380, 1.4, () => E.drawEnemyBullet(ctx, { x: 0, y: 0, r: 14, kind: 'blob', id: 1 }, 0.1));
+  at(480, 380, 1, () => E.drawEnemyBullet(ctx, { x: 0, y: 0, r: 26, kind: 'wave', id: 1 }, 0.1));
+  for (let k = 0; k < 4; k++) at(220 + (k % 2) * 700, 560 + Math.floor(k / 2) * 300, 1.35, () => E.drawBoss(ctx, { kind: k, x: 0, hp: 20, maxHp: 40, flash: 0, state: 'fight', atk: null, cycle: 0.5, id: 1 }, 0.4));
+  window.__done = true;
+</script>

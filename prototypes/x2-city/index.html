@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>X2 / ГОРОД — игра</title>
+<style>
+  @font-face{font-family:Inter;src:url('../../public/fonts/inter-latin.woff2') format('woff2');font-weight:100 900;unicode-range:U+0000-00FF,U+2000-206F,U+2212}
+  @font-face{font-family:Inter;src:url('../../public/fonts/inter-cyrillic.woff2') format('woff2');font-weight:100 900;unicode-range:U+0400-045F,U+2116}
+  html, body { height: 100%; margin: 0; background: #05060c; overflow: hidden; }
+  #game { position: fixed; inset: 0; }
+</style>
+<script type="importmap">{"imports":{"three":"../../node_modules/three/build/three.module.js","three/examples/jsm/":"../../node_modules/three/examples/jsm/"}}</script>
+</head>
+<body>
+<div id="game"></div>
+<script type="module">
+  // отдельная страница для разработки и проверок (нужен собранный public/: npm run build:site)
+  import { mountGame } from './src/main.js';
+  const P = '../../public/media/products/', q = new URLSearchParams(location.search);
+  const tiles = [['Магма X2', '6bd8eb48904dc82d56d4', 'x2-magma'], ['Клаймб X2', 'a84158a876c9bc58cda6', 'x2-climb'], ['Материя X2', '7bb0aca29983da23fd18', 'x2-materia'], ['Аура X2', 'cc6adba0b65b239cf979', 'x2-aura']].map(t => ({ name: t[0], img: P + t[1] + '.webp', url: '/collections/' + t[2] + '/' }));
+  const app = mountGame(document.getElementById('game'), { tiles, quality: q.get('q') || undefined, touch: q.has('touch') ? true : undefined });
+  if (q.has('test')) window.__X2__ = app;
+  addEventListener('pagehide', () => app.destroy());
+</script>
+</body>
+</html>

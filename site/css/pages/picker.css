@@ -1,0 +1,64 @@
+/* Подбор керамогранита (/picker/): вкладки «По описанию» и «По фото», результаты — сетка карточек каталога. */
+.picker { padding-bottom: var(--section); }
+.picker__wrap { padding-top: clamp(1.25rem, .8rem + 1.5vw, 2rem); background: linear-gradient(var(--line), var(--line)) no-repeat center top / calc(100% - 2 * var(--edge)) 1px; }
+.picker__tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: var(--s-6); }
+.picker__tab {
+  display: inline-flex; align-items: center; gap: .6rem; min-height: var(--btn-h); padding: .6rem 1.4rem;
+  background: transparent; color: var(--text); border: 1px solid var(--line); border-radius: var(--radius); font: inherit; font-size: var(--fs-m); cursor: pointer;
+  transition: border-color var(--t) var(--ease), background-color var(--t) var(--ease), color var(--t) var(--ease);
+}
+.picker__tab svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 1.4; }
+.picker__tab:hover { border-color: var(--text); }
+.picker__tab[aria-selected="true"] { background: var(--btn); border-color: var(--btn); color: var(--btn-text); }
+.picker__tab:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.picker__panel[hidden] { display: none; }
+.picker__form { display: grid; gap: var(--s-3); max-width: 52rem; }
+.picker__text { min-height: 5.5rem; resize: vertical; font-size: var(--fs-l); }
+.picker__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.picker__examples { margin-top: var(--s-5); max-width: 62rem; }
+.picker__examples ul { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: var(--s-3); }
+.chip {
+  min-height: var(--tap); padding: .45rem 1rem; background: var(--bg-2); color: var(--text); border: 1px solid transparent; border-radius: var(--radius);
+  font: inherit; font-size: var(--fs-s); text-align: left; cursor: pointer; transition: border-color var(--t) var(--ease);
+}
+.chip:hover { border-color: var(--text); }
+.chip:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.picker__understood { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-top: var(--s-6); }
+.picker__understood-label { font-size: var(--fs-s); color: var(--text-2); margin-right: .25rem; }
+.picker__tag { display: inline-flex; align-items: center; min-height: 2rem; padding: .2rem .8rem; border: 1px solid var(--line); border-radius: 999px; font-size: var(--fs-s); }
+.picker__note { margin-top: var(--s-3); padding: .75rem 1rem; background: var(--bg-2); border-left: 2px solid var(--text); font-size: var(--fs-s); max-width: 52rem; }
+.picker__status { margin-top: var(--s-5); font-size: var(--fs-s); color: var(--text-2); min-height: 1.4em; }
+.picker__grid { margin-top: var(--s-5); }
+.picker__grid:empty { margin: 0; }
+.picker__more { margin-top: var(--s-6); text-align: center; }
+.picker__sub { margin-top: var(--s-7); }
+.picker__fine { margin-top: var(--s-7); color: var(--text-2); max-width: 52rem; }
+.pick-card { display: grid; grid-template-rows: 1fr auto; gap: .6rem; min-width: 0; }
+.pick-card .product-card { height: auto; }
+.pick-card__why { margin: 0; font-size: var(--fs-s); color: var(--text-2); line-height: 1.45; }
+.pick-card__why strong { color: var(--text); font-weight: 600; }
+.pick-card__score { display: inline-block; margin-right: .4rem; padding: .05rem .5rem; background: var(--btn); color: var(--btn-text); border-radius: 999px; font-size: var(--fs-xs); font-variant-numeric: tabular-nums; }
+.pick-card__more { margin: 0; font-size: var(--fs-xs); color: var(--text-2); }
+
+/* Загрузка фото */
+.picker__drop { display: grid; gap: var(--s-3); justify-items: start; padding: clamp(1.5rem, 1rem + 2vw, 3rem); border: 1px dashed var(--field-line); border-radius: var(--radius); background: var(--bg-2); max-width: 52rem; transition: border-color var(--t), background-color var(--t); }
+.picker__drop.is-over { border-color: var(--text); background: #ecebe6; }
+.picker__drop .btn { gap: .6rem; cursor: pointer; }
+.picker__drop .btn svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 1.4; }
+.picker__drop input:focus-visible + .btn { outline: 2px solid var(--focus); outline-offset: 3px; }
+.picker__drop-text { margin: 0; color: var(--text-2); }
+.picker__editor { display: grid; gap: var(--s-5); grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 52rem) { .picker__editor { grid-template-columns: minmax(0, 3fr) minmax(16rem, 2fr); } }
+.picker__stage { position: relative; display: inline-block; overflow: hidden; max-width: 100%; justify-self: start; line-height: 0; background: var(--bg-2); user-select: none; -webkit-user-select: none; touch-action: none; }
+.picker__stage canvas { display: block; max-width: 100%; height: auto; }
+.picker__frame { position: absolute; border: 2px solid #fff; outline: 1px solid rgba(0, 0, 0, .75); box-shadow: 0 0 0 9999px rgba(0, 0, 0, .38); cursor: move; touch-action: none; }
+.picker__frame:focus-visible { outline: 3px solid #fff; box-shadow: 0 0 0 9999px rgba(0, 0, 0, .38), 0 0 0 5px var(--text); }
+.picker__controls { display: grid; gap: var(--s-3); }
+.picker__controls input[type="range"] { width: 100%; min-height: var(--tap); accent-color: var(--text); }
+.picker__buttons { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.check { display: flex; align-items: flex-start; gap: .6rem; font-size: var(--fs-s); cursor: pointer; }
+.check input { width: 1.2rem; height: 1.2rem; margin-top: .15rem; accent-color: var(--text); }
+.picker__sample { display: flex; align-items: center; gap: var(--s-3); }
+.picker__sample canvas { width: 4.5rem; height: 4.5rem; border: 1px solid var(--line); }
+.picker__sample p { margin: 0; color: var(--text-2); }
+@media (prefers-reduced-motion: reduce) { .picker__tab, .chip, .picker__drop { transition: none; } }

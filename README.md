@@ -46,7 +46,7 @@ npm run build
 npm run check
 npm test
 npm run test:hosting
-node tests/ui-check.mjs
+npm run build:site && node tests/ui-check.mjs
 ```
 
 Проверяются упаковки, минимальные партии, расчёт цен на сервере, сохранение корзин после перезапуска, изоляция посетителей, конфликт версий, фотографии и скачивание PDF. Запуск Docker/Caddy и выпуск публичного TLS-сертификата требуют проверки на выбранном сервере.
@@ -55,8 +55,9 @@ node tests/ui-check.mjs
 
 | Каталог | Содержание |
 | --- | --- |
-| `public/` | HTML, стили, локальные фотографии и шрифты |
-| `src/` | Интерфейс, каталог, галереи и PDF |
+| `site/` | Исходники многостраничного сайта: страницы, каркас, стили, скрипты (см. [site/README.md](site/README.md)) |
+| `public/` | Фотографии, шрифты; сюда же `npm run build:site` собирает страницы, `assets/` и `data/catalog.json` |
+| `src/` | Каталог, расчёт цен (`pricing.mjs`), сцены и PDF |
 | `data/` | Прайс и происхождение изображений |
 | `worker/` | Общая логика API и корзины, используемая сервером Node.js |
 | `hosting/` | Сервер Node.js, SQLite, Docker Compose и Caddy |
