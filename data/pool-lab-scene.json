@@ -191,6 +191,79 @@
           "light": 1.7038748264312744
         }
       }
+    },
+    "krysha": {
+      "label": "Крыша в городе",
+      "kind": "photo",
+      "resolution": [
+        2000,
+        1342
+      ],
+      "pool": {
+        "type": "overflow",
+        "length": 12,
+        "width": 5,
+        "depth": 1.4
+      },
+      "hotspots": {
+        "deck": [
+          0.4,
+          0.85
+        ],
+        "bowl": [
+          0.45,
+          0.5
+        ]
+      },
+      "zones": [
+        1,
+        2
+      ],
+      "layers": {
+        "sun": {
+          "base": 0.9913928508758545,
+          "light": 1.8979299068450928
+        }
+      }
+    },
+    "kryty": {
+      "label": "Крытый бассейн",
+      "kind": "photo",
+      "resolution": [
+        2000,
+        1342
+      ],
+      "pool": {
+        "type": "skimmer",
+        "length": 10,
+        "width": 6,
+        "depth": 1.4
+      },
+      "hotspots": {
+        "deck": [
+          0.3,
+          0.88
+        ],
+        "bowl": [
+          0.55,
+          0.55
+        ],
+        "coping": [
+          0.78,
+          0.6
+        ]
+      },
+      "zones": [
+        1,
+        2,
+        3
+      ],
+      "layers": {
+        "sun": {
+          "base": 0.9489649534225464,
+          "light": 1.7658129930496216
+        }
+      }
     }
   }
 }
