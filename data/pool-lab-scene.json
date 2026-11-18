@@ -1,0 +1,115 @@
+{
+  "variants": {
+    "gory": {
+      "label": "Инфинити в горах",
+      "kind": "photo",
+      "resolution": [
+        2000,
+        1342
+      ],
+      "pool": {
+        "type": "overflow",
+        "length": 12,
+        "width": 5,
+        "depth": 1.4
+      },
+      "hotspots": {
+        "deck": [
+          0.2,
+          0.8
+        ],
+        "bowl": [
+          0.5,
+          0.62
+        ]
+      },
+      "zones": [
+        1,
+        2
+      ],
+      "layers": {
+        "sun": {
+          "base": 0.97430020570755,
+          "light": 1.5859929323196411
+        },
+        "pool": {
+          "base": 0.9573695659637451,
+          "light": 1.8974204063415527
+        }
+      }
+    },
+    "ispansky": {
+      "label": "Испанский двор",
+      "kind": "photo",
+      "resolution": [
+        2000,
+        1342
+      ],
+      "pool": {
+        "type": "skimmer",
+        "length": 8,
+        "width": 4,
+        "depth": 1.4
+      },
+      "hotspots": {
+        "deck": [
+          0.2,
+          0.8
+        ],
+        "bowl": [
+          0.47,
+          0.52
+        ]
+      },
+      "zones": [
+        1,
+        2
+      ],
+      "layers": {
+        "sun": {
+          "base": 0.97430020570755,
+          "light": 1.4802600145339966
+        }
+      }
+    },
+    "les": {
+      "label": "Хвойный лес",
+      "kind": "photo",
+      "resolution": [
+        2000,
+        1342
+      ],
+      "pool": {
+        "type": "skimmer",
+        "length": 9.6,
+        "width": 7.2,
+        "depth": 1.4
+      },
+      "hotspots": {
+        "deck": [
+          0.15,
+          0.78
+        ],
+        "bowl": [
+          0.5,
+          0.62
+        ],
+        "coping": [
+          0.84,
+          0.865
+        ]
+      },
+      "zones": [
+        1,
+        2,
+        3
+      ],
+      "layers": {
+        "sun": {
+          "base": 0.859173595905304,
+          "light": 1.5739951133728027
+        }
+      }
+    }
+  }
+}

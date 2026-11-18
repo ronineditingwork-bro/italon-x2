@@ -74,6 +74,7 @@ export const nav = [
   { path: '/collections/', label: 'Коллекции' },
   { path: '/x2/', label: 'X2 · улица' },
   { path: '/outdoor/', label: 'Outdoor Lab' },
+  { path: '/pool/', label: 'Бассейн Lab' },
   { path: '/catalog/', label: 'Каталог' },
   { path: '/picker/', label: 'Подбор' },
   { path: '/lab/', label: 'MATERIAL LAB' },
