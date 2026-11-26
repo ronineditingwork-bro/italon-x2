@@ -1,0 +1,40 @@
+# Publishes the Whitecross app to GitHub Pages and refreshes Sanjet stock (Krasnodar, Moscow) every hour.
+# Copy to .github/workflows/pages.yml of the site repository; Settings → Pages → Source: GitHub Actions.
+name: Site
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Fetch Sanjet stock
+        run: |
+          pip install xlrd==2.0.1
+          mkdir -p _site
+          cp index.html doc.html docs.js sellers.js products.json _site/
+          python tools/stock.py _site/stock.json
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: _site }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

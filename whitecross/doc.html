@@ -1,0 +1,10 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Документ</title>
+<!-- iPhone/browser version: shows the invoice the catalog page saved, in the same window -->
+<script>
+  var h; try { h = localStorage.getItem('docHtml'); } catch (e) {}
+  document.open();
+  document.write(h || '<p style="font:18px sans-serif;padding:24px">Документ не найден. Вернитесь в корзину и нажмите «Создать PDF» ещё раз.</p>');
+  document.close();
+</script>
