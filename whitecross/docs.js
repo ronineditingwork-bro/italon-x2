@@ -47,7 +47,7 @@ function buildDoc({ kind = 'invoice', seller, buyer = {}, comment = '', lines, n
   <tr><td>ИНН ${e(seller.inn)}</td><td>КПП ${e(seller.kpp || '')}</td><td rowspan="2">Сч. №</td><td rowspan="2">${e(seller.account)}</td></tr>
   <tr><td colspan="2">${e(seller.name)}<br><span class="small">Получатель</span></td></tr>
 </table>`;
-  const head = `<div class="head"><div class="brand">WHITECROSS</div><div class="small">${e(seller.name)}<br>${e(seller.address)}<br>тел.: ${e(seller.phone)}</div></div>`;
+  const head = `<div class="head"><img class="brand" src="logo.svg" alt="WHITECROSS"><div class="small">${e(seller.name)}<br>${e(seller.address)}<br>тел.: ${e(seller.phone)}</div></div>`;
   const sign = seller.director ? `Руководитель ______________________ ${e(seller.director)}${quote ? '' : `<br><br>Главный бухгалтер ______________________ ${e(seller.director)}`}`
     : `Предприниматель ______________________ ${e(seller.short)}`;
   return `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=794"><title>${title}</title><style>
@@ -59,7 +59,7 @@ function buildDoc({ kind = 'invoice', seller, buyer = {}, comment = '', lines, n
   td, th { border: 1px solid #000; padding: 3px 5px; vertical-align: top; }
   .bank td { height: 18px; } .small { font-size: 9pt; }
   .head { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid #000; padding-bottom: 10px; }
-  .head .brand { font: 300 26pt Arial, sans-serif; letter-spacing: .18em; } .head .small { text-align: right; }
+  .head .brand { height: 36px; filter: invert(1); /* logo.svg is white, made for the black site header */ } .head .small { text-align: right; }
   h1 { font-size: 15pt; border-bottom: 2px solid #000; padding-bottom: 6px; margin: 18px 0 10px; }
   .party { display: grid; grid-template-columns: 110px 1fr; gap: 6px 10px; margin-bottom: 12px; }
   .items th { background: #f0f0f0; } .r { text-align: right; white-space: nowrap; } .c { text-align: center; }

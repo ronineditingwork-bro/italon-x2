@@ -6,14 +6,16 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Whitecross">
-<meta name="theme-color" content="#1d1d1b">
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bounded:wght@400;600&family=Open+Sans:wght@400;600;700&display=swap">
 <title>Whitecross</title>
 <style>
-  /* Layout follows the MAPEI price app; palette is Whitecross graphite */
-  :root { --navy:#1d1d1b; --bg:#f5f5f3; --text:#1d1d1b; --muted:#6b6b66; --line:#e3e3df; --ok:#1ba64e; --bad:#c0392b; --heart:#f52d44; }
+  /* Layout follows the MAPEI price app; look follows wcross.ru: black header, Bounded titles, Open Sans text */
+  :root { --navy:#000; --bg:#f2f2f2; --text:#1d1d1d; --muted:#5a5a5a; --line:#ebebeb; --ok:#1ba64e; --bad:#c0392b; --heart:#f52d44; }
   * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html, body { margin:0; height:100%; overscroll-behavior:none; -webkit-text-size-adjust:100%; }
-  body { font:15px/1.35 system-ui, sans-serif; background:var(--bg); color:var(--text); display:flex; flex-direction:column; height:100dvh; }
+  body { font:15px/1.4 'Open Sans', Arial, sans-serif; background:var(--bg); color:var(--text); display:flex; flex-direction:column; height:100dvh; }
   button { font:inherit; cursor:pointer; }
   input, select, textarea { font:inherit; font-size:16px; /* under 16px iPhone Safari zooms on tap */ width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:#fff; color:var(--text); min-height:46px; }
   label { display:block; font-size:13px; color:var(--muted); margin:10px 0 4px; }
@@ -113,10 +115,30 @@
     .rows { grid-template-columns:repeat(2, minmax(0,1fr)); }
     .detail-wrap { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px; align-items:start; }
   }
+  /* ---- wcross.ru look ---- */
+  #splash .brand { width:min(300px, 75vw); height:auto; margin-bottom:18px; }
+  .logo-row { justify-content:center; height:56px; }
+  .logo-row img { height:30px; }
+  .bar-top h1, h2.sec, .tile b, .d-price, .total { font-family:'Bounded', Arial, sans-serif; font-weight:600; }
+  .bar-top h1, h2.sec, .tile b { text-transform:uppercase; letter-spacing:.04em; }
+  .bar-top h1 { font-size:15px; }
+  .sync-line, .bar-top h1 small { color:#b7b7b7; }
+  .search { border-radius:24px; background:transparent; border:2px solid #b7b7b7; }
+  .search input { background:transparent; color:#fff; }
+  .search span { color:#b7b7b7; }
+  .tile { text-align:center; border-radius:0; }
+  .tile .im { height:140px; }
+  .tile b { font-size:11px; color:var(--text); }
+  .rows { border-radius:0; }
+  .prow .nm { color:var(--muted); }
+  .card, .gallery div, .tile .im, .prow .im { border-radius:0; }
+  .btn, .plus, .chips button, .qty button { border-radius:24px; font-weight:600; }
+  .chips button { border-color:#b7b7b7; }
+  nav button.on { color:#000; }
 </style>
 </head>
 <body>
-<div id="splash"><div class="brand">WHITECROSS</div><div class="sub" id="splashText">Загрузка каталога…</div></div>
+<div id="splash"><img class="brand" src="logo.svg" alt="WHITECROSS"><div class="sub" id="splashText">Загрузка каталога…</div></div>
 <header id="top"></header>
 <main id="main"><div class="body" id="view"></div></main>
 <nav id="nav">
@@ -218,7 +240,7 @@ function listScreen(title, list, empty, chips = []) {
 // ---------- screens ----------
 function home() {
   $('top').innerHTML = `<div class="hero">
-    <div class="logo-row">WHITECROSS</div>
+    <div class="logo-row"><img src="logo.svg" alt="WHITECROSS"></div>
     <form class="search" id="searchForm"><span>⌕</span><input id="q" type="search" enterkeyhint="search" placeholder="Поиск по артикулу или названию…"></form>
     <div class="sync-line">${items.length} товаров${stock ? ' · остатки Краснодар и Москва' : ''}</div>
   </div>`;

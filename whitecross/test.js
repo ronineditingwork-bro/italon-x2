@@ -23,5 +23,6 @@ test('quote has no bank block and shows validity date', () => {
   assert.match(h, /Коммерческое предложение № 3 от 24 ноября 2026/);
   assert.doesNotMatch(h, /БИК/);
   assert.match(h, /действительно до 8 декабря 2026 г\. Цены/);
-  assert.doesNotMatch(h, /<img/);
+  assert.doesNotMatch(h, /<td class="ph">/);
+  assert.match(h, /src="logo.svg"/);
 });
