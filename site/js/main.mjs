@@ -64,6 +64,16 @@ setupDialogs();
 initMenu();
 initSearch();
 initShop();
+
+// ---------- уведомление о cookie: показываем, пока посетитель не нажал «Согласен» ----------
+{
+  const note = $('[data-cookie-note]'), KEY = 'italon-cookie-ok';
+  let seen = false; try { seen = localStorage.getItem(KEY) === '1'; } catch { /* приватный режим — просто покажем */ }
+  if (note && !seen) {
+    note.hidden = false;
+    $('[data-cookie-ok]', note).addEventListener('click', () => { try { localStorage.setItem(KEY, '1'); } catch { /* не запомнили — покажем в следующий раз */ } note.hidden = true; });
+  }
+}
 if (window.Italon) window.Italon.reveal = initReveal;
 initReveal();
 html.classList.add('motion-ready');

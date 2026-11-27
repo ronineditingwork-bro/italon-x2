@@ -105,3 +105,13 @@ test('рекомендуемый клей: блок в карточке плит
     assert.doesNotMatch(await readFile(fileFor(`/product/${code(section, format)}/`), 'utf8'), /adhesive-title/, `${section} ${format}: правила нет — блока быть не должно`);
   for (const path of ['/', '/catalog/', '/salon/']) assert.match(await readFile(fileFor(path), 'utf8'), /id="cart-mapei" aria-live="polite" hidden/, path);   // затирка и клей Mapei — после создания КП
 });
+
+test('cookie: уведомление со ссылкой на условия есть на страницах; в политике — раздел о cookie сайта', async () => {
+  const { readFile } = await import('node:fs/promises');
+  for (const f of ['public/index.html', 'public/catalog/index.html', 'public/x2/game/index.html']) {
+    const html = await readFile(f, 'utf8');
+    assert.match(html, /data-cookie-note[^>]*hidden/, f); assert.match(html, /href="[^"]*privacy\/#cookie"/, f); assert.match(html, /data-cookie-ok/, f);
+  }
+  const pp = await readFile('public/privacy/index.html', 'utf8');
+  assert.match(pp, /id="cookie"/); assert.match(pp, /__Host-italon_cart/); assert.doesNotMatch(pp, /не использует cookie и не подключает/);
+});

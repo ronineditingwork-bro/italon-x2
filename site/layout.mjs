@@ -92,7 +92,7 @@ function footer(ctx) {
 </footer>`;
 }
 
-function dialogs() {
+function dialogs(ctx) {
   const close = label => `<button type="button" class="dialog__close" data-dialog-close aria-label="${label}">${CLOSE}</button>`;
   return `<dialog class="dialog" id="product-dialog" aria-labelledby="product-dialog-title">${close('Закрыть карточку')}<div class="dialog__scroll" id="product-dialog-body"></div></dialog>
 <dialog class="dialog dialog--photo" id="photo-dialog" aria-labelledby="photo-dialog-title">${close('Закрыть фото')}<div class="dialog__scroll" id="photo-dialog-body"></div></dialog>
@@ -120,7 +120,11 @@ function dialogs() {
 </div>
 </div>
 </dialog>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>`;
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<section class="cookie-note" data-cookie-note aria-label="Уведомление о cookie" hidden>
+<p>Мы используем файлы cookie, чтобы сохранять вашу корзину и коммерческое предложение. Рекламу и аналитику не подключаем. Продолжая пользоваться сайтом, вы соглашаетесь с <a href="${ctx.url('/privacy/')}#cookie">условиями использования файлов cookie</a>.</p>
+<button type="button" class="btn btn--small" data-cookie-ok>Согласен</button>
+</section>`;
 }
 
 /**
@@ -157,7 +161,7 @@ ${body}
 ${footer(ctx)}
 ${menu(ctx)}
 ${search(ctx)}
-${dialogs()}
+${dialogs(ctx)}
 </body>
 </html>
 `;

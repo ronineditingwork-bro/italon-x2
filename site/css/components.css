@@ -289,3 +289,13 @@ input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; a
 /* вся карточка товара — ссылка на страницу товара (большая цель нажатия); кнопка «+» над ней */
 .product-card__title a::after { content: ""; position: absolute; inset: 0; z-index: 0; }
 .product-card__add { z-index: 2; }
+
+/* уведомление о cookie — внизу экрана, не перекрывает контент целиком */
+.cookie-note { position: fixed; z-index: 60; left: 50%; bottom: var(--s-4); transform: translateX(-50%); width: min(100% - 2rem, 60rem);
+  display: flex; align-items: center; gap: var(--s-4); padding: var(--s-4) var(--s-5); background: var(--bg); color: var(--text);
+  border: 1px solid var(--line); box-shadow: 0 10px 40px rgb(0 0 0 / .12); font-size: var(--fs-sm, .875rem); }
+.cookie-note[hidden] { display: none; }
+.cookie-note p { margin: 0; flex: 1; }
+.cookie-note a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.cookie-note .btn { flex: none; }
+@media (max-width: 600px) { .cookie-note { flex-direction: column; align-items: stretch; bottom: var(--s-2); } }
