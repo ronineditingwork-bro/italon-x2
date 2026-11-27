@@ -4,8 +4,9 @@ import { esc, ARROW, positions, collectionUrl } from './format.mjs';
 /** Хлебные крошки: items = [[label, path|null], …]; последний — текущая страница. */
 export function breadcrumbs(ctx, items) {
   const all = [['Главная', '/'], ...items];
-  return `<nav class="breadcrumbs" aria-label="Навигация по разделам"><ol>${all.map(([label, path], i) =>
-    `<li>${i < all.length - 1 && path ? `<a href="${ctx.url(path)}">${esc(label)}</a>` : `<span aria-current="page">${esc(label)}</span>`}</li>`).join('')}</ol></nav>`;
+  // микроразметка BreadcrumbList: Яндекс и Google показывают путь вместо адреса в выдаче
+  return `<nav class="breadcrumbs" aria-label="Навигация по разделам"><ol itemscope itemtype="https://schema.org/BreadcrumbList">${all.map(([label, path], i) =>
+    `<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">${i < all.length - 1 && path ? `<a itemprop="item" href="${ctx.url(path)}"><span itemprop="name">${esc(label)}</span></a>` : `<span itemprop="name" aria-current="page">${esc(label)}</span>`}<meta itemprop="position" content="${i + 1}"></li>`).join('')}</ol></nav>`;
 }
 
 /** Шапка внутренней страницы: крошки, eyebrow, заголовок h1, вводный текст, справа — произвольный HTML. */

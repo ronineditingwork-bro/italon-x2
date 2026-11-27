@@ -4,7 +4,7 @@
 // Фото салона нет: типографика, линии, блоки #F5F3EF и один кадр коллекции с честной подписью.
 import { esc, fmt, ARROW } from '../shared/format.mjs';
 import { pageHead } from '../shared/blocks.mjs';
-import { salon, stats, collections } from '../data.mjs';
+import { salon, salonSchema, stats, collections } from '../data.mjs';
 
 const ext = 'target="_blank" rel="noopener noreferrer"';
 const PIN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-6.1-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.8" r="2.3"/></svg>';
@@ -137,8 +137,9 @@ ${links.map(([href, t, d]) => `<li data-reveal><a class="salon-link" href="${ctx
 
 export default {
   path: '/salon/',
-  title: 'Салон',
-  description: `Салон Italon Experience: ${salon.address}. Пн—Пт 10:00—19:00, Сб—Вс 10:00—18:00. Парковка есть.`,
+  title: 'Салон керамогранита Italon в Краснодаре, ул. Бабушкина, 248',
+  description: `Салон керамогранита Italon и X2 в Краснодаре: ${salon.street}. Пн—Пт 10:00—19:00, Сб—Вс 10:00—18:00. Телефон ${salon.phone}. Образцы, расчёт и КП, парковка.`,
+  jsonLd: ctx => salonSchema(ctx.origin),
   styles: ['salon'],
   scripts: ['salon'],
   render: ctx => `${pageHead(ctx, { crumbs: [['Салон']], eyebrow: 'Салон Italon Experience', title: 'Салон в Краснодаре',

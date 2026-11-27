@@ -1,7 +1,7 @@
 // Главная: герой → «Найдите своё решение» → «Характер — в деталях» → «Избранное из каталога»
 // → «Идеи для вашего пространства» → салон. Всё содержимое — из данных (site/data.mjs).
 import { esc, fmt, positions, productCard, productImage, collectionUrl, number, plural, ARROW } from '../shared/format.mjs';
-import { collections, italonCollections, x2Collections, products, stats, salon, variantsOf, categoryOf } from '../data.mjs';
+import { collections, italonCollections, x2Collections, products, stats, salon, salonSchema, variantsOf, categoryOf } from '../data.mjs';
 
 const col = id => collections.find(c => c.id === id);
 const img = (ctx, image, alt, { eager = false, sizes = '' } = {}) =>
@@ -147,7 +147,8 @@ ${salon.hours.map(([d, t]) => `<div><dt>${esc(d)}</dt><dd>${esc(t)}</dd></div>`)
 export default {
   path: '/',
   title: '',
-  description: `Салон Italon Experience в Краснодаре: керамогранит Italon и X2 20 мм для улицы. ${stats.total} позиции прайса, ${stats.collections} коллекции, расчёт упаковок и КП в PDF.`,
+  description: `Салон Italon Experience в Краснодаре: керамогранит Italon и X2 20 мм для улицы. ${positions(stats.total)} с ценами, ${stats.collections} ${plural(stats.collections, ['коллекция', 'коллекции', 'коллекций'])}, расчёт количества и КП в PDF. Ул. Бабушкина, 248.`,
+  jsonLd: ctx => [salonSchema(ctx.origin), { '@type': 'WebSite', name: 'Italon Experience', url: `${ctx.origin}/`, inLanguage: 'ru' }],
   styles: ['home'],
   render: ctx => [hero(ctx), solutions(ctx), story(ctx), featured(ctx), ideas(ctx), showroom(ctx)].join('\n'),
 };

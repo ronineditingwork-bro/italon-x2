@@ -45,7 +45,7 @@ ${feature ? `<span class="insp__links"><a class="link-arrow" href="${href}">См
 
 export default {
   path: '/inspiration/',
-  title: 'Вдохновение',
+  title: 'Керамогранит Italon в интерьере и на улице — фото и идеи',
   description: 'Интерьерные и уличные кадры коллекций Italon и X2: фото, подписи, переход к коллекции и её позициям.',
   styles: ['collections', 'inspiration'],
   scripts: ['inspiration'],

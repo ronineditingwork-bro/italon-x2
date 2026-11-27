@@ -10,7 +10,7 @@ const SEARCH = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy
 
 export default {
   path: '/calculator/',
-  title: 'Калькулятор упаковок',
+  title: 'Калькулятор керамогранита: сколько упаковок нужно',
   description: 'Расчёт количества упаковок керамогранита Italon и X2 по площади или размерам помещения: запас на подрезку, целые упаковки, минимальный заказ и сумма по прайсу с НДС.',
   styles: ['calculator'],
   scripts: ['calculator'],

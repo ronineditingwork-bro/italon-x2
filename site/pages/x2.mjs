@@ -132,8 +132,8 @@ ${collectionRows(ctx, x2Collections)}
 
 export default {
   path: '/x2/',
-  title: 'X2 · улица, 20 мм',
-  description: `X2 — керамогранит 20 мм для террас, дорожек и зоны у бассейна: ${x2Collections.length} коллекций, ${stats.x2} позиций, 4 способа укладки.`,
+  title: 'Керамогранит X2 20 мм для террас, дорожек и бассейнов',
+  description: `Italon X2 — уличный керамогранит толщиной 20 мм для террас, дорожек и зоны у бассейна, Краснодар: ${x2Collections.length} коллекций, ${stats.x2} позиций, 4 способа укладки.`,
   styles: ['collections', 'x2'],
   scripts: ['x2'],
   render: ctx => `${pageHead(ctx, { crumbs: [['X2 · улица']], eyebrow: 'Керамогранит 20 мм для улицы', title: 'X2 — для&nbsp;террас, дорожек и&nbsp;бассейна',

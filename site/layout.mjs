@@ -127,6 +127,30 @@ function dialogs(ctx) {
 </section>`;
 }
 
+/** Адрес на боевом сайте для файла или пути («media/…», «/x2/»). */
+const absolute = (ctx, src) => `${ctx.origin}/${String(src).replace(/^\/+/, '')}`;
+
+/** Для поисковиков и мессенджеров: канонический адрес, Open Graph и микроразметка Schema.org (JSON-LD).
+ *  Страница может задать image ({src, width, height}) — картинку карточки ссылки, и jsonLd (объект, массив или функция от ctx). */
+function seo(page, ctx, title) {
+  if (ctx.noindex || page.noindex || page.is404) return '';
+  const url = ctx.origin + ctx.path;
+  const image = page.image || { src: '/media/og-default.jpg', width: 1200, height: 630 };
+  const ld = [typeof page.jsonLd === 'function' ? page.jsonLd(ctx) : page.jsonLd].flat().filter(Boolean);
+  return `<link rel="canonical" href="${esc(url)}">
+<meta property="og:type" content="${page.ogType || 'website'}">
+<meta property="og:site_name" content="Italon Experience">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(page.description || '')}">
+<meta property="og:url" content="${esc(url)}">
+<meta property="og:image" content="${esc(absolute(ctx, image.src))}">${image.width ? `
+<meta property="og:image:width" content="${image.width}">
+<meta property="og:image:height" content="${image.height}">` : ''}
+<meta name="twitter:card" content="summary_large_image">
+${ld.map(item => `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', ...item }).replace(/</g, '\\u003c')}</script>\n`).join('')}`;
+}
+
 /**
  * Полный HTML-документ страницы.
  * @param {object} page  описание страницы ({title, description, name, styles, scripts, bodyClass, is404, head})
@@ -134,7 +158,7 @@ function dialogs(ctx) {
  * @param {string} body  содержимое <main>
  */
 export function layout(page, ctx, body) {
-  const title = page.title ? `${page.title} — Italon Experience` : 'Italon Experience — салон керамогранита Italon и X2 в Краснодаре';
+  const title = page.title ? `${page.title} — Italon Experience` : 'Керамогранит Italon и X2 в Краснодаре — салон Italon Experience';
   const styles = (page.styles || []).map(name => `<link rel="stylesheet" href="${ctx.asset(`pages/${name}.css`)}">`).join('');
   const scripts = (page.scripts || []).map(name => `<script type="module" src="${ctx.asset(`pages/${name}.js`)}"></script>`).join('');
   return `<!doctype html>
@@ -144,7 +168,7 @@ export function layout(page, ctx, body) {
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 ${page.is404 ? `<script>${BASE_404}</script>\n` : ''}<title>${esc(title)}</title>
 <meta name="description" content="${esc(page.description || '')}">
-${ctx.noindex || page.noindex || page.is404 ? '<meta name="robots" content="noindex, nofollow">\n' : ''}<meta name="theme-color" content="#ffffff">
+${seo(page, ctx, title)}${ctx.noindex || page.noindex || page.is404 ? '<meta name="robots" content="noindex, nofollow">\n' : ''}<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="${ctx.root}favicon.svg" type="image/svg+xml">
 <link rel="preload" href="${ctx.root}fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <script>${BOOT}</script>

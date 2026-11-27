@@ -115,3 +115,21 @@ test('cookie: уведомление со ссылкой на условия е�
   const pp = await readFile('public/privacy/index.html', 'utf8');
   assert.match(pp, /id="cookie"/); assert.match(pp, /__Host-italon_cart/); assert.doesNotMatch(pp, /не использует cookie и не подключает/);
 });
+
+test('SEO: канонический адрес, Open Graph и микроразметка Schema.org на страницах; у 404 — нет', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const ld = html => [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  const page = async f => readFile(f, 'utf8');
+  for (const [f, url] of [['public/index.html', '/'], ['public/salon/index.html', '/salon/'], ['public/product/610010001539/index.html', '/product/610010001539/']]) {
+    const html = await page(f);
+    assert.match(html, new RegExp(`<link rel="canonical" href="https://italon-x2\\.ru${url}">`), f);
+    assert.match(html, /<meta property="og:image" content="https:\/\/italon-x2\.ru\/media\/[^"]+">/, f);
+    assert.match(html, /<meta property="og:title" content="[^"]+">/, f);
+  }
+  const salon = ld(await page('public/salon/index.html'))[0];
+  assert.equal(salon['@type'], 'HomeGoodsStore'); assert.equal(salon.telephone, '+79182489248'); assert.equal(salon.address.streetAddress, 'ул. Бабушкина, 248');
+  const product = ld(await page('public/product/610010001539/index.html'))[0];
+  assert.equal(product['@type'], 'Product'); assert.equal(product.sku, '610010001539'); assert.equal(product.offers.priceCurrency, 'RUB'); assert.match(product.offers.price, /^\d+\.\d\d$/);
+  assert.match(await page('public/collections/x2-aura/index.html'), /itemtype="https:\/\/schema\.org\/BreadcrumbList"/);
+  assert.doesNotMatch(await page('public/404.html'), /rel="canonical"|ld\+json/);
+});

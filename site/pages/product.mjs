@@ -209,11 +209,40 @@ ${data.length > 1 ? `<script type="application/json" id="pdp-variants">${JSON.st
   };
 }
 
+/** Вид товара в заголовке страницы (упаковка — без слова) */
+const KIND = { plate: 'Керамогранит', mosaic: 'Мозаика', decor: 'Декор' };
+const priceText = p => priceHtml(p).replace(/<[^>]+>/g, '').replace(/\u00a0/g, ' ');
+
+/** Товар для поисковиков (Schema.org Product): цена из прайса за единицу заказа (м² — код MTK). Наличие не указываем: остатков по плитке на сайте нет. */
+function productSchema(ctx, p) {
+  const url = `${ctx.origin}/product/${p.code}/`;
+  return {
+    '@type': 'Product',
+    name: p.name,
+    sku: p.code,
+    mpn: p.code,
+    url,
+    ...(p.image ? { image: `${ctx.origin}/${p.image.src.replace(/^\//, '')}` } : {}),
+    ...(p.category !== 'packaging' ? { brand: { '@type': 'Brand', name: 'Italon' } } : {}),
+    ...(p.priceKopecks > 0 ? { offers: {
+      '@type': 'Offer',
+      url,
+      price: (p.priceKopecks / 100).toFixed(2),
+      priceCurrency: 'RUB',
+      ...(p.unit === 'м²' ? { priceSpecification: { '@type': 'UnitPriceSpecification', price: (p.priceKopecks / 100).toFixed(2), priceCurrency: 'RUB', referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MTK' } } } : {}),
+      seller: { '@id': `${ctx.origin}/salon/#salon` },
+    } } : {}),
+  };
+}
+
 export default products.map(p => ({
   path: `/product/${p.code}/`,
   name: 'product',
-  title: `${p.name} — арт. ${p.code}`,
-  description: `${p.name}, артикул ${p.code}. ${p.priceKopecks > 0 ? `Цена ${priceHtml(p).replace(/<[^>]+>/g, '').replace(/\u00a0/g, ' ')}` : 'Цена уточняется'} по прайсу от 01.07.2026, склад Краснодар.`,
+  title: `${KIND[categoryOf(p)] ? `${KIND[categoryOf(p)]} ` : ''}${p.name} — арт. ${p.code}, цена`,
+  description: `${KIND[categoryOf(p)] ? `${KIND[categoryOf(p)]} Italon ` : ''}${p.name}, артикул ${p.code}. ${p.priceKopecks > 0 ? `Цена ${priceText(p)}` : 'Цена уточняется'} по прайсу от 01.07.2026, склад Краснодар. Расчёт количества и КП в салоне на ул. Бабушкина, 248.`,
+  image: p.image,
+  ogType: 'product',
+  jsonLd: ctx => productSchema(ctx, p),
   styles: ['product'],
   scripts: ['product'],
   render: render(p),

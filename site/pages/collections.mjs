@@ -21,8 +21,8 @@ const LINES = [
 ];
 const index = {
   path: '/collections/',
-  title: 'Коллекции',
-  description: `${stats.collections} коллекций керамогранита Italon, X2, Coliseum и Контракт.`,
+  title: 'Коллекции керамогранита Italon, X2, Coliseum и Контракт',
+  description: `${stats.collections} коллекций керамогранита Italon в Краснодаре: Italon для интерьера, X2 20 мм для улицы, Coliseum и Контракт. Форматы, отделки и цены по прайсу.`,
   styles: ['collections'],
   scripts: ['collections'],
   render: ctx => `${pageHead(ctx, { crumbs: [['Коллекции']], eyebrow: 'Italon, X2, Coliseum и Контракт', title: 'Коллекции',
@@ -61,6 +61,8 @@ import { esc as escB, positions as positionsB, productCard as cardB, money as mo
 import { finishInfo, formatLabel } from '../shared/product-view.mjs';
 import { finishVariantsOf, categoryOf as categoryOfB } from '../data.mjs';
 
+/** Линия в заголовке и описании для поисковиков */
+const SEO_LINE = { italon: 'Italon', x2: 'Italon X2 20 мм', coliseum: 'Italon Coliseum', contract: 'Italon Контракт' };
 const listB = items => items.length > 1 ? `${items.slice(0, -1).join(', ')} и ${items.at(-1)}` : items[0] || '';
 const fmtB = f => formatLabel({ format: f }).replace(/ см$/, '');
 const surfaceOf = p => finishInfo(p).surface || 'без отделки';
@@ -102,8 +104,9 @@ function collectionPage(c, i, list) {
   return {
     path: `/collections/${c.id}/`,
     name: 'collection',
-    title: `Коллекция ${c.label}`,
-    description: `Коллекция ${c.label} (${c.latin}): ${positionsB(c.count)}${c.plateFormats.length ? `, форматы ${c.plateFormats.map(fmtB).join(', ')} см` : ''}. Цены по прайсу от 01.07.2026.`,
+    title: `Коллекция ${c.label} (${c.latin}) — керамогранит ${SEO_LINE[c.section] || 'Italon'}, цены`,
+    image: c.image,
+    description: `Керамогранит ${SEO_LINE[c.section] || 'Italon'}, коллекция ${c.label} (${c.latin}): ${positionsB(c.count)}${c.plateFormats.length ? `, форматы ${c.plateFormats.map(fmtB).join(', ')} см` : ''}. Цены по прайсу от 01.07.2026, купить в Краснодаре.`,
     styles: ['collection'],
     scripts: ['collection'],
     render: ctx => `<div class="wrap">${crumbsB(ctx, [['Коллекции', '/collections/'], [c.label]])}</div>

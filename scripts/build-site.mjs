@@ -113,6 +113,7 @@ for (const page of pages) {
   const ctx = {
     root: pageRoot,
     path: page.path,
+    origin: ORIGIN,
     noindex: NOINDEX,
     preview: PREVIEW,
     data,

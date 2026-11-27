@@ -16,8 +16,8 @@ const facet = (id, title, body, { open = true } = {}) => `<details class="facet"
 
 export default {
   path: '/catalog/',
-  title: 'Каталог',
-  description: `Каталог Italon, X2, Coliseum и Контракт: ${stats.total} позиции с ценами по прайсу от 01.07.2026, поиск по названию и артикулу, фильтры по коллекции, формату, отделке и цене.`,
+  title: 'Каталог керамогранита Italon с ценами — купить в Краснодаре',
+  description: `Каталог керамогранита Italon, X2, Coliseum и Контракт: ${positions(stats.total)} с ценами по прайсу от 01.07.2026, поиск по названию и артикулу, фильтры по коллекции, формату, отделке и цене.`,
   styles: ['catalog'],
   scripts: ['catalog'],
   render: ctx => {
